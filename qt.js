@@ -1,10 +1,10 @@
 ﻿// ==UserScript==
-// @name           Quack Toolsammlung 2.0 Beta
+// @name           Quack Toolsammlung
 // @namespace      Quack
 // @description    Toolsammlung für Grepolis 2.0
 // @include        http://*.grepolis.*/game*
 // @icon           http://s7.directupload.net/images/120320/ullq32vn.jpg
-// @version        0.27.00
+// @version        2.27.00
 // ==/UserScript==
 
 var uw = unsafeWindow || window, $ = uw.jQuery;
