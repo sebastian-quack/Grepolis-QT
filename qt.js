@@ -4,7 +4,14 @@
 // @description    Toolsammlung für Grepolis 2.0
 // @include        http://*.grepolis.*/game*
 // @icon           http://s7.directupload.net/images/120320/ullq32vn.jpg
-// @version        2.27.00
+// @version        2.27.01
+// @grant          GM_listValues
+// @grant          GM_getValue
+// @grant          GM_setValue
+// @grant          GM_deleteValue
+// @grant          GM_info
+// @grant          GM_xmlhttpRequest
+// @grant          unsafeWindow
 // ==/UserScript==
 
 var uw = unsafeWindow || window, $ = uw.jQuery;
@@ -2576,7 +2583,7 @@ QT.Functions = {
 				["Daniela T. - 1€", "Peter J. - 1€", "André V. - 5€", "Nepomuk P. - 10€"],
 				["Michael H. - 1€", "Heiner W. - 5€", "LightShining - 15€", "Hans Hermann S. - 5€"],
 				["Leuchtkraft - 10€", "Ann-Katrin R. - 3€", "alexander1128 - 10€", "Martin P. - 10€"],
-				[" Rolf M. - 5€"]
+				[" Rolf M. - 5€", "David W. - 5€"]
 			];
 
 			HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>" + qsettingsContainer;
@@ -3210,7 +3217,7 @@ QT.Functions = {
 				"height" : "370px"
 			});
 			$("#qcultureBTN_wrapper").css({
-				
+
 				"color" : "white",
 				"font-family" : "Verdana",
 				"font-weight" : "bold",
@@ -3253,54 +3260,58 @@ QT.Functions = {
 				"background-position" : "0 -50px"
 			});
 			var qcultureBTN_r_clicked_last = "";
-			function hideTownElements (JQelement) {
+			function hideTownElements(JQelement) {
 				var qcultureBTN_mode = "";
 				switch (JQelement.id) {
-				  case "qcultureBTN_cityfestival_r":
+				case "qcultureBTN_cityfestival_r":
 					qcultureBTN_mode = "ul li:eq(0)";
 					break;
-				  case "qcultureBTN_olympicgames_r":
+				case "qcultureBTN_olympicgames_r":
 					qcultureBTN_mode = "ul li:eq(1)";
 					break;
-				  case "qcultureBTN_triumph_r":
+				case "qcultureBTN_triumph_r":
 					qcultureBTN_mode = "ul li:eq(2)";
 					break;
-				  case "qcultureBTN_theather_r":
+				case "qcultureBTN_theather_r":
 					qcultureBTN_mode = "ul li:eq(3)";
 					break;
-				  default:
+				default:
 					alert("Error");
 					break;
 				}
 				if (qcultureBTN_r_clicked_last === JQelement.id) {
 					$("ul#culture_overview_towns li").filter(function () {
-						return !! $(qcultureBTN_mode, this).find('.eta').length;
+						return !!$(qcultureBTN_mode, this).find('.eta').length;
 					}).toggle();
 					$(JQelement).toggleClass("culture_red");
 				} else {
 					$("ul#culture_overview_towns li").show().filter(function () {
-						return !! $(qcultureBTN_mode, this).find('.eta').length;
+						return !!$(qcultureBTN_mode, this).find('.eta').length;
 					}).hide();
 					$(".qcultureBTN_r").removeClass("culture_red");
 					$(JQelement).addClass("culture_red");
 				}
 				qcultureBTN_r_clicked_last = JQelement.id;
-				$(".qcultureBTN_r").css({border: "2px groove #808080"});
-				$(".culture_red").css({border: "2px groove #CC0000"});
+				$(".qcultureBTN_r").css({
+					border : "2px groove #808080"
+				});
+				$(".culture_red").css({
+					border : "2px groove #CC0000"
+				});
 			}
 			$(".qcultureBTN_r").click(function () {
 				hideTownElements(this);
 			});
 			/*
 			function hideCelebrationElements (JQelement) {
-				$(".qcultureBTN_r").css({border: "2px groove #808080"});
-				$(".culture_red").css({border: "2px groove #CC0000"});
-				$("ul#culture_overview_towns li ul.celebration_wrapper li:nth-child(2)").hide();
-				$("ul#culture_overview_towns li ul.celebration_wrapper li:nth-child(4)").hide();
+			$(".qcultureBTN_r").css({border: "2px groove #808080"});
+			$(".culture_red").css({border: "2px groove #CC0000"});
+			$("ul#culture_overview_towns li ul.celebration_wrapper li:nth-child(2)").hide();
+			$("ul#culture_overview_towns li ul.celebration_wrapper li:nth-child(4)").hide();
 			}
 			$(".qcultureBTN_l").click(function () {
-				hideCelebrationElements(this);
-			});*/	
+			hideCelebrationElements(this);
+			});*/
 		}
 
 		var qcultureCounter = {
@@ -3413,33 +3424,33 @@ QT.Functions = {
 			$("#q_place_sim_lost_res").remove();
 		}
 		$(".place_sim_wrap_mods").append('\
-						<table id="q_place_sim_lost_res" class="place_simulator_table" cellspacing="0" cellpadding="0">\
-						<tbody>\
-						<tr>\
-							<td class="place_simulator_even" style="width:18px"></td>\
-							<td class="place_simulator_odd"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/wood.png)"></span></td>\
-							<td class="place_simulator_even"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/stone.png)"></span></td>\
-							<td class="place_simulator_odd"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/iron.png)"></span></td>\
-							<td class="place_simulator_even"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/favor.png)"></span></td>\
-							<td class="place_simulator_odd"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/pop.png)"></span></td>\
-						</tr>\
-						<tr>\
-							<td class="place_simulator_even"><div class="place_symbol place_att"></div></td>\
-							<td class="place_simulator_odd">' + h.wood + '</td>\
-							<td class="place_simulator_even">' + h.stone + '</td>\
-							<td class="place_simulator_odd">' + h.iron + '</td>\
-							<td class="place_simulator_even">' + h.favor + '</td>\
-							<td class="place_simulator_odd">' + h.pop + '</td>\
-						</tr>\
-						<tr>\
-							<td class="place_simulator_even"><div class="place_symbol place_def"></div></td>\
-							<td class="place_simulator_odd">' + g.wood + '</td>\
-							<td class="place_simulator_even">' + g.stone + '</td>\
-							<td class="place_simulator_odd">' + g.iron + '</td>\
-							<td class="place_simulator_even">' + g.favor + '</td>\
-							<td class="place_simulator_odd">' + g.pop + '</td>\
-						</tr>\
-						</tbody></table>');
+									<table id="q_place_sim_lost_res" class="place_simulator_table" cellspacing="0" cellpadding="0">\
+									<tbody>\
+									<tr>\
+										<td class="place_simulator_even" style="width:18px"></td>\
+										<td class="place_simulator_odd"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/wood.png)"></span></td>\
+										<td class="place_simulator_even"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/stone.png)"></span></td>\
+										<td class="place_simulator_odd"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/iron.png)"></span></td>\
+										<td class="place_simulator_even"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/favor.png)"></span></td>\
+										<td class="place_simulator_odd"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/pop.png)"></span></td>\
+									</tr>\
+									<tr>\
+										<td class="place_simulator_even"><div class="place_symbol place_att"></div></td>\
+										<td class="place_simulator_odd">' + h.wood + '</td>\
+										<td class="place_simulator_even">' + h.stone + '</td>\
+										<td class="place_simulator_odd">' + h.iron + '</td>\
+										<td class="place_simulator_even">' + h.favor + '</td>\
+										<td class="place_simulator_odd">' + h.pop + '</td>\
+									</tr>\
+									<tr>\
+										<td class="place_simulator_even"><div class="place_symbol place_def"></div></td>\
+										<td class="place_simulator_odd">' + g.wood + '</td>\
+										<td class="place_simulator_even">' + g.stone + '</td>\
+										<td class="place_simulator_odd">' + g.iron + '</td>\
+										<td class="place_simulator_even">' + g.favor + '</td>\
+										<td class="place_simulator_odd">' + g.pop + '</td>\
+									</tr>\
+									</tbody></table>');
 		$(".q_place_simulator_tableheader").css({
 			"background-repeat" : "no-repeat",
 			"background-position" : "center center",
@@ -3888,16 +3899,16 @@ QT.Functions = {
 				$("#trade_type_" + mode.substring(2)).find("input").val(d).select().blur();
 			}
 			$("#trade_tab").append('\
-																																								<a id="q_wood" class="q_send" style="top:211px" href="#"></a>\
-																																								<a id="q_stone" class="q_send" style="top:245px" href="#"></a>\
-																																								<a id="q_iron" class="q_send" style="top:279px" href="#"></a>\
-																																								<a id="q_wood" class="q_send_cult" style="top:211px" href="#"></a>\
-																																								<a id="q_stone" class="q_send_cult" style="top:245px" href="#"></a>\
-																																								<a id="q_iron" class="q_send_cult" style="top:279px" href="#"></a>\
-																																								<a id="q_wood" class="q_send_cult_reverse" style="top:211px" href="#"></a>\
-																																								<a id="q_stone" class="q_send_cult_reverse" style="top:245px" href="#"></a>\
-																																								<a id="q_iron" class="q_send_cult_reverse" style="top:279px" href="#"></a>\
-																																							');
+																																												<a id="q_wood" class="q_send" style="top:211px" href="#"></a>\
+																																												<a id="q_stone" class="q_send" style="top:245px" href="#"></a>\
+																																												<a id="q_iron" class="q_send" style="top:279px" href="#"></a>\
+																																												<a id="q_wood" class="q_send_cult" style="top:211px" href="#"></a>\
+																																												<a id="q_stone" class="q_send_cult" style="top:245px" href="#"></a>\
+																																												<a id="q_iron" class="q_send_cult" style="top:279px" href="#"></a>\
+																																												<a id="q_wood" class="q_send_cult_reverse" style="top:211px" href="#"></a>\
+																																												<a id="q_stone" class="q_send_cult_reverse" style="top:245px" href="#"></a>\
+																																												<a id="q_iron" class="q_send_cult_reverse" style="top:279px" href="#"></a>\
+																																											');
 			$(".q_send_cult").css({
 				"right" : "84px",
 				"position" : "absolute",
@@ -4366,12 +4377,12 @@ QT.Functions = {
 		});
 
 		$('<style id="qplusmenustyle" type="text/css">\
-											#toolbar_activity_recruits_list, #toolbar_activity_commands_list, #toolbar_activity_trades_list {width: 149px !important} \
-											.displayImp {display: block !important}\
-											.qplusmenu {margin:6px 0px 2px 5px;width:100%;height:11px;display:block;position:relative}\
-											.qplusdraghandle {width:119px;height:11px;position:absolute;background:url(http://s14.directupload.net/images/131001/7guz6abs.png)}\
-											.qplusback {right:11px;margin-top:-1px;width:16px;height:12px;position:absolute;background:url(http://s1.directupload.net/images/131001/u6le7bdw.png)}\
-											</style>').appendTo('head');
+														#toolbar_activity_recruits_list, #toolbar_activity_commands_list, #toolbar_activity_trades_list {width: 149px !important} \
+														.displayImp {display: block !important}\
+														.qplusmenu {margin:6px 0px 2px 5px;width:100%;height:11px;display:block;position:relative}\
+														.qplusdraghandle {width:119px;height:11px;position:absolute;background:url(http://s14.directupload.net/images/131001/7guz6abs.png)}\
+														.qplusback {right:11px;margin-top:-1px;width:16px;height:12px;position:absolute;background:url(http://s1.directupload.net/images/131001/u6le7bdw.png)}\
+														</style>').appendTo('head');
 
 		$('#toolbar_activity_recruits_list').draggable({
 			cursor : "move",
@@ -4458,7 +4469,7 @@ QT.Functions = {
 				"right" : "0px",
 				"bottom" : "14px",
 				"width" : "138px",
-				"background" : "url(http://gpde.innogamescdn.com/images/game/layout/layout_2.51_compressed.png) no-repeat scroll right -224px rgba(0, 0, 0, 0)"
+				"background" : "url(http://gpde.innogamescdn.com/images/game/layout/layout_2.56_compressed.png) no-repeat scroll right -224px rgba(0, 0, 0, 0)"
 			});
 			$("#tr_wrapper").css({
 				"padding" : "7px 7px 17px 7px",
