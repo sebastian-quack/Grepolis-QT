@@ -1,10 +1,10 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           Quack Toolsammlung
 // @namespace      Quack
 // @description    Toolsammlung für Grepolis 2.0
 // @include        http://*.grepolis.*/game*
 // @icon           http://s7.directupload.net/images/120320/ullq32vn.jpg
-// @version        2.28.00
+// @version        2.28.01
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -632,7 +632,10 @@ QT.Lang = {
 		},
 		town_info : {
 			no_overload : 'niet overbelasten',
-			delete : 'Verwijderen'
+			delete : 'Verwijderen',
+			polissuche : 'stedenzoeker',
+			inactivity : 'Inaktief',
+			days : 'dagen'
 		},
 		grepo_mainmenu : {
 			city_view : 'Stadsoverzicht'
@@ -685,7 +688,7 @@ QT.Lang = {
 			top_killers : 'Top Aanvallers',
 			maps : 'Kaart',
 			townsearches : 'Stedenzoeker',
-			tonda_polissuche : 'Stadzoek',
+			tonda_polissuche : 'Stedenzoeker',
 			in_town : 'In stad',
 			from_town : 'Uit stad',
 			outside_town : 'Buiten stad',
@@ -701,11 +704,11 @@ QT.Lang = {
 			undo : 'Markeringen opheffen'
 		},
 		caves : {
-			stored_silver : 'Opgeslagen silverstukken',
-			name : 'Name',
+			stored_silver : 'Opgeslagen zilverstukken',
+			name : 'Naam',
 			wood : 'Hout',
 			stone : 'Steen',
-			silver : 'Silverstukken'
+			silver : 'Zilverstukken'
 		},
 		transport_calc : {
 			btn_main : 'Transport rekenaar',
@@ -739,6 +742,7 @@ QT.Lang = {
 			text21 : 'Breedte van het forum maximaliseren',
 			text22 : 'Hotkey afbeelding',
 			text23 : 'Grepolis menu',
+			text24 : 'Senaat',
 			text25 : 'Toon het aantal toegekende punten voor de bouw van een gebouw',
 			text26 : 'Handelsvenster',
 			text27 : 'Extensie activeren',
@@ -755,6 +759,7 @@ QT.Lang = {
 			text40 : 'Boerendorpen overzicht (Kapitein)',
 			text41 : 'Een button voor het openen van de stadsoverzicht aan het zijkant menu toevoegen',
 			text42 : 'Toon de verloren grondstoffen',
+			text44 : 'Eiland overzicht',
 			other : 'Overige',
 			save : 'Opslaan',
 			reset : 'Reset instellingen',
@@ -1677,7 +1682,7 @@ QT.CallAjaxFunction = {
 	},
 	town_info : {
 		info : function () {
-			QT.Functions.inactivityWatch();
+			QT.Functions.townInactivity();
 			QT.Functions.townGSButton();
 		},
 		trading : function () {
@@ -1746,10 +1751,61 @@ QT.Functions = {
 	test : function () {
 		alert("Test funktioniert");
 	},
-	inactivityWatch : function (event, xhr, settings) {
+	Inactivity : {
+		cache : {
+			297128 : 1.30
+		},
+		compareCached : function (players) {
+			var playerIDs = players.split(',');
+			var playersToGet = [];
+			//var playersCached = {};
+			$.each(playerIDs, function (index, value) {
+				if (!(value in QT.Functions.Inactivity.cache)) {
+					playersToGet.push(value);
+				}
+				/*else {
+				playersCached[value] = QT.Functions.Inactivity.cache[value];
+				}*/
+			});
+			return playersToGet.join();
+			/*return {
+			playersToGet: playersToGet.join(),
+			playersCached: playersCached
+			};*/
+		},
+		getData : function (players) {
+			var players = players.toString();
+			/*var playersToGet = QT.Functions.Inactivity.compareCached(players); //"297128,1764472,432065"
+			if (playersToGet.length === 0)
+			return;*/
+			return $.ajax({
+				url : "http://marco93.de/grepolis/player_inactivity.php",
+				dataType : "jsonp",
+				data : {
+					"world" : wID,
+					"players" : players
+				}
+			});
+		},
+		calcDays : function (data) {
+			var date_now = new Date();
+			var playerArray = {};
+			var dataArray = data.split(',');
+			$.each(dataArray, function (index, value) {
+				var obj_temp = value.split(':');
+				var date_user = new Date(parseInt(obj_temp[1], 10) * 1000);
+				var date_diff = date_now - date_user;
+				var inactive_days = date_diff / 1000 / 60 / 60 / 24;
+				var inactive_days_quarter = Math.round(inactive_days * 4) / 4;
+				playerArray[obj_temp[0]] = inactive_days_quarter;
+			});
+			return playerArray;
+		},
+	},
+	townInactivity : function (event, xhr, settings) {
 		var p_str = sID.toString();
 		var p_num = parseInt(p_str.substr(p_str.length - 1));
-		var tester = [297128, 1764472, 432065];
+		var tester = [297128, 1764472, 432065, 880414, 7809196, 927818, 879988, 265587, 600297, 270260];
 		if (p_num != 0 && tester.indexOf(sID) < 0)
 			return;
 
@@ -1764,47 +1820,34 @@ QT.Functions = {
 			var e = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo A.gp_player_link").attr("href");
 		var f = e.split(/#/);
 		var g = $.parseJSON(atob(f[1] || f[0]));
+
 		var inactive_days = "~";
 		$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.gp_player_link").css({
 			"float" : "left"
 		});
-		$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.gp_player_link").after('<a class="qt_activity" style="float:left; margin:2px 2px 0; display: block; width:20px; height:12px; background:url(http://s1.directupload.net/images/140416/7fwyuv54.gif) no-repeat" href="' + QT.Links.Polissuche + '" target="_blank">\
-					<span class="qt_activity_number" style="display:block; margin-top:1px; font-size: 8px; color:#EEDDBB; text-shadow:1px 1px #000000; text-align:center"></span></a>');
+		$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.gp_player_link").after('<a class="qt_activity" style="float:left; margin:2px 2px 0; display: block; width:20px; height:12px; background:url(http://s1.directupload.net/images/140416/7fwyuv54.gif) no-repeat" href="' + QT.Links.Polissuche + '" target="_blank"><span class="qt_activity_number" style="display:block; margin-top:1px; font-size: 8px; color:#EEDDBB; text-shadow:1px 1px #000000; text-align:center"></span></a>');
 
-		$.ajax({
-			"url" : "http://marco93.de/grepolis/player_inactivity.php",
-			"dataType" : "jsonp",
-			"data" : {
-				"world" : wID,
-				"players" : g.id
-			},
-			"success" : function (data) {
-				var timestamp_user = parseInt(data.split(/:/)[1], 10) * 1000;
-				var timestamp_now = Date.now();
-				var date_user = new Date(timestamp_user);
-				var date_now = new Date(timestamp_now);
-				var date_diff = date_now - date_user;
-				inactive_days = Math.floor(date_diff / 1000 / 60 / 60 / 24 * 100) / 100;
-				$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left SPAN.qt_activity_number").text(Math.floor(inactive_days));
+		var Ajax = QT.Functions.Inactivity.getData(g.id);
+		Ajax.done(function (data) {
+			var inactive_days = QT.Functions.Inactivity.calcDays(data)[g.id];
+			$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left SPAN.qt_activity_number").text(Math.floor(inactive_days));
+			$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity").css({
+				"background-image" : "url(http://s14.directupload.net/images/140415/mju99vog.png)"
+			});
+			if (inactive_days < 2) {
 				$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity").css({
-					"background-image" : "url(http://s14.directupload.net/images/140415/mju99vog.png)"
+					"background-position" : "0 -12px"
 				});
-
-				if (inactive_days < 2) {
-					$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity").css({
-						"background-position" : "0 -12px"
-					});
-				} else if (inactive_days >= 2 && inactive_days < 5) {
-					$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity").css({
-						"background-position" : "0 -24px"
-					});
-				} else if (inactive_days >= 5) {
-					$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity").css({
-						"background-position" : "0 -36px"
-					});
-				}
-				$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity").mousePopup(new uw.MousePopup('<span style=""><b>' + QT.Lang.get("town_info", "inactivity") + ':</b> ' + inactive_days + ' ' + QT.Lang.get("town_info", "days") + '</span><p/><span style="font-size:10px">powered by Tondas ' + QT.Lang.get("town_info", "polissuche") + '</span>'));
+			} else if (inactive_days >= 2 && inactive_days < 5) {
+				$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity").css({
+					"background-position" : "0 -24px"
+				});
+			} else if (inactive_days >= 5) {
+				$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity").css({
+					"background-position" : "0 -36px"
+				});
 			}
+			$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity").mousePopup(new uw.MousePopup('<span style=""><b>' + QT.Lang.get("town_info", "inactivity") + ':</b> ' + inactive_days + ' ' + QT.Lang.get("town_info", "days") + '</span><p/><span style="font-size:10px">powered by Tondas ' + QT.Lang.get("town_info", "polissuche") + '</span>'));
 		});
 	},
 	windowmanager : function () {
@@ -2878,8 +2921,9 @@ QT.Functions = {
 				ES : "Jonh Snow",
 				FR : "higter",
 				IT : "masale81",
+				NL : "sannelos",
 				PL : "Slietie",
-				RU : "Jest"
+				RU : "Jest",
 			};
 			HTML_tab2 += grepoGameBorder + QT.Lang.get("settings", "translations") + '<div style="float: right; margin-top: -2px; margin-right: -5px">' + QT.Functions.helper.grepo_dropdown("langdiv", supported_lang)[0].outerHTML + '</div></div>';
 			HTML_tab2 += '<div id="trans_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:369px"><b>' + QT.Lang.get("settings", "please_note") + ':</b><br/><ul style="list-style:square outside;padding-left: 13px"><li>' + QT.Lang.get("settings", "trans_infotext1") + '</li><li>' + QT.Lang.get("settings", "trans_infotext2") + '</li><li>' + QT.Lang.get("settings", "trans_infotext3") + '</li><li>' + QT.Lang.get("settings", "trans_infotext4") + '</li></ul><div style="margin-top:40px"><b>' + QT.Lang.get("settings", "credits") + ':</b><br/><ul style="list-style:square outside;padding-left: 13px">';
@@ -3258,7 +3302,7 @@ QT.Functions = {
 			$('#qtbox_button2').mousePopup(new uw.MousePopup(QT.Lang.get("qtoolbox", "grepo_intel")));
 			$('#qtbox_button3').mousePopup(new uw.MousePopup(QT.Lang.get("qtoolbox", "grepo_bash")));
 			$('#qtbox_button4').mousePopup(new uw.MousePopup(QT.Lang.get("qtoolbox", "grepo_maps")));
-			if (mID == "de") {
+			if (mID == "de" || mID == "nl" || mID == "en") {
 				$('#qtbox_buttons_wrapper').append('<a id="qtbox_button5" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 107px;" target="_blank" href="' + QT.Links.Polissuche + '"><img src="http://s7.directupload.net/images/131008/5zj4ujmi.png"></a>');
 				$('#qtbox_button5').mousePopup(new uw.MousePopup(QT.Lang.get("qtoolbox", "tonda_polissuche")));
 			} else {
@@ -3826,34 +3870,7 @@ QT.Functions = {
 		if ($("#q_place_sim_lost_res").length > 0) {
 			$("#q_place_sim_lost_res").remove();
 		}
-		$(".place_sim_wrap_mods").append('\
-												<table id="q_place_sim_lost_res" class="place_simulator_table" cellspacing="0" cellpadding="0">\
-												<tbody>\
-												<tr>\
-													<td class="place_simulator_even" style="width:18px"></td>\
-													<td class="place_simulator_odd"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/wood.png)"></span></td>\
-													<td class="place_simulator_even"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/stone.png)"></span></td>\
-													<td class="place_simulator_odd"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/iron.png)"></span></td>\
-													<td class="place_simulator_even"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/favor.png)"></span></td>\
-													<td class="place_simulator_odd"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/pop.png)"></span></td>\
-												</tr>\
-												<tr>\
-													<td class="place_simulator_even"><div class="place_symbol place_att"></div></td>\
-													<td class="place_simulator_odd">' + h.wood + '</td>\
-													<td class="place_simulator_even">' + h.stone + '</td>\
-													<td class="place_simulator_odd">' + h.iron + '</td>\
-													<td class="place_simulator_even">' + h.favor + '</td>\
-													<td class="place_simulator_odd">' + h.pop + '</td>\
-												</tr>\
-												<tr>\
-													<td class="place_simulator_even"><div class="place_symbol place_def"></div></td>\
-													<td class="place_simulator_odd">' + g.wood + '</td>\
-													<td class="place_simulator_even">' + g.stone + '</td>\
-													<td class="place_simulator_odd">' + g.iron + '</td>\
-													<td class="place_simulator_even">' + g.favor + '</td>\
-													<td class="place_simulator_odd">' + g.pop + '</td>\
-												</tr>\
-												</tbody></table>');
+		$(".place_sim_wrap_mods").append('<table id="q_place_sim_lost_res" class="place_simulator_table" cellspacing="0" cellpadding="0"><tbody><tr><td class="place_simulator_even" style="width:18px"></td><td class="place_simulator_odd"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/wood.png)"></span></td><td class="place_simulator_even"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/stone.png)"></span></td><td class="place_simulator_odd"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/iron.png)"></span></td><td class="place_simulator_even"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/favor.png)"></span></td><td class="place_simulator_odd"><span class="q_place_simulator_tableheader" style="background-image:url(http://cdn.grepolis.com/images/game/res/pop.png)"></span></td></tr><tr><td class="place_simulator_even"><div class="place_symbol place_att"></div></td><td class="place_simulator_odd">' + h.wood + '</td><td class="place_simulator_even">' + h.stone + '</td><td class="place_simulator_odd">' + h.iron + '</td><td class="place_simulator_even">' + h.favor + '</td><td class="place_simulator_odd">' + h.pop + '</td></tr><tr><td class="place_simulator_even"><div class="place_symbol place_def"></div></td><td class="place_simulator_odd">' + g.wood + '</td><td class="place_simulator_even">' + g.stone + '</td><td class="place_simulator_odd">' + g.iron + '</td><td class="place_simulator_even">' + g.favor + '</td><td class="place_simulator_odd">' + g.pop + '</td></tr></tbody></table>');
 		$(".q_place_simulator_tableheader").css({
 			"background-repeat" : "no-repeat",
 			"background-position" : "center center",
@@ -4302,16 +4319,16 @@ QT.Functions = {
 				$("#trade_type_" + mode.substring(2)).find("input").val(d).select().blur();
 			}
 			$("#trade_tab").append('\
-																																																<a id="q_wood" class="q_send" style="top:211px" href="#"></a>\
-																																																<a id="q_stone" class="q_send" style="top:245px" href="#"></a>\
-																																																<a id="q_iron" class="q_send" style="top:279px" href="#"></a>\
-																																																<a id="q_wood" class="q_send_cult" style="top:211px" href="#"></a>\
-																																																<a id="q_stone" class="q_send_cult" style="top:245px" href="#"></a>\
-																																																<a id="q_iron" class="q_send_cult" style="top:279px" href="#"></a>\
-																																																<a id="q_wood" class="q_send_cult_reverse" style="top:211px" href="#"></a>\
-																																																<a id="q_stone" class="q_send_cult_reverse" style="top:245px" href="#"></a>\
-																																																<a id="q_iron" class="q_send_cult_reverse" style="top:279px" href="#"></a>\
-																																															');
+																																																								<a id="q_wood" class="q_send" style="top:211px" href="#"></a>\
+																																																								<a id="q_stone" class="q_send" style="top:245px" href="#"></a>\
+																																																								<a id="q_iron" class="q_send" style="top:279px" href="#"></a>\
+																																																								<a id="q_wood" class="q_send_cult" style="top:211px" href="#"></a>\
+																																																								<a id="q_stone" class="q_send_cult" style="top:245px" href="#"></a>\
+																																																								<a id="q_iron" class="q_send_cult" style="top:279px" href="#"></a>\
+																																																								<a id="q_wood" class="q_send_cult_reverse" style="top:211px" href="#"></a>\
+																																																								<a id="q_stone" class="q_send_cult_reverse" style="top:245px" href="#"></a>\
+																																																								<a id="q_iron" class="q_send_cult_reverse" style="top:279px" href="#"></a>\
+																																																							');
 			$(".q_send_cult").css({
 				"right" : "84px",
 				"position" : "absolute",
@@ -4792,11 +4809,11 @@ QT.Functions = {
 		});
 
 		$('<style id="qplusmenustyle" type="text/css">\
-						.displayImp {display: block !important}\
-						.qplusmenu {margin:6px 22px 2px 5px;height:11px;display:block;position:relative}\
-						.qplusdraghandle {width:100%;height:11px;position:absolute;background:url(http://s14.directupload.net/images/131001/7guz6abs.png)}\
-						.qplusback {right:-18px;margin-top:-1px;width:16px;height:12px;position:absolute;background:url(http://s1.directupload.net/images/131001/u6le7bdw.png)}\
-						</style>').appendTo('head');
+												.displayImp {display: block !important}\
+												.qplusmenu {margin:6px 22px 2px 5px;height:11px;display:block;position:relative}\
+												.qplusdraghandle {width:100%;height:11px;position:absolute;background:url(http://s14.directupload.net/images/131001/7guz6abs.png)}\
+												.qplusback {right:-18px;margin-top:-1px;width:16px;height:12px;position:absolute;background:url(http://s1.directupload.net/images/131001/u6le7bdw.png)}\
+												</style>').appendTo('head');
 
 		$('#toolbar_activity_recruits_list').draggable({
 			cursor : "move",
