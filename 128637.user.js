@@ -4,7 +4,7 @@
 // @description    Toolsammlung für Grepolis 2.0
 // @include        http://*.grepolis.*/game*
 // @icon           http://s7.directupload.net/images/120320/ullq32vn.jpg
-// @version        2.28.01
+// @version        2.28.02
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -1708,6 +1708,7 @@ QT.CallAjaxFunction = {
 	alliance : {
 		profile : function (event, xhr, settings) {
 			QT.Functions.allianceGSButton(event, xhr, settings);
+			QT.Functions.allianceInactivity(event, xhr, settings);
 		}
 	},
 	farm_town_overviews : {
@@ -1752,32 +1753,15 @@ QT.Functions = {
 		alert("Test funktioniert");
 	},
 	Inactivity : {
-		cache : {
-			297128 : 1.30
+		cache : {},
+		addToCache : function (players) {
+			$.extend(QT.Functions.Inactivity.cache, players);
 		},
-		compareCached : function (players) {
-			var playerIDs = players.split(',');
-			var playersToGet = [];
-			//var playersCached = {};
-			$.each(playerIDs, function (index, value) {
-				if (!(value in QT.Functions.Inactivity.cache)) {
-					playersToGet.push(value);
-				}
-				/*else {
-				playersCached[value] = QT.Functions.Inactivity.cache[value];
-				}*/
-			});
-			return playersToGet.join();
-			/*return {
-			playersToGet: playersToGet.join(),
-			playersCached: playersCached
-			};*/
+		isCached : function (ID) {
+			return (ID in QT.Functions.Inactivity.cache) ? true : false;
 		},
 		getData : function (players) {
 			var players = players.toString();
-			/*var playersToGet = QT.Functions.Inactivity.compareCached(players); //"297128,1764472,432065"
-			if (playersToGet.length === 0)
-			return;*/
 			return $.ajax({
 				url : "http://marco93.de/grepolis/player_inactivity.php",
 				dataType : "jsonp",
@@ -1796,16 +1780,85 @@ QT.Functions = {
 				var date_user = new Date(parseInt(obj_temp[1], 10) * 1000);
 				var date_diff = date_now - date_user;
 				var inactive_days = date_diff / 1000 / 60 / 60 / 24;
-				var inactive_days_quarter = Math.round(inactive_days * 4) / 4;
+				var inactive_days_quarter = Math.floor(inactive_days * 4) / 4;
 				playerArray[obj_temp[0]] = inactive_days_quarter;
 			});
 			return playerArray;
 		},
+		getBG : function (inactive_days) {
+			var bgImage = "http://s14.directupload.net/images/140415/mju99vog.png";
+			var bgPos = "";
+			if (inactive_days < 2) {
+				bgPos = "0 -12px";
+			} else if (inactive_days >= 2 && inactive_days < 5) {
+				bgPos = "0 -24px";
+			} else if (inactive_days >= 5) {
+				bgPos = "0 -36px";
+			}
+			return 'url(' + bgImage + ') no-repeat ' + bgPos + '';
+		},
+		createPopup : function (inactive_days) {
+			return '<span style=""><b>' + QT.Lang.get("town_info", "inactivity") + ':</b> ' + inactive_days + ' ' + QT.Lang.get("town_info", "days") + '</span><p/><span style="font-size:10px">powered by Tondas ' + QT.Lang.get("town_info", "polissuche") + '</span>';
+		},
+		changeDisplay : function (JQelement, inactive_days) {
+			var number_days = Math.floor(inactive_days);
+			var background = QT.Functions.Inactivity.getBG(number_days);
+			$(JQelement).find(".qt_activity_number").text(number_days);
+			$(JQelement).css({
+				"background" : background
+			});
+			$(JQelement).mousePopup(new uw.MousePopup(QT.Functions.Inactivity.createPopup(inactive_days)));
+		}
+	},
+	allianceInactivity : function () {
+		var p_str = sID.toString();
+		var p_num = parseInt(p_str.substr(p_str.length - 1));
+		var tester = [297128, 1764472, 432065, 880414, 7809196, 927818, 879988, 265587, 600297, 270260, 603597, 32034];
+		if (p_num != 0 && tester.indexOf(sID) < 0)
+			return;
+
+		var wnd = uw.GPWindowMgr.getOpenFirst(uw.Layout.wnd.TYPE_ALLIANCE_PROFILE);
+		if (!wnd)
+			return;
+		var wndID = wnd.getID();
+
+		$("DIV#gpwnd_" + wndID + " DIV#ally_towns UL.members_list UL LI:not(.error_message)").prepend('<a class="qt_activity" style="float:left; margin:3px 4px 0px 0px; display: block; width:20px; height:12px; background:url(http://s1.directupload.net/images/140416/7fwyuv54.gif) no-repeat" href="' + QT.Links.Polissuche + '" target="_blank"><span class="qt_activity_number" style="display:block; margin-top:1px; font-size: 8px; color:#EEDDBB; text-shadow:1px 1px #000000; text-align:center"></span></a>');
+
+		var players = [];
+		$("DIV#gpwnd_" + wndID + " DIV#ally_towns UL.members_list UL LI").each(function (index, element) {
+			var gpElement = $(this).find(".gp_player_link");
+			var qt_activityElement = $(this).find(".qt_activity");
+			var href = gpElement.attr("href").split(/#/);
+			var id = $.parseJSON(atob(href[1] || href[0])).id;
+			if (QT.Functions.Inactivity.isCached(id)) {
+				var inactive_days_cached = QT.Functions.Inactivity.cache[id];
+				QT.Functions.Inactivity.changeDisplay(qt_activityElement, inactive_days_cached);
+			} else {
+				players.push(id);
+			}
+			qt_activityElement.data("id", id).prop('href', 'http://polissuche.marco93.de/' + wID + '.html?filter=player_id:' + id + '');
+		});
+
+		if (!players.length > 0)
+			return;
+
+		var Ajax = QT.Functions.Inactivity.getData(players);
+		Ajax.done(function (data) {
+			var inactive_days_Array = QT.Functions.Inactivity.calcDays(data);
+			QT.Functions.Inactivity.addToCache(inactive_days_Array);
+			var emptyDisplays = $("DIV#gpwnd_" + wndID + " DIV#ally_towns UL.members_list UL LI A.qt_activity");
+			emptyDisplays.each(function (index, element) {
+				var dataID = $(this).data('id');
+				var inactive_days = QT.Functions.Inactivity.cache[dataID];
+				QT.Functions.Inactivity.changeDisplay(this, inactive_days);
+
+			});
+		});
 	},
 	townInactivity : function (event, xhr, settings) {
 		var p_str = sID.toString();
 		var p_num = parseInt(p_str.substr(p_str.length - 1));
-		var tester = [297128, 1764472, 432065, 880414, 7809196, 927818, 879988, 265587, 600297, 270260];
+		var tester = [297128, 1764472, 432065, 880414, 7809196, 927818, 879988, 265587, 600297, 270260, 603597, 32034];
 		if (p_num != 0 && tester.indexOf(sID) < 0)
 			return;
 
@@ -1821,33 +1874,20 @@ QT.Functions = {
 		var f = e.split(/#/);
 		var g = $.parseJSON(atob(f[1] || f[0]));
 
-		var inactive_days = "~";
-		$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.gp_player_link").css({
-			"float" : "left"
-		});
-		$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.gp_player_link").after('<a class="qt_activity" style="float:left; margin:2px 2px 0; display: block; width:20px; height:12px; background:url(http://s1.directupload.net/images/140416/7fwyuv54.gif) no-repeat" href="' + QT.Links.Polissuche + '" target="_blank"><span class="qt_activity_number" style="display:block; margin-top:1px; font-size: 8px; color:#EEDDBB; text-shadow:1px 1px #000000; text-align:center"></span></a>');
+		$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left").prepend('<a class="qt_activity" style="float:left; margin:2px 3px 0 0; display: block; width:20px; height:12px; background:url(http://s1.directupload.net/images/140416/7fwyuv54.gif) no-repeat" href="http://polissuche.marco93.de/' + wID + '.html?filter=player_id:' + g.id + '" target="_blank"><span class="qt_activity_number" style="display:block; margin-top:1px; font-size: 8px; color:#EEDDBB; text-shadow:1px 1px #000000; text-align:center"></span></a>');
+		var JQelement = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity");
+		if (QT.Functions.Inactivity.isCached(g.id)) {
+			var inactive_days_cached = QT.Functions.Inactivity.cache[g.id];
+			QT.Functions.Inactivity.changeDisplay(JQelement, inactive_days_cached);
+			return;
+		}
 
 		var Ajax = QT.Functions.Inactivity.getData(g.id);
 		Ajax.done(function (data) {
-			var inactive_days = QT.Functions.Inactivity.calcDays(data)[g.id];
-			$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left SPAN.qt_activity_number").text(Math.floor(inactive_days));
-			$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity").css({
-				"background-image" : "url(http://s14.directupload.net/images/140415/mju99vog.png)"
-			});
-			if (inactive_days < 2) {
-				$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity").css({
-					"background-position" : "0 -12px"
-				});
-			} else if (inactive_days >= 2 && inactive_days < 5) {
-				$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity").css({
-					"background-position" : "0 -24px"
-				});
-			} else if (inactive_days >= 5) {
-				$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity").css({
-					"background-position" : "0 -36px"
-				});
-			}
-			$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity").mousePopup(new uw.MousePopup('<span style=""><b>' + QT.Lang.get("town_info", "inactivity") + ':</b> ' + inactive_days + ' ' + QT.Lang.get("town_info", "days") + '</span><p/><span style="font-size:10px">powered by Tondas ' + QT.Lang.get("town_info", "polissuche") + '</span>'));
+			var inactive_days_Array = QT.Functions.Inactivity.calcDays(data);
+			var inactive_days = inactive_days_Array[g.id]
+				QT.Functions.Inactivity.addToCache(inactive_days_Array);
+			QT.Functions.Inactivity.changeDisplay(JQelement, inactive_days);
 		});
 	},
 	windowmanager : function () {
@@ -3798,6 +3838,9 @@ QT.Functions = {
 		if (!c)
 			return;
 		var d = $("DIV#gpwnd_" + c.getID() + " DIV#player_buttons ");
+		$(d[0]).find(".ally_msg_leader, .ally_msg_founder").css({
+			"float" : "left"
+		});
 		$(d[0]).append("<a target=_blank href=http://" + mID + ".grepostats.com/world/" + wID + "/alliance/" + b[1] + '><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a>')
 	},
 	playerGSButton : function (event, xhr, settings) {
@@ -4319,16 +4362,16 @@ QT.Functions = {
 				$("#trade_type_" + mode.substring(2)).find("input").val(d).select().blur();
 			}
 			$("#trade_tab").append('\
-																																																								<a id="q_wood" class="q_send" style="top:211px" href="#"></a>\
-																																																								<a id="q_stone" class="q_send" style="top:245px" href="#"></a>\
-																																																								<a id="q_iron" class="q_send" style="top:279px" href="#"></a>\
-																																																								<a id="q_wood" class="q_send_cult" style="top:211px" href="#"></a>\
-																																																								<a id="q_stone" class="q_send_cult" style="top:245px" href="#"></a>\
-																																																								<a id="q_iron" class="q_send_cult" style="top:279px" href="#"></a>\
-																																																								<a id="q_wood" class="q_send_cult_reverse" style="top:211px" href="#"></a>\
-																																																								<a id="q_stone" class="q_send_cult_reverse" style="top:245px" href="#"></a>\
-																																																								<a id="q_iron" class="q_send_cult_reverse" style="top:279px" href="#"></a>\
-																																																							');
+																																																												<a id="q_wood" class="q_send" style="top:211px" href="#"></a>\
+																																																												<a id="q_stone" class="q_send" style="top:245px" href="#"></a>\
+																																																												<a id="q_iron" class="q_send" style="top:279px" href="#"></a>\
+																																																												<a id="q_wood" class="q_send_cult" style="top:211px" href="#"></a>\
+																																																												<a id="q_stone" class="q_send_cult" style="top:245px" href="#"></a>\
+																																																												<a id="q_iron" class="q_send_cult" style="top:279px" href="#"></a>\
+																																																												<a id="q_wood" class="q_send_cult_reverse" style="top:211px" href="#"></a>\
+																																																												<a id="q_stone" class="q_send_cult_reverse" style="top:245px" href="#"></a>\
+																																																												<a id="q_iron" class="q_send_cult_reverse" style="top:279px" href="#"></a>\
+																																																											');
 			$(".q_send_cult").css({
 				"right" : "84px",
 				"position" : "absolute",
@@ -4809,11 +4852,11 @@ QT.Functions = {
 		});
 
 		$('<style id="qplusmenustyle" type="text/css">\
-												.displayImp {display: block !important}\
-												.qplusmenu {margin:6px 22px 2px 5px;height:11px;display:block;position:relative}\
-												.qplusdraghandle {width:100%;height:11px;position:absolute;background:url(http://s14.directupload.net/images/131001/7guz6abs.png)}\
-												.qplusback {right:-18px;margin-top:-1px;width:16px;height:12px;position:absolute;background:url(http://s1.directupload.net/images/131001/u6le7bdw.png)}\
-												</style>').appendTo('head');
+															.displayImp {display: block !important}\
+															.qplusmenu {margin:6px 22px 2px 5px;height:11px;display:block;position:relative}\
+															.qplusdraghandle {width:100%;height:11px;position:absolute;background:url(http://s14.directupload.net/images/131001/7guz6abs.png)}\
+															.qplusback {right:-18px;margin-top:-1px;width:16px;height:12px;position:absolute;background:url(http://s1.directupload.net/images/131001/u6le7bdw.png)}\
+															</style>').appendTo('head');
 
 		$('#toolbar_activity_recruits_list').draggable({
 			cursor : "move",
