@@ -4,7 +4,7 @@
 // @description    Toolsammlung für Grepolis 2.0
 // @include        http://*.grepolis.*/game*
 // @icon           http://s7.directupload.net/images/120320/ullq32vn.jpg
-// @version        2.29.00
+// @version        2.30.00
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -326,6 +326,9 @@ QT.Lang = {
 			flag : 'http://s7.directupload.net/images/140408/fo8msuwx.png',
 			donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=FR&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/fr_FR/i/btn/btn_donate_LG.gif" alt="Donate"></a>'
 		},
+		reports : {
+			spy : 'Espion'
+		},
 		forum : {
 			delete : 'Supprimer'
 		},
@@ -495,6 +498,10 @@ QT.Lang = {
 		grepo_mainmenu : {
 			city_view : 'Város nézet'
 		},
+		messages : {
+			ghosttown : 'Szellem város',
+			no_cities : 'Ezen a szigeten nincs város'
+		},
 		hotkeys : {
 			hotkeys : 'Gyorsparancsok',
 			city_select : 'Város kiválasztás',
@@ -529,15 +536,18 @@ QT.Lang = {
 			council : 'Hősök Világa'
 		},
 		qtoolbox : {
-			onlinecounter_now : 'Jelenlegi',
+			onlinecounter_now : 'Most',
 			onlinecounter_total : 'Összes',
-			onlinecounter_switch : 'Online jelenlegi/összes',
+			onlinecounter_switch : 'Eltöltött idő most/összes',
 			stats : 'Statisztika',
 			grepostats : 'Grepo stats megnyitása',
 			player : 'Játékos',
 			alliance : 'Szövetség',
 			rankings : 'Ranglista',
 			grepo_bash : 'Grepo bash megnyitása',
+			track_player : 'Játékos elhelyezkedése',
+			track_alliance : 'Szövetség elhelyezkedése',
+			top_killers : 'Legtöbb harcipont',
 			maps : 'Térképek',
 			grepo_maps : 'Grepo Maps megnyitása',
 			grepo_intel : 'Grepo Intel megnyitása',
@@ -550,8 +560,11 @@ QT.Lang = {
 			outside_town : 'Városon kívül',
 			tools : 'Eszközök',
 			unit_comparison : 'Összehasonlítás',
+			deff_helper : 'Deff segítő',
+			display_modes : 'Kijelző módok',
 			full_screen : 'Teljes képernyő',
 			minimal : 'Minimális',
+			standard : 'Alap',
 			stats_scripts : 'Statisztikák/Scriptek'
 		},
 		academy : {
@@ -567,7 +580,7 @@ QT.Lang = {
 			silver : 'Ezüstpénz'
 		},
 		transport_calc : {
-			btn_main : 'Szállító számológép',
+			btn_main : 'Szállítási idő számláló',
 			available : 'Rendelkezésre álló szállítási kapacitás',
 			transportable : 'Szállítható egységek',
 			recruits : 'Számolja a kiképzés alatt álló egységeket',
@@ -584,22 +597,62 @@ QT.Lang = {
 		settings : {
 			text2 : 'Onlineszámoló',
 			text3 : 'Linkek megnyitása a menüből a játékban',
+			text4 : 'Aktiválja a többi greasemonkey scriptet',
+			text6 : 'Gombsor',
 			text9 : 'Kijelzés indításkor',
+			text12 : 'Szállítási idő számláló',
 			text13 : 'Menü megjelenítés',
 			text14 : 'Menü tulajdonságok',
 			text15 : 'jelentések',
 			text16 : 'Szín hozzáadása',
+			text17 : 'Szűrő hozzáadása',
+			text18 : 'Kijelző aktiválása',
+			text19 : 'Törölsz minden scriptet és beállítást a gyorsítótárból és az előzményekből?',
 			text20 : 'Fórum',
+			text21 : 'Maximális szélesség',
 			text22 : 'Gyorsparancs kép',
 			text23 : 'Grepolis menü',
 			text24 : 'Szenátus',
+			text25 : 'Kiírja, mennyi pontot kapsz, ha bővíted az épületet',
 			text26 : 'Kereskedés ablak',
+			text27 : 'Bővítmény aktiválása',
 			text28 : 'Város lista',
 			text29 : 'Küldetés lista',
-			text31 : 'BB-kód a jelenlegi városhoz',
+			text30 : 'Hozzáad egy legördülő listát a mappáiddal',
+			text31 : 'Város BB-kódja',
+			text32 : 'Válassz ki és törölj megjegyzéseket',
 			text34 : 'Vermek áttekintése (parancsnok)',
+			text35 : 'Akadémia tervező',
 			text36 : 'Verem',
-			text37 : 'Engedélyezze a városok rendezését '
+			text37 : 'Engedélyezze a városok rendezését',
+			text40 : 'Farmolható faluk áttekintése (Kapitány szükséges)',
+			text41 : 'Hozzáad egy "Város nézet" gombot a menühöz',
+			text42 : 'Kiírja a vesztett nyersanyagokat',
+			text43 : 'Szimulátor',
+			text44 : 'Sziget áttekintő',
+			other : 'Másik',
+			save : 'Mentés',
+			reset : 'Beállítások visszaállítása',
+			contact : 'Kapcsolat',
+			settings : 'Beállítások',
+			translations : 'Fordítás',
+			trans_sure : 'Biztos vagy benne, hogy a fordításod kész arra hogy elküldd?',
+			trans_success : 'Sikeresen elküldted a fordítást',
+			trans_fail : 'A fordítás nem lett elküldve',
+			trans_infotext1 : 'A fordítás nincs teljesen kész - fordíts amit szeretnél',
+			trans_infotext2 : 'Ha egy szöveg HTML-t tartalmaz ( < > között ) akkor megkérdezlek, biztosan szeretnéd-e használni.',
+			trans_infotext4 : 'A spammelők hozzá lesznek adva a Ban-listához én nem tudják majd használni a scriptet.',
+			please_note : 'Kérlek vedd figyelembe',
+			credits : 'Készítők',
+			no_translation : 'Nem találtunk fordítást',
+			choose_lang : 'Válaszz nyelvet',
+			add_lang : 'Új nyelv hozzáadása',
+			language : 'Nyeév',
+			enter_lang_name : 'Írd be a nyelv nevét',
+			send : 'Küldés',
+			name : 'Név',
+			adfly : 'Szeretnél pénzt szerezni linkekkel is?',
+			donations : 'Támogatások'
 		},
 		bbcode : {
 			troops : 'Csapatok',
@@ -1977,10 +2030,12 @@ QT.Functions = {
 		}
 	},
 	allianceInactivity : function () {
+		if (mID !== "de" && mID !== "nl" && mID !== "en" && mID !== "fr")
+			return;
 		var p_str = sID.toString();
 		var p_num = parseInt(p_str.substr(p_str.length - 1));
 		var testerID_num = [0,9,8,7,6]
-		var tester = [297128, 1764472, 432065, 880414, 7809196, 927818, 879988, 265587, 600297, 270260, 603597, 32034, 304581, 1472815, 728273];
+		var tester = [297128, 1764472, 432065, 880414, 7809196, 927818, 879988, 265587, 600297, 270260, 603597, 32034, 304581, 1472815, 728273, 1039235, 1550585, 366741, 8271245];
 		if (testerID_num.indexOf(p_num) < 0 && tester.indexOf(sID) < 0)
 			return;
 
@@ -2024,10 +2079,12 @@ QT.Functions = {
 		});
 	},
 	townInactivity : function (event, xhr, settings) {
+		if (mID !== "de" && mID !== "nl" && mID !== "en" && mID !== "fr")
+			return;
 		var p_str = sID.toString();
 		var p_num = parseInt(p_str.substr(p_str.length - 1));
 		var testerID_num = [0,9,8,7,6]
-		var tester = [297128, 1764472, 432065, 880414, 7809196, 927818, 879988, 265587, 600297, 270260, 603597, 32034, 304581, 1472815, 728273];
+		var tester = [297128, 1764472, 432065, 880414, 7809196, 927818, 879988, 265587, 600297, 270260, 603597, 32034, 304581, 1472815, 728273, 1039235, 1550585, 366741, 8271245];
 		if (testerID_num.indexOf(p_num) < 0 && tester.indexOf(sID) < 0)
 			return;
 
@@ -2037,9 +2094,9 @@ QT.Functions = {
 		wnd = b[b.length - 1];
 		var c = wnd.getID();
 		var d = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity")
-			if (d.length > 0)
-				return;
-			var e = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo A.gp_player_link").attr("href");
+		if (!$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo A.gp_player_link").length > 0 || d.length > 0)
+			return;
+		var e = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo A.gp_player_link").attr("href");
 		var f = e.split(/#/);
 		var g = $.parseJSON(atob(f[1] || f[0]));
 
@@ -2608,7 +2665,7 @@ QT.Functions = {
 	},
 	city_view_btn : function () {
 		$('#ui_box .nui_main_menu .middle .content ul li[data-option-id=messages]').removeClass("first");
-		$('#ui_box .nui_main_menu .middle .content ul').not("ul li ul").prepend('<li data-option-id="cityview" class="messages main_menu_item first"><span class="content_wrapper"><span class="button_wrapper" style="opacity: 1;"><span class="button"><span class="icon" style="background-position: -696px -111px"></span><span class="indicator" style="display: none;">0</span></span></span><span class="name_wrapper" style="opacity: 1;"><span class="name">' + QT.Lang.get("grepo_mainmenu", "city_view") + '</span></span></span></li>');
+		$('#ui_box .nui_main_menu .middle .content ul').not("ul li ul").prepend('<li data-option-id="cityview" class="messages main_menu_item first"><span class="content_wrapper"><span class="button_wrapper" style="opacity: 1;"><span class="button"><span class="icon" style="background:url(http://s14.directupload.net/images/140424/vbvnndai.png)"></span><span class="indicator" style="display: none;">0</span></span></span><span class="name_wrapper" style="opacity: 1;"><span class="name">' + QT.Lang.get("grepo_mainmenu", "city_view") + '</span></span></span></li>');
 		$('#ui_box .nui_main_menu .middle .content ul').not("ul li ul").css({
 			"height" : "+=34px"
 		});
@@ -3128,7 +3185,7 @@ QT.Functions = {
 			var HTML_tab2 = '';
 			var q_translations = {
 				ES : "Jonh Snow",
-				FR : "higter",
+				FR : "higter, Mazelys",
 				HU : "Arminno",
 				IT : "masale81",
 				NL : "sannelos",
@@ -3512,7 +3569,7 @@ QT.Functions = {
 			$('#qtbox_button2').mousePopup(new uw.MousePopup(QT.Lang.get("qtoolbox", "grepo_intel")));
 			$('#qtbox_button3').mousePopup(new uw.MousePopup(QT.Lang.get("qtoolbox", "grepo_bash")));
 			$('#qtbox_button4').mousePopup(new uw.MousePopup(QT.Lang.get("qtoolbox", "grepo_maps")));
-			if (mID == "de" || mID == "nl" || mID == "en") {
+			if (mID == "de" || mID == "nl" || mID == "en" || mID == "fr") {
 				$('#qtbox_buttons_wrapper').append('<a id="qtbox_button5" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 107px;" target="_blank" href="' + QT.Links.Polissuche + '"><img src="http://s7.directupload.net/images/131008/5zj4ujmi.png"></a>');
 				$('#qtbox_button5').mousePopup(new uw.MousePopup(QT.Lang.get("qtoolbox", "tonda_polissuche")));
 			} else {
@@ -4028,7 +4085,7 @@ QT.Functions = {
 		wnd = b[b.length - 1];
 		var c = wnd.getID();
 		var d = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_right SPAN.gt_gsbutton");
-		if (d.length > 0)
+		if (!$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo A.gp_player_link").length > 0 || d.length > 0)
 			return;
 		var e = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo A.gp_player_link").attr("href");
 		var f = e.split(/#/);
@@ -4038,6 +4095,8 @@ QT.Functions = {
 		var j = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_right");
 		$(j[1]).append('<a class="gt_gsbutton" target="_blank" href="http://' + i + ".grepostats.com/world/" + h + "/player/" + g.id + '"><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a>');
 		$(j[1]).css("width", "+=25px");
+		if (!$('DIV#gpwnd_' + c + ' a[onclick^="Layout.allianceProfile"]').length > 0)
+			return;
 		var k = $('DIV#gpwnd_' + c + ' a[onclick^="Layout.allianceProfile"]').attr("onclick").replace(")", "").split(",")[1];
 		var l = $('DIV#gpwnd_' + c + ' a[onclick^="Layout.allianceProfile"]').parent().find(".list_item_right");
 		l.prepend('<span class="gt_gsbutton"><a class="gt_gsbutton" target="_blank" href="http://' + i + ".grepostats.com/world/" + h + "/alliance/" + k + '"><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a></span>');
@@ -5113,7 +5172,7 @@ QT.Functions = {
 				"right" : "0px",
 				"bottom" : "14px",
 				"width" : "138px",
-				"background" : "url(http://gpde.innogamescdn.com/images/game/layout/layout_2.56_compressed.png) no-repeat scroll right -224px rgba(0, 0, 0, 0)"
+				"background" : "url(http://s14.directupload.net/images/140424/9ol6fg6t.png) no-repeat"
 			});
 			$("#tr_wrapper").css({
 				"padding" : "7px 7px 17px 7px",
