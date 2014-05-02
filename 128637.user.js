@@ -4,7 +4,7 @@
 // @description    Toolsammlung für Grepolis 2.0
 // @include        http://*.grepolis.*/game*
 // @icon           http://s7.directupload.net/images/120320/ullq32vn.jpg
-// @version        2.30.00
+// @version        2.31.00
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -69,11 +69,14 @@ QT.Lang = {
 			no_data : 'Der Spieler befindet sich noch nicht in der Datenbank'
 		},
 		grepo_mainmenu : {
-			city_view : 'Stadtansicht'
+			city_view : 'Stadtansicht',
+			island_view : 'Inselansicht'
 		},
 		messages : {
 			ghosttown : 'Geisterstadt',
-			no_cities : 'Keine Städte auf dieser Insel'
+			no_cities : 'Keine Städte auf dieser Insel',
+			all : 'Alle',
+			export : 'Nachricht als BB-Code für das Forum'
 		},
 		hotkeys : {
 			hotkeys : 'Hotkeys',
@@ -842,11 +845,12 @@ QT.Lang = {
 			no_overload : 'niet overbelasten',
 			delete : 'Verwijderen',
 			polissuche : 'stedenzoeker',
-			inactivity : 'Inaktief',
+			inactivity : 'Inactief',
 			days : 'dagen'
 		},
 		grepo_mainmenu : {
-			city_view : 'Stadsoverzicht'
+			city_view : 'Stadsoverzicht',
+			island_view : 'Eislandoverzicht'
 		},
 		messages : {
 			ghosttown : 'Spookstad',
@@ -1140,8 +1144,29 @@ QT.Lang = {
 			flag : 'http://s1.directupload.net/images/140408/7bsp2aye.png',
 			donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=RU&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/ru_RU/i/btn/btn_donate_LG.gif" alt="Donate"></a>'
 		},
+		reports : {
+			choose_folder : 'Выбрать каталог',
+			enacted : 'принятый',
+			conquered : 'завоеванный',
+			spying : 'шпионаж',
+			spy : 'шпион',
+			support : 'поддержка',
+			supporting : 'поддерживающий',
+			attacking : 'атакующий',
+			farming_village : 'селения'
+		},
 		forum : {
-			delete : 'Удалить'
+			delete : 'Удалить',
+			delete_sure : 'Вы действительно хотите удалить эти сообщения?',
+			no_selection : 'Сообщения не выбраны'
+		},
+		town_info : {
+			no_overload : 'Нет перезагрузки',
+			delete : 'Удалить',
+			polissuche : 'Поиск города',
+			inactivity : 'Бездействие',
+			days : 'Дни',
+			no_data : 'Игрок не найден в базе данных'
 		},
 		grepo_mainmenu : {
 			city_view : 'Обзор города',
@@ -1152,6 +1177,7 @@ QT.Lang = {
 			no_cities : 'На этом острове нет городов'
 		},
 		hotkeys : {
+			hotkeys : 'Горячие клавиши',
 			city_select : 'Выбор города',
 			last_city : 'Последний город',
 			next_city : 'Следующий город',
@@ -1184,12 +1210,52 @@ QT.Lang = {
 			chat : 'Чат',
 			council : 'Совет героев'
 		},
+		qtoolbox : {
+			onlinecounter_now : 'Текущий',
+			onlinecounter_total : 'Общий',
+			onlinecounter_switch : 'Online текущий/всего',
+			stats : 'Статистика',
+			grepostats : 'Grepo Статистика',
+			player : 'Игрок',
+			alliance : 'Союз',
+			rankings : 'Рейтинг',
+			maps : 'Карты',
+			grepo_maps : 'Grepo Карты',
+			townsearches : 'Поисковик городов',
+			grepo_finder : 'Grepo Поисковик',
+			tonda_polissuche : 'Поиск городов',
+			bb_codes : 'ББ-коды',
+			in_town : 'В городе',
+			from_town : 'Из города',
+			outside_town : 'Вне города',
+			tools : 'Инструменты',
+			google_docs : 'Google Документы',
+			deff_helper : 'Deff помощник',
+			full_screen : 'Полный экран',
+			minimal : 'Минимализированный',
+			standard : 'Стандартный',
+			settings : 'Менеджер скриптов'
+		},
+		academy : {
+			researched : 'Выделить изученное',
+			notresearched : 'Выделить неизученное',
+			undo : 'Отменить выделение'
+		},
 		caves : {
 			stored_silver : 'Встроенные cереб. монеты',
 			name : 'название',
 			wood : 'древесина',
 			stone : 'камень',
 			silver : 'Сереб. монеты'
+		},
+		transport_calc : {
+			btn_main : 'Калькулятор транспорта',
+			available : 'Доступная вместимость транспорта',
+			transportable : 'Перевозимые юниты',
+			recruits : 'Подсчитать юнитов в очереди обучения',
+			outsidetown : 'Подсчитать юнитов вне города',
+			slowtrans : 'Подсчитать медленных транспортных юнитов',
+			fasttrans : 'Подсчитать быстрых транспортных юнитов'
 		},
 		culture : {
 			cityfestivals : 'Фестиваль',
@@ -1198,17 +1264,29 @@ QT.Lang = {
 			theater : 'Представление'
 		},
 		settings : {
+			text9 : 'Показывать при запуске',
+			text12 : 'Калькулятор транспорта',
 			text15 : 'Отчеты',
+			text16 : 'Добавить цвет',
+			text17 : 'Добавить фильтр',
 			text20 : 'Форум',
-			text28 : 'Город списка',
-			text29 : 'списке заданий',
+			text21 : 'Увеличить размер форума',
+			text24 : 'Сенат',
+			text26 : 'Окно торговли',
+			text28 : 'Список городов',
+			text29 : 'Список заданий',
 			text34 : 'Обзор пещеры (Администратор)',
 			text35 : 'Академия планированию',
 			text36 : 'Пещера',
 			text40 : 'Обзор селений земледельцев (Капитан)',
 			text43 : 'Симулятор',
+			text44 : 'Обзор острова',
+			other : 'Другое',
+			save : 'Сохранить',
+			reset : 'Сброс настроек',
 			contact : 'контакт',
 			info : 'информация',
+			settings : 'Настройки',
 			translations : 'Переводы',
 			donations : 'пожертвования'
 		}
@@ -1247,11 +1325,14 @@ QT.Lang = {
 			no_data : 'The player is not yet listed in the database'
 		},
 		grepo_mainmenu : {
-			city_view : 'City view'
+			city_view : 'City view',
+			island_view : 'Island view'
 		},
 		messages : {
 			ghosttown : 'Ghost town',
-			no_cities : 'No cities on this island'
+			no_cities : 'No cities on this island',
+			all : 'all',
+			export : 'Convert message into BB-Code'
 		},
 		hotkeys : {
 			hotkeys : 'Hotkeys',
@@ -1948,6 +2029,8 @@ QT.CallAjaxFunction = {
 			//alert(return_data.html)
 			});*/
 			//uw.paginatorTabsGotoPage('message_message_list', 2, 1013207, 'message', 'view');
+			QT.Functions.messageViewAll();
+			QT.Functions.messageExport();
 		},
 		new : function () {
 			QT.Functions.message_inputwidth();
@@ -1960,6 +2043,11 @@ QT.CallAjaxFunction = {
 QT.Functions = {
 	test : function () {
 		alert("Test funktioniert");
+	},
+	filter : function (playerID) {
+		var tester = [297128, 1764472, 432065, 880414, 7809196, 927818, 879988, 265587, 600297, 270260, 603597, 32034, 304581, 1472815, 728273, 1039235, 1550585, 366741, 8271245];
+		if (tester.indexOf(playerID) < 0)
+			return true;
 	},
 	Inactivity : {
 		cache : {},
@@ -2027,25 +2115,28 @@ QT.Functions = {
 				"background" : background
 			});
 			$(JQelement).mousePopup(new uw.MousePopup(QT.Functions.Inactivity.createPopup(inactive_days)));
+		},
+		Filter : {
+			coordinates : function () {
+				var currentTownX = uw.ITowns.getCurrentTown().getIslandCoordinateX();
+				var currentTownY = uw.ITowns.getCurrentTown().getIslandCoordinateY();
+				return ';order_type:distance;order_x:' + currentTownX + ';order_y:' + currentTownY;
+			}
 		}
 	},
 	allianceInactivity : function () {
 		if (mID !== "de" && mID !== "nl" && mID !== "en" && mID !== "fr")
-			return;
-		var p_str = sID.toString();
-		var p_num = parseInt(p_str.substr(p_str.length - 1));
-		var testerID_num = [0,9,8,7,6]
-		var tester = [297128, 1764472, 432065, 880414, 7809196, 927818, 879988, 265587, 600297, 270260, 603597, 32034, 304581, 1472815, 728273, 1039235, 1550585, 366741, 8271245];
-		if (testerID_num.indexOf(p_num) < 0 && tester.indexOf(sID) < 0)
 			return;
 
 		var wnd = uw.GPWindowMgr.getOpenFirst(uw.Layout.wnd.TYPE_ALLIANCE_PROFILE);
 		if (!wnd)
 			return;
 		var wndID = wnd.getID();
-//$("DIV#gpwnd_" + wndID + " DIV#ally_towns UL.members_list > LI > UL > LI:not(.error_message):not(.sub_header):not(.header):not(:has(ul))")
-//$("DIV#gpwnd_" + wndID + " DIV#ally_towns UL.members_list UL LI:not(.error_message):not(.sub_header):not(.header):not(:has(ul))")
+		//$("DIV#gpwnd_" + wndID + " DIV#ally_towns UL.members_list > LI > UL > LI:not(.error_message):not(.sub_header):not(.header):not(:has(ul))")
+		//$("DIV#gpwnd_" + wndID + " DIV#ally_towns UL.members_list UL LI:not(.error_message):not(.sub_header):not(.header):not(:has(ul))")
 		$("DIV#gpwnd_" + wndID + " DIV#ally_towns UL.members_list > LI > UL > LI:not(.error_message):not(.sub_header):not(.header):not(:has(ul))").prepend('<a class="qt_activity" style="float:left; margin:3px 4px 0px 0px; display: block; width:20px; height:12px; background:url(http://s1.directupload.net/images/140416/7fwyuv54.gif) no-repeat" href="' + QT.Links.Polissuche + '" target="_blank"><span class="qt_activity_number" style="display:block; margin-top:1px; font-size: 8px; color:#EEDDBB; text-shadow:1px 1px #000000; text-align:center"></span></a>');
+
+		var currentTownXY = QT.Functions.Inactivity.Filter.coordinates();
 
 		var JQelement_qt_activity = $("DIV#gpwnd_" + wndID + " DIV#ally_towns UL.members_list UL LI A.qt_activity");
 		var players = [];
@@ -2060,7 +2151,7 @@ QT.Functions = {
 			} else {
 				players.push(id);
 			}
-			qt_activityElement.data("id", id).prop('href', 'http://polissuche.marco93.de/' + wID + '.html?filter=player_id:' + id + '');
+			qt_activityElement.data("id", id).prop('href', 'http://polissuche.marco93.de/' + wID + '.html?filter=player_id:' + id + currentTownXY + '');
 		});
 
 		if (!players.length > 0)
@@ -2074,18 +2165,11 @@ QT.Functions = {
 				var dataID = $(this).data('id');
 				var inactive_days = QT.Functions.Inactivity.cache[dataID];
 				QT.Functions.Inactivity.changeDisplay(this, inactive_days);
-
 			});
 		});
 	},
 	townInactivity : function (event, xhr, settings) {
 		if (mID !== "de" && mID !== "nl" && mID !== "en" && mID !== "fr")
-			return;
-		var p_str = sID.toString();
-		var p_num = parseInt(p_str.substr(p_str.length - 1));
-		var testerID_num = [0,9,8,7,6]
-		var tester = [297128, 1764472, 432065, 880414, 7809196, 927818, 879988, 265587, 600297, 270260, 603597, 32034, 304581, 1472815, 728273, 1039235, 1550585, 366741, 8271245];
-		if (testerID_num.indexOf(p_num) < 0 && tester.indexOf(sID) < 0)
 			return;
 
 		var b = uw.GPWindowMgr.getOpen(uw.Layout.wnd.TYPE_TOWN);
@@ -2094,13 +2178,14 @@ QT.Functions = {
 		wnd = b[b.length - 1];
 		var c = wnd.getID();
 		var d = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity")
-		if (!$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo A.gp_player_link").length > 0 || d.length > 0)
-			return;
-		var e = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo A.gp_player_link").attr("href");
+			if (!$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo A.gp_player_link").length > 0 || d.length > 0)
+				return;
+			var e = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo A.gp_player_link").attr("href");
 		var f = e.split(/#/);
 		var g = $.parseJSON(atob(f[1] || f[0]));
 
-		$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left").prepend('<a class="qt_activity" style="float:left; margin:2px 3px 0 0; display: block; width:20px; height:12px; background:url(http://s1.directupload.net/images/140416/7fwyuv54.gif) no-repeat" href="http://polissuche.marco93.de/' + wID + '.html?filter=player_id:' + g.id + '" target="_blank"><span class="qt_activity_number" style="display:block; margin-top:1px; font-size: 8px; color:#EEDDBB; text-shadow:1px 1px #000000; text-align:center"></span></a>');
+		var currentTownXY = QT.Functions.Inactivity.Filter.coordinates();
+		$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left").prepend('<a class="qt_activity" style="float:left; margin:2px 3px 0 0; display: block; width:20px; height:12px; background:url(http://s1.directupload.net/images/140416/7fwyuv54.gif) no-repeat" href="http://polissuche.marco93.de/' + wID + '.html?filter=player_id:' + g.id + currentTownXY + '" target="_blank"><span class="qt_activity_number" style="display:block; margin-top:1px; font-size: 8px; color:#EEDDBB; text-shadow:1px 1px #000000; text-align:center"></span></a>');
 		var JQelement = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity");
 		if (QT.Functions.Inactivity.isCached(g.id)) {
 			var inactive_days_cached = QT.Functions.Inactivity.cache[g.id];
@@ -2112,7 +2197,7 @@ QT.Functions = {
 		Ajax.done(function (data) {
 			var inactive_days_Array = QT.Functions.Inactivity.calcDays(data);
 			var inactive_days = inactive_days_Array[g.id]
-			QT.Functions.Inactivity.addToCache(inactive_days_Array);
+				QT.Functions.Inactivity.addToCache(inactive_days_Array);
 			QT.Functions.Inactivity.changeDisplay(JQelement, inactive_days);
 		});
 	},
@@ -2479,97 +2564,6 @@ QT.Functions = {
 			characterData : false
 		});
 	},
-	message_export : function () { //DEFEKT
-		var messages = [];
-		var messagesBB = "[font=sansserif]";
-		var messageTitle = $("#message_message_list .game_header").text().trim();
-		messagesBB += '[size=13][b]' + messageTitle + '[/b][/size][size=8]';
-
-		var format_search = [
-			/\<b\>(.*?)\<\/b\>/ig,
-			/\<i\>(.*?)\<\/i\>/ig,
-			/\<u\>(.*?)\<\/u\>/ig,
-			/\<s\>(.*?)\<\/s\>/ig,
-			/\<center\>(.*?)\<\/center\>/ig,
-			/\<div class="bbcodes bbcodes_quote quote"\>.+quote_author bold small"\>(.*?) .+quote_message small"\>(.*?)\<\/div\>\<\/div\>/ig,
-			/\<div class="bbcodes bbcodes_quote quote"\>.+quote_message small"\>(.*?)\<\/div\>\<\/div\>/ig,
-			/\<a class="bbcodes bbcodes_url".+href.+url=(.*?)%3A%2F%2F(.*?)".+\>(.*?)\<\/a>/ig,
-			/\<a href="#" class="bbcodes bbcodes_player".+\>(.*?)\<\/a>/ig,
-			/\<span class="bbcodes bbcodes_ally"\>.+\>(.*?)\<\/a\>\<\/span\>/ig,
-			/\<span class="bbcodes bbcodes_town"\>\<a href=\"#(.*?)\".+\<\/span\>/ig,
-			/\<span class="bbcodes bbcodes_size" style="font-size:(.*?)pt"\>(.*?)\<\/span\>/ig,
-			/\<img src="(.*?)" alt=""\>/ig,
-			/\<span class="bbcodes bbcodes_color" style="color:(.*?)"\>(.*?)\<\/span\>/ig,
-			/\<div class="bbcodes published_report".+\<\/div\>/ig,
-			/\<span class="bbcodes bbcodes_island"\>\<a href=\"#(.*?)\" .+\<\/span\>/ig,
-			/\<span class="bbcodes bbcodes_font serif"\>(.*?)\<\/span\>/ig,
-			/\<span class="bbcodes bbcodes_font sansserif"\>(.*?)\<\/span\>/ig,
-			/\<span class="bbcodes bbcodes_font monospace"\>(.*?)\<\/span\>/ig,
-			/\<div class="bbcode_awards"\>(.*?)\"clear\"\>\<\/div\>\<\/div\>/ig, //noch kaputt
-			/\<script.+\<\/script\>/ig
-		];
-
-		var format_replace = [
-			'[b]$1[/b]',
-			'[i]$1[/i]',
-			'[u]$1[/u]',
-			'[s]$1[/s]',
-			'[center]$1[/center]',
-			'[quote=$1]$2[/quote]',
-			'[quote]$1[/quote]',
-			'[url=$1://$2]$3[/url]',
-			'[player]$1[/player]',
-			'[ally]$1[/ally]',
-			replaceBBtowns,
-			'[size=$1]$2[/size]',
-			'[img]$1[/img]',
-			'[color=$1]$2[/color]',
-			'[report][/report]',
-			replaceBBislands,
-			'[font=serif]$1[/font]',
-			'[font=sansserif]$1[/font]',
-			'[font=monospace]$1[/font]',
-			replaceBBawards,
-			''
-		];
-
-		function replaceBBtowns(match, p1, offset, string) {
-			var a = $.parseJSON(atob(p1));
-			return '[town]' + a.id + '[/town]'
-		};
-		function replaceBBislands(match, p1, offset, string) {
-			var a = $.parseJSON(atob(p1));
-			return '[island]' + a.id + '[/island]'
-		};
-		function replaceBBawards(match, p1, offset, string) {
-			//alert(p1);
-			return ""
-		};
-
-		$("#message_post_container .message_post").each(function (index, element) {
-			poster = $(".message_poster .gp_player_link", this).text();
-			postDate = $(".message_poster .message_date", this).text().trim();
-			messagesBB += '[u][player]' + poster + '[/player] ' + postDate + '[/u]';
-			//$(this).find('.bbcode_awards').remove();
-
-			if ($(".message_post_content", this).find('.bbcode_awards')) {
-				//alert("ss");
-			}
-			postHTML = $(".message_post_content", this).html().trim();
-			//postHTML = $(''+postHTML+'').find('.bbcode_awards').remove();
-			postHTML = postHTML.replace(/(\r\n|\n|\r|\t)/gm, ""); //remove line-breaks, tab characters
-			postHTML = postHTML.replace(/<br\s*\/?>/mg, "\n"); //add line-breaks instead of <br>
-			postHTML = postHTML.replace(/&nbsp;/mg, ' ') //replace &nbsp
-
-				for (var i = 0; i < format_search.length; i++) {
-					postHTML = postHTML.replace(format_search[i], format_replace[i]);
-				}
-
-				//alert(postHTML);
-				//messages.push([$(".message_poster",this).html(), $(".message_post_content",this).html()])
-		});
-		messagesBB += "[/size][/font]";
-	},
 	message_inputwidth : function () {
 		$('#message_recipients').css({
 			"width" : "480px"
@@ -2579,6 +2573,159 @@ QT.Functions = {
 		});
 		$('#message_buttons').css({
 			"width" : "0px"
+		});
+	},
+	messageViewAll : function () {
+		var wnd = uw.GPWindowMgr.getOpenFirst(uw.GPWindowMgr.TYPE_MESSAGE);
+		var wndID = wnd.getID();
+		if ($(".paginator_qt").is(":visible"))
+			return;
+		$("DIV#gpwnd_" + wndID + " DIV#message_message_list .paginator_bg:last").after('<a id="QT_viewAll" class="paginator_bg paginator_qt" href="javascript:void(0)">' + QT.Lang.get("messages", "all") + '</a>');
+		var pages = $("DIV#gpwnd_" + wndID + " DIV#message_message_list .paginator_bg").not("#QT_viewAll").length;
+		var params = {
+			offset : 0,
+			id : uw.Message.id
+		};
+		function pagesLoad() {
+			uw.gpAjax.ajaxGet('message', 'view', params, true, function (return_data) {
+				var elements = return_data.html;
+				var found = $('.message_post', elements);
+				$('#message_post_container').append(found);
+				params.offset += 10;
+				if (params.offset < pages * 10)
+					pagesLoad();
+			});
+		}
+		$("#QT_viewAll").click(function () {
+			$('#message_post_container').empty();
+			pagesLoad();
+			var prevPage = $("#paginator_selected").text();
+			var paginatorOnclick = "'message_message_list', " + prevPage + ", " + params.id + ", 'message', 'view'";
+			$("#paginator_selected").replaceWith('<a class="paginator_bg" onclick="paginatorTabsGotoPage(' + paginatorOnclick + ')" href="javascript:void(0)">' + prevPage + '</a>');
+			$("#QT_viewAll").replaceWith('<strong id="paginator_selected" class="paginator_bg paginator_qt">' + QT.Lang.get("messages", "all") + '</strong>');
+		});
+	},
+	messageExport : function () {
+		var wnd = uw.GPWindowMgr.getOpenFirst(uw.GPWindowMgr.TYPE_MESSAGE);
+		var wndID = wnd.getID();
+		if ($("#qt_messageExport").is(":visible"))
+			return;
+		$("DIV#gpwnd_" + wndID + " DIV#message_message_list .game_header:first").append('<div id="qt_messageExport" style="float:right; margin-top:-19px; cursor:pointer;"><img src="http://s14.directupload.net/images/140124/8tzken7v.png"/></div><div id="qt_messageExportTMP" style="display:none"></div>');
+		$("#qt_messageExport").mousePopup(new uw.MousePopup(QT.Lang.get("messages", "export")));
+		$("#qt_messageExport").click(function () {
+			var bb_content = "[quote]";
+			var format_search = [
+				/\<b\>(.*?)\<\/b\>/ig,
+				/\<i\>(.*?)\<\/i\>/ig,
+				/\<u\>(.*?)\<\/u\>/ig,
+				/\<s\>(.*?)\<\/s\>/ig,
+				/\<center\>(.*?)\<\/center\>/ig,
+				/\<a class="bbcodes bbcodes_url".+href.+url=(.*?)%3A%2F%2F(.*?)".+\>(.*?)\<\/a>/ig,
+				/\<span class="bbcodes bbcodes_town"\>\<a href=\"#(.*?)\".+\<\/span\>/ig,
+				/\<img src="(.*?)" alt=""\>/ig,
+				/\<span class="bbcodes bbcodes_color" style="color:(.*?)"\>(.*?)\<\/span\>/ig,
+				/\<span class="bbcodes bbcodes_island"\>\<a href=\"#(.*?)\" .+\<\/span\>/ig,
+				/\<table.+\<tbody\>(.*?)\<\/tbody\>\<\/table\>/ig,
+				/\<tr\>\<td\>/ig,
+				/\<tr\>\<th\>/ig,
+				/\<\/td\>\<\/tr\>/ig,
+				/\<\/th\>\<\/tr\>/ig,
+				/\<\/td\>/ig,
+				/\<\/th\>/ig,
+				/\<td\>/ig,
+				/\<th\>/ig
+			];
+			var format_replace = [
+				'[b]$1[/b]',
+				'[i]$1[/i]',
+				'[u]$1[/u]',
+				'[s]$1[/s]',
+				'[center]$1[/center]',
+				'[url=$1://$2]$3[/url]',
+				replaceBBtowns,
+				'[img]$1[/img]',
+				'[color=$1]$2[/color]',
+				replaceBBislands,
+				'[table]$1[/table]',
+				'[*]',
+				'[**]',
+				'[/*]',
+				'[/**]',
+				'[|]',
+				'[||]',
+				'',
+				''
+			];
+			function replaceBBtowns(match, p1, offset, string) {
+				var a = $.parseJSON(atob(p1));
+				return '[town]' + a.id + '[/town]'
+			};
+			function replaceBBislands(match, p1, offset, string) {
+				var a = $.parseJSON(atob(p1));
+				return '[island]' + a.id + '[/island]'
+			};
+
+			$("#message_post_container .message_post").each(function (index, element) {
+				var qt_messageExportTMP = $("#qt_messageExportTMP");
+				qt_messageExportTMP.empty();
+				$(this).clone().appendTo(qt_messageExportTMP);
+
+				qt_messageExportTMP.find(".published_report").replaceWith("[report][/report]"); //replace reports
+				qt_messageExportTMP.find(".bbcode_awards").replaceWith("[img]http://s1.directupload.net/images/140428/twuzm5vx.png[/img]"); //replace awards
+				qt_messageExportTMP.find(".reservation_list").replaceWith(""); //remove reservations
+				qt_messageExportTMP.find(".bbcodes_spoiler").replaceWith(function () { //replace spoiler
+					$(this).find(".button").remove();
+					return '[spoiler=' + $("b:first", this).text() + ']' + $(".bbcodes_spoiler_text", this).html() + '[/spoiler]';
+				});
+				qt_messageExportTMP.find(".bbcodes_quote").replaceWith(function () { //replace quotes
+					return '[quote]' + $(".quote_message", this).html() + '[/quote]';
+				});
+				qt_messageExportTMP.find(".bbcodes_size").replaceWith(function () { //replace size
+					return '[size=' + $(this)[0].style.fontSize + ']' + $(this).html() + '[/size]';
+				});
+				qt_messageExportTMP.find(".bbcodes_player").replaceWith(function () { //replace player
+					return '[player]' + $(this).text() + '[/player]';
+				});
+				qt_messageExportTMP.find(".bbcodes_ally").replaceWith(function () { //replace ally
+					return '[ally]' + $(this).text() + '[/ally]';
+				});
+				qt_messageExportTMP.find(".bbcodes_font").replaceWith(function () { //replace font
+					return '[font=' + $(this).attr('class').split(' ').pop() + ']' + $(this).html() + '[/font]';
+				});
+				qt_messageExportTMP.find("script").remove(); //remove script tags
+
+				var author = $(".message_poster .gp_player_link", this).text();
+				var postDate = $(".message_poster .message_date", this).text().trim();
+				bb_content += '[size=7][player]' + author + '[/player] ' + postDate + '[/size]\n';
+				bb_content += '[img]http://s7.directupload.net/images/140502/izczcrte.png[/img]\n';
+				var postHTML = $("#qt_messageExportTMP .message_post_content").html().trim();
+				postHTML = postHTML.replace(/(\r\n|\n|\r|\t)/gm, ""); //remove line-breaks, tab characters
+				postHTML = postHTML.replace(/<br\s*\/?>/mg, "\n"); //add line-breaks instead of <br>
+				postHTML = postHTML.replace(/&nbsp;/mg, " ") //replace &nbsp
+					for (var i = 0; i < format_search.length; i++) {
+						postHTML = postHTML.replace(format_search[i], format_replace[i]);
+					}
+					bb_content += postHTML + "\n";
+				bb_content += '[img]http://s1.directupload.net/images/140502/f3i4p5oy.png[/img]';
+				bb_content += "\n";
+			});
+
+			bb_content = bb_content.slice(0, -1);
+			bb_content += "[/quote]";
+
+			var expRahmen_a = "<div class='inner_box'><div class='game_border'><div class='game_border_top'></div><div class='game_border_bottom'></div><div class='game_border_left'></div><div class='game_border_right'></div><div class='game_border_corner corner1'></div><div class='game_border_corner corner2'></div><div class='game_border_corner corner3'></div><div class='game_border_corner corner4'></div><div class='game_header bold' style='height:18px;'><div style='float:left; padding-right:10px;'></div>";
+			var expRahmen_b = "</div><textarea id='expTextarea' style=\"height: 228px; width: 685px;\">";
+			var expRahmen_c = "</textarea></div><div style='overflow-x: hidden; padding-left: 5px; position: relative;'></div></div></div>";
+			var expTitel = "Copy & Paste";
+			var BBwnd = uw.GPWindowMgr.Create(uw.GPWindowMgr.TYPE_QT_BBCODE) || uw.GPWindowMgr.getOpenFirst(uw.GPWindowMgr.TYPE_QT_BBCODE);
+			BBwnd.setTitle(QT.Lang.get("qtoolbox", "bb_codes") + " - " + QT.Lang.get("bbcode", "cities"));
+			BBwnd.setContent(expRahmen_a + expTitel + expRahmen_b + bb_content + expRahmen_c);
+			$("#expTextarea").focus(function () {
+				var that = this;
+				setTimeout(function () {
+					$(that).select();
+				}, 10);
+			});
 		});
 	},
 	grepopoints : function () {
@@ -2669,8 +2816,32 @@ QT.Functions = {
 		$('#ui_box .nui_main_menu .middle .content ul').not("ul li ul").css({
 			"height" : "+=34px"
 		});
+		/*function QT_city_overview() {
+		$('#ui_box .city_overview').click();
+		$(".icon", this).css({
+		"background":"url(http://s14.directupload.net/images/140501/rwe2n26g.png) no-repeat",
+		"top":"8px",
+		"left":"5px"
+		});
+		$(".name", this).text(QT.Lang.get("grepo_mainmenu", "island_view"));
+		$(this).off().one("click", QT_island_overview);
+		}
+		function QT_island_overview() {
+		$('#ui_box .island_view').click();
+		$(".icon", this).css({
+		"background":"url(http://s14.directupload.net/images/140424/vbvnndai.png) no-repeat",
+		"top":"6px",
+		"left":"6px"
+		});
+		$(".name", this).text(QT.Lang.get("grepo_mainmenu", "city_view"));
+		$(this).off().one("click", QT_city_overview);
+		}
+		$('#ui_box .nui_main_menu .middle .content ul li[data-option-id=cityview]').one("click", QT_city_overview);
+		$('#ui_box .island_view,.city_overview').click(function () {
+		$('#ui_box .nui_main_menu .middle .content ul li[data-option-id=cityview]').click();
+		});*/
 		$('#ui_box .nui_main_menu .middle .content ul li[data-option-id=cityview]').click(function () {
-			uw.TownIndexWindowFactory.openTownIndexWindow();
+			uw.GPWindowMgr.Create(uw.Layout.wnd.TYPE_TOWNINDEX, QT.Lang.get("grepo_mainmenu", "city_view") + " - " + uw.ITowns.getTown(uw.Game.townId).name);
 		});
 	},
 	selectunitshelper : function () {
@@ -3188,9 +3359,9 @@ QT.Functions = {
 				FR : "higter, Mazelys",
 				HU : "Arminno",
 				IT : "masale81",
-				NL : "sannelos",
+				NL : "sannelos, megaabelleke",
 				PL : "Slietie",
-				RU : "Jest",
+				RU : "Jest, DJEDIVER, nihondzin",
 			};
 			HTML_tab2 += grepoGameBorder + QT.Lang.get("settings", "translations") + '<div style="float: right; margin-top: -2px; margin-right: -5px">' + QT.Functions.helper.grepo_dropdown("langdiv", supported_lang)[0].outerHTML + '</div></div>';
 			HTML_tab2 += '<div id="trans_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:369px"><b>' + QT.Lang.get("settings", "please_note") + ':</b><br/><ul style="list-style:square outside;padding-left: 13px"><li>' + QT.Lang.get("settings", "trans_infotext1") + '</li><li>' + QT.Lang.get("settings", "trans_infotext2") + '</li><li>' + QT.Lang.get("settings", "trans_infotext3") + '</li><li>' + QT.Lang.get("settings", "trans_infotext4") + '</li></ul><div style="margin-top:40px"><b>' + QT.Lang.get("settings", "credits") + ':</b><br/><ul style="list-style:square outside;padding-left: 13px">';
@@ -3782,7 +3953,7 @@ QT.Functions = {
 			}
 			// Andere
 			if (hk.keyCode == 83 && $.inArray(target, notTheseOnes) < 0) {
-				uw.TownIndexWindowFactory.openTownIndexWindow();
+				uw.GPWindowMgr.Create(uw.Layout.wnd.TYPE_TOWNINDEX, QT.Lang.get("grepo_mainmenu", "city_view") + " - " + uw.ITowns.getTown(uw.Game.townId).name);
 			}
 			if (hk.keyCode == 82 && $.inArray(target, notTheseOnes) < 0) {
 				uw.RankingWindowFactory.openRankingWindow();
@@ -4591,16 +4762,16 @@ QT.Functions = {
 				$("#trade_type_" + mode.substring(2)).find("input").val(d).select().blur();
 			}
 			$("#trade_tab").append('\
-																																																												<a id="q_wood" class="q_send" style="top:211px" href="#"></a>\
-																																																												<a id="q_stone" class="q_send" style="top:245px" href="#"></a>\
-																																																												<a id="q_iron" class="q_send" style="top:279px" href="#"></a>\
-																																																												<a id="q_wood" class="q_send_cult" style="top:211px" href="#"></a>\
-																																																												<a id="q_stone" class="q_send_cult" style="top:245px" href="#"></a>\
-																																																												<a id="q_iron" class="q_send_cult" style="top:279px" href="#"></a>\
-																																																												<a id="q_wood" class="q_send_cult_reverse" style="top:211px" href="#"></a>\
-																																																												<a id="q_stone" class="q_send_cult_reverse" style="top:245px" href="#"></a>\
-																																																												<a id="q_iron" class="q_send_cult_reverse" style="top:279px" href="#"></a>\
-																																																											');
+																																																																<a id="q_wood" class="q_send" style="top:211px" href="#"></a>\
+																																																																<a id="q_stone" class="q_send" style="top:245px" href="#"></a>\
+																																																																<a id="q_iron" class="q_send" style="top:279px" href="#"></a>\
+																																																																<a id="q_wood" class="q_send_cult" style="top:211px" href="#"></a>\
+																																																																<a id="q_stone" class="q_send_cult" style="top:245px" href="#"></a>\
+																																																																<a id="q_iron" class="q_send_cult" style="top:279px" href="#"></a>\
+																																																																<a id="q_wood" class="q_send_cult_reverse" style="top:211px" href="#"></a>\
+																																																																<a id="q_stone" class="q_send_cult_reverse" style="top:245px" href="#"></a>\
+																																																																<a id="q_iron" class="q_send_cult_reverse" style="top:279px" href="#"></a>\
+																																																															');
 			$(".q_send_cult").css({
 				"right" : "84px",
 				"position" : "absolute",
@@ -5012,7 +5183,6 @@ QT.Functions = {
 					$(that).select();
 				}, 10);
 			});
-
 		});
 		$('.town_group_town')
 		.hover(function () {
@@ -5081,11 +5251,11 @@ QT.Functions = {
 		});
 
 		$('<style id="qplusmenustyle" type="text/css">\
-															.displayImp {display: block !important}\
-															.qplusmenu {margin:6px 22px 2px 5px;height:11px;display:block;position:relative}\
-															.qplusdraghandle {width:100%;height:11px;position:absolute;background:url(http://s14.directupload.net/images/131001/7guz6abs.png)}\
-															.qplusback {right:-18px;margin-top:-1px;width:16px;height:12px;position:absolute;background:url(http://s1.directupload.net/images/131001/u6le7bdw.png)}\
-															</style>').appendTo('head');
+																		.displayImp {display: block !important}\
+																		.qplusmenu {margin:6px 22px 2px 5px;height:11px;display:block;position:relative}\
+																		.qplusdraghandle {width:100%;height:11px;position:absolute;background:url(http://s14.directupload.net/images/131001/7guz6abs.png)}\
+																		.qplusback {right:-18px;margin-top:-1px;width:16px;height:12px;position:absolute;background:url(http://s1.directupload.net/images/131001/u6le7bdw.png)}\
+																		</style>').appendTo('head');
 
 		$('#toolbar_activity_recruits_list').draggable({
 			cursor : "move",
