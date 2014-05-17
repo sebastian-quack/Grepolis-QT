@@ -1654,7 +1654,7 @@ QT.Settings = {
 	load_all : function () {
 		setTimeout(function () {
 			var GMsettings = GM_listValues();
-			for each(var val in GMsettings) {
+			for (var val in GMsettings) {
 				QT.Settings.values[val] = GM_getValue(val);
 			}
 		}, 0);
@@ -1679,7 +1679,7 @@ QT.Settings = {
 		uw.hOpenWindow.showConfirmDialog('', QT.Lang.get("settings", "text19"), function () {
 			setTimeout(function () {
 				GMsettings = GM_listValues();
-				for each(var val in GMsettings) {
+				for (var val in GMsettings) {
 					GM_deleteValue(val);
 				}
 				window.location.reload();
@@ -3480,7 +3480,7 @@ QT.Functions = {
 				uw.hOpenWindow.showConfirmDialog('', QT.Lang.get("settings", "text19"), function () {
 					setTimeout(function () {
 						GMsettings = GM_listValues();
-						for each(var val in GMsettings) {
+						for (var val in GMsettings) {
 							GM_deleteValue(val);
 						}
 						window.location.reload();
