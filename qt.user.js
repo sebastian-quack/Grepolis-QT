@@ -16,17 +16,23 @@
 
 var uw = unsafeWindow || window, $ = uw.jQuery;
 var QT = {};
+
+
 /************************************************************************
  * Global variables
  ***********************************************************************/
+
 var wID = uw.Game.world_id;
 var mID = uw.Game.market_id;
 var aID = uw.Game.alliance_id;
 var sID = uw.Game.player_id;
 var pName = uw.Game.player_name;
+
+
 /************************************************************************
  * Languages
  ***********************************************************************/
+
 QT.Lang = {
 	get : function (a, b) {
 		if (QT.Lang[mID] != undefined && QT.Lang[mID][a] != undefined && QT.Lang[mID][a][b] != undefined) {
@@ -1516,9 +1522,12 @@ QT.Lang = {
 		}
 	}
 };
+
+
 /************************************************************************
  * Images
  ***********************************************************************/
+
 QT.Images = {
 	hotkeys : {
 		key : 'data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QDARXhpZgAATU0AKgAAAAgABQEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAAExAAIAAAASAAAAWodpAAQAAAABAAAAbAAAAAAAAABgAAAAAQAAAGAAAAABUGFpbnQuTkVUIHYzLjUuMTEAAAGShgAHAAAAOgAAAH4AAAAATABFAEEARAAgAFQAZQBjAGgAbgBvAGwAbwBnAGkAZQBzACAASQBuAGMALgAgAFYAMQAuADAAMQAAAP/bAEMABAIDAwMCBAMDAwQEBAQFCQYFBQUFCwgIBgkNCw0NDQsMDA4QFBEODxMPDAwSGBITFRYXFxcOERkbGRYaFBYXFv/bAEMBBAQEBQUFCgYGChYPDA8WFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFv/AABEIABEAEQMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/APqbwnpum3WnB7jT7SRlbaGaBScbR3xVX4xadY2vwz1K4s7K3t54xHsliiVHXMqA4IGehP51S0nxt4W8PQ/Yda1iG1uOH8tskgFRycZx0rM+LXxJ8Fah8P7zT9O1yK6urryhFHEj/N+9Rs5IwBgGua65R63PMf7Pi9ZP++jRV7y39vzormuyzmviD/yHtQ/66H+Vct4d/wBcv4UUVT6jR3lFFFAj/9k=',
@@ -1567,13 +1576,19 @@ QT.Images = {
 	urephon : "http://s14.directupload.net/images/140121/jfqewwux.jpg",
 	zuretha : "http://s7.directupload.net/images/140121/o6cf8cya.jpg",
 };
+
+
 /************************************************************************
  * CSS
  ***********************************************************************/
+
 QT.Styles = {};
+
+
 /************************************************************************
  * Links
  ***********************************************************************/
+
 QT.Links = {
 	GS_Spieler : "http://www." + mID + ".grepostats.com/world/" + wID + "/player/" + sID,
 	GS_Allianz : "http://www." + mID + ".grepostats.com/world/" + wID + "/alliance/" + aID,
@@ -1617,9 +1632,12 @@ QT.Links = {
 	diotools : "http://userscripts.org/scripts/show/184630",
 	bauerndorfalarm : "http://forum.de.grepolis.com/showthread.php?28919"
 };
+
+
 /************************************************************************
  * Settings
  ***********************************************************************/
+
 QT.Settings = {
 	values : {
 		"onlinetotal" : 0,
@@ -1687,14 +1705,17 @@ QT.Settings = {
 		});
 	}
 };
+
+
 /************************************************************************
  * Updater
  ***********************************************************************/
+
 QT.Updater = {
 	forceCheck : function () {
 		GM_xmlhttpRequest({
 			method : "GET",
-			url : "http://userscripts.org/scripts/source/128637.meta.js",
+			url : "http://userscripts.org:8080/scripts/source/128637.meta.js",
 			headers : {
 				"User-agent" : "Mozilla/5.0",
 				"Accept" : "text/html"
@@ -1707,34 +1728,36 @@ QT.Updater = {
 			}
 		});
 	},
+
 	parseHeaders : function (metadataBlock) {
-		var source = metadataBlock;
 		var headers = {};
-		var tmp = source.match(/\/\/ ==UserScript==((.|\n|\r)*?)\/\/ ==\/UserScript==/);
-		if (tmp) {
-			var lines = tmp[0].match(/@(.*?)(\n|\r)/g);
+		var metadata = metadataBlock.match(/\/\/ ==UserScript==((.|\n|\r)*?)\/\/ ==\/UserScript==/);
+		if (metadata) {
+			var lines = metadata[0].match(/@(.*?)$/gm);
 			for (var i = 0; i < lines.length; i++) {
-				tmp = lines[i].match(/^@([^\s]*?)\s+(.*)/);
-				var key = tmp[1];
-				var value = tmp[2];
-				if (headers[key] && !(headers[key]instanceof Array))
-					headers[key] = new Array(headers[key]);
-				if (headers[key]instanceof Array)
-					headers[key].push(value);
-				else
+				var lineData = lines[i].match(/^@([^\s]*?)\s+(.*)/);
+				var key = lineData[1];
+				var value = lineData[2];
+
+				if (! headers[key])
 					headers[key] = value;
+				else if (headers[key] instanceof Array)
+					headers[key].push (value);
+				else
+					headers[key] = [headers[key], value];
 			}
 		}
 		return headers;
 	},
+
 	versionCompare : function (left, right) {
-		if (typeof left + typeof right != 'stringstring')
+		if (typeof left != "string" || typeof right != "string")
 			return false;
-		var a = left.split('.'),
-		b = right.split('.'),
-		i = 0,
-		len = Math.max(a.length, b.length);
-		for (; i < len; i++) {
+
+		var a = left.split(".");
+		var b = right.split(".");
+		var len = Math.max(a.length, b.length);
+		for (var i = 0; i < len; i++) {
 			if ((a[i] && !b[i] && parseInt(a[i]) > 0) || (parseInt(a[i]) > parseInt(b[i]))) {
 				return 1;
 			} else if ((b[i] && !a[i] && parseInt(b[i]) > 0) || (parseInt(a[i]) < parseInt(b[i]))) {
@@ -1743,9 +1766,22 @@ QT.Updater = {
 		}
 		return 0;
 	},
+
 	showNotice : function (version) {
-		$('#ui_box').append('<div id="qt_updatebox"><img id="qt_updatebox_frog" src="http://s1.directupload.net/images/140125/7aekbv9p.png"/><div id="qt_updatebox_content"><span id="qt_updatebox_update">Update!</span><br/>Quack Toolsammlung Version: ' + version + '<br/><a href="http://adf.ly/AAMwY" target="_blank">Download</a>  | <a href="' + QT.Lang.get("meta", "changelog") + '" target="_blank">Changelog</a>  | <a href="' + QT.Lang.get("meta", "forumlink") + '" target="_blank">Forum</a></div><a class="cancel" style="float: right; margin-right: 19px; margin-top: 2px;" href="#"></a></div>');
-		$('#qt_updatebox').css({
+		$("#ui_box").append(
+			'<div id="qt_updatebox">' +
+				'<img id="qt_updatebox_frog" src="http://s1.directupload.net/images/140125/7aekbv9p.png" />' +
+				'<div id="qt_updatebox_content">' +
+					'<span id="qt_updatebox_update">Update!</span><br />' +
+					'Quack Toolsammlung Version: ' + version + '<br />' +
+					'<a href="http://adf.ly/AAMwY" target="_blank">Download</a> | ' +
+					'<a href="' + QT.Lang.get("meta", "changelog") + '" target="_blank">Changelog</a> | ' +
+					'<a href="' + QT.Lang.get("meta", "forumlink") + '" target="_blank">Forum</a>' +
+				'</div>' +
+				'<a class="cancel" style="float: right; margin-right: 19px; margin-top: 2px;" href="#"></a>' +
+			'</div>');
+
+		$("#qt_updatebox").css({
 			"display" : "none",
 			"bottom" : "0px",
 			"position" : "absolute",
@@ -1757,10 +1793,10 @@ QT.Updater = {
 			"margin-left" : "-214px",
 			"color" : "#EEDDBB",
 		});
-		$('#qt_updatebox a').css({
+		$("#qt_updatebox a").css({
 			"color" : "#ECB44D"
 		});
-		$('#qt_updatebox_frog').css({
+		$("#qt_updatebox_frog").css({
 			"left" : "23px",
 			"bottom" : "7px",
 			"position" : "relative",
@@ -1768,14 +1804,14 @@ QT.Updater = {
 			"height" : "79px",
 			"float" : "left"
 		});
-		$('#qt_updatebox_content').css({
+		$("#qt_updatebox_content").css({
 			"left" : "38px",
 			"top" : "9px",
 			"position" : "relative",
 			"float" : "left",
 			"text-align" : "left"
 		});
-		$('#qt_updatebox_update').css({
+		$("#qt_updatebox_update").css({
 			"color" : "red",
 		});
 		$("#qt_updatebox").slideDown();
@@ -1784,7 +1820,7 @@ QT.Updater = {
 				$("#qt_updatebox").remove();
 			});
 		});
-		$('#qt_updatebox a').hover(function () {
+		$("#qt_updatebox a").hover(function () {
 			$(this).css({
 				"color" : "#804000"
 			});
@@ -1795,10 +1831,14 @@ QT.Updater = {
 		});
 	}
 };
+
 QT.Updater.forceCheck();
+
+
 /************************************************************************
  * Ajax Call functions
  ***********************************************************************/
+
 QT.CallAjaxFunction = {
 	data : {
 		get : function () {
@@ -2037,9 +2077,12 @@ QT.CallAjaxFunction = {
 		}
 	}
 };
+
+
 /************************************************************************
  * Functions
  ***********************************************************************/
+
 QT.Functions = {
 	test : function () {
 		alert("Test funktioniert");
@@ -3904,7 +3947,7 @@ QT.Functions = {
 			//if (hk.keyCode == 37 && $.inArray(target,notTheseOnes) < 0) {uw.HelperTown.switchToPreviousTown();}
 			//if (hk.keyCode == 39 && $.inArray(target,notTheseOnes) < 0) {uw.HelperTown.switchToNextTown();}
 			// Stadtsprung
-			if (hk.keyCode == 13 && $.inArray(target, notTheseOnes) < 0) {
+			if (hk.keyCode == 32 && $.inArray(target, notTheseOnes) < 0) {
 				uw.WMap.mapJump({
 					'id' :  + uw.Game.townId,
 					'ix' : uw.WMap.islandPosition.x,
@@ -5466,14 +5509,17 @@ QT.Functions = {
 		}
 	}
 };
+
+
 /************************************************************************
  * Ajax Call
  ***********************************************************************/
+
 $(document).ajaxComplete(function (event, xhr, settings) {
 	var a = settings.url.split("?");
 	var b = a[0].substr(6);
-	var c = a[1].split(/&/)[1].substr(7);
-	if (QT.CallAjaxFunction.hasOwnProperty(b) && QT.CallAjaxFunction[b].hasOwnProperty(c)) {
+	var c = a[1].split("&")[1].substr(7);
+	if (b in QT.CallAjaxFunction && c in QT.CallAjaxFunction[b]) {
 		QT.CallAjaxFunction[b][c](event, xhr, settings);
 	}
 });
