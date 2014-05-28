@@ -4,7 +4,7 @@
 // @description    Toolsammlung für Grepolis 2.0
 // @include        http://*.grepolis.*/game*
 // @icon           http://s7.directupload.net/images/120320/ullq32vn.jpg
-// @version        2.32.00
+// @version        2.32.01
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
