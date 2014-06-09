@@ -4,7 +4,7 @@
 // @description    Toolsammlung für Grepolis 2.0
 // @include        http://*.grepolis.*/game*
 // @icon           http://s7.directupload.net/images/120320/ullq32vn.jpg
-// @version        2.33.00
+// @version        2.34.00
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -69,6 +69,10 @@ QT.Lang = {
 			no_cities : 'Nenhuma cidade nesta Ilha',
 			all : 'Tudo',
 			export : 'Converter mensagem em BB-Code'
+		},
+		settings : {
+			settings : 'Configurações',
+			translations : 'Idiomas',
 		}
 	},
 	cz : {
@@ -366,9 +370,9 @@ QT.Lang = {
 			from_town : 'Aus Stadt',
 			outside_town : 'Außerhalb Stadt',
 			tools : 'Tools',
-			unit_comparison : 'Unit Vergleich',
+			unit_comparison : 'Einheiten Vergleich',
 			google_docs : 'Google Docs',
-			deff_helper : 'Deff Helper',
+			deff_helper : 'Deff Assistent',
 			display_modes : 'Anzeige',
 			full_screen : 'Vollbild',
 			minimal : 'Minimal',
@@ -445,8 +449,8 @@ QT.Lang = {
 			text44 : 'Inselübersicht',
 			text45 : 'Listen der Städte und Bauerndörfer vergrößern',
 			text46 : 'Hotkeys',
-			text47 : '[Enter] als Button um zur aktuellen Stadt zu springen ([nicht [Space])',
-			text48 : 'Open the old cityview',
+			text47 : '[Enter] als Button um zur aktuellen Stadt zu springen (nicht [Space])',
+			text48 : 'Alte Stadtansicht öffnen',
 			other : 'Sonstiges',
 			save : 'Speichern',
 			reset : 'Einstellungen zurücksetzen',
@@ -1034,9 +1038,9 @@ QT.Lang = {
 			cities : 'Városok',
 			all : 'Összes',
 			active_grp : 'Aktív város csoport',
-			in : '-ben',
-			from : '-ból',
-			outside : '-n kívül'
+			in : 'itt',
+			from : 'itt',
+			outside : 'kívül itt'
 		},
 		stats_scripts : {
 			stats_scripts_ov : 'Statisztikák és szkriptek attekintése'
@@ -1396,6 +1400,7 @@ QT.Lang = {
 			donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=PL&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/pl_PL/i/btn/btn_donate_LG.gif" alt="Donate"></a>'
 		},
 		reports : {
+			choose_folder : 'Wybierz folder',
 			enacted : 'Rzuciłeś',
 			conquered : 'podbiło',
 			spying : 'szpieguje',
@@ -1406,15 +1411,27 @@ QT.Lang = {
 			farming_village : 'wioskę'
 		},
 		forum : {
-			delete : 'Usunąć'
+			delete : 'Usunąć',
+			delete_sure : 'Czy na pewno chcesz usunąć te posty?',
+			no_selection : 'Brak zaznaczonych Postów'
+		},
+		town_info : {
+			no_overload : 'Wybierz i napełnij łódki',
+			delete : 'Wyczyść',
+			polissuche : 'szukaj miasta',
+			inactivity : 'Nieaktywny',
+			days : 'dni',
+			no_data : 'Gracz jeszcze nie został dodany do bazy'
 		},
 		grepo_mainmenu : {
 			city_view : 'Podgląd miasta',
-			delete : 'Usunąć'
+			island_view : 'Podgląd wyspy'
 		},
 		messages : {
 			ghosttown : 'Opuszczone miasto',
-			no_cities : 'Brak miast na tej wyspie'
+			no_cities : 'Brak miast na tej wyspie',
+			all : 'wszystkie',
+			export : 'Zmień wiadomość na BB-Code'
 		},
 		hotkeys : {
 			hotkeys : 'Skróty',
@@ -1437,6 +1454,7 @@ QT.Lang = {
 			city_list : 'Lista miast',
 			attack_planner : 'Planer ataków',
 			farming_villages : 'Wioski',
+			menu : 'Menu',
 			city_view : 'Podgląd miasta',
 			messages : 'Wiadomości',
 			reports : 'Raporty',
@@ -1444,38 +1462,60 @@ QT.Lang = {
 			alliance_forum : 'Forum sojuszu',
 			settings : 'Ustawienia',
 			profile : 'Profil',
+			ranking : 'Ranking',
 			notes : 'Notatnik',
 			chat : 'Czat',
 			council : 'Rada Bohaterów'
 		},
 		qtoolbox : {
+			onlinecounter_now : 'Aktualnie',
+			onlinecounter_total : 'Całkowicie',
+			onlinecounter_switch : 'Czas przed grą: aktualnie/całkowicie',
 			stats : 'Statystyki',
+			grepostats : 'Grepo Stats',
 			player : 'Gracz',
 			alliance : 'Sojusz',
-			track_player : 'Sledz Gracza',
-			track_alliance : 'Sledz Sojusz',
-			top_killers : 'Czolowi Agresorzy',
+			rankings : 'Rankingi',
+			grepo_bash : 'Grepo Bash',
+			track_player : 'Sledź Gracza',
+			track_alliance : 'Sledż Sojusz',
+			top_killers : 'Czołowi Agresorzy',
 			maps : 'Mapy',
+			grepo_maps : 'Grepo Maps',
+			grepo_intel : 'Grepo Intel',
+			townsearches : 'Szukanie miast',
+			grepo_finder : 'Grepo Finder',
+			tonda_polissuche : 'Townsearches',
+			bb_codes : 'BB-Code',
 			in_town : 'W mieście',
 			from_town : 'Z miasta',
 			outside_town : 'Na zewnątrz miasta',
 			tools : 'Narzędzia',
+			unit_comparison : 'Porównaj jednostki',
+			google_docs : 'Dokumenty Google',
+			deff_helper : 'Deff Pomocnik',
+			display_modes : 'Wyświetlanie',
 			full_screen : 'Pełny ekran',
 			minimal : 'Ograniczone',
 			standard : 'Standardowe',
-			stats_scripts : 'Statystyki/skrypty'
+			stats_scripts : 'Statystyki/skrypty',
+			settings : 'Menadżer skrypt.'
 		},
 		caves : {
-			stored_silver : 'Wbudowane srebrne monety',
+			stored_silver : 'Przechowywane srebrne monety',
 			name : 'Nazwa',
 			wood : 'Drewno',
 			stone : 'Kamién',
 			silver : 'Srebrne monety'
 		},
 		transport_calc : {
-			btn_main : 'Kalkulator transport',
-			available : 'Dostępna pojemność transportowców',
-			transportable : 'Jednostki do przetransportowania'
+			btn_main : 'Kalkulator transportu',
+			available : 'Dostępna pojemność transporterów',
+			transportable : 'Jednostki do przetransportowania',
+			recruits : 'Uwzględniaj jednostki w kolejce rekrutacji',
+			outsidetown : 'Uwzględniaj jednostki na zewnątrz miasta',
+			slowtrans : 'Uwzględniaj szybkie łodzie',
+			fasttrans : 'Uwzględniaj wolne łodzie'
 		},
 		culture : {
 			cityfestivals : 'Festyn miejski',
@@ -1499,6 +1539,7 @@ QT.Lang = {
 			text17 : 'Dodaj filtr',
 			text18 : 'Aktywuj podgląd',
 			text19 : 'Usunąć wszystkie ustawienia i obecność skryptu w pamięci cache przeglądarki?',
+			text20 : 'Forum',
 			text21 : 'Zmaksymalizuj szerokość forum',
 			text22 : 'Ikonka skrótów',
 			text23 : 'Menu Grepolis',
@@ -1507,30 +1548,69 @@ QT.Lang = {
 			text26 : 'Okno handlu',
 			text27 : 'Aktywuj przedłużanie',
 			text28 : 'Lista miast',
-			text29 : 'Lista quest',
+			text29 : 'Lista zadań',
+			text30 : 'Dodaj wyskakującą listę w folderach',
+			text31 : 'Guzik z kodem BB-code aktualnego miasta',
+			text32 : 'Zaznaczanie i usuwanie postów',
 			text34 : 'Podgląd jaskiń (Zarządca)',
-			text35 : 'Planiści akademia',
+			text35 : 'Pomocnik badań w akademi',
 			text36 : 'Jaskinia',
+			text37 : 'Możliwość sortowania miast',
+			text38 : 'Wstaw automatycznie w pole wpisywania srebro powyżej 15000',
 			text40 : 'Podgląd wiosek (Kapitan)',
+			text41 : 'Dodaj guzik "Podgląd Miasta" do menu',
+			text42 : 'Pokaż straty surowców',
 			text43 : 'Symulator',
+			text44 : 'Podgląd wyspy',
+			text45 : 'Powiększ listę miast i wiosek w podglądzie wyspy',
+			text46 : 'Skróty klawiszowe',
+			text47 : 'Użyj [Enter] jako klawisz przełączania do obecnego miasta (nie [Space])',
+			text48 : 'Otwieraj podgląd miasta w starym stylu',
 			other : 'Inne',
 			save : 'Zapisz',
 			reset : 'Zresetuj ustawienia',
+			contact : 'Kontakt',
+			info : 'Informacja',
+			settings : 'Ustawienia',
 			translations : 'Tłumaczenia',
-			donations : 'Darowizny'
+			trans_sure : 'Czy jesteś pewien że twoje tłumaczenie jest gotowe do wysłania?',
+			trans_success : 'Tłumaczenie zostało wysłane',
+			trans_fail : 'Tłumaczenie nie może zostać wysłane',
+			trans_infotext1 : 'Tłumaczenie nie musi być kompletne - po prostu tłumacz co chcesz',
+			trans_infotext2 : 'Jeżeli tekst zawiera tagi HTML (czyli wszystko co jest zawarte w <> klamrach) proszę ich nie usuwać ani nie modyfikować',
+			trans_infotext3 : 'Aby móc dodać cię do listy tłumaczących, twoja nazwa gracza, identyfikator gracza i kraju/świata zostanie przekazany automatycznie',
+			trans_infotext4 : 'Spamerzy będą banowani i dodawani do czarnej listy',
+			please_note : 'Proszę się zapoznać',
+			credits : 'Dotychczasowi tłumaczący',
+			no_translation : 'Nie odnaleziono tłumaczenia',
+			choose_lang : 'Wybierz język',
+			add_lang : 'Dodaj nowy jęzzyk',
+			language : 'Język',
+			enter_lang_name : 'Proszę podać nazwę języka',
+			send : 'Wyślij',
+			name : 'Nazwa',
+			ingame_name : 'Nie wahaj się ze mną skontaktować, jeśli wolisz być nazywany tak jak w grze',
+			adfly : 'Czy chcesz zarabieć także pieniądze na linkach?',
+			donations : 'Darowizny',
+			update_check : 'Sprawdź czy jest nowsza wersja'
 		},
 		bbcode : {
 			troops : 'Jednostki',
-			building : 'Poziomy budynku',
+			building : 'Poziomy budynków',
+			cities : 'Miasta',
+			all : 'Wszystkie',
+			active_grp : 'Aktywna grupa miast',
 			in : 'w',
 			from : 'z',
-			outside : 'na zewnątrz'
+			outside : 'na zewnątrz',
+			messages : 'Wiadomości'
 		},
 		stats_scripts : {
 			stats_scripts_ov : 'Podgląd statystyk i skryptów'
 		},
 		googledocs : {
-			change_url : 'Zmień URL'
+			change_url : 'Zmień URL',
+			reset : 'Zresetuj'
 		}
 	},
 	ru : {
@@ -3228,7 +3308,7 @@ QT.Functions = {
 						points = "500";
 						if ($(this).children("img").length > 0)
 							points = "-500";
-					} else if ($(this).children("img").length > 0) {
+					} else if ($(".tear_down", this).length > 0) {
 						points_old = calculatePoints(level, val);
 						--level;
 						points_new = calculatePoints(level, val);
@@ -3270,7 +3350,7 @@ QT.Functions = {
 					}
 				}
 			} else {
-				var c = $("DIV#gpwnd_" + wndID + "#special_building_" + key);
+				var c = $("DIV#gpwnd_" + wndID + " #special_building_" + key).not(".special_tear_down");
 				if (c.length > 0) {
 					level = examineQueue(key, 0, val);
 					if (level == 0) {
@@ -3883,14 +3963,15 @@ QT.Functions = {
 			});
 			var HTML_tab2 = '';
 			var q_translations = {
-				BR : "==CrAZyWoW==",
+				BR : "==CrAZyWoW==, douglasgoclv",
 				CZ : "jarajanos",
+				DE : "Scav77",
 				ES : "Jonh Snow, F0NT3, cuervobrujo",
 				FR : "higter, Mazelys",
-				HU : "Arminno",
+				HU : "Arminno, Betagamer",
 				IT : "masale81",
 				NL : "Florent15, sannelos, megaabelleke, Thodoris",
-				PL : "Slietie",
+				PL : "Slietie, Tropsy Kretts",
 				RU : "Jest, DJEDIVER, nihondzin"
 			};
 			HTML_tab2 += grepoGameBorder + QT.Lang.get("settings", "translations") + '<div style="float: right; margin-top: -2px; margin-right: -5px">' + QT.Functions.helper.grepo_dropdown("langdiv", supported_lang)[0].outerHTML + '</div></div>';
@@ -4494,8 +4575,7 @@ QT.Functions = {
 			}
 			// Andere
 			if (hk.keyCode == 83 && $.inArray(target, notTheseOnes) < 0) {
-				//uw.GPWindowMgr.Create(uw.Layout.wnd.TYPE_TOWNINDEX, QT.Lang.get("grepo_mainmenu", "city_view") + " - " + uw.ITowns.getTown(uw.Game.townId).name);
-				uw.TownIndexWindowFactory.openTownIndexWindow();
+				uw.GPWindowMgr.Create(uw.Layout.wnd.TYPE_TOWNINDEX, QT.Lang.get("grepo_mainmenu", "city_view") + " - " + uw.ITowns.getTown(uw.Game.townId).name);
 			}
 			if (hk.keyCode == 82 && $.inArray(target, notTheseOnes) < 0) {
 				uw.RankingWindowFactory.openRankingWindow();
