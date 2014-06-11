@@ -4,7 +4,7 @@
 // @description    Toolsammlung für Grepolis 2.0
 // @include        http://*.grepolis.*/game*
 // @icon           http://s7.directupload.net/images/120320/ullq32vn.jpg
-// @version        2.34.00
+// @version        2.34.01
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -2317,22 +2317,25 @@ QT.CallAjaxFunction = {
 			QT.Functions.mutationobserver();
 		}
 	},
-	debug : {
-		log_startup_time : function () {
-			QT.Functions.windowmanager();
-			QT.Functions.hotkeys();
-			QT.Functions.qtoolbox();
-			QT.Functions.selectunitshelper();
-			if (QT.Settings.values.qmenu_settings_cityview_BTN)
-				QT.Functions.city_view_btn();
-			if (QT.Settings.values.qmenu_settings_townbb)
-				QT.Functions.townBBcodeBTN();
-			if (QT.Settings.values.qmenu_settings_plusmenu)
-				QT.Functions.tb_activitiesExtra();
-			if (QT.Settings.values.qmenu_settings_transport_rechner)
-				QT.Functions.transportcalculator.init();
-			if (QT.Settings.values.qmenu_settings_questliste && $('#quest_overview li').length !== 0)
-				QT.Functions.questlist();
+	map_data : {
+		get_chunks : function () {
+			if (typeof startup === 'undefined') {
+				QT.Functions.windowmanager();
+				QT.Functions.hotkeys();
+				QT.Functions.qtoolbox();
+				QT.Functions.selectunitshelper();
+				if (QT.Settings.values.qmenu_settings_cityview_BTN)
+					QT.Functions.city_view_btn();
+				if (QT.Settings.values.qmenu_settings_townbb)
+					QT.Functions.townBBcodeBTN();
+				if (QT.Settings.values.qmenu_settings_plusmenu)
+					QT.Functions.tb_activitiesExtra();
+				if (QT.Settings.values.qmenu_settings_transport_rechner)
+					QT.Functions.transportcalculator.init();
+				if (QT.Settings.values.qmenu_settings_questliste && $('#quest_overview li').length !== 0)
+					QT.Functions.questlist();
+				startup = true;
+			}
 		}
 	},
 	index : {
