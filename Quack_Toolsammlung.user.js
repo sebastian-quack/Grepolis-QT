@@ -4,7 +4,7 @@
 // @description    Toolsammlung für Grepolis 2.0
 // @include        http://*.grepolis.*/game*
 // @icon           http://s7.directupload.net/images/120320/ullq32vn.jpg
-// @version        2.34.01
+// @version        2.34.02
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -2310,34 +2310,6 @@ QT.Updater = {
  * Ajax Call functions
  ***********************************************************************/
 QT.CallAjaxFunction = {
-	data : {
-		get : function () {
-			QT.Updater.init();
-			QT.Settings.load_all();
-			QT.Functions.mutationobserver();
-		}
-	},
-	map_data : {
-		get_chunks : function () {
-			if (typeof startup === 'undefined') {
-				QT.Functions.windowmanager();
-				QT.Functions.hotkeys();
-				QT.Functions.qtoolbox();
-				QT.Functions.selectunitshelper();
-				if (QT.Settings.values.qmenu_settings_cityview_BTN)
-					QT.Functions.city_view_btn();
-				if (QT.Settings.values.qmenu_settings_townbb)
-					QT.Functions.townBBcodeBTN();
-				if (QT.Settings.values.qmenu_settings_plusmenu)
-					QT.Functions.tb_activitiesExtra();
-				if (QT.Settings.values.qmenu_settings_transport_rechner)
-					QT.Functions.transportcalculator.init();
-				if (QT.Settings.values.qmenu_settings_questliste && $('#quest_overview li').length !== 0)
-					QT.Functions.questlist();
-				startup = true;
-			}
-		}
-	},
 	index : {
 		switch_town : function () {
 			if ($("#tr_wrapper").is(':visible'))
@@ -6104,5 +6076,27 @@ $(document).ajaxComplete(function (event, xhr, settings) {
 	if (b in QT.CallAjaxFunction && c in QT.CallAjaxFunction[b]) {
 		QT.CallAjaxFunction[b][c](event, xhr, settings);
 	}
+});
+/************************************************************************
+ * Script Start
+ ***********************************************************************/
+QT.Settings.load_all();
+$.Observer(uw.GameEvents.game.load).subscribe('QT', function (l, q) {
+	QT.Updater.init();
+	QT.Functions.mutationobserver();
+	QT.Functions.windowmanager();
+	QT.Functions.selectunitshelper();
+	QT.Functions.hotkeys();
+	QT.Functions.qtoolbox();
+	if (QT.Settings.values.qmenu_settings_cityview_BTN)
+		QT.Functions.city_view_btn();
+	if (QT.Settings.values.qmenu_settings_townbb)
+		QT.Functions.townBBcodeBTN();
+	if (QT.Settings.values.qmenu_settings_plusmenu)
+		QT.Functions.tb_activitiesExtra();
+	if (QT.Settings.values.qmenu_settings_transport_rechner)
+		QT.Functions.transportcalculator.init();
+	if (QT.Settings.values.qmenu_settings_questliste && $('#quest_overview li').length !== 0)
+		QT.Functions.questlist();
 });
 
