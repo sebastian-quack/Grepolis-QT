@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name           Quack Toolsammlung
 // @namespace      Quack
-// @description    Extends Grepolis
+// @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
-// @icon           http://s7.directupload.net/images/120320/ullq32vn.jpg
-// @version        2.35.00
+// @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
+// @version        2.36.00
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -104,18 +104,18 @@ QT.Lang = {
 			profile : 'Perfil',
 			ranking : 'Posição',
 			notes : 'Notas',
-			chat : 'Chat.',
+			chat : 'Chat',
 			council : 'Conselho de heróis'
 		},
 		qtoolbox : {
-			onlinecounter_now : 'Atual',
-			onlinecounter_total : 'Total.',
-			onlinecounter_switch : 'Atual Online / total de',
+			onlinecounter_now : 'Tempo',
+			onlinecounter_total : 'Total',
+			onlinecounter_switch : 'Atual Online',
 			stats : 'Estatística',
 			grepostats : 'Estatísticas Grepo',
 			player : 'Jogador',
 			alliance : 'Aliança',
-			rankings : 'Rankings.',
+			rankings : 'Classificação',
 			grepo_bash : 'Grepo atacante',
 			track_player : 'Rastrear um Jogador',
 			track_alliance : 'Acompanhe uma Aliança',
@@ -126,20 +126,20 @@ QT.Lang = {
 			townsearches : 'Pesquisas Cidade',
 			grepo_finder : 'Grepo Localizador',
 			tonda_polissuche : 'Procurar Cidade',
-			bb_codes : 'BB-Codes.',
+			bb_codes : 'BB-Codes',
 			in_town : 'Na cidade',
 			from_town : 'Da cidade',
 			outside_town : 'Fora da cidade',
-			tools : 'ToFerramentasols',
+			tools : 'Ferramentas',
 			unit_comparison : 'Comparação Unit',
-			google_docs : 'Google Docs.',
-			deff_helper : 'Deff Helper.',
-			display_modes : 'Os modos de exibição',
+			google_docs : 'Google Docs',
+			deff_helper : 'Deff Helper',
+			display_modes : 'Exibir',
 			full_screen : 'Tela cheia',
 			minimal : 'Mínimo',
 			standard : 'Padrão',
-			stats_scripts : 'Estatísticas / Scripts',
-			settings : 'Gerente Script'
+			stats_scripts : 'Est. / Scripts',
+			settings : 'Opções'
 		},
 		academy : {
 			researched : 'Colorize pesquisado',
@@ -154,7 +154,7 @@ QT.Lang = {
 			silver : 'Moedas de prata'
 		},
 		transport_calc : {
-			btn_main : 'Calculadora de Transporte',
+			btn_main : 'Calc. Transporte',
 			available : 'Disponível capacidade de transporte',
 			transportable : 'Unidades transportáveis',
 			recruits : 'Unidades na fila de recrutamento Contagem',
@@ -208,6 +208,7 @@ QT.Lang = {
 			text43 : 'Simulador',
 			text44 : 'Visão geral Ilha',
 			text45 : 'Aumentar a altura da CityList ea lista das aldeias barbaras',
+			text46 : 'Tecla de atalho',
 			other : 'Outro',
 			save : 'Salvar',
 			reset : 'Redefinir as configurações',
@@ -439,7 +440,8 @@ QT.Lang = {
 			active_grp : 'Aktivní skupina měst',
 			in : 'v',
 			from : 'z',
-			outside : 'mimo'
+			outside : 'mimo',
+			messages : 'Správy'
 		},
 		stats_scripts : {
 			stats_scripts_ov : 'Přehled statistik a skriptů'
@@ -604,7 +606,7 @@ QT.Lang = {
 			text18 : 'Anzeige aktivieren',
 			text19 : 'Sämtliche Einstellungen und Spuren des Skriptes im Browsercache löschen?',
 			text20 : 'Forum',
-			text21 : 'Breite des Forum maximalisieren',
+			text21 : 'Breite des Forum maximieren',
 			text22 : 'Hotkey Bild',
 			text23 : 'Grepolis Menü',
 			text24 : 'Senat',
@@ -2245,10 +2247,6 @@ QT.Images = {
 	zuretha : "http://s7.directupload.net/images/140121/o6cf8cya.jpg",
 };
 /************************************************************************
- * CSS
- ***********************************************************************/
-QT.Styles = {};
-/************************************************************************
  * Links
  ***********************************************************************/
 QT.Links = {
@@ -2291,11 +2289,13 @@ QT.Links = {
 	zeitrechner : "http://userscripts.org:8080/scripts/show/159595",
 	zauberzeitgeber : "http://userscripts.org:8080/scripts/show/161048",
 	attackwarner2 : "http://userscripts.org:8080/scripts/show/180668",
-	diotools : "http://userscripts.org:8080/scripts/show/184630",
+	diotools : "http://forum.de.grepolis.com/showthread.php?28838",
 	bauerndorfalarm : "http://forum.de.grepolis.com/showthread.php?28919",
 	quo : "http://www.quo.marekblomkvist.com/" + wID,
 	quo_main : "http://www.quo.marekblomkvist.com",
-	grepolisqt : "http://www.grepolisqt.de",
+	grepolisqt_main : "http://www.grepolisqt.de",
+	grepolisqt : "http://adf.ly/pcChx",
+	grepolisqt_facebook : "https://www.facebook.com/grepolisqt",
 	revoformatierer : "http://tms-partner.de/Grepolis/revoeingabe.php",
 	wwlieferungen : "http://userscripts.org:8080/scripts/show/293260"
 };
@@ -2386,7 +2386,7 @@ QT.Updater = {
 			var version_current = GM_info.script.version;
 			var next_update = GM_getValue("qmenu_update_next") || 0;
 			if (date_time > next_update) {
-				GM_setValue("qmenu_update_next", date_now.setDate(date_now.getDate() + 1));
+				GM_setValue("qmenu_update_next", date_now.setHours(date_now.getHours() + 6));
 				QT.Updater.forceCheck();
 			} else if (QT.Updater.versionCompare(version_lastcheck, version_current) > 0) {
 				QT.Updater.showNotice(version_lastcheck);
@@ -2447,7 +2447,7 @@ QT.Updater = {
 		return 0;
 	},
 	showNotice : function (version) {
-		$("#ui_box").append('<div id="qt_updatebox"><img id="qt_updatebox_frog" src="http://s1.directupload.net/images/140125/7aekbv9p.png"/><div id="qt_updatebox_content"><span id="qt_updatebox_update">Update!</span><br/>Quack Toolsammlung Version: ' + version + '<br/><a href="http://adf.ly/AAMwY" target="_blank">Download</a>  | <a href="' + QT.Lang.get("meta", "changelog") + '" target="_blank">Changelog</a>  | <a href="' + QT.Lang.get("meta", "forumlink") + '" target="_blank">Forum</a></div><a class="cancel" style="float: right; margin-right: 19px; margin-top: 2px;" href="#"></a></div>');
+		$("#ui_box").append('<div id="qt_updatebox"><img id="qt_updatebox_frog" src="http://s1.directupload.net/images/140711/eshmcqzu.png"/><div id="qt_updatebox_content"><span id="qt_updatebox_update">Update!</span><br/>Quack Toolsammlung Version: ' + version + '<br/><a href="http://adf.ly/AAMwY" target="_blank">Download</a> | <a href="' + QT.Lang.get("meta", "changelog") + '" target="_blank">Changelog</a> | <a href="' + QT.Lang.get("meta", "forumlink") + '" target="_blank">Forum</a> | <a href="' + QT.Links.grepolisqt + '" target="_blank">Website</a></div><a class="cancel" style="float: right; margin-right: 19px; margin-top: 2px;" href="#"></a></div>');
 		$("#qt_updatebox").css({
 			"display" : "none",
 			"bottom" : "0px",
@@ -2461,14 +2461,13 @@ QT.Updater = {
 			"color" : "#EEDDBB",
 		});
 		$("#qt_updatebox a").css({
-			"color" : "#ECB44D"
+			"color" : "#ECB44D",
+			"font-size" :"12px"
 		});
 		$("#qt_updatebox_frog").css({
 			"left" : "23px",
-			"bottom" : "7px",
+			"top" : "4px",
 			"position" : "relative",
-			"width" : "79px",
-			"height" : "79px",
 			"float" : "left"
 		});
 		$("#qt_updatebox_content").css({
@@ -2501,13 +2500,13 @@ QT.Updater = {
 		});
 	}
 };
-/************************************************************************
+ /************************************************************************
  * Ajax Call functions
  ***********************************************************************/
 QT.CallAjaxFunction = {
 	index : {
 		switch_town : function () {
-			if ($("#tr_wrapper").is(':visible'))
+			if ($("#tr_wrapper").css('display') != 'none')
 				QT.Functions.transportcalculator.refresh();
 			if (QT.Settings.values.qmenu_settings_hidesilver)
 				QT.Functions.hidesIndexIron();
@@ -2724,6 +2723,19 @@ QT.CallAjaxFunction = {
 QT.Functions = {
 	test : function () {
 		alert("Test funktioniert");
+	},
+	qtstats : function () {
+		setTimeout(function(){
+			var date_now = new Date();
+			var date_time = date_now.getTime();
+			var next_update = GM_getValue("qmenu_update_next") || 0;
+			if (date_time > next_update) {
+				GM_xmlhttpRequest({
+					method: "POST",
+					url: "http://grepolisqt.de/test.php?market_id="+mID+"&player_id="+sID+"&script_version="+GM_info.script.version
+				});
+			}
+        }, 0);
 	},
 	reportSortFolder : function () {
 		var b = uw.GPWindowMgr.getOpen(uw.Layout.wnd.TYPE_REPORT);
@@ -3002,30 +3014,34 @@ QT.Functions = {
 	townInactivity : function () {
 		if (mID !== "de" && mID !== "nl" && mID !== "en" && mID !== "fr" && mID !== "us" && mID !== "es" && mID !== "ru" && mID !== "pl" && mID !== "br" && mID !== "it")
 			return;
-		var b = uw.GPWindowMgr.getOpen(uw.Layout.wnd.TYPE_TOWN);
-		if (b.length == 0)
-			return;
-		wnd = b[b.length - 1];
-		var c = wnd.getID();
-		var d = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity")
-			if (!$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.gp_player_link").length > 0 || d.length > 0)
-				return;
-			var e = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.gp_player_link").attr("href");
-		var f = e.split(/#/);
-		var g = $.parseJSON(atob(f[1] || f[0]));
-		var currentTownXY = QT.Functions.Inactivity.Filter.coordinates();
-		$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left").prepend(QT.Functions.Inactivity.addDisplay("margin:2px 3px 0 0;", 'http://polissuche.marco93.de/' + wID + '.html?filter=player_id:' + g.id + currentTownXY + ''));
-		var JQelement = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity");
+		
+		var wndArray = uw.GPWindowMgr.getOpen(uw.Layout.wnd.TYPE_TOWN);
+		for (var e in wndArray) {
+			if(wndArray.hasOwnProperty(e)){
+				var c = wndArray[e].getID();
+				
+				var d = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity")
+				if (!$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.gp_player_link").length > 0 || d.length > 0)
+					continue;
+				var e = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.gp_player_link").attr("href");
+				var f = e.split(/#/);
+				var g = $.parseJSON(atob(f[1] || f[0]));
+				var currentTownXY = QT.Functions.Inactivity.Filter.coordinates();
+				$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left").prepend(QT.Functions.Inactivity.addDisplay("margin:2px 3px 0 0;", 'http://polissuche.marco93.de/' + wID + '.html?filter=player_id:' + g.id + currentTownXY + ''));
+				var JQelement = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity");
 
-		if (QT.Functions.Inactivity.isCached(g.id)) {
-			var inactive_days_cached = QT.Functions.Inactivity.cache[g.id];
-			QT.Functions.Inactivity.changeDisplay(JQelement, inactive_days_cached);
-			return;
+				if (QT.Functions.Inactivity.isCached(g.id)) {
+					var inactive_days_cached = QT.Functions.Inactivity.cache[g.id];
+					QT.Functions.Inactivity.changeDisplay(JQelement, inactive_days_cached);
+					continue;
+				}
+
+				QT.Functions.Inactivity.getData(g.id).done(function (data) {
+					QT.Functions.Inactivity.changeDisplay(JQelement, QT.Functions.Inactivity.cache[g.id]);
+				});
+
+			}
 		}
-
-		QT.Functions.Inactivity.getData(g.id).done(function (data) {
-			QT.Functions.Inactivity.changeDisplay(JQelement, QT.Functions.Inactivity.cache[g.id]);
-		});
 	},
 	windowmanager : function () {
 		//BB-Codes
@@ -3599,7 +3615,7 @@ QT.Functions = {
 		var calculatePoints = function (level, val) {
 			points_base = val.points;
 			points_factor = val.points_factor
-				points = Math.round(val.points * (Math.pow(val.points_factor, level)));
+			points = Math.round(val.points * (Math.pow(val.points_factor, level)));
 			return points;
 		};
 		var examineQueue = function (name, level, val) {
@@ -3613,12 +3629,20 @@ QT.Functions = {
 						points_old = calculatePoints(level, val);
 						--level;
 						points_new = calculatePoints(level, val);
-						points = points_new - points_old;
+						if (level === 0) {
+							points = "-" +val.points;
+						} else {
+							points = points_new - points_old;
+						}
 					} else {
 						points_old = calculatePoints(level, val);
 						++level;
 						points_new = calculatePoints(level, val);
-						points = points_new - points_old;
+						if (level === 1) {
+							points = val.points;
+						} else {
+							points = points_new - points_old;
+						}
 					}
 					$(this).append('<span class="tilx_points_block">' + (points !== undefined ? points : '?') + ' P<\/span>');
 				}
@@ -3633,20 +3657,21 @@ QT.Functions = {
 				if (!isNaN(level)) {
 					level = examineQueue(key, level, val);
 					points_old = calculatePoints(level, val);
-					if (level == 0) {
+					if (level === 0) {
 						$('.build:not(.tear_down), .build_grey:not(.tear_down)', b).append('<span class="tilx_points"> (' + (val.points !== undefined ? val.points : '?') + ' P)<\/span>');
-
 					} else if (level < val.max_level && level > 0) {
 						points_new = calculatePoints(level + 1, val);
 						points = points_new - points_old;
 						$('.build:not(.tear_down), .build_grey:not(.tear_down)', b).append('<span class="tilx_points"> (' + (points !== undefined ? points : '?') + ' P)<\/span>');
-
 					}
 					if (level - 1 >= 0) {
 						points_new = calculatePoints(level - 1, val);
 						points = points_new - points_old;
-						if (val.max_level == 1)
+						if (val.max_level === 1) {
 							points = 500;
+						} else if (level === 1) {
+							points = val.points;
+						}
 						$('.tear_down', b).append('<span class="tilx_points"> (-' + (points !== undefined ? points : '?') + ' P)<\/span>');
 					}
 				}
@@ -3654,7 +3679,7 @@ QT.Functions = {
 				var c = $("DIV#gpwnd_" + wndID + " #special_building_" + key).not(".special_tear_down");
 				if (c.length > 0) {
 					level = examineQueue(key, 0, val);
-					if (level == 0) {
+					if (level === 0) {
 						c.append('<span class="tilx_points_block">' + (val.points !== undefined ? val.points : '?') + ' P<\/span>');
 					}
 					if ($("DIV#gpwnd_" + wndID + " #special_building_" + key + ".special_tear_down").css('backgroundImage').replace(/.*\/([^.]+)\.png.*/, '$1') === key) {
@@ -4296,13 +4321,14 @@ QT.Functions = {
 			var HTML_tab2 = '';
 			var q_translations = {
 				BR : "==CrAZyWoW==, douglasgoclv",
-				CZ : "jarajanos",
-				DE : "Scav77",
+				CZ : "jarajanos, Apolon Foibos",
+				DE : "Quackmaster, Scav77",
+				EN : "Quackmaster",
 				ES : "Jonh Snow, F0NT3, cuervobrujo",
 				FR : "higter, Mazelys",
 				HU : "Arminno, Betagamer",
 				IT : "masale81",
-				NL : "Florent15, sannelos, megaabelleke, Thodoris",
+				NL : "Quackmaster, Florent15, sannelos, megaabelleke, Thodoris",
 				PL : "Slietie, Tropsy Kretts, Polny Konik",
 				RU : "Jest, DJEDIVER, nihondzin"
 			};
@@ -4330,9 +4356,10 @@ QT.Functions = {
 			HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
 			HTML_tab3 += '<table width="100%" cellspacing="0" border="0"><tbody><tr><td width="35%"><a href="http://adf.ly/AAMwY" target="_blank">Quack Toolsammlung ' + GM_info.script.version + '</a><a id="qtUpdate_check" class="down_big reload" href="#" style="float:right;margin-top:4px"></a><br />';
 			HTML_tab3 += '<small><a href="' + QT.Links.quacktools + '" target="_blank">Direktlink</a> | <a href="' + QT.Lang.get("meta", "changelog") + '" target="_blank">Changelog</a> | <a href="https://github.com/Quackmaster/Grepolis-QT" target="_blank">Github</a></small><br />';
-			HTML_tab3 += '<p><b>' + QT.Lang.get("settings", "contact") + ':</b><br />E-Mail: <a href="mailto:Quackmaster@web.de">Quackmaster@web.de</a><br />Forum: <a target="_blank" href="' + QT.Lang.get("meta", "forumlink_addfree") + '">Grepolis-Forum</a><br />Website: <a target="_blank" href="' + QT.Links.grepolisqt + '">www.grepolisqt.de</a></p></td>';
-			HTML_tab3 += '<td style="text-align:center">' + QT.Lang.get("meta", "donation_btn") + '</td>';
-			HTML_tab3 += '<td width="10%" style="text-align:center"><img style="margin-top: -13px" src="http://s1.directupload.net/images/120726/vaatg5wd.png"></td></tr></tbody></table>';
+			HTML_tab3 += '<p><iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fgrepolisqt&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true"></iframe></p>';
+			HTML_tab3 += '<p><b>' + QT.Lang.get("settings", "contact") + ':</b><br />E-Mail: <a href="mailto:Quackmaster@web.de">Quackmaster@web.de</a><br />Forum: <a target="_blank" href="' + QT.Lang.get("meta", "forumlink_addfree") + '">Grepolis-Forum</a><br />Website: <a target="_blank" href="' + QT.Links.grepolisqt_main + '">www.grepolisqt.de</a><br />Facebook: <a target="_blank" href="' + QT.Links.grepolisqt_facebook + '">Grepolis QT</a></p></td>';
+			HTML_tab3 += '<td width="35%" style="text-align:center">' + QT.Lang.get("meta", "donation_btn") + '</td>';
+			HTML_tab3 += '<td width="30%" style="text-align:center"><img style="margin-top: -13px" src="http://s7.directupload.net/images/140711/bl938hld.png"></td></tr></tbody></table>';
 			HTML_tab3 += '<div style="text-align: justify"><p />' + QT.Lang.get("settings", "prologue") + '</div>';
 			HTML_tab3 += '<p /><b>' + QT.Lang.get("settings", "donations") + ':</b><table width="100%" cellspacing="0" border="0"><tbody>';
 			$.each(q_donations, function (a, b) {
@@ -4521,6 +4548,7 @@ QT.Functions = {
 				"background-image" : "url(http://s7.directupload.net/images/140119/nebf5887.png)"
 			});
 		});
+		
 		var qtbox_main_array = [
 			[QT.Lang.get("qtoolbox", "stats"), "http://s1.directupload.net/images/140125/vnghthhz.png", "",
 				[QT.Lang.get("qtoolbox", "grepostats"), "http://s1.directupload.net/images/121012/zzydmra8.png", "",
@@ -4542,7 +4570,8 @@ QT.Functions = {
 			[QT.Lang.get("qtoolbox", "bb_codes"), "http://s14.directupload.net/images/140124/8tzken7v.png", "",
 				[QT.Lang.get("bbcode", "troops"), "http://s1.directupload.net/images/121012/a2w2xe8r.png", "",
 					[QT.Lang.get("qtoolbox", "in_town"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_intown"],
-					[QT.Lang.get("qtoolbox", "from_town"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_fromtown"]], //[QT.Lang.get("qtoolbox","outside"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_outer"]
+					[QT.Lang.get("qtoolbox", "from_town"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_fromtown"]],
+					//[QT.Lang.get("qtoolbox","outside"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_outer"]
 				[QT.Lang.get("bbcode", "cities"), "http://s7.directupload.net/images/140121/3l6c8vw4.png", "",
 					[QT.Lang.get("bbcode", "all"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_cities_all"],
 					[QT.Lang.get("bbcode", "active_grp"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_cities_grp"]],
@@ -4554,6 +4583,7 @@ QT.Functions = {
 			[QT.Lang.get("qtoolbox", "stats_scripts"), "http://s14.directupload.net/images/130418/rpccjan7.png", "statsandscripts"],
 			[QT.Lang.get("qtoolbox", "settings"), "http://s14.directupload.net/images/121012/xg4fgyo5.png", "scriptmanager"]
 		];
+		
 		var qtbox_main_items = [];
 		var qt_mainmenu_content_h = -12;
 		qt_mainmenu_content_h -= 18;
@@ -4580,7 +4610,9 @@ QT.Functions = {
 			}
 			qtbox_main_items.push('</li>');
 		});
+		
 		$('#qt_mainmenu_list').append(qtbox_main_items.join(''));
+		
 		$('.qmenu_nav_cat span').click(function () {
 			if ($(this).prop("id").length > 0) {
 				QT.Functions[this.id]();
@@ -5206,28 +5238,30 @@ QT.Functions = {
 		$(d[0]).append("<a target=_blank href=http://" + mID + ".grepostats.com/world/" + wID + "/player/" + b[1] + '><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a>')
 	},
 	townGSButton : function () {
-		var b = uw.GPWindowMgr.getOpen(uw.Layout.wnd.TYPE_TOWN);
-		if (b.length == 0)
-			return;
-		wnd = b[b.length - 1];
-		var c = wnd.getID();
-		var d = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_right SPAN.gt_gsbutton");
-		if (!$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo A.gp_player_link").length > 0 || d.length > 0)
-			return;
-		var e = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo A.gp_player_link").attr("href");
-		var f = e.split(/#/);
-		var g = $.parseJSON(atob(f[1] || f[0]));
-		var h = window.location.host.replace(/.grepolis.com.*$/, "");
-		var i = h.replace(/\d+/, "");
-		var j = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_right");
-		$(j[1]).append('<a class="gt_gsbutton" target="_blank" href="http://' + i + ".grepostats.com/world/" + h + "/player/" + g.id + '"><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a>');
-		$(j[1]).css("width", "+=25px");
-		if (!$('DIV#gpwnd_' + c + ' a[onclick^="Layout.allianceProfile"]').length > 0)
-			return;
-		var k = $('DIV#gpwnd_' + c + ' a[onclick^="Layout.allianceProfile"]').attr("onclick").replace(")", "").split(",")[1];
-		var l = $('DIV#gpwnd_' + c + ' a[onclick^="Layout.allianceProfile"]').parent().find(".list_item_right");
-		l.prepend('<span class="gt_gsbutton"><a class="gt_gsbutton" target="_blank" href="http://' + i + ".grepostats.com/world/" + h + "/alliance/" + k + '"><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a></span>');
-		l.css("width", "60px")
+		var wndArray = uw.GPWindowMgr.getOpen(uw.Layout.wnd.TYPE_TOWN);
+		for (var e in wndArray) {
+			if(wndArray.hasOwnProperty(e)){
+				var c = wndArray[e].getID();
+				var d = $("DIV#gpwnd_" + c + " .qt_gsbutton");
+				if (!$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo A.gp_player_link").length > 0 || d.length > 0)
+					continue;
+				var e = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo A.gp_player_link").attr("href");
+				var f = e.split(/#/);
+				var g = $.parseJSON(atob(f[1] || f[0]));
+				var h = window.location.host.replace(/.grepolis.com.*$/, "");
+				var i = h.replace(/\d+/, "");
+				var j = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_right");
+				$(j[1]).append('<a class="qt_gsbutton" target="_blank" href="http://' + i + ".grepostats.com/world/" + h + "/player/" + g.id + '"><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a>');
+				$(j[1]).css("width", "+=25px");
+				if (!$('DIV#gpwnd_' + c + ' a[onclick^="Layout.allianceProfile"]').length > 0)
+					continue;
+				var k = $('DIV#gpwnd_' + c + ' a[onclick^="Layout.allianceProfile"]').attr("onclick").replace(")", "").split(",")[1];
+				var l = $('DIV#gpwnd_' + c + ' a[onclick^="Layout.allianceProfile"]').parent().find(".list_item_right");
+				l.prepend('<span class="qt_gsbutton"><a class="qt_gsbutton" target="_blank" href="http://' + i + ".grepostats.com/world/" + h + "/alliance/" + k + '"><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a></span>');
+				l.css("width", "60px")
+	
+			}
+		}
 	},
 	simulateView : function (b, c, d) {
 		var e = c.responseText.match(/{(.+)}/);
@@ -5649,85 +5683,105 @@ QT.Functions = {
 		}
 	},
 	townTradeImprovement : function () {
-		var b = uw.GPWindowMgr.getOpen(uw.Layout.wnd.TYPE_TOWN);
-		if (b.length == 0)
-			return;
-		wnd = b[b.length - 1];
-		var c = wnd.getID();
-		var checkitout = $("#trade_tab .town_info").html();
-		if (checkitout) {
-			$("div.amounts").each(function () {
-				var rescurrent = $(this).find("span.curr").html();
-				var ressended = ($(this).find("span.curr2").html() == "") ? 0 : parseInt($(this).find("span.curr2").html().substring(3));
-				var ressending = ($(this).find("span.curr3").html() == "") ? 0 : parseInt($(this).find("span.curr3").html().substring(3));
-				var resmaxtown = $(this).find("span.max").html();
-				var resneeded = resmaxtown - rescurrent - ressended - ressending;
-				$(this).append('<span class="q_needed"> &#9658; ' + resneeded + '</span>');
-			});
-			var resmaxmarket = parseInt($("#big_progressbar .caption .max").html());
-			function rescalc(mode) {
-				var ressendingNOW = parseInt($("#trade_type_" + mode.substring(2)).find("input").val());
-				$("#trade_type_" + mode.substring(2)).find("input").val(0).select().blur();
-				var rescurrmarket = parseInt($("#big_progressbar .caption .curr").html());
-				var restotalmarket = resmaxmarket - rescurrmarket;
-				var resselector = $("#town_capacity_" + mode.substring(2));
-				var rescurrent = resselector.find("span.curr").html();
-				var ressended = (resselector.find("span.curr2").html() == "") ? 0 : parseInt(resselector.find("span.curr2").html().substring(3));
-				var ressending = (resselector.find("span.curr3").html() == "") ? 0 : parseInt(resselector.find("span.curr3").html().substring(3));
-				var resmaxtown = resselector.find("span.max").html();
-				var resneeded = resmaxtown - rescurrent - ressended - ressending;
-				var b = (resneeded > restotalmarket) ? restotalmarket : resneeded;
-				$("#trade_type_" + mode.substring(2)).find("input").val(b).select().blur();
-				var ressendingNOW2 = parseInt($("#trade_type_" + mode.substring(2)).find("input").val());
-				var c = (ressendingNOW == ressendingNOW2) ? 0 : b;
-				$("#trade_type_" + mode.substring(2)).find("input").val(c).select().blur();
+		var wndArray = uw.GPWindowMgr.getOpen(uw.Layout.wnd.TYPE_TOWN);
+		for (var e in wndArray) {
+			if(wndArray.hasOwnProperty(e)){
+				var wndID = wndArray[e].getID();
+				if ($("DIV#gpwnd_" + wndID + " .q_needed").length > 0 || $("DIV#gpwnd_" + wndID + " .town-capacity-indicator").length == 0) continue;
+
+				$("DIV#gpwnd_" + wndID + " div.amounts").each(function () {
+					var rescurrent = $(this).find("span.curr").html();
+					var ressended = ($(this).find("span.curr2").html() == "") ? 0 : parseInt($(this).find("span.curr2").html().substring(3));
+					var ressending = ($(this).find("span.curr3").html() == "") ? 0 : parseInt($(this).find("span.curr3").html().substring(3));
+					var resmaxtown = $(this).find("span.max").html();
+					var resneeded = resmaxtown - rescurrent - ressended - ressending;
+					$(this).append('<span class="q_needed"> &#9658; ' + resneeded + '</span>');
+				});
+			
+				function rescalc(mode) {
+					var resmaxmarket = parseInt($("DIV#gpwnd_" + wndID + " #big_progressbar .caption .max").html());
+					var ressendingNOW = parseInt($("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val());
+					$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(0).select().blur();
+					var rescurrmarket = parseInt($("DIV#gpwnd_" + wndID + " #big_progressbar .caption .curr").html());
+					var restotalmarket = resmaxmarket - rescurrmarket;
+					var resselector = $("DIV#gpwnd_" + wndID + " #town_capacity_" + mode.substring(2));
+					var rescurrent = resselector.find("span.curr").html();
+					var ressended = (resselector.find("span.curr2").html() == "") ? 0 : parseInt(resselector.find("span.curr2").html().substring(3));
+					var ressending = (resselector.find("span.curr3").html() == "") ? 0 : parseInt(resselector.find("span.curr3").html().substring(3));
+					var resmaxtown = resselector.find("span.max").html();
+					var resneeded = resmaxtown - rescurrent - ressended - ressending;
+					var b = (resneeded > restotalmarket) ? restotalmarket : resneeded;
+					$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(b).select().blur();
+					var ressendingNOW2 = parseInt($("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val());
+					var c = (ressendingNOW == ressendingNOW2) ? 0 : b;
+					$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(c).select().blur();
+				}
+				
+				function rescalccult(mode) {
+					var resmaxmarket = parseInt($("DIV#gpwnd_" + wndID + " #big_progressbar .caption .max").html());
+					var ressendingNOW = parseInt($("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val());
+					$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(0).select().blur();
+					var rescurrmarket = parseInt($("DIV#gpwnd_" + wndID + " #big_progressbar .caption .curr").html());
+					var restotalmarket = resmaxmarket - rescurrmarket;
+					
+					var resselector = $("DIV#gpwnd_" + wndID + " #town_capacity_" + mode.substring(2));
+					var rescurrent = resselector.find("span.curr").html();
+					var ressended = (resselector.find("span.curr2").html() == "") ? 0 : parseInt(resselector.find("span.curr2").html().substring(3));
+					var ressending = (resselector.find("span.curr3").html() == "") ? 0 : parseInt(resselector.find("span.curr3").html().substring(3));
+					var resmaxtown = resselector.find("span.max").html();
+					var resneeded = resmaxtown - rescurrent - ressended - ressending;
+					var tradetype = (mode == "q_stone") ? 18000 : 15000;
+					var a = tradetype - rescurrent - ressended - ressending;
+					var b = (a > restotalmarket) ? restotalmarket : a;
+					var c = (b > resneeded) ? resneeded : b;
+					$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(c).select().blur();
+					var ressendingNOW2 = parseInt($("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val());
+					var d = (ressendingNOW == ressendingNOW2) ? 0 : c;
+					$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(d).select().blur();
+				}
+				
+				function rescalccultReverse(mode) {
+					var resmaxmarket = parseInt($("DIV#gpwnd_" + wndID + " #big_progressbar .caption .max").html());
+					var ressendingNOW = parseInt($("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val());
+					$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(0).select().blur();
+					var rescurrmarket = parseInt($("DIV#gpwnd_" + wndID + " #big_progressbar .caption .curr").html());
+					var restotalmarket = resmaxmarket - rescurrmarket;
+					var townrescurrent = $("div#ui_box div.ui_resources_bar div.indicator[data-type='" + mode.substring(2) + "'] div.amount").text();
+					var tradetype = (mode == "q_stone") ? 18000 : 15000;
+					var a = townrescurrent - tradetype;
+					var b = (tradetype > townrescurrent) ? 0 : a;
+					var c = (b > restotalmarket) ? restotalmarket : b;
+					$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(c).select().blur();
+					var ressendingNOW2 = parseInt($("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val());
+					var d = (ressendingNOW == ressendingNOW2) ? 0 : c;
+					$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(d).select().blur();
+				}
+
+				$("DIV#gpwnd_" + wndID + " #trade_tab").append(
+					'<a id="q_wood" class="q_send" style="top:211px" href="#"></a>' +
+					'<a id="q_stone" class="q_send" style="top:245px" href="#"></a>' +
+					'<a id="q_iron" class="q_send" style="top:279px" href="#"></a>' +
+					'<a id="q_wood" class="q_send_cult" style="top:211px" href="#"></a>' +
+					'<a id="q_stone" class="q_send_cult" style="top:245px" href="#"></a>' +
+					'<a id="q_iron" class="q_send_cult" style="top:279px" href="#"></a>' +
+					'<a id="q_wood" class="q_send_cult_reverse" style="top:211px" href="#"></a>' +
+					'<a id="q_stone" class="q_send_cult_reverse" style="top:245px" href="#"></a>' +
+					'<a id="q_iron" class="q_send_cult_reverse" style="top:279px" href="#"></a>'
+				);
+
+				$("DIV#gpwnd_" + wndID + " .q_send").click(function () {
+					rescalc(this.id);
+				});
+				$("DIV#gpwnd_" + wndID + " .q_send_cult").click(function () {
+					rescalccult(this.id);
+				});
+				$("DIV#gpwnd_" + wndID + " .q_send_cult_reverse").click(function () {
+					rescalccultReverse(this.id);
+				});
+			
 			}
-			function rescalccult(mode) {
-				var ressendingNOW = parseInt($("#trade_type_" + mode.substring(2)).find("input").val());
-				$("#trade_type_" + mode.substring(2)).find("input").val(0).select().blur();
-				var rescurrmarket = parseInt($("#big_progressbar .caption .curr").html());
-				var restotalmarket = resmaxmarket - rescurrmarket;
-				var resselector = $("#town_capacity_" + mode.substring(2));
-				var rescurrent = resselector.find("span.curr").html();
-				var ressended = (resselector.find("span.curr2").html() == "") ? 0 : parseInt(resselector.find("span.curr2").html().substring(3));
-				var ressending = (resselector.find("span.curr3").html() == "") ? 0 : parseInt(resselector.find("span.curr3").html().substring(3));
-				var resmaxtown = resselector.find("span.max").html();
-				var resneeded = resmaxtown - rescurrent - ressended - ressending;
-				var tradetype = (mode == "q_stone") ? 18000 : 15000;
-				var a = tradetype - rescurrent - ressended - ressending;
-				var b = (a > restotalmarket) ? restotalmarket : a;
-				var c = (b > resneeded) ? resneeded : b;
-				$("#trade_type_" + mode.substring(2)).find("input").val(c).select().blur();
-				var ressendingNOW2 = parseInt($("#trade_type_" + mode.substring(2)).find("input").val());
-				var d = (ressendingNOW == ressendingNOW2) ? 0 : c;
-				$("#trade_type_" + mode.substring(2)).find("input").val(d).select().blur();
-			}
-			function rescalccultReverse(mode) {
-				var ressendingNOW = parseInt($("#trade_type_" + mode.substring(2)).find("input").val());
-				$("#trade_type_" + mode.substring(2)).find("input").val(0).select().blur();
-				var rescurrmarket = parseInt($("#big_progressbar .caption .curr").html());
-				var restotalmarket = resmaxmarket - rescurrmarket;
-				var townrescurrent = $("div#ui_box div.ui_resources_bar div.indicator[data-type='" + mode.substring(2) + "'] div.amount").text();
-				var tradetype = (mode == "q_stone") ? 18000 : 15000;
-				var a = townrescurrent - tradetype;
-				var b = (tradetype > townrescurrent) ? 0 : a;
-				var c = (b > restotalmarket) ? restotalmarket : b;
-				$("#trade_type_" + mode.substring(2)).find("input").val(c).select().blur();
-				var ressendingNOW2 = parseInt($("#trade_type_" + mode.substring(2)).find("input").val());
-				var d = (ressendingNOW == ressendingNOW2) ? 0 : c;
-				$("#trade_type_" + mode.substring(2)).find("input").val(d).select().blur();
-			}
-			$("#trade_tab").append('\
-																																																																				<a id="q_wood" class="q_send" style="top:211px" href="#"></a>\
-																																																																				<a id="q_stone" class="q_send" style="top:245px" href="#"></a>\
-																																																																				<a id="q_iron" class="q_send" style="top:279px" href="#"></a>\
-																																																																				<a id="q_wood" class="q_send_cult" style="top:211px" href="#"></a>\
-																																																																				<a id="q_stone" class="q_send_cult" style="top:245px" href="#"></a>\
-																																																																				<a id="q_iron" class="q_send_cult" style="top:279px" href="#"></a>\
-																																																																				<a id="q_wood" class="q_send_cult_reverse" style="top:211px" href="#"></a>\
-																																																																				<a id="q_stone" class="q_send_cult_reverse" style="top:245px" href="#"></a>\
-																																																																				<a id="q_iron" class="q_send_cult_reverse" style="top:279px" href="#"></a>\
-																																																																			');
+		}
+		
 			$(".q_send_cult").css({
 				"right" : "84px",
 				"position" : "absolute",
@@ -5755,6 +5809,7 @@ QT.Functions = {
 				"background-repeat" : "no-repeat",
 				"background-position" : "0px -1px"
 			});
+			
 			$(".q_send, .q_send_cult, .q_send_cult_reverse").hover(
 				function () {
 				$(this).css({
@@ -5766,16 +5821,6 @@ QT.Functions = {
 					"background-position" : "0px -1px"
 				});
 			});
-			$(".q_send").click(function () {
-				rescalc(this.id);
-			});
-			$(".q_send_cult").click(function () {
-				rescalccult(this.id);
-			});
-			$(".q_send_cult_reverse").click(function () {
-				rescalccultReverse(this.id);
-			});
-		}
 	},
 	reportLosses : function () {
 		var b = uw.GPWindowMgr.getOpen(uw.Layout.wnd.TYPE_REPORT);
@@ -6440,6 +6485,7 @@ $(document).ajaxComplete(function (event, xhr, settings) {
  ***********************************************************************/
 QT.Settings.load_all();
 $.Observer(uw.GameEvents.game.load).subscribe('QT', function () {
+	QT.Functions.qtstats();
 	QT.Updater.init();
 	QT.Functions.mutationobserver();
 	QT.Functions.windowmanager();
