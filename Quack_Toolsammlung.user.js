@@ -4,145 +4,19 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.37.01
+// @version        2.38.00
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_deleteValue
 // @grant          GM_info
 // @grant          GM_xmlhttpRequest
-// @grant          unsafeWindow
 // ==/UserScript==
 
 /************************************************************************
- * Functions which use the GM_ API
+ * Main Script
  ***********************************************************************/
-var GM = {
-	values : {
-		"script_version" : GM_info.script.version,
-		"script_meta" : "",
-		"onlinetotal" : 0,
-		"googledocsurl" : "https://docs.google.com/spreadsheet/ccc?key=0AkpTmTnKs72_dEF3bWs3SW5iWjdyUEE0M0c3Znpmc3c",
-		"qmenu_update_next" : 0,
-		"qmenu_online_version" : 0,
-		"qmenu_settings_counter" : true,
-		"qmenu_settings_counter_aktiv" : true,
-		"qmenu_settings_links" : true,
-		"qmenu_settings_plusmenu" : true,
-		"qmenu_settings_buttonbar" : true,
-		"qmenu_settings_transport_rechner" : true,
-		"qmenu_settings_berichte_farben" : true,
-		"qmenu_settings_berichte_filter" : true,
-		"qmenu_settings_berichte_losses" : true,
-		"qmenu_settings_maximize_forum" : true,
-		"qmenu_settings_hotkey_anzeige" : true,
-		"qmenu_settings_grepopoints" : true,
-		"qmenu_settings_tradeimprovement" : true,
-		"qmenu_settings_stadtliste" : true,
-		"qmenu_settings_questliste" : true,
-		"qmenu_settings_berichte_move" : true,
-		"qmenu_settings_townbb" : true,
-		"qmenu_settings_forumdelete" : true,
-		"qmenu_settings_hidessort" : true,
-		"qmenu_settings_akademieplaner" : true,
-		"qmenu_settings_farmhelper" : true,
-		"qmenu_settings_hidessilver" : true,
-		"qmenu_settings_hidesilver" : true,
-		"qmenu_settings_cityview_BTN" : true,
-		"qmenu_settings_cityview_old" : true,
-		"qmenu_settings_island_villages" : true,
-		"qmenu_settings_hotkey_jump" : true,
-		"qmenu_settings_berichte_sortfolders" : true
-	},
-	save : function (name, value) {
-		setTimeout(function () {
-			GM_setValue(name, value);
-		}, 0);
-	},
-	load : function (name) {
-		setTimeout(function () {
-			GM_getValue(name);
-		}, 0);
-	},
-	delete : function (name) {
-		setTimeout(function () {
-			GM_deleteValue(name);
-		}, 0);
-	},
-	save_all : function (values) {
-		setTimeout(function () {
-			var keys = GM_listValues();
-			for (key in GM.values) {
-				if (key != "qmenu_update_next" && key != "qmenu_online_version" && key != "onlinetotal") {
-					if (key in values) {
-						GM_setValue(key, values[key]);
-					} else {
-						GM_deleteValue(key);
-					}
-				}
-			}
-		}, 0);
-		window.location.reload();
-	},
-	reset_all : function () {
-		setTimeout(function () {
-			var keys = GM_listValues();
-			for (var i = 0, key = null; key = keys[i]; i++) {
-				GM_deleteValue(key);
-			}
-		}, 0);
-		window.location.reload();
-	},
-	xmlhttpRequest : function (method, url) {
-		setTimeout(function () {
-			GM_xmlhttpRequest({
-				method : method,
-				url : url
-			});
-		}, 0);
-	},
-	Updater : function (Update) {
-		setTimeout(function () {
-			var date_now = new Date();
-			var date_time = date_now.getTime();
-			var version_lastcheck = GM_getValue("qmenu_online_version");
-			var version_current = GM_info.script.version;
-			var next_update = GM_getValue("qmenu_update_next") || 0;
-
-			if (date_time > next_update) {
-				GM_setValue("qmenu_update_next", date_now.setHours(date_now.getHours() + 6));
-				GM_xmlhttpRequest({
-					method : "GET",
-					url : "https://openuserjs.org/meta/quackmaster/Quack/Quack_Toolsammlung.meta.js",
-					headers : {
-						"User-agent" : "Mozilla/5.0",
-						"Accept" : "text/html"
-					},
-					onload : function (response) {
-						GM.Updater.meta = Update.parseHeaders(response.responseText);
-						GM_setValue("qmenu_online_version", GM.Updater.meta.version);
-						if (Update.versionCompare(GM.Updater.meta.version, GM_info.script.version) > 0) {
-							Update.showNotice(GM.Updater.meta.version);
-						}
-					}
-				});
-			} else if (Update.versionCompare(version_lastcheck, version_current) > 0) {
-				Update.showNotice(version_lastcheck);
-			}
-
-		}, 0);
-	}
-};
-
-var keys = GM_listValues();
-for (var i = 0, key = null; key = keys[i]; i++) {
-	GM.values[key] = GM_getValue(key);
-}
-
-/************************************************************************
- * Main script content
- ***********************************************************************/
-function main_script() {
+function main_script(DATA) {
 	/************************************************************************
 	 * Global variables
 	 ***********************************************************************/
@@ -152,6 +26,7 @@ function main_script() {
 	var aID = Game.alliance_id;
 	var sID = Game.player_id;
 	var pName = Game.player_name;
+
 	/************************************************************************
 	 * Languages
 	 ***********************************************************************/
@@ -701,6 +576,7 @@ function main_script() {
 			},
 			caves : {
 				stored_silver : 'Eingelagerte Silbermünzen',
+				silver_to_store: 'Lagerbare Silbermünzen',
 				name : 'Name',
 				wood : 'Holz',
 				stone : 'Stein',
@@ -713,7 +589,8 @@ function main_script() {
 				recruits : 'Truppen in der Bauschleife',
 				outsidetown : 'Truppen außerhalb der Stadt',
 				slowtrans : 'Langsame Transportboote mitzählen',
-				fasttrans : 'Schnelle Transportboote mitzählen'
+				fasttrans : 'Schnelle Transportboote mitzählen',
+				disabled : 'Temporär deaktiviert'
 			},
 			culture : {
 				cityfestivals : 'Stadtfeste',
@@ -792,7 +669,7 @@ function main_script() {
 				adfly : 'Auch mit Links Geld verdienen?',
 				donations : 'Spenden',
 				update_check : 'Nach Update suchen',
-				prologue : 'Aus Mangel an Skriptalternativen für Grepolis 2.0 wurde diese Toolsammlung vor 2 Jahren gestartet und versucht seitdem Grepolis um diverse Funktionen zu erweitern.<p />Anfänglich war es lediglich das Ziel alte Skripte der 1.0 Version wieder funktionstüchtig zu machen und Einblicke in die Funktionsweise von JavaScript zu erhalten. Mittlerweile hat sich jedoch einiges mehr daraus entwickelt. Die Toolsammlung wird stetig durch eigene Ideen oder Ideen aus der Community erweitert und durch euren Support ist die Motivation bis heute erhalten geblieben. Ihr stellt mich dabei immer wieder vor interessanten Problemstellungen und es macht Spaß eine Lösung dafür auszutüfteln.<p />Da dies mitunter viel Aufwand und Zeit beansprucht, freue ich mich immer sehr über jede Form von Unterstützung. Deshalb ein großes Danke an alle die dieses Projekt schon solange unterstützen - sei es durch eine Spende oder einen Klick auf einen AdFly-Link, Wissen, Kreativität, Bugberichte oder aufmunternde Worte.'
+				prologue : 'Aus Mangel an Skriptalternativen für Grepolis 2.0 wurde diese Toolsammlung vor 2 Jahren gestartet und versucht seitdem Grepolis um diverse Funktionen zu erweitern.<p />Anfänglich war es lediglich das Ziel alte Skripte der 1.0 Version wieder funktionstüchtig zu machen und Einblicke in die Funktionsweise von JavaScript zu erhalten. Mittlerweile hat sich jedoch einiges mehr daraus entwickelt. Die Toolsammlung wird stetig durch eigene Ideen oder Ideen aus der Community erweitert und durch euren Support ist die Motivation bis heute erhalten geblieben. Ihr stellt mich dabei immer wieder vor interessante Problemstellungen und es macht Spaß eine Lösung dafür auszutüfteln.<p />Da dies mitunter viel Aufwand und Zeit beansprucht, freue ich mich immer sehr über jede Form von Unterstützung. Deshalb ein großes Danke an alle die dieses Projekt schon solange unterstützen - sei es durch eine Spende oder einen Klick auf einen AdFly-Link, Wissen, Kreativität, Bugberichte oder aufmunternde Worte.'
 			},
 			bbcode : {
 				troops : 'Truppen',
@@ -2264,7 +2141,8 @@ function main_script() {
 				undo : 'Undo coloration'
 			},
 			caves : {
-				stored_silver : 'Stored Silver coins',
+				stored_silver : 'Stored silver coins',
+				silver_to_store: 'Storable silver coins',
 				name : 'Name',
 				wood : 'Wood',
 				stone : 'Stone',
@@ -2277,7 +2155,8 @@ function main_script() {
 				recruits : 'Count units in recruitment queue',
 				outsidetown : 'Count units outside of city',
 				slowtrans : 'Count slow transport ships',
-				fasttrans : 'Count fast transport ships'
+				fasttrans : 'Count fast transport ships',
+				disabled : 'Temporarily disabled'
 			},
 			culture : {
 				cityfestivals : 'City festivals',
@@ -2378,6 +2257,7 @@ function main_script() {
 			}
 		}
 	};
+
 	/************************************************************************
 	 * Images
 	 ***********************************************************************/
@@ -2429,6 +2309,7 @@ function main_script() {
 		urephon : "http://s14.directupload.net/images/140121/jfqewwux.jpg",
 		zuretha : "http://s7.directupload.net/images/140121/o6cf8cya.jpg",
 	};
+	
 	/************************************************************************
 	 * Links
 	 ***********************************************************************/
@@ -2482,98 +2363,65 @@ function main_script() {
 		revoformatierer : "http://tms-partner.de/Grepolis/revoeingabe.php",
 		wwlieferungen : "http://userscripts.org:8080/scripts/show/293260"
 	};
+
 	/************************************************************************
-	 * Updater
+	 * Settings
 	 ***********************************************************************/
-	QT.Updater = {
-		parseHeaders : function (metadataBlock) {
-			var headers = {};
-			var metadata = metadataBlock.match(/\/\/ ==UserScript==((.|\n|\r)*?)\/\/ ==\/UserScript==/);
-			if (metadata) {
-				var lines = metadata[0].match(/@(.*?)(\n|\r)/g);
-				for (var i = 0; i < lines.length; i++) {
-					var lineData = lines[i].match(/^@([^\s]*?)\s+(.*)/);
-					var key = lineData[1];
-					var value = lineData[2];
-					if (!headers[key])
-						headers[key] = value;
-					else if (headers[key]instanceof Array)
-						headers[key].push(value);
-					else
-						headers[key] = [headers[key], value];
-				}
+	QT.Settings = {
+		values : {
+			"onlinetotal" : 0,
+			"qmenu_online_version" : 0,
+			"qmenu_update_next" : 0,
+			"script_version" : 0,
+			"googledocsurl" : "https://docs.google.com/spreadsheet/ccc?key=0AkpTmTnKs72_dEF3bWs3SW5iWjdyUEE0M0c3Znpmc3c",
+			"qmenu_settings_akademieplaner" : true,
+			"qmenu_settings_berichte_farben" : true,
+			"qmenu_settings_berichte_filter" : true,
+			"qmenu_settings_berichte_losses" : true,
+			"qmenu_settings_berichte_move" : true,
+			"qmenu_settings_berichte_sortfolders" : true,
+			"qmenu_settings_buttonbar" : true,
+			"qmenu_settings_cityview_BTN" : true,
+			"qmenu_settings_cityview_old" : true,
+			"qmenu_settings_counter" : true,
+			"qmenu_settings_counter_aktiv" : true,
+			"qmenu_settings_farmhelper" : true,
+			"qmenu_settings_forumdelete" : true,
+			"qmenu_settings_grepopoints" : true,
+			"qmenu_settings_hidesilver" : true,
+			"qmenu_settings_hidessilver" : true,
+			"qmenu_settings_hidessort" : true,
+			"qmenu_settings_hotkey_anzeige" : true,
+			"qmenu_settings_hotkey_jump" : true,
+			"qmenu_settings_island_villages" : true,
+			"qmenu_settings_links" : true,
+			"qmenu_settings_maximize_forum" : true,
+			"qmenu_settings_plusmenu" : true,
+			"qmenu_settings_questliste" : true,
+			"qmenu_settings_stadtliste" : true,
+			"qmenu_settings_tradeimprovement" : true,
+			"qmenu_settings_transport_rechner" : true,
+			"qmenu_settings_townbb" : true
+		},
+		save : function (name, value) {
+			QT_saveValue(name, value);
+		},
+		save_all : function (valuesToSave) {
+			QT_saveAllValues(valuesToSave);
+		},
+		delete : function (name) {
+			QT_deleteValue(name);
+		},
+		delete_all : function () {
+			QT_deleteAllValues();
+		},
+		setValues : function () {
+			for (var opt in DATA) {
+				QT.Settings.values[opt] = DATA[opt];
 			}
-			return headers;
-		},
-		versionCompare : function (left, right) {
-			if (typeof left != "string" || typeof right != "string")
-				return false;
-			var a = left.split('.');
-			var b = right.split('.');
-			var len = Math.max(a.length, b.length);
-			for (var i = 0; i < len; i++) {
-				if ((a[i] && !b[i] && parseInt(a[i]) > 0) || (parseInt(a[i]) > parseInt(b[i]))) {
-					return 1;
-				} else if ((b[i] && !a[i] && parseInt(b[i]) > 0) || (parseInt(a[i]) < parseInt(b[i]))) {
-					return -1;
-				}
-			}
-			return 0;
-		},
-		showNotice : function (version) {
-			$("#ui_box").append('<div id="qt_updatebox"><img id="qt_updatebox_frog" src="http://s1.directupload.net/images/140711/eshmcqzu.png"/><div id="qt_updatebox_content"><span id="qt_updatebox_update">Update!</span><br/>Quack Toolsammlung Version: ' + version + '<br/><a href="http://adf.ly/AAMwY" target="_blank">Download</a> | <a href="' + QT.Lang.get("meta", "changelog") + '" target="_blank">Changelog</a> | <a href="' + QT.Lang.get("meta", "forumlink") + '" target="_blank">Forum</a> | <a href="' + QT.Links.grepolisqt + '" target="_blank">Website</a></div><a class="cancel" style="float: right; margin-right: 19px; margin-top: 2px;" href="#"></a></div>');
-			$("#qt_updatebox").css({
-				"display" : "none",
-				"bottom" : "0px",
-				"position" : "absolute",
-				"z-index" : "1000",
-				"background" : "url(http://s7.directupload.net/images/140125/8ke6vfq4.png)",
-				"width" : "429px",
-				"height" : "69px",
-				"left" : "50%",
-				"margin-left" : "-214px",
-				"color" : "#EEDDBB",
-			});
-			$("#qt_updatebox a").css({
-				"color" : "#ECB44D",
-				"font-size" : "12px"
-			});
-			$("#qt_updatebox_frog").css({
-				"left" : "23px",
-				"top" : "4px",
-				"position" : "relative",
-				"float" : "left"
-			});
-			$("#qt_updatebox_content").css({
-				"left" : "38px",
-				"top" : "9px",
-				"position" : "relative",
-				"float" : "left",
-				"text-align" : "left"
-			});
-			$("#qt_updatebox_update").css({
-				"color" : "red",
-			});
-			$("#qt_updatebox").slideDown();
-			$("#qt_updatebox a.cancel").click(function () {
-				QT.Updater.hideNotice();
-			});
-			$("#qt_updatebox a").hover(function () {
-				$(this).css({
-					"color" : "#804000"
-				});
-			}, function () {
-				$(this).css({
-					"color" : "#ECB44D"
-				});
-			});
-		},
-		hideNotice : function () {
-			$("#qt_updatebox").slideUp("slow", function () {
-				$("#qt_updatebox").remove();
-			});
 		}
 	};
+
 	/************************************************************************
 	 * Ajax Call functions
 	 ***********************************************************************/
@@ -2787,21 +2635,31 @@ function main_script() {
 			}
 		}
 	};
+
 	/************************************************************************
 	 * Functions
 	 ***********************************************************************/
 	QT.Functions = {
+		testButtons : function () {
+			$('#ui_box').append('<div id="qt_buttons" style="position: relative;top: 54px;z-index: 100"><button id="qt_save">Save</button><button id="qt_saveall">Save all</button><button id="qt_delete">Delete</button><button id="qt_deleteall">Delete all</button></div>');
+			$("#qt_save").click(function () {
+				QT.Settings.save("messageOpenAlert", false);
+			});
+			$("#qt_saveall").click(function () {
+				var values = {};
+				values.messageOpenAlert = false;
+				values.reportOpenAlert = false;
+				QT.Settings.save_all(values);
+			});
+			$("#qt_delete").click(function () {
+				QT.Settings.delete("messageOpenAlert");
+			});
+			$("#qt_deleteall").click(function () {
+				QT.Settings.delete_all();
+			});
+		},
 		test : function () {
 			alert("Test funktioniert");
-		},
-		qtstats : function () {
-			var date_now = new Date();
-			var date_time = date_now.getTime();
-			var next_update = QT.Settings.values.qmenu_update_next || 0;
-			if (date_time > next_update) {
-				QT.Settings.xmlhttpRequest("POST", "http://grepolisqt.de/test.php?market_id=" + mID + "&player_id=" + sID + "&script_version=" + QT.Settings.values.script_version);
-				QT.Settings.save("qmenu_update_next", date_now.setHours(date_now.getHours() + 6));
-			}
 		},
 		reportSortFolder : function () {
 			var b = GPWindowMgr.getOpen(Layout.wnd.TYPE_REPORT);
@@ -2824,8 +2682,7 @@ function main_script() {
 				}
 				return 0;
 			});
-
-			folders.remove().appendTo(foldersContainer);
+			folders.appendTo(foldersContainer);
 		},
 		unitsBeyondView : function () {
 			var selected_town = ITowns.getTown(Game.townId);
@@ -2996,8 +2853,6 @@ function main_script() {
 			}
 		},
 		allianceInactivity : function () {
-			if (mID !== "de" && mID !== "nl" && mID !== "en" && mID !== "fr" && mID !== "us" && mID !== "es" && mID !== "ru" && mID !== "pl" && mID !== "br" && mID !== "it")
-				return;
 			var wnd = GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_ALLIANCE_PROFILE);
 			if (!wnd)
 				return;
@@ -3034,8 +2889,6 @@ function main_script() {
 			});
 		},
 		islandInactivity : function (event, xhr, settings) {
-			if (mID !== "de" && mID !== "nl" && mID !== "en" && mID !== "fr" && mID !== "us" && mID !== "es" && mID !== "ru" && mID !== "pl" && mID !== "br" && mID !== "it")
-				return;
 			var b = GPWindowMgr.getOpen(Layout.wnd.TYPE_ISLAND);
 			if (b.length == 0)
 				return;
@@ -3077,9 +2930,6 @@ function main_script() {
 			});
 		},
 		townInactivity : function () {
-			if (mID !== "de" && mID !== "nl" && mID !== "en" && mID !== "fr" && mID !== "us" && mID !== "es" && mID !== "ru" && mID !== "pl" && mID !== "br" && mID !== "it")
-				return;
-
 			var wndArray = GPWindowMgr.getOpen(Layout.wnd.TYPE_TOWN);
 			for (var e in wndArray) {
 				if (wndArray.hasOwnProperty(e)) {
@@ -3278,8 +3128,8 @@ function main_script() {
 				str += '</select></span></span></span>';
 				return $(str);
 			},
-			grepo_input : function (ID, Text) {
-				return $('<div class="input_box"><span class="grepo_input"><span class="left"><span class="right"><input id="' + ID + '" type="text" value="' + Text + '"></span></span></span></div>');
+			grepo_input : function (Style, ID, Text) {
+				return $('<div class="input_box" style="' + Style + '"><span class="grepo_input"><span class="left"><span class="right"><input id="' + ID + '" type="text" value="' + Text + '"></span></span></span></div>');
 			},
 			grepo_submenu : function (ID, Title) {
 				return $('<li><a id="' + ID + '" class="submenu_link" href="#"><span class="left"><span class="right"><span class="middle" title="' + Title + '">' + Title + '</span></span></span></a></li>');
@@ -4291,15 +4141,16 @@ function main_script() {
 			var wnd = GPWindowMgr.Create(GPWindowMgr.TYPE_QT_GOOGLEDOCS) || GPWindowMgr.getOpenFirst(GPWindowMgr.TYPE_QT_GOOGLEDOCS);
 			wnd.setTitle("Google Docs");
 			wnd.setContent(html);
-			QT.Functions.helper.grepo_input("googledocsURL_CHANGE_TEXTFELD", QT.Settings.values.googledocsurl).insertAfter('#googledocs_frame');
+			QT.Functions.helper.grepo_input("margin-left:-5px;margin-top:3px;float:left", "googledocsURL_CHANGE_TEXTFELD", QT.Settings.values.googledocsurl).insertAfter('#googledocs_frame');
 			QT.Functions.helper.grepo_btn("googledocsURL_RESET_BUTTON", QT.Lang.get("googledocs", "reset")).insertAfter('#googledocs_frame');
 			QT.Functions.helper.grepo_btn("googledocsURL_CHANGE_BUTTON", QT.Lang.get("googledocs", "change_url")).insertAfter('#googledocs_frame');
 			$("#googledocsURL_CHANGE_TEXTFELD").css({
-				"width" : "590px"
+				"width" : "580px"
 			});
 			$("#googledocsURL_CHANGE_BUTTON").css({
-				"margin-left" : "5px",
-				"margin-top" : "3px"
+				"margin-right" : "0px",
+				"margin-top" : "3px",
+				"float" : "right"
 			}).click(function () {
 				QT.Settings.values.googledocsurl = $("#googledocsURL_CHANGE_TEXTFELD").val();
 				setTimeout(function () {
@@ -4308,12 +4159,11 @@ function main_script() {
 				document.getElementById('googledocs_frame').src = QT.Settings.values.googledocsurl;
 			});
 			$("#googledocsURL_RESET_BUTTON").css({
-				"margin-top" : "3px"
+				"margin-top" : "3px",
+				"float" : "right"
 			}).click(function () {
 				QT.Settings.values.googledocsurl = "https://docs.google.com/spreadsheet/ccc?key=0AkpTmTnKs72_dEF3bWs3SW5iWjdyUEE0M0c3Znpmc3c";
-				setTimeout(function () {
-					QT.Settings.delete("googledocsurl");
-				}, 0);
+				QT.Settings.delete("googledocsurl");
 				document.getElementById('googledocs_frame').src = QT.Settings.values.googledocsurl;
 				document.getElementById('googledocsURL_CHANGE_TEXTFELD').value = QT.Settings.values.googledocsurl;
 			});
@@ -4416,7 +4266,8 @@ function main_script() {
 					["Leuchtkraft - 10€", "Ann-Katrin R. - 3€", "alexander1128 - 10€", "Martin P. - 10€"],
 					[" Rolf M. - 5€", "David W. - 5€", "Omega78 - 25€", "Helga S. - 1€"],
 					["Falk T. - 5€", "Christian B. - 1€", "Christian P. - 25€", "Maik S. - 2€"],
-					["Dennis B. - 1€", "Sinnaman - 15€", "Marcel N. - 10€"]
+					["Dennis B. - 1€", "Sinnaman - 15€", "Marcel N. - 10€", "Edith M. - 10€"],
+					["Nepomuk P. - 50€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
@@ -4521,7 +4372,7 @@ function main_script() {
 					"margin-left" : "1px"
 				}).click(function () {
 					hOpenWindow.showConfirmDialog('', QT.Lang.get("settings", "text19"), function () {
-						QT.Settings.reset_all();
+						QT.Settings.delete_all();
 					});
 				});
 				$(".contentDiv > DIV:last-child").css({
@@ -4786,18 +4637,13 @@ function main_script() {
 				$('#ui_box .nui_main_menu .bottom, #ui_box .nui_main_menu .leaves').css({
 					"bottom" : "-=27px"
 				});
-				$('#qtbox_buttons_wrapper').append('<a id="qtbox_button1" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 3px;" target="_blank" href="' + QT.Links.GS_Spieler + '"><img src="http://s1.directupload.net/images/131008/ktvkyrx8.png"></a><a id="qtbox_button2" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 29px;" target="_blank" href="' + QT.Links.GrepoIntelPlayer + '"><img src="http://s1.directupload.net/images/131008/2hr8vbhw.png"></a><a id="qtbox_button3" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 55px;" target="_blank" href="' + QT.Links.GrepoBash + '"><img src="http://s14.directupload.net/images/131008/wfe9ficd.png"></a><a id="qtbox_button4" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 81px;" target="_blank" href="' + QT.Links.GrepoMaps + '"><img src="http://s7.directupload.net/images/131007/hdh4farx.png"></a>');
+				$('#qtbox_buttons_wrapper').append('<a id="qtbox_button1" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 3px;" target="_blank" href="' + QT.Links.GS_Spieler + '"><img src="http://s1.directupload.net/images/131008/ktvkyrx8.png"></a><a id="qtbox_button2" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 29px;" target="_blank" href="' + QT.Links.GrepoIntelPlayer + '"><img src="http://s1.directupload.net/images/131008/2hr8vbhw.png"></a><a id="qtbox_button3" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 55px;" target="_blank" href="' + QT.Links.GrepoBash + '"><img src="http://s14.directupload.net/images/131008/wfe9ficd.png"></a><a id="qtbox_button4" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 81px;" target="_blank" href="' + QT.Links.GrepoMaps + '"><img src="http://s7.directupload.net/images/131007/hdh4farx.png"></a><a id="qtbox_button5" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 107px;" target="_blank" href="' + QT.Links.Polissuche + '"><img src="http://s7.directupload.net/images/131008/5zj4ujmi.png"></a>');
 				$('#qtbox_button1').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepostats")));
 				$('#qtbox_button2').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepo_intel")));
 				$('#qtbox_button3').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepo_bash")));
 				$('#qtbox_button4').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepo_maps")));
-				if (mID == "de" || mID == "nl" || mID == "en" || mID == "fr" || mID == "us" || mID == "es" || mID == "ru" || mID == "pl" || mID == "br" || mID == "it") {
-					$('#qtbox_buttons_wrapper').append('<a id="qtbox_button5" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 107px;" target="_blank" href="' + QT.Links.Polissuche + '"><img src="http://s7.directupload.net/images/131008/5zj4ujmi.png"></a>');
-					$('#qtbox_button5').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "tonda_polissuche")));
-				} else {
-					$('#qtbox_buttons_wrapper').append('<a id="qtbox_button5" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 107px;" target="_blank" href="' + QT.Links.Grepofinder + '"><img src="http://s7.directupload.net/images/131008/k5uwtmfr.png"></a>');
-					$('#qtbox_button5').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepo_finder")));
-				}
+				$('#qtbox_button5').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "tonda_polissuche")));
+
 				$(".qtbox_button").hover(
 					function () {
 					$(this).css({
@@ -5538,96 +5384,60 @@ function main_script() {
 			$(".hide_storage_level").text(addPoints(hideSilver));
 		},
 		hidesSort : function () {
-			$("#hides_overview_wrapper").parent().parent().append('<div id="trade_control" class="overview_search_bar" style="width:741px;margin-left:16px"><span class="grepo_input" style="margin:2px"><span class="left"><span class="right"><select name="qsort_towns" id="qsort_towns" type="text"><option value="ironinstore">' + QT.Lang.get("caves", "stored_silver") + '</option><option value="name">' + QT.Lang.get("caves", "name") + '</option><option value="wood">' + QT.Lang.get("caves", "wood") + '</option><option value="stone">' + QT.Lang.get("caves", "stone") + '</option><option value="iron">' + QT.Lang.get("caves", "silver") + '</option></select></span></span></span><div id="qsortfilter"></div><div id="qsortinit" class="button_order_by active" style="margin: 3px 0 0 3px"></div></div>');
-			$('#qsortfilter').css({
-				"position" : "relative",
-				"height" : "21px",
-				"width" : "20px",
-				"vertical-align" : "middle",
-				"overlow" : "hidden",
-				"display" : "inline-block",
-				"cursor" : "pointer",
-				"background" : "url(http://s1.directupload.net/images/130819/p7ddm23r.png) no-repeat scroll 0 0 transparent",
-				"float" : "left",
-				"margin" : "3px"
-			});
+			$("#hides_overview_wrapper").parent().parent().append('<div id="hides_sort_control" class="overview_search_bar" style="width:741px;margin-left:6px"><span class="grepo_input" style="margin:2px"><span class="left"><span class="right"><select name="qsort_towns" id="qsort_towns" type="text"><option value="ironinstore">' + QT.Lang.get("caves", "stored_silver") + '</option><option value="name">' + QT.Lang.get("caves", "name") + '</option><option value="wood">' + QT.Lang.get("caves", "wood") + '</option><option value="stone">' + QT.Lang.get("caves", "stone") + '</option><option value="iron">' + QT.Lang.get("caves", "silver") + '</option></select></span></span></span><div id="qsortinit" class="button_order_by active" style="margin: 3px 0 0 3px"></div></div>');
+			QT.Functions.helper.grepo_input("margin-top:0px","qsortfilterbox","").appendTo('#hides_sort_control');
 			$('#hides_overview_towns').css({
 				"margin-top" : "39px"
 			});
+
 			var selection,
 			order;
-			var filterbox = '<div class="textbox initial-message qsortfilterbox" style="float:left;margin:2px"><div class="left"></div><div class="right"></div><div class="middle"><div class="initial-message-box js-empty" style="display: block;"></div><input type="text" tabindex="1"></div></div>';
-			var filterswitch = false;
-			var filterswitchHover = '0px ';
 			$("#qsortinit").click(function () {
 				sort($("#qsort_towns").val());
 				$(this).toggleClass('active')
 			});
-			$("#qsortfilter").click(function () {
-				togglefilter(filterswitch = !filterswitch);
-			});
-			$("#qsortfilter").on('mouseover', function () {
-				this.style.backgroundPosition = filterswitchHover + '-21px ';
-			}).on('mouseout', function () {
-				this.style.backgroundPosition = filterswitchHover + '0px';
-			})
-			function togglefilter(filterswitch) {
-				if (filterswitch) {
-					$("#qsortfilter").before(filterbox).before(filterbox).before(filterbox);
-					$('#qsortfilter').css({
-						"background-position" : "-20px 0"
-					});
-					filterswitchHover = '-20px ';
-				} else {
-					$(".qsortfilterbox").remove();
-					$('#qsortfilter').css({
-						"background-position" : "0 0"
-					});
-					filterswitchHover = '0px ';
-				}
 
-			};
 			function isNumber(n) {
 				return !isNaN(parseFloat(n)) && isFinite(n);
 			}
+			
 			function setfilter(selection) {
+				console.log(selection);
 				$('#hides_overview_towns>li').show();
-				$('.qsortfilterbox :input').each(function (i, e) {
-					if (isNumber($(this).val())) {
-						regexpRES = RegExp(/wood|stone|iron/);
-						regexpInS = RegExp(/eta/);
-						regexpNoT = RegExp(/gp_town_link/);
-						if (regexpNoT.test(selection)) {
-							numericfilter = $(this).val();
+				if (isNumber($('#qsortfilterbox').val())) {
+					regexpRES = RegExp(/wood|stone|iron/);
+					regexpInS = RegExp(/eta/);
+					regexpNoT = RegExp(/gp_town_link/);
+					numericfilter = parseInt($('#qsortfilterbox').val());
+					console.log(numericfilter);
+					$('#hides_overview_towns>li').each(function (i, e) {
+						if (regexpRES.test(selection)) {
+							console.log(e);
+							selectedSort = parseInt($(e).find(selection).text()) || 0;
+						} else if (regexpInS.test(selection)) {
+							selectedSort = parseInt($(e).find(selection).text().substr(1)) || 0;
 						} else {
-							numericfilter = parseInt($(this).val());
+							selectedSort = $(e).find(selection).text();
+							if (!(selectedSort.indexOf(numericfilter) >= 0)) {
+								$(e).hide();
+							}
 						}
-						$('#hides_overview_towns>li').each(function (i, e) {
-							if (regexpRES.test(selection)) {
-								selectedSort = parseInt($(e).find(selection).text()) || 0;
-							} else if (regexpInS.test(selection)) {
-								selectedSort = parseInt($(e).find(selection).text().substr(1)) || 0;
-							} else {
-								selectedSort = $(e).find(selection).text();
-								if (!(selectedSort.indexOf(numericfilter) >= 0)) {
-									$(e).hide();
-								}
-							}
-							if (numericfilter > selectedSort) {
-								$(e).hide();
-							}
-						});
-					} else {
-						namefilter = $(this).val();
-						$('#hides_overview_towns>li').each(function (i, e) {
-							townname = $(e).find('a.gp_town_link').text();
-							if (namefilter.length > 0 && !(townname.indexOf(namefilter) >= 0)) {
-								$(e).hide();
-							}
-						});
-					}
-				});
+						
+						if (numericfilter > selectedSort) {
+							$(e).hide();
+						}
+					});
+				} else {
+					namefilter = $('#qsortfilterbox').val();
+					$('#hides_overview_towns>li').each(function (i, e) {
+						townname = $(e).find('a.gp_town_link').text();
+						if (namefilter.length > 0 && !(townname.indexOf(namefilter) >= 0)) {
+							$(e).hide();
+						}
+					});
+				}
 			};
+			
 			function sort(selection) {
 				order = !order;
 				switch (selection) {
@@ -6339,7 +6149,7 @@ function main_script() {
 		},
 		transportcalculator : {
 			init : function () {
-				$('#ui_box .nui_units_box .units_naval').after('<div id="units_transport" class="container_hidden" style="position:relative"><div class="top"></div><div class="bottom"></div><div class="middle"><div class="left"></div><div class="right"></div><div class="content"><div class="units_wrapper clearfix"><div id="tr_wrapper"><div id="tr_options"><div id="tr_recruit" class="checkbox_new checked" style="margin-right:-1px"><div class="tr_options tr_recruit"></div><div class="cbx_icon" style="margin-top:2px"></div></div><div id="tr_outside" class="checkbox_new" style="margin-right:-1px"><div class="tr_options tr_outside"></div><div class="cbx_icon" style="margin-top:2px"></div></div><div id="tr_big_transporter" class="checkbox_new checked" style="margin-right:-1px"><div class="tr_options tr_big_transporter"></div><div class="cbx_icon" style="margin-top:2px"></div></div><div id="tr_small_transporter" class="checkbox_new checked" style="margin-right:-1px"><div class="tr_options tr_small_transporter"></div><div class="cbx_icon" style="margin-top:2px"></div></div></div><div id="tr_content"></div></div></div><div id= "tr_btn" class="">' + QT.Lang.get("transport_calc", "btn_main") + '</div><div id="tr_btn_top"></div><div class="bottom" style="bottom:19px"></div></div></div></div>');
+				$('#ui_box .nui_units_box .units_naval').after('<div id="units_transport" class="container_hidden" style="position:relative"><div class="top"></div><div class="bottom"></div><div class="middle"><div class="left"></div><div class="right"></div><div class="content"><div class="units_wrapper clearfix"><div id="tr_wrapper"><div id="tr_options"><div id="tr_recruit" class="checkbox_new checked" style="margin-right:-1px"><div class="tr_options tr_recruit"></div><div class="cbx_icon" style="margin-top:2px"></div></div><div id="tr_outside" class="checkbox_new disabled" style="margin-right:-1px"><div class="tr_options tr_outside tr_deactivated"></div><div class="cbx_icon" style="margin-top:2px"></div></div><div id="tr_big_transporter" class="checkbox_new checked" style="margin-right:-1px"><div class="tr_options tr_big_transporter"></div><div class="cbx_icon" style="margin-top:2px"></div></div><div id="tr_small_transporter" class="checkbox_new checked" style="margin-right:-1px"><div class="tr_options tr_small_transporter"></div><div class="cbx_icon" style="margin-top:2px"></div></div></div><div id="tr_content"></div></div></div><div id= "tr_btn" class="">' + QT.Lang.get("transport_calc", "btn_main") + '</div><div id="tr_btn_top"></div><div class="bottom" style="bottom:19px"></div></div></div></div>');
 				$("#tr_btn").css({
 					"cursor" : "pointer",
 					"position" : "relative",
@@ -6379,6 +6189,9 @@ function main_script() {
 				$(".tr_recruit").css({
 					"background-position" : "0 -54px"
 				});
+				$(".tr_deactivated").css({
+					"background-image" : "url(http://s7.directupload.net/images/140729/z474f6rk.png)"
+				});
 				$(".tr_big_transporter").css({
 					"background-position" : "0 0"
 				});
@@ -6386,12 +6199,14 @@ function main_script() {
 					"background-position" : "0 -18px"
 				});
 				$('#tr_recruit').mousePopup(new MousePopup(QT.Lang.get("transport_calc", "recruits")));
-				$('#tr_outside').mousePopup(new MousePopup(QT.Lang.get("transport_calc", "outsidetown")));
+				$('#tr_outside').mousePopup(new MousePopup(QT.Lang.get("transport_calc", "disabled")));
 				$('#tr_big_transporter').mousePopup(new MousePopup(QT.Lang.get("transport_calc", "slowtrans")));
 				$('#tr_small_transporter').mousePopup(new MousePopup(QT.Lang.get("transport_calc", "fasttrans")));
 				$("#tr_options .checkbox_new").click(function () {
-					$(this).toggleClass("checked");
-					$("#tr_content").html(QT.Functions.transportcalculator.refresh());
+					if ($(this).find('DIV.tr_deactivated').length === 0) {
+						$(this).toggleClass("checked");
+						$("#tr_content").html(QT.Functions.transportcalculator.refresh());
+					}
 				});
 				$("#tr_btn").hover(
 					function () {
@@ -6481,13 +6296,14 @@ function main_script() {
 			}
 		}
 	};
+
 	/************************************************************************
 	 * Observer
 	 ***********************************************************************/
 	$.Observer(GameEvents.game.load).subscribe('QT', function (e, data) {
-		QT.Settings = GM;
-		GM.Updater(QT.Updater);
-		QT.Functions.qtstats();
+		QT.Settings.setValues();
+		QT_sendStats(mID, sID, QT.Settings.values.script_version);
+		QT_updater(QT.Lang.get("meta", "changelog"), QT.Lang.get("meta", "forumlink"));
 		QT.Functions.mutationobserver();
 		QT.Functions.windowmanager();
 		QT.Functions.selectunitshelper();
@@ -6503,7 +6319,6 @@ function main_script() {
 			QT.Functions.transportcalculator.init();
 		if (QT.Settings.values.qmenu_settings_questliste && $('#quest_overview li').length !== 0)
 			QT.Functions.questlist();
-
 		$(document).ajaxComplete(function (event, xhr, settings) {
 			var a = settings.url.split("?");
 			var b = a[0].substr(6);
@@ -6512,60 +6327,198 @@ function main_script() {
 				QT.CallAjaxFunction[b][c](event, xhr, settings);
 			}
 		});
-
 	});
 }
 
 /************************************************************************
- * Starting method
+ * Start Method
  ***********************************************************************/
-if (typeof cloneInto != "undefined") {
-	unsafeWindow.GM = cloneInto(GM, unsafeWindow, {
-			cloneFunctions : true
-		});
-	var s = document.createElement('script');
-	s.type = 'text/javascript';
-	s.textContent = main_script.toString() + "\n main_script();";
-	document.head.appendChild(s);
-} else {
-	function getBrowser(){
-		var ua = navigator.userAgent, tem, 
-		M = ua.match(/(opera|maxthon|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-		if(/trident/i.test(M[1])){
-			tem =  /\brv[ :]+(\d+)/g.exec(ua) || [];
-			M[1] = 'IE';
-			M[2] = tem[1] || '';
-		}
-		if(M[1] === 'Chrome'){
-			tem = ua.match(/\bOPR\/(\d+)/);
-			if(tem != null){ 
-				M[1] = 'Opera';
-				M[2] = tem[1];
-			}
-		}
-		M = M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
-		if((tem = ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
-		return M;
-	}
-	if (getBrowser()[0] == "Firefox") {
-		function ff_updatebox () {
-			$.Observer(GameEvents.game.load).subscribe('QT', function (e, data) {
-				var ub_text_array = {
-					de : "Du benutzt wahrscheinlich eine veraltete Greasemonkey Version, womit die Quack Toolsammlung nicht funktionsfähig ist. Möchtest du die aktuelle Version von Greasemonkey downloaden?",
-					en : "You are probably using an old version of Greasemonkey which is not compatible with the Quack Toolsammlung. Do you want to download the newest version of Greasemonkey?"
-				};
-				var lang = (Game.market_id == "de") ? "de" : "en";
-				var ub_text = '<img style="margin-top:-20px;width:40px" src="http://s7.directupload.net/images/140711/bl938hld.png"><br/>' + ub_text_array[lang];
-				hOpenWindow.showConfirmDialog('Quack Toolsammlung', ub_text, function () {
-					window.open('https://addons.mozilla.org/'+lang+'/firefox/addon/greasemonkey/', '_blank');
-				});
-			});
-		}
-		var s = document.createElement('script');
-		s.type = 'text/javascript';
-		s.textContent = ff_updatebox.toString() + "\n ff_updatebox();";
-		document.head.appendChild(s);
-	}
-	main_script();
+var DATA = {
+	script_version : GM_info.script.version
+};
+
+var keys = GM_listValues();
+for (var i = 0, key = null; key = keys[i]; i++) {
+	DATA[key] = GM_getValue(key);
 }
 
+unsafeWindow.QT_saveValue = function (name, val) {
+	setTimeout(function () {
+		GM_setValue(name, val);
+		window.location.reload();
+	}, 0);
+};
+unsafeWindow.QT_saveAllValues = function (values) {
+	setTimeout(function () {
+		var exceptions = ["qmenu_update_next", "qmenu_online_version", "onlinetotal, googledocsurl"];
+		var keys = GM_listValues();
+		for (var i = 0, key = null; key = keys[i]; i++) {
+			if (exceptions.indexOf(key) > -1) {
+				continue;
+			}
+			GM_deleteValue(key);
+		}
+		for (key in values) {
+			GM_setValue(key, values[key]);
+		}
+		window.location.reload();
+	}, 0);
+};
+unsafeWindow.QT_deleteValue = function (name) {
+	setTimeout(function () {
+		GM_deleteValue(name);
+		window.location.reload();
+	}, 0);
+};
+unsafeWindow.QT_deleteAllValues = function () {
+	setTimeout(function () {
+		var keys = GM_listValues();
+		for (var i = 0, key = null; key = keys[i]; i++) {
+			GM_deleteValue(key);
+		}
+		window.location.reload();
+	}, 0);
+};
+unsafeWindow.QT_sendStats = function (market_id, player_id, script_version) {
+	setTimeout(function () {
+		GM_xmlhttpRequest({
+			method : "POST",
+			url : "http://grepolisqt.de/test.php?market_id=" + market_id + "&player_id=" + player_id + "&script_version=" + script_version
+		});
+	}, 0);
+};
+unsafeWindow.QT_updater = function (changelog, forumlink) {
+	setTimeout(function () {
+		var date_now = new Date();
+		var date_time = date_now.getTime();
+		var version_lastcheck = GM_getValue("qmenu_online_version");
+		var version_current = GM_info.script.version;
+		var next_update = GM_getValue("qmenu_update_next") || 0;
+
+		function forceCheck() {
+			GM_xmlhttpRequest({
+				method : "GET",
+				url : "https://openuserjs.org/meta/quackmaster/Quack/Quack_Toolsammlung.meta.js",
+				headers : {
+					"User-agent" : "Mozilla/5.0",
+					"Accept" : "text/html"
+				},
+				onload : function (response) {
+					var meta = parseHeaders(response.responseText);
+					GM_setValue("qmenu_online_version", meta.version);
+					GM_setValue("qmenu_update_next", date_time + (6 * 60 * 60 * 1000));
+					if (versionCompare(meta.version, version_current) > 0) {
+						showNotice(meta.version);
+					}
+				}
+			});
+		}
+		function parseHeaders(metadataBlock) {
+			var headers = {};
+			var metadata = metadataBlock.match(/\/\/ ==UserScript==((.|\n|\r)*?)\/\/ ==\/UserScript==/);
+			if (metadata) {
+				var lines = metadata[0].match(/@(.*?)(\n|\r)/g);
+				for (var i = 0; i < lines.length; i++) {
+					var lineData = lines[i].match(/^@([^\s]*?)\s+(.*)/);
+					var key = lineData[1];
+					var value = lineData[2];
+					if (!headers[key])
+						headers[key] = value;
+					else if (headers[key]instanceof Array)
+						headers[key].push(value);
+					else
+						headers[key] = [headers[key], value];
+				}
+			}
+			return headers;
+		}
+		function versionCompare(left, right) {
+			if (typeof left != "string" || typeof right != "string")
+				return false;
+			var a = left.split('.');
+			var b = right.split('.');
+			var len = Math.max(a.length, b.length);
+			for (var i = 0; i < len; i++) {
+				if ((a[i] && !b[i] && parseInt(a[i]) > 0) || (parseInt(a[i]) > parseInt(b[i]))) {
+					return 1;
+				} else if ((b[i] && !a[i] && parseInt(b[i]) > 0) || (parseInt(a[i]) < parseInt(b[i]))) {
+					return -1;
+				}
+			}
+			return 0;
+		}
+		function showNotice(version) {
+			var objTo = document.getElementById('ui_box');
+			var divtest = document.createElement("div");
+			divtest.innerHTML = '<div id="qt_updatebox" style="position:absolute; bottom:0px; left:50%; margin-left:-214px; width:429px; height:69px; z-index:1000; color:#EEDDBB; background-image:url(http://s7.directupload.net/images/140125/8ke6vfq4.png)">' +
+				'<img id="qt_updatebox_frog" src="http://s1.directupload.net/images/140711/eshmcqzu.png" style="position:relative; left:23px; top:4px; float:left"/>' +
+				'<div id="qt_updatebox_content" style="position:relative; left:38px; top:9px; float:left"; text-align: left>' +
+				'<span id="qt_updatebox_update" style="color:red">Update!</span><br/>' +
+				'Quack Toolsammlung Version: ' + version + '<br/>' +
+				'<a href="' + changelog + '" target="_blank" class="qt_updatebox_link" style="color:#ECB44D">Changelog</a> | ' +
+				'<a href="' + forumlink + '" target="_blank" class="qt_updatebox_link" style="color:#ECB44D">Forum</a> | ' +
+				'<a href="http://adf.ly/pcChx" target="_blank" class="qt_updatebox_link" style="color:#ECB44D">Website</a>' +
+				'</div>' +
+				'<a id="qt_updatebox_close" class="cancel" style="float:right; margin-right:19px; margin-top:2px;" href="#"></a>' +
+				'</div>';
+			objTo.appendChild(divtest);
+
+			var qt_updatebox = document.getElementById('qt_updatebox_close');
+			qt_updatebox.addEventListener('click', function (event) {
+				document.getElementById('qt_updatebox').remove();
+			});
+
+			/*$("#qt_updatebox a").hover(function () {
+			$(this).css({
+			"color" : "#804000"
+			});
+			}, function () {
+			$(this).css({
+			"color" : "#ECB44D"
+			});
+			});*/
+		}
+
+		if (date_time > next_update) {
+			forceCheck();
+		} else if (versionCompare(version_lastcheck, version_current) > 0) {
+			showNotice(version_lastcheck);
+		}
+	}, 0);
+};
+
+if (typeof exportFunction == 'function') {
+	exportFunction(unsafeWindow.QT_saveValue, unsafeWindow, {
+		defineAs : "QT_saveValue"
+	});
+	exportFunction(unsafeWindow.QT_saveAllValues, unsafeWindow, {
+		defineAs : "QT_saveAllValues"
+	});
+	exportFunction(unsafeWindow.QT_deleteValue, unsafeWindow, {
+		defineAs : "QT_deleteValue"
+	});
+	exportFunction(unsafeWindow.QT_deleteAllValues, unsafeWindow, {
+		defineAs : "QT_deleteAllValues"
+	});
+	exportFunction(unsafeWindow.QT_sendStats, unsafeWindow, {
+		defineAs : "QT_sendStats"
+	});
+	exportFunction(unsafeWindow.QT_updater, unsafeWindow, {
+		defineAs : "QT_updater"
+	});
+}
+
+function appendScript() {
+	if (unsafeWindow.Game) {
+		var QT_script = document.createElement('script');
+		QT_script.type = 'text/javascript';
+		QT_script.textContent = main_script.toString() + "\n main_script(" + JSON.stringify(DATA) + ");";
+		document.body.appendChild(QT_script);
+	} else {
+		setTimeout(function () {
+			appendScript();
+		}, 100);
+	}
+}
+
+appendScript();
