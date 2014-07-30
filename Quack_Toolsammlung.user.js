@@ -4,7 +4,7 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.38.00
+// @version        2.38.01
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -6345,7 +6345,6 @@ for (var i = 0, key = null; key = keys[i]; i++) {
 unsafeWindow.QT_saveValue = function (name, val) {
 	setTimeout(function () {
 		GM_setValue(name, val);
-		window.location.reload();
 	}, 0);
 };
 unsafeWindow.QT_saveAllValues = function (values) {
@@ -6367,7 +6366,6 @@ unsafeWindow.QT_saveAllValues = function (values) {
 unsafeWindow.QT_deleteValue = function (name) {
 	setTimeout(function () {
 		GM_deleteValue(name);
-		window.location.reload();
 	}, 0);
 };
 unsafeWindow.QT_deleteAllValues = function () {
