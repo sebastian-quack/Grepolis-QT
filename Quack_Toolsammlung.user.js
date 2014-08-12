@@ -4,7 +4,7 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.39.00
+// @version        2.40.00
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -212,6 +212,7 @@ function main_script(DATA) {
 				text44 : 'Visão geral Ilha',
 				text45 : 'Aumentar a altura da CityList ea lista das aldeias barbaras',
 				text46 : 'Tecla de atalho',
+				text52 : 'Vista da cidade',
 				other : 'Outro',
 				save : 'Salvar',
 				reset : 'Redefinir as configurações',
@@ -412,6 +413,7 @@ function main_script(DATA) {
 				text47 : 'Ke skoku na aktuální město použij [Enter] (ne [Space])',
 				text48 : 'Otevřít starý pohled na město',
 				text49 : 'Seřadit složky hlášení abecedně',
+				text52 : 'Přehled města',
 				other : 'Ostatní',
 				save : 'Uložit',
 				reset : 'Resetovat nastavení',
@@ -634,7 +636,7 @@ function main_script(DATA) {
 				text37 : 'Sortierung der Städte ermöglichen',
 				text38 : 'Silber über 15000 automatisch in das Eingabefeld eintragen',
 				text40 : 'Bauerndörfer Übersicht (Kapitän)',
-				text41 : 'Einen Button für die Stadtsübersicht dem Seitenmenü von Grepolis hinzufügen',
+				text41 : 'Einen Button für die Stadtansicht dem Seitenmenü von Grepolis hinzufügen',
 				text42 : 'Rohstoffverlustanzeige hinzufügen',
 				text43 : 'Simulator',
 				text44 : 'Inselübersicht',
@@ -645,6 +647,8 @@ function main_script(DATA) {
 				text49 : 'Berichteordner alphabetisch sortieren',
 				text50 : 'Questpfeil anzeigen',
 				text51 : 'Städte nach dem Farmen automatisch verstecken',
+				text52 : 'Stadtansicht',
+				text53 : 'Stadtansicht in einem Fenster anzeigen',
 				other : 'Sonstiges',
 				save : 'Speichern',
 				reset : 'Einstellungen zurücksetzen',
@@ -856,6 +860,7 @@ function main_script(DATA) {
 				text45 : 'Agrandar la altura de la lista de ciudades y la lista de las aldeas agrícolas',
 				text46 : 'Atajos de teclado',
 				text47 : 'Utilizar [Enter] como el botón para saltar a la ciudad actual (no [Space])',
+				text52 : 'Vista de la ciudad',
 				other : 'Otros',
 				save : 'Salvar',
 				reset : 'Restablecer la configuración',
@@ -1027,6 +1032,7 @@ function main_script(DATA) {
 				text40 : 'L\'aperçu des villages de paysans (Capitaine)',
 				text41 : 'Ajouter un bouton pour ouvrir la vue sur la ville au menu de côté sur Grepolis',
 				text43 : 'Simulateur',
+				text52 : 'Vue de la ville',
 				other : 'Autre',
 				save : 'Sauver',
 				reset : 'Réinitialiser les réglages',
@@ -1064,9 +1070,11 @@ function main_script(DATA) {
 				export : 'Μετατροπή μυνήματος σε BB-Code'
 			},
 			hotkeys : {
+				hotkeys : 'Συντομεύσεις Πληκτρολογίου',
 				city_select : 'Επιλογή πόλης',
 				last_city : 'Τελευταία πόλη',
 				next_city : 'Επόμενη πόλη',
+				jump_city : 'Πηγαίνει στην σωστή πόλη',
 				administrator : 'Διαχειριστής',
 				captain : 'Καπετάνιος',
 				trade_ov : 'Συνναλαγή',
@@ -1075,8 +1083,10 @@ function main_script(DATA) {
 				culture_ov : 'Κουλτούρα',
 				gods_ov : 'Θεότητες',
 				cave_ov : 'Σπηλιές',
+				city_groups_ov : 'Ομάδες πόλεων',
 				city_list : 'Λίστα πόλεων',
 				attack_planner : 'Πλάνο επίθεσης',
+				farming_villages : 'Αγροτικά χωριά',
 				menu : 'Μενού',
 				city_view : 'Προεπισκόπηση πόλης',
 				messages : 'Μυνήματα',
@@ -1085,8 +1095,10 @@ function main_script(DATA) {
 				alliance_forum : 'Φορουμ Συμμαχίας',
 				settings : 'Ρυθμίσεις',
 				profile : 'Προφίλ',
+				ranking : 'Κατάταξη',
 				notes : 'Σημειώσεις',
-				chat : 'Συνομηλία'
+				chat : 'Συνομηλία',
+				council : 'Συμβούλιο Ηρώων'
 			},
 			qtoolbox : {
 				onlinecounter_total : 'Σύνολο',
@@ -1259,6 +1271,7 @@ function main_script(DATA) {
 				text42 : 'Kiírja a vesztett nyersanyagokat',
 				text43 : 'Szimulátor',
 				text44 : 'Sziget áttekintő',
+				text52 : 'Város nézet',
 				other : 'Másik',
 				save : 'Mentés',
 				reset : 'Beállítások visszaállítása',
@@ -1426,6 +1439,7 @@ function main_script(DATA) {
 				text36 : 'Caverna',
 				text40 : 'La panoramica dei villaggi (Capitano)',
 				text43 : 'Simulatore',
+				text52 : 'Panoramica città',
 				other : 'Altro',
 				save : 'Salva',
 				reset : 'Resetta impostazioni',
@@ -1604,6 +1618,7 @@ function main_script(DATA) {
 				text41 : 'Een button voor het openen van de stadsoverzicht aan het zijkant menu toevoegen',
 				text42 : 'Toon de verloren grondstoffen',
 				text44 : 'Eiland overzicht',
+				text52 : 'Stadsoverzicht',
 				other : 'Overige',
 				save : 'Opslaan',
 				reset : 'Reset instellingen',
@@ -1824,6 +1839,7 @@ function main_script(DATA) {
 				text47 : 'Użyj [Enter] jako klawisz przełączania do obecnego miasta (nie [Space])',
 				text48 : 'Otwieraj podgląd miasta w starym stylu',
 				text49 : 'Segreguj foldery raportów według alfabetu',
+				text52 : 'Podgląd miasta',
 				other : 'Inne',
 				save : 'Zapisz',
 				reset : 'Zresetuj ustawienia',
@@ -1940,7 +1956,7 @@ function main_script(DATA) {
 				settings : 'Настройки',
 				profile : 'Профиль',
 				ranking : 'Рейтинг',
-				notes : 'Блокнот',
+				notes : 'Заметки',
 				chat : 'Чат',
 				council : 'Совет героев'
 			},
@@ -2005,23 +2021,47 @@ function main_script(DATA) {
 			},
 			settings : {
 				text2 : 'Время онлайн',
+				text3 : 'Открыть ссылки в окне игры',
+				text4 : 'Активируйте включение других скриптов в меню.',
+				text5 : 'Постоянно показывать кнопки Очереди стройки юнитов, передвижения и торговли',
+				text6 : 'Меню кнопок',
 				text9 : 'Показывать при запуске',
 				text12 : 'Калькулятор транспорта',
+				text13 : 'Показывать меню',
+				text14 : 'Список функций',
 				text15 : 'Отчеты',
 				text16 : 'Добавить цвет',
 				text17 : 'Добавить фильтр',
+				text18 : 'Включить на весь экран',
+				text19 : 'Удалить все настройки скрипта из кеша браузера?',
 				text20 : 'Форум',
 				text21 : 'Увеличить размер форума',
+				text22 : 'Значок "Быстрых клавиш"',
+				text23 : 'Меню Grepolis',
 				text24 : 'Сенат',
+				text25 : 'Показать количество очков, нужных для постройки следующего уровня здания',
 				text26 : 'Окно торговли',
+				text27 : 'Активировать дополнение',
 				text28 : 'Список городов',
 				text29 : 'Список заданий',
+				text30 : 'Добавить выпадающий список с вашими папками',
+				text31 : 'BB-code текущего города',
+				text32 : 'Выбрать и удалить сообщения форума',
 				text34 : 'Обзор пещеры (Администратор)',
 				text35 : 'Академия планированию',
 				text36 : 'Пещера',
+				text37 : 'Разрешить сортировку городов',
+				text38 : 'Поместить 15000 серебра автоматически в поле ввода',
 				text40 : 'Обзор селений земледельцев (Капитан)',
+				text41 : 'Добавить кнопку для открытия Обзора города в подменю Grepolis',
+				text42 : 'Показать потерянные ресурсы',
 				text43 : 'Симулятор',
 				text44 : 'Обзор острова',
+				text46 : 'Быстрые клавиши',
+				text47 : 'Использовать клавишу [Enter] для перехода к текущему городу. (не [Пробел])',
+				text48 : 'Открыть старый вид Обзора города',
+				text49 : 'Сортировать папки отчетов в алфавитном порядке',
+				text52 : 'Обзор города',
 				other : 'Другое',
 				save : 'Сохранить',
 				reset : 'Сброс настроек',
@@ -2029,7 +2069,44 @@ function main_script(DATA) {
 				info : 'информация',
 				settings : 'Настройки',
 				translations : 'Переводы',
-				donations : 'пожертвования'
+				trans_sure : 'Вы уверены? Ваша версия перевода будет отослана разработчику.',
+				trans_success : 'Версия перевода успешно отправлена.',
+				trans_fail : 'Отправка перевода не удалась.',
+				trans_infotext1 : 'Данная версия перевода неполная - при желании можете перевести.',
+				trans_infotext2 : 'Текст кода содержит HTML (всё, заключенное в угловые скобки <> прошу не изменять)',
+				trans_infotext3 : 'Дабы добавить вас в Титры, ваш никнейм и игровой мир будут переданы разработчику.',
+				trans_infotext4 : 'Спамеры будут добавлены в Черный список и их внесенные данные в код скрипта, будут удалены.',
+				credits : 'Помощники проекта:',
+				no_translation : 'Перевод не найден.',
+				choose_lang : 'Выбор языка',
+				add_lang : 'Добавить новый язык',
+				language : 'Язык',
+				enter_lang_name : 'Укажите название языка',
+				send : 'Послать',
+				name : 'Имя',
+				ingame_name : 'Не стесняйтесь обращаться ко мне, чтобы я указал ваш игровой ник.',
+				adfly : 'Вы хотите заработать деньги по ссылкам?',
+				donations : 'Пожертвования',
+				update_check : 'Проверить обновление',
+				prologue : 'В связи с отсутствием подобных скриптов на userscripts.org для Grepolis 2.0. Два года назад была начата разработка данного скрипта. Скрипт постоянно пополняется новыми функциями и дополнениями.<p />Я благодарен игрокам за советы и идеи, они дают мне силы работать дальше. К сожалению, проект отнимает очень много времени, поэтому я буду рад любой поддержке.<p />Я хочу поблагодарить всех, кто помогал проекту, будь то Пожертвования или ссылки AdFly-Link, советы, отчеты с ошибками или просто добрые слова в мой адрес.'
+			},
+			bbcode : {
+				troops : 'Войска',
+				building : 'Уровень зданий',
+				cities : 'Города',
+				all : 'все',
+				active_grp : 'Активная группа городов',
+				in : 'в',
+				from : 'из',
+				outside : 'вне',
+				messages : 'Сообщения'
+			},
+			stats_scripts : {
+				stats_scripts_ov : 'Обзор статистики и скриптов'
+			},
+			googledocs : {
+				change_url : 'Изменить URL',
+				reset : 'Сброс'
 			}
 		},
 		en : {
@@ -2219,6 +2296,8 @@ function main_script(DATA) {
 				text49 : 'Sort report folders alphabetically',
 				text50 : 'Display of the questarrow',
 				text51 : 'Autohide cities after farming',
+				text52 : 'City view',
+				text53 : 'Display the city view in a window',
 				other : 'Other',
 				save : 'Save',
 				reset : 'Reset settings',
@@ -2396,6 +2475,7 @@ function main_script(DATA) {
 			"qmenu_settings_berichte_sortfolders" : true,
 			"qmenu_settings_buttonbar" : true,
 			"qmenu_settings_cityview_BTN" : true,
+			"qmenu_settings_cityview_window" : true,
 			"qmenu_settings_counter" : true,
 			"qmenu_settings_counter_aktiv" : true,
 			"qmenu_settings_farmhelper" : true,
@@ -2407,6 +2487,7 @@ function main_script(DATA) {
 			"qmenu_settings_hidessort" : true,
 			"qmenu_settings_hotkey_anzeige" : true,
 			"qmenu_settings_hotkey_jump" : true,
+			"qmenu_settings_hotkey_active" : true,
 			"qmenu_settings_island_villages" : true,
 			"qmenu_settings_links" : true,
 			"qmenu_settings_maximize_forum" : true,
@@ -2447,6 +2528,8 @@ function main_script(DATA) {
 					QT.Functions.transportcalculator.refresh();
 				if (QT.Settings.values.qmenu_settings_hidesilver)
 					QT.Functions.hidesIndexIron();
+				if (QT.Settings.values.qmenu_settings_cityview_window)
+					QT.Functions.city_view_windowTitle();
 			}
 		},
 		report : {
@@ -3113,6 +3196,29 @@ function main_script(DATA) {
 				};
 			};
 			GPWindowMgr.addWndType("QT_GOOGLEDOCS", "qtgoogledocs", WndHandlerQTgoogledocs, 1);
+			//Townoverview
+			function WndHandlerQTtownoverview(wndhandle) {
+				this.wnd = wndhandle;
+			}
+			Function.prototype.inherits.call(WndHandlerQTtownoverview, WndHandlerDefault);
+			WndHandlerQTtownoverview.prototype.getDefaultWindowOptions = function () {
+				return {
+					position : ["center", "center"],
+					height : 600,
+					width : 800,
+					minimizable : true,
+					title : QT.Lang.get("grepo_mainmenu", "city_view")
+				};
+			};
+			WndHandlerQTtownoverview.prototype.onClose = function () {
+				$('#ui_box').append($('DIV.ui_city_overview')).append($('DIV.ui_construction_queue'));
+				if ($("#minimap_canvas").hasClass('expanded')) {
+					$.Observer(GameEvents.ui.bull_eye.radiobutton.strategic_map.click).publish({});
+				} else {
+					$.Observer(GameEvents.ui.bull_eye.radiobutton.island_view.click).publish({});
+				}
+			};
+			GPWindowMgr.addWndType("QT_TOWNOVERVIEW", "qttownoverview", WndHandlerQTtownoverview, 1);
 			//Rest
 			function WndHandlerQTstandard(wndhandle) {
 				this.wnd = wndhandle;
@@ -3672,44 +3778,65 @@ function main_script(DATA) {
 				$('#ui_box .nui_main_menu .middle .content ul li[data-option-id=cityview] .name').text(QT.Lang.get("grepo_mainmenu", "city_view"));
 			}
 
-			$('#ui_box .nui_main_menu .middle .content ul li[data-option-id=cityview]').click(function () {
-				if (!$("#ui_box .bull_eye_buttons .city_overview").hasClass('checked')) {
-					$.Observer(GameEvents.ui.bull_eye.radiobutton.city_overview.click).publish({});
-					QT_island_overview();
-				} else {
-					Minimap.zoomIn();
-					$.Observer(GameEvents.ui.bull_eye.radiobutton.island_view.click).publish({});
-					QT_city_overview();
-				}
-			});
-			$("#ui_box .bull_eye_buttons .rb_map").on('rb:change:value', function (e, value, old_value) {
-				if (value === 'island_view' || value === 'strategic_map') {
-					QT_city_overview();
-				} else if (value === "city_overview") {
-					QT_island_overview();
-				}
+			$.Observer(GameEvents.ui.bull_eye.radiobutton.city_overview.click).subscribe('QT_city_overview', function (e, data) {
+				QT_island_overview();
 			});
 
-			/*$("#ui_box .bull_eye_buttons .rb_map").off("rb:change:value").on('rb:change:value', function (e, value, old_value) {
-			if (value === 'strategic_map') {
-			var town_pos = WMap.townPosition,
-			pos = WMap.mapTiles.map2Pixel(town_pos.x, town_pos.y);
-			Minimap.zoomOut({
-			x : pos.x,
-			y : pos.y,
-			type : 'programatical_zoom'
+			$.Observer(GameEvents.ui.bull_eye.radiobutton.island_view.click).subscribe('QT_island_view', function (e, data) {
+				QT_city_overview();
 			});
-			$.Observer(GameEvents.ui.bull_eye.radiobutton.strategic_map.click).publish({});
-			} else if (value === 'island_view') {
-			Minimap.zoomIn();
-			$.Observer(GameEvents.ui.bull_eye.radiobutton.island_view.click).publish({});
-			} else if (value === "city_overview") {
-			$.Observer(GameEvents.ui.bull_eye.radiobutton.island_view.click).publish({});
-			GPWindowMgr.Create(Layout.wnd.TYPE_TOWNINDEX, QT.Lang.get("grepo_mainmenu", "city_view") + " - " + ITowns.getTown(Game.townId).name);
-			$("#ui_box .bull_eye_buttons .island_view").addClass("checked");
-			$("#ui_box .bull_eye_buttons .city_overview").removeClass("checked");
-			}
-			});*/
+
+			$.Observer(GameEvents.ui.bull_eye.radiobutton.strategic_map.click).subscribe('QT_strategic_map', function (e, data) {
+				QT_city_overview();
+			});
+
+			$('#ui_box .nui_main_menu .middle .content ul li[data-option-id=cityview]').click(function () {
+				if (!$("#ui_box .bull_eye_buttons .city_overview").hasClass('checked')) {
+					$("#ui_box .bull_eye_buttons .city_overview").click();
+				} else {
+					$("#ui_box .bull_eye_buttons .island_view").click();
+				}
+			});
+		},
+		city_view_window : function () {
+			$.Observer(GameEvents.ui.bull_eye.radiobutton.city_overview.click).subscribe('QT_city_overview_window', function (e, data) {
+				var city_wnd = GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_QT_TOWNOVERVIEW);
+				if (city_wnd) {
+					city_wnd.setTitle(QT.Lang.get("grepo_mainmenu", "city_view") + " - " + Game.townName);
+					return;
+				}
+				var html = '<div id="QT_townoverview"></div>';
+				var wnd = GPWindowMgr.Create(GPWindowMgr.TYPE_QT_TOWNOVERVIEW) || GPWindowMgr.getOpenFirst(GPWindowMgr.TYPE_QT_TOWNOVERVIEW);
+				wnd.setContent(html);
+				wnd.setTitle(QT.Lang.get("grepo_mainmenu", "city_view") + " - " + Game.townName);
+				var JQel = wnd.getJQElement();
+				
+				JQel.find(".gpwindow_content").css({
+					"overflow" : "hidden",
+					"border" : "1px solid black"
+				});
+				
+				JQel.find('#QT_townoverview').append($('DIV.ui_city_overview')).append($('DIV.ui_construction_queue'));
+				
+				$('DIV.ui_city_overview').find(".town_background").css({
+					"left" : "-566px",
+					"top" : "-316px"
+				});
+			});
+			
+			$("#ui_box .bull_eye_buttons .rb_map").on("rb:change:value", function (e, value, old_value) {
+				if (value === 'island_view' || value === 'strategic_map') {
+					var wnd = GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_QT_TOWNOVERVIEW);
+					if (!wnd)
+						return;
+					wnd.close();
+				}
+			});
+		},
+		city_view_windowTitle : function () {
+			var wnd = GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_QT_TOWNOVERVIEW);
+			if (wnd)
+				wnd.setTitle(QT.Lang.get("grepo_mainmenu", "city_view") + " - " + Game.townName);
 		},
 		selectunitshelper : function () {
 			var scriptEl = document.createElement("script");
@@ -4211,8 +4338,8 @@ function main_script(DATA) {
 						"onlinecounter" : [QT.Lang.get("settings", "text2"), [["qmenu_settings_counter", QT.Lang.get("settings", "text9")], ["qmenu_settings_counter_aktiv", QT.Lang.get("settings", "text11")]]],
 						"buttonbar" : [QT.Lang.get("settings", "text6"), [["qmenu_settings_buttonbar", QT.Lang.get("settings", "text9")]]],
 						"plusmenu" : [QT.Lang.get("settings", "text5"), [["qmenu_settings_plusmenu", QT.Lang.get("settings", "text9")]]],
-						"cityview" : [QT.Lang.get("settings", "text41"), [["qmenu_settings_cityview_BTN", QT.Lang.get("settings", "text9")]]],
-						"hotkey" : [QT.Lang.get("settings", "text22"), [["qmenu_settings_hotkey_anzeige", QT.Lang.get("settings", "text9")]]],
+						"cityview" : [QT.Lang.get("settings", "text52"), [["qmenu_settings_cityview_BTN", QT.Lang.get("settings", "text41")], ["qmenu_settings_cityview_window", QT.Lang.get("settings", "text53")]]],
+						"hotkeys" : [QT.Lang.get("settings", "text22"), [["qmenu_settings_hotkey_anzeige", QT.Lang.get("settings", "text9")]]],
 						"bbcode_btn" : [QT.Lang.get("settings", "text31"), [["qmenu_settings_townbb", QT.Lang.get("settings", "text9")]]],
 						"transportcalc" : [QT.Lang.get("settings", "text12"), [["qmenu_settings_transport_rechner", QT.Lang.get("settings", "text9")]]]
 					}
@@ -4229,7 +4356,7 @@ function main_script(DATA) {
 						"cavemod_town" : [QT.Lang.get("settings", "text36"), [["qmenu_settings_hidesilver", QT.Lang.get("settings", "text38")]]],
 						"farmhelper" : [QT.Lang.get("settings", "text40"), [["qmenu_settings_farmhelper", QT.Lang.get("settings", "text27")], ["qmenu_settings_farmhelper_hidecities", QT.Lang.get("settings", "text51")]]],
 						"island" : [QT.Lang.get("settings", "text44"), [["qmenu_settings_island_villages", QT.Lang.get("settings", "text45")]]],
-						"hotkeys" : [QT.Lang.get("settings", "text46"), [["qmenu_settings_hotkey_jump", QT.Lang.get("settings", "text47")]]],
+						"hotkeys" : [QT.Lang.get("settings", "text46"), [["qmenu_settings_hotkey_jump", QT.Lang.get("settings", "text47")], ["qmenu_settings_hotkey_active", QT.Lang.get("settings", "text27")]]],
 						"other" : [QT.Lang.get("settings", "other"), [["qmenu_settings_links", QT.Lang.get("settings", "text3")]]]
 					}
 				];
@@ -4273,7 +4400,7 @@ function main_script(DATA) {
 					IT : "masale81",
 					NL : "Quackmaster, Florent15, sannelos, megaabelleke, Thodoris",
 					PL : "Slietie, Tropsy Kretts, Polny Konik, danon2",
-					RU : "Jest, DJEDIVER, nihondzin"
+					RU : "Jest, DJEDIVER, nihondzin, Jestex"
 				};
 				HTML_tab2 += grepoGameBorder + QT.Lang.get("settings", "translations") + '<div style="float: right; margin-top: -2px; margin-right: -5px">' + QT.Functions.helper.grepo_dropdown("langdiv", supported_lang)[0].outerHTML + '</div></div>';
 				HTML_tab2 += '<div id="trans_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:369px"><b>' + QT.Lang.get("settings", "please_note") + ':</b><br/><ul style="list-style:square outside;padding-left: 13px"><li>' + QT.Lang.get("settings", "trans_infotext1") + '</li><li>' + QT.Lang.get("settings", "trans_infotext2") + '</li><li>' + QT.Lang.get("settings", "trans_infotext3") + '</li><li>' + QT.Lang.get("settings", "trans_infotext4") + '</li></ul><div style="margin-top:30px"><b>' + QT.Lang.get("settings", "credits") + ':</b><br/><ul style="list-style:square outside;padding-left: 13px">';
@@ -4295,7 +4422,7 @@ function main_script(DATA) {
 					[" Rolf M. - 5€", "David W. - 5€", "Omega78 - 25€", "Helga S. - 1€"],
 					["Falk T. - 5€", "Christian B. - 1€", "Christian P. - 25€", "Maik S. - 2€"],
 					["Dennis B. - 1€", "Sinnaman - 15€", "Marcel N. - 10€", "Edith M. - 10€"],
-					["Nepomuk P. - 50€", "Kevin T. - 5€", "Thomas R. - 10€"]
+					["Nepomuk P. - 50€", "Kevin T. - 5€", "Thomas R. - 10€", "Claines C. C. - 3€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
@@ -4891,30 +5018,10 @@ function main_script(DATA) {
 				}
 				// Andere
 				if (hk.keyCode == 83 && $.inArray(target, notTheseOnes) < 0) {
-					function QT_island_overview() {
-						$('#ui_box .nui_main_menu .middle .content ul li[data-option-id=cityview] .icon').css({
-							"background" : "url(http://s14.directupload.net/images/140501/rwe2n26g.png) no-repeat",
-							"top" : "8px",
-							"left" : "5px"
-						});
-						$('#ui_box .nui_main_menu .middle .content ul li[data-option-id=cityview] .name').text(QT.Lang.get("grepo_mainmenu", "island_view"));
-					}
-					function QT_city_overview() {
-						$('#ui_box .nui_main_menu .middle .content ul li[data-option-id=cityview] .icon').css({
-							"background" : "url(http://s14.directupload.net/images/140424/vbvnndai.png) no-repeat",
-							"top" : "6px",
-							"left" : "6px"
-						});
-						$('#ui_box .nui_main_menu .middle .content ul li[data-option-id=cityview] .name').text(QT.Lang.get("grepo_mainmenu", "city_view"));
-					}
-
 					if (!$("#ui_box .bull_eye_buttons .city_overview").hasClass('checked')) {
-						$.Observer(GameEvents.ui.bull_eye.radiobutton.city_overview.click).publish({});
-						QT_island_overview();
+						$("#ui_box .bull_eye_buttons .city_overview").click();
 					} else {
-						Minimap.zoomIn();
-						$.Observer(GameEvents.ui.bull_eye.radiobutton.island_view.click).publish({});
-						QT_city_overview();
+						$("#ui_box .bull_eye_buttons .island_view").click();
 					}
 				}
 				if (hk.keyCode == 82 && $.inArray(target, notTheseOnes) < 0) {
@@ -5459,17 +5566,14 @@ function main_script(DATA) {
 			}
 			
 			function setfilter(selection) {
-				console.log(selection);
 				$('#hides_overview_towns>li').show();
 				if (isNumber($('#qsortfilterbox').val())) {
 					regexpRES = RegExp(/wood|stone|iron/);
 					regexpInS = RegExp(/eta/);
 					regexpNoT = RegExp(/gp_town_link/);
 					numericfilter = parseInt($('#qsortfilterbox').val());
-					console.log(numericfilter);
 					$('#hides_overview_towns>li').each(function (i, e) {
 						if (regexpRES.test(selection)) {
-							console.log(e);
 							selectedSort = parseInt($(e).find(selection).text()) || 0;
 						} else if (regexpInS.test(selection)) {
 							selectedSort = parseInt($(e).find(selection).text().substr(1)) || 0;
@@ -6437,10 +6541,13 @@ function main_script(DATA) {
 		QT.Functions.mutationobserver();
 		QT.Functions.windowmanager();
 		QT.Functions.selectunitshelper();
-		QT.Functions.hotkeys();
 		QT.Functions.qtoolbox();
+		if (QT.Settings.values.qmenu_settings_hotkey_active)
+			QT.Functions.hotkeys();
 		if (QT.Settings.values.qmenu_settings_cityview_BTN)
 			QT.Functions.city_view_btn();
+		if (QT.Settings.values.qmenu_settings_cityview_window)
+			QT.Functions.city_view_window();
 		if (QT.Settings.values.qmenu_settings_townbb)
 			QT.Functions.townBBcodeBTN();
 		if (QT.Settings.values.qmenu_settings_plusmenu)
