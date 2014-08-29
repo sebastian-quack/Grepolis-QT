@@ -4,7 +4,7 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.40.01
+// @version        2.40.02
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -1053,7 +1053,7 @@ function main_script(DATA) {
 			},
 			googledocs : {
 				change_url : 'Changer lien',
-				reset : 'Remettre'
+				reset : 'Ràz'
 			}
 		},
 		gr : {
@@ -1061,7 +1061,25 @@ function main_script(DATA) {
 				flag : 'http://s7.directupload.net/images/140725/ki6kli48.png',
 			},
 			reports : {
-				choose_folder : 'επιλογή φακέλου'
+				choose_folder : 'επιλογή φακέλου',
+				conquered : 'κατακτήθηκε',
+				spying : 'κατασκοπεία',
+				spy : 'Κατάκσοπος',
+				support : 'Υποστήριξη',
+				supporting : 'Υποστηρίξεις',
+				attacking : 'Επιθέσεις',
+				farming_village : 'Αγροτικό χωριό'
+			},
+			forum : {
+				delete : 'Διαγραφή',
+				delete_sure : 'Θέλετε να διαγραφεί αυτή η ανάρτηση?',
+				no_selection : 'Δεν έχετε επιλέξειανάρτηση'
+			},
+			town_info : {
+				delete : 'Διαγραφή',
+				polissuche : 'Εύρεση πόλης',
+				inactivity : 'Ανενεργός',
+				days : 'Ημέρες'
 			},
 			messages : {
 				ghosttown : 'Πόλη φάντασμα',
@@ -1895,15 +1913,15 @@ function main_script(DATA) {
 				flag : 'http://s1.directupload.net/images/140818/uqbqdqcf.png',
 			},
 			reports : {
-				choose_folder : 'Alege un fisier',
-				enacted : 'adoptat',
+				choose_folder : 'Alege un folder',
+				enacted : 'decretat',
 				conquered : 'cucerit',
 				spying : 'spionaj',
 				spy : 'Spion',
-				support : 'Suport',
-				supporting : 'Sprijinirea',
-				attacking : 'Atacul',
-				farming_village : 'Oras de farmat'
+				support : 'suport',
+				supporting : 'sprijinire',
+				attacking : 'ataca',
+				farming_village : 'sat de farmat'
 			},
 			forum : {
 				delete : 'Sterge',
@@ -1911,16 +1929,16 @@ function main_script(DATA) {
 				no_selection : 'Nici un post selectat'
 			},
 			town_info : {
-				no_overload : 'Nici o supraincarcare',
+				no_overload : 'Nu supraincarcati',
 				delete : 'Sterge',
-				polissuche : 'Cautare oras',
+				polissuche : 'cautare oras',
 				inactivity : 'Inactivitate',
 				days : 'zile',
 				no_data : 'Acest jucator nu este inca listat in baza de date'
 			},
 			grepo_mainmenu : {
-				city_view : 'Vezi oras',
-				island_view : 'Vezi insula'
+				city_view : 'Vezi Oras',
+				island_view : 'Vezi Insula'
 			},
 			messages : {
 				ghosttown : 'Oras fantoma',
@@ -1938,87 +1956,172 @@ function main_script(DATA) {
 				trade_ov : 'Negot',
 				command_ov : 'Comenzi',
 				recruitment_ov : 'Recrutare',
-				troop_ov : 'Privire ansamblu a trupelor',
-				troops_outside : 'Trupele din afara',
-				building_ov : 'Cladiri',
+				troop_ov : 'Privire de ansamblu a trupelor',
+				troops_outside : 'Trupe din afara orasului',
+				building_ov : 'Constructii',
 				culture_ov : 'Cultura',
 				gods_ov : 'Zei',
-				cave_ov : 'Pestera',
+				cave_ov : 'Pesteri',
 				city_groups_ov : 'Grupe orase',
 				city_list : 'Lista orase',
 				attack_planner : 'Planificator atacuri',
-				farming_villages : 'Orase de farmat',
+				farming_villages : 'Sate de farmat',
 				menu : 'Meniu',
-				city_view : 'Vedere oras',
+				city_view : 'Vezi oras ',
 				messages : 'Mesaje',
 				reports : 'Rapoarte',
 				alliance : 'Alianta',
-				alliance_forum : 'Forum alianta',
+				alliance_forum : 'Forum Alianta',
 				settings : 'Setari',
 				profile : 'Profil',
-				ranking : 'Rank',
-				notes : 'Note',
+				ranking : 'Clasament',
+				notes : 'Notite',
 				council : 'Consiliul eroilor'
 			},
 			qtoolbox : {
 				onlinecounter_now : 'Curent',
 				onlinecounter_switch : 'Online curent/total',
 				stats : 'Statistici',
-				player : 'Jucatori',
+				player : 'Jucator',
 				alliance : 'Alianta',
-				rankings : 'Ranguri',
-				track_player : 'Urmariti un jucator',
-				track_alliance : 'Urmariti o alianta',
-				top_killers : 'Top asasini',
+				rankings : 'Clasament',
+				track_player : 'Urmareste un jucator',
+				track_alliance : 'Urmareste o alianta',
+				top_killers : 'Top ucigasi/asasini',
 				maps : 'Mape',
-				townsearches : 'Cautare orase',
 				tonda_polissuche : 'Cautare oras',
 				in_town : 'In oras',
 				from_town : 'Din oras',
 				outside_town : 'In afara orasului',
-				tools : 'Instrumente ',
+				tools : 'Instrumente',
+				unit_comparison : 'Comparare unitati',
 				google_docs : 'Documente Google',
-				deff_helper : 'Ajutor defensiv',
-				display_modes : 'Moduri afisaj',
+				deff_helper : 'Ajutator Deff',
+				display_modes : 'Modul Afisaj',
 				full_screen : 'Tot ecranul',
+				minimal : 'Minim',
 				stats_scripts : 'Statistici/Scripturi',
-				settings : 'Manager scripturi'
+				settings : 'Manager script'
 			},
 			academy : {
-				researched : 'Colorati cercetare',
+				researched : 'Colorati cercetarea',
 				notresearched : 'Nu colorati cercetarea',
-				undo : 'Anuleaza colorarea'
+				undo : 'Anulare colorare'
 			},
 			caves : {
-				stored_silver : 'Monede de argint memorate ',
+				stored_silver : 'Monede de argint stocate',
 				silver_to_store : 'Monede de argint ce pot fi stocate',
 				name : 'Nume',
 				wood : 'Lemn',
 				stone : 'Piatra',
-				silver : 'Monede de argint'
+				silver : 'Monede de argint '
 			},
 			transport_calc : {
 				btn_main : 'Calculator transport',
 				available : 'Capacitate de transport disponibila',
 				transportable : 'Unitati transportabile',
-				recruits : 'Numarul de unitati de recrutare puse in coada',
-				outsidetown : 'Numarul de unitati din afara orasului',
-				slowtrans : 'Numarul de transportoare lente ',
-				fasttrans : 'Numarul de transportoare rapide',
-				disabled : 'Dezactivat temporar'
+				recruits : 'Numar unitati in asteptare de recrutare',
+				outsidetown : 'Numar unitati din afara orasului',
+				slowtrans : 'Numar transportoare incete',
+				fasttrans : 'Numar transportoare rapide',
+				disabled : 'Temporar scos din uz '
 			},
 			culture : {
-				cityfestivals : 'Festivaluri oras',
-				olympicgames : 'Jocuri Olimpice',
+				cityfestivals : 'Festival oras',
+				olympicgames : 'Jocuri olimpice',
 				triumph : 'Parada triumfala',
 				theater : 'Piese de teatru'
 			},
 			settings : {
 				text2 : 'Contrare Online',
-				text3 : 'Deschide linkul din meniul in joc',
-				text4 : 'Activati includerea altor scripturi Greasemonkey la meniu',
-				text5 : 'Arată butoane pentru afișarea permanentă a unității de așteptare, mișcările și comerț',
-				text6 : 'Butor de bara'
+				text3 : 'Deschide linkurile din meniul in joc',
+				text4 : 'Activati includerea altor scripturi Greasemonkey in meniu',
+				text5 : 'Arata butoanele pentru afisarea permanenta a unitatilor in asteptare, miscarile si comertul',
+				text6 : 'Buton bara',
+				text9 : 'Afisaj la pornire',
+				text11 : 'Dezactiveaza economisirea din totalul timp online',
+				text12 : 'Calculator de transport',
+				text13 : 'Meniu afisaj',
+				text14 : 'Caracteristici meniu ',
+				text15 : 'Reporturi',
+				text16 : 'Adauga culoare',
+				text17 : 'Adauga filtru',
+				text18 : 'Activeaza afisaj',
+				text19 : 'Stergi toate setarile si urmele ale scripturilor in ascunzatoarea browserului?',
+				text21 : 'Maximizati latimea forumului ',
+				text22 : 'Taste imagine',
+				text23 : 'Meniu grepolis',
+				text24 : 'Senat',
+				text25 : 'Arata numarul de puncte primite din constructia urmatorului nivel al cladiri',
+				text26 : 'Fereastra de negot',
+				text27 : 'Activeaa extensia',
+				text28 : 'Lista orase',
+				text29 : 'Lista misiuni',
+				text30 : 'Adauga o lista verticala cu foldere',
+				text31 : 'Buton pentru BB-Code a orasului curent',
+				text32 : 'Selecteaza si sterge posturi',
+				text34 : 'Privire de ansamblu asupra pesterilor(Administrator)',
+				text35 : 'Planificator academie',
+				text36 : 'Pestera',
+				text37 : 'Permite sortarea oraselor',
+				text38 : 'Introdu 1500 monede de argint automat in campul selectat',
+				text40 : 'Privire de ansamblu a satelor de farmat(Captain)',
+				text41 : 'Adauga buton pentru deschiderea "vezi orasul" in meniul lateral al Grepolisului ',
+				text42 : 'Arata resurse pierdute',
+				text44 : 'Privire ansamblu insula',
+				text45 : 'Mareste inaltimea listei orasele si lista de orase farmat',
+				text46 : 'Taste',
+				text47 : 'Foloseste [ENTER] ca buton pentru a sari la orasul curent',
+				text48 : 'Deschide vechiul "vezi orasul"',
+				text49 : 'Sorteaza alfabetiv foldere de report',
+				text50 : 'Afiseaza sageata misiune',
+				text51 : 'Ascunde automat orasele dupa farmat',
+				text52 : 'Vezi oras',
+				text53 : 'Afiseaza vederea orasului in fereastra',
+				other : 'Altele',
+				save : 'Salveaza ',
+				reset : 'Reseteaza salvarile',
+				info : 'Informatii',
+				settings : 'Setari',
+				translations : 'Traduceri',
+				trans_sure : 'Esti sigur ca traducerea ta este gata sa fie trimisa?',
+				trans_success : 'Traducerea a fost trimis cu succes',
+				trans_fail : 'Traducerea nu a putut fi trimisa',
+				trans_infotext1 : 'Traducerea nu trebuie sa fie completa, doar traduce ce vrei tu',
+				trans_infotext4 : 'Spammeri vor fi adaugati in lista de blocare si vor fi exclusi din a utiliza acest script',
+				please_note : 'Nota',
+				credits : 'Credite',
+				no_translation : 'Nici o traducere gasita',
+				choose_lang : 'Alege o limba',
+				add_lang : 'Adauga o noua limba',
+				language : 'Limba',
+				enter_lang_name : 'Introdu numele limbii',
+				send : 'Trimite',
+				name : 'Nume',
+				ingame_name : 'Nu ezita sa ma contactezi daca preferi sa fi numit dupa numele de joc',
+				adfly : 'Vrei sa castigi bani cu linkuri de asemenea?',
+				donations : 'Donatii',
+				update_check : 'Cautate update'
+			},
+			bbcode : {
+				troops : 'Trupe',
+				building : 'Nivel cladire',
+				cities : 'Orase',
+				all : 'Toate',
+				active_grp : 'grupa oras activ',
+				from : 'din',
+				outside : 'in afara',
+				messages : 'Mesaje'
+			},
+			stats_scripts : {
+				stats_scripts_ov : 'Prezentare generala a statisticilor si scripturilor'
+			},
+			googledocs : {
+				change_url : 'Schimba URL',
+				reset : 'Resetare'
+			},
+			farmhelper : {
+				autohide_cities : 'Ascundere automata a oraselor dupa farmaj pornire/oprire '
 			}
 		},
 		ru : {
@@ -5420,7 +5523,7 @@ function main_script(DATA) {
 					DE : "Quackmaster, Scav77",
 					EN : "Quackmaster",
 					ES : "Jonh Snow, F0NT3, cuervobrujo",
-					FR : "higter, Mazelys",
+					FR : "higter, Mazelys, jbrek",
 					GR : "drmacsoft, adipas.ioannis",
 					HU : "Arminno, Betagamer",
 					IT : "masale81",
@@ -5449,7 +5552,8 @@ function main_script(DATA) {
 					[" Rolf M. - 5€", "David W. - 5€", "Omega78 - 25€", "Helga S. - 1€"],
 					["Falk T. - 5€", "Christian B. - 1€", "Christian P. - 25€", "Maik S. - 2€"],
 					["Dennis B. - 1€", "Sinnaman - 15€", "Marcel N. - 10€", "Edith M. - 10€"],
-					["Nepomuk P. - 50€", "Kevin T. - 5€", "Thomas R. - 10€", "Claines C. C. - 3€"]
+					["Nepomuk P. - 50€", "Kevin T. - 5€", "Thomas R. - 10€", "Claines C. C. - 3€"],
+					["Carsten R. - 5€", "Nick K. - 0,74€", "Eduard R. - 3€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
