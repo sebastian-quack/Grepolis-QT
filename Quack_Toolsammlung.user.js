@@ -4,7 +4,7 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.40.02
+// @version        2.40.03
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -797,7 +797,7 @@ function main_script(DATA) {
 				undo : 'Deshacer coloración'
 			},
 			caves : {
-				stored_silver : 'Monedas de plata almacenadas',
+				stored_silver : 'Monedas de plata almacenables',
 				name : 'Nombre',
 				wood : 'Madera',
 				stone : 'Piedra',
@@ -810,7 +810,8 @@ function main_script(DATA) {
 				recruits : 'Contar unidades en cola de reclutamiento',
 				outsidetown : 'Contar unidades fuera de la ciudad',
 				slowtrans : 'Contar naves de transporte lentas',
-				fasttrans : 'Contar naves de transportes rapidas'
+				fasttrans : 'Contar naves de transportes rapidas',
+				disabled : 'Deshabilitado temporalmente'
 			},
 			culture : {
 				cityfestivals : 'Festival de la ciudad',
@@ -860,11 +861,15 @@ function main_script(DATA) {
 				text45 : 'Agrandar la altura de la lista de ciudades y la lista de las aldeas agrícolas',
 				text46 : 'Atajos de teclado',
 				text47 : 'Utilizar [Enter] como el botón para saltar a la ciudad actual (no [Space])',
+				text49 : 'Ordenar por orden alfabético los informes',
+				text51 : 'Ocultar automáticamente Ciudades después de la agricultura',
 				text52 : 'Vista de la ciudad',
+				text53 : 'Mostrar la vista de la ciudad en una ventana',
 				other : 'Otros',
 				save : 'Salvar',
 				reset : 'Restablecer la configuración',
 				contact : 'Contacto',
+				info : 'Información',
 				settings : 'Opciones',
 				translations : 'Traducciones',
 				trans_sure : '¿Está seguro de que su traducción esta lista para enviar?',
@@ -1062,6 +1067,7 @@ function main_script(DATA) {
 			},
 			reports : {
 				choose_folder : 'επιλογή φακέλου',
+				enacted : 'θεσπιστεί',
 				conquered : 'κατακτήθηκε',
 				spying : 'κατασκοπεία',
 				spy : 'Κατάκσοπος',
@@ -1079,7 +1085,12 @@ function main_script(DATA) {
 				delete : 'Διαγραφή',
 				polissuche : 'Εύρεση πόλης',
 				inactivity : 'Ανενεργός',
-				days : 'Ημέρες'
+				days : 'Ημέρες',
+				no_data : 'Ο παιχτης δεν εχει μπει ακομα στν database'
+			},
+			grepo_mainmenu : {
+				city_view : 'Μπες στην πολη',
+				island_view : 'Δες το νησι'
 			},
 			messages : {
 				ghosttown : 'Πόλη φάντασμα',
@@ -1097,6 +1108,9 @@ function main_script(DATA) {
 				captain : 'Καπετάνιος',
 				trade_ov : 'Συνναλαγή',
 				command_ov : 'Εντολές',
+				recruitment_ov : 'Στρατολογηση',
+				troop_ov : 'Επισκοπηση Στρατευματων',
+				troops_outside : 'Στρατευματα Εξω',
 				building_ov : 'Κτίρια',
 				culture_ov : 'Κουλτούρα',
 				gods_ov : 'Θεότητες',
@@ -1860,7 +1874,9 @@ function main_script(DATA) {
 				text47 : 'Użyj [Enter] jako klawisz przełączania do obecnego miasta (nie [Space])',
 				text48 : 'Otwieraj podgląd miasta w starym stylu',
 				text49 : 'Segreguj foldery raportów według alfabetu',
+				text51 : 'Autoukrywanie miast po zebraniu surowców z wiosek',
 				text52 : 'Podgląd miasta',
+				text53 : 'Wyświetl podgląd miasta w oknie',
 				other : 'Inne',
 				save : 'Zapisz',
 				reset : 'Zresetuj ustawienia',
@@ -1906,6 +1922,9 @@ function main_script(DATA) {
 			googledocs : {
 				change_url : 'Zmień URL',
 				reset : 'Resetuj'
+			},
+			farmhelper : {
+				autohide_cities : 'Autoukrywanie miast po zebraniu surowców z wiosek rolniczych wł/wył'
 			}
 		},
 		ro : {
@@ -2583,7 +2602,7 @@ function main_script(DATA) {
 				reset : 'Reset'
 			},
 			farmhelper : {
-				autohide_cities : 'Autohide cities after farming on/off'
+				autohide_cities : 'Ocultar automáticamente las Ciudades después de la agricultura encendido/apagado'
 			}
 		}
 	};
@@ -4350,7 +4369,7 @@ function main_script(DATA) {
 					TownOverviewWindowFactory.openHidesOverview();
 				}
 				if (hk.keyCode == 48 && $.inArray(target, notTheseOnes) < 0) {
-					TownOverviewWindowFactory.openTownGroupOverview();
+					//TownOverviewWindowFactory.openTownGroupOverview();
 				}
 				if (hk.keyCode == 63 && $.inArray(target, notTheseOnes) < 0 || hk.keyCode == 219 && $.inArray(target, notTheseOnes) < 0) {
 					TownOverviewWindowFactory.openTownsOverview();
@@ -4391,7 +4410,7 @@ function main_script(DATA) {
 					Layout.wnd.Create(GPWindowMgr.TYPE_PLAYER_PROFILE_EDIT, ' ');
 				}
 				if (hk.keyCode == 77 && $.inArray(target, notTheseOnes) < 0) {
-					Layout.showMemoWindow();
+					NotesWindowFactory.openNotesWindow();
 				}
 				if (hk.keyCode == 76 && $.inArray(target, notTheseOnes) < 0) {
 					Layout.wnd.Create(GPWindowMgr.TYPE_CHAT, ' ');
@@ -4877,7 +4896,7 @@ function main_script(DATA) {
 					[QT.Lang.get("qtoolbox", "grepo_intel"), "http://s14.directupload.net/images/130403/u33cb3b8.jpg", "link_maps_grepointel"]],
 				[QT.Lang.get("qtoolbox", "townsearches"), "http://s14.directupload.net/images/121012/vlnknenk.png", "",
 					[QT.Lang.get("qtoolbox", "tonda_polissuche"), "http://polissuche.marco93.de/favicon.ico", "link_polissuche"],
-					[QT.Lang.get("qtoolbox", "grepo_finder"), "http://s14.directupload.net/images/121012/vlnknenk.png", "link_grepofinder"]],
+					[QT.Lang.get("qtoolbox", "grepo_finder"), "http://s14.directupload.net/images/140913/5c6ak7br.jpg", "link_grepofinder"]],
 				[QT.Lang.get("qtoolbox", "bb_codes"), "http://s14.directupload.net/images/140124/8tzken7v.png", "",
 					[QT.Lang.get("bbcode", "troops"), "http://s1.directupload.net/images/121012/a2w2xe8r.png", "",
 						[QT.Lang.get("qtoolbox", "in_town"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_intown"],
@@ -5524,7 +5543,7 @@ function main_script(DATA) {
 					EN : "Quackmaster",
 					ES : "Jonh Snow, F0NT3, cuervobrujo",
 					FR : "higter, Mazelys, jbrek",
-					GR : "drmacsoft, adipas.ioannis",
+					GR : "drmacsoft, adipas.ioannis, juvekdk, ΤζονακοςΚ",
 					HU : "Arminno, Betagamer",
 					IT : "masale81",
 					NL : "Quackmaster, Florent15, sannelos, megaabelleke, Thodoris, HGamert",
