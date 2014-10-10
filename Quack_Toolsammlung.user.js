@@ -4,7 +4,7 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.40.03
+// @version        2.40.04
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -919,18 +919,37 @@ function main_script(DATA) {
 				donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=FR&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/fr_FR/i/btn/btn_donate_LG.gif" alt="Donate"></a>'
 			},
 			reports : {
-				spy : 'Espion'
+				choose_folder : 'Choisissez un dossier',
+				enacted : 'promulgué',
+				conquered : 'conquérir (ville conquise)',
+				spying : 'espionner ',
+				spy : 'Espion',
+				supporting : 'soutenir',
+				attacking : 'attaquer',
+				farming_village : 'village agricole'
 			},
 			forum : {
-				delete : 'Supprimer'
+				delete : 'Supprimer',
+				delete_sure : 'Voulez vous réellement effacer ces messages?',
+				no_selection : 'Aucun message sélectionnés'
+			},
+			town_info : {
+				delete : 'Effacer',
+				polissuche : 'Recherche ville',
+				inactivity : 'Inactivité',
+				days : 'Jours',
+				no_data : "Le joueur n'est pas encore listé dans la base de données"
 			},
 			grepo_mainmenu : {
 				city_view : 'Vue de la ville',
+				island_view : "Vue île",
 				delete : 'Supprimer'
 			},
 			messages : {
 				ghosttown : 'Ville fantôme',
-				no_cities : 'Aucune ville sur cette île'
+				no_cities : 'Aucune ville sur cette île',
+				all : 'Tous',
+				export : 'Convertir le message en BB-Code',
 			},
 			hotkeys : {
 				hotkeys : 'Raccourci',
@@ -961,7 +980,7 @@ function main_script(DATA) {
 				alliance_forum : 'Forum d\'alliance',
 				settings : 'Réglages',
 				profile : 'Profil',
-				ranking : 'Ranking',
+				ranking : 'Rang',
 				notes : 'Notes',
 				chat : 'Chat',
 				council : 'Concile des héros'
@@ -986,9 +1005,14 @@ function main_script(DATA) {
 				display_modes : 'Mode écran',
 				full_screen : 'Plein écran'
 			},
+			academy : {
+				researched : 'Colorer recherché',
+				notresearched : 'Colorer non recherché',
+				undo : 'Annuler coloration'
+			},
 			caves : {
-				stored_silver : 'Pièces d\'argent embarqués',
-				name : 'Name',
+				stored_silver : 'Capacité de stockage des pièces d\'argent',
+				name : 'Nom',
 				wood : 'Bois',
 				stone : 'Pierre',
 				silver : 'Pièces d\'argent'
@@ -996,7 +1020,12 @@ function main_script(DATA) {
 			transport_calc : {
 				btn_main : 'Transports assistant',
 				available : 'Capacité disponible',
-				transportable : 'Unités transportables'
+				transportable : 'Unités transportables',
+				recruits : 'Nombre d\'unités dans la queue de recrutement',
+				outsidetown : 'Nombre d\'unités en dehors de la ville',
+				slowtrans : 'Nombre de transporteurs lents',
+				fasttrans : 'Nombre de transporteurs rapides',
+				disabled : 'Temporairement désactivé'
 			},
 			culture : {
 				cityfestivals : 'Festivals',
@@ -1019,7 +1048,10 @@ function main_script(DATA) {
 				text16 : 'Ajoutez de la couleur',
 				text17 : 'Ajouter filtrer',
 				text18 : 'Afficher activé',
-				text21 : 'Largeur du forum maximiser',
+				text19 : 'Effacer toutes les traces et personnalisations du script dans le cache du navigateur?',
+				text21 : 'Maximiser la largeur du forum',
+				text22 : 'Image raccourcis',
+				text23 : 'Menu Grepolis',
 				text24 : 'Sénat',
 				text25 : 'Afficher le nombre de points attribués pour la construction d\'un niveau supérieur d\'un bâtiment',
 				text26 : 'Fenêtre de négociation',
@@ -1036,12 +1068,42 @@ function main_script(DATA) {
 				text38 : 'Entrer argent au-dessus de 15.000 automatiquement dans le champ de saisie',
 				text40 : 'L\'aperçu des villages de paysans (Capitaine)',
 				text41 : 'Ajouter un bouton pour ouvrir la vue sur la ville au menu de côté sur Grepolis',
+				text42 : 'Afficher les pertes de ressources',
 				text43 : 'Simulateur',
+				text44 : 'Visualisation de l\'île',
+				text45 : 'Agrandir la hauteur de la liste des villes et des villages',
+				text46 : 'Raccourcis',
+				text47 : 'Utiliser [Entrer] comme bouton pour passer à la ville courante (et pas [Espace])',
+				text48 : 'Ouvrir l\'ancienne vue de la ville',
+				text49 : 'Trier les sorts alphabétiquement',
+				text50 : 'Afficher les quêtes',
+				text51 : 'Masquer automatiquement la ville',
 				text52 : 'Vue de la ville',
+				text53 : 'Afficher la ville dans une fenêtre',
 				other : 'Autre',
 				save : 'Sauver',
 				reset : 'Réinitialiser les réglages',
-				translations : 'Traductions'
+				settings : 'Paramètres',
+				translations : 'Traductions',
+				trans_sure : 'Etes vous sur que votre traduction est prête à être envoyée ?',
+				trans_success : 'La traduction a été envoyée avec succès',
+				trans_fail : 'La traduction ne peut pas être envoyée',
+				trans_infotext1 : 'La traduction n\'a pas besoin d\'être complète - traduisez juste ce que vous voulez',
+				trans_infotext2 : 'Quand du texte contient des balises HTML (tout ce qui est entouré par des <> ) je vous demande de les laisser au même endroit où vous les avez trouvé',
+				trans_infotext3 : 'Afin de pouvoir vous ajouter aux crédits, votre pseudo, identifiant et votre numéro de monde seront également envoyé',
+				trans_infotext4 : 'Les spammeurs seront ajoutés à la liste noir interne et ne pourront plus utiliser le script',
+				please_note : 'Notez',
+				no_translation : 'Traduction non trouvée',
+				choose_lang : 'Sélectionner la langue',
+				add_lang : 'Ajouter une langue',
+				language : 'Langue',
+				enter_lang_name : 'Entrer un nom de langue',
+				send : 'Envoyer',
+				name : 'Nom',
+				ingame_name : 'N\'hésitez pas à me contacter si vous préférez être appeler par votre pseudo.',
+				adfly : 'Voulez vous également gagner de l\'argent avec des lien ?',
+				update_check : 'Vérifier les mise à jours',
+				prologue : 'A cause du manque de script alternatifs pour Grepolis 2.0, cet outil a été lancé il y a 2 ans et essaye constamment depuis d\'étendre Grepolis avec de nouvelles fonctionnalités.<p />Le but initial était de réparer les fonctions des vieux script pour Grepolis 1.0 et d\'apprendre les bases du Javascript, mais depuis, beaucoup plus a été accomplis. Mon outil est constamment étendu par mes propres idées, ou celles de la communauté, et grâce à votre support, ma motivation à continuer est toujours là. Vous me présentez constamment de nouveaux défis, et c\'est très amusant d\'en trouver les solutions.<p />Comme il y a beaucoup à faire, et que cela peut demander beaucoup de temps, je suis toujours très reconnaissant pour tout type d\'aide. De ce fait, j\'aimerai remercier tous ceux qui ont offert de l\'aide sur ce projet, que ce soit par des donations, en cliquant sur des liens AdFly, en partageant des connaissances, des conseils créatifs, en rapportant des problèmes, ou simplement par des messages d\'encouragement.'
 			},
 			bbcode : {
 				troops : 'Troupes',
@@ -1138,6 +1200,9 @@ function main_script(DATA) {
 				grepostats : 'Στατιστικά Grepolis',
 				player : 'Παίκτης',
 				alliance : 'Συμμαχία',
+				rankings : 'Κατάταξη',
+				track_player : 'Εύρεση παίκτη',
+				track_alliance : 'Εύρεση συμμαχίας',
 				maps : 'Χάρτης'
 			}
 		},
@@ -1166,14 +1231,18 @@ function main_script(DATA) {
 				delete : 'Törlés',
 				polissuche : 'Városkeresés',
 				inactivity : 'Inaktivitás',
-				days : 'nap'
+				days : 'nap',
+				no_data : 'A játékos még nincs listázva az adatbázisban'
 			},
 			grepo_mainmenu : {
-				city_view : 'Város nézet'
+				city_view : 'Város nézet',
+				island_view : 'Sziget nézet'
 			},
 			messages : {
 				ghosttown : 'Szellem város',
-				no_cities : 'Ezen a szigeten nincs város'
+				no_cities : 'Ezen a szigeten nincs város',
+				all : 'mind',
+				export : 'Üzenet BB-Code-ba konvertálása'
 			},
 			hotkeys : {
 				hotkeys : 'Gyorsparancsok',
@@ -1213,7 +1282,7 @@ function main_script(DATA) {
 				onlinecounter_total : 'Összes',
 				onlinecounter_switch : 'Eltöltött idő most/összes',
 				stats : 'Statisztika',
-				grepostats : 'Grepo stats megnyitása',
+				grepostats : 'Grepo statisztika megnyitása',
 				player : 'Játékos',
 				alliance : 'Szövetség',
 				rankings : 'Ranglista',
@@ -1222,10 +1291,10 @@ function main_script(DATA) {
 				track_alliance : 'Szövetség elhelyezkedése',
 				top_killers : 'Legtöbb harcipont',
 				maps : 'Térképek',
-				grepo_maps : 'Grepo Maps megnyitása',
-				grepo_intel : 'Grepo Intel megnyitása',
+				grepo_maps : 'Grepo mappák megnyitása',
+				grepo_intel : 'Grepo információk megnyitása',
 				townsearches : 'Város keresések',
-				grepo_finder : 'Grepo Finder megnyitása',
+				grepo_finder : 'Grepo kereső megnyitása',
 				tonda_polissuche : 'Városkeresés',
 				bb_codes : 'BB-Kódok',
 				in_town : 'Városban',
@@ -1233,6 +1302,7 @@ function main_script(DATA) {
 				outside_town : 'Városon kívül',
 				tools : 'Eszközök',
 				unit_comparison : 'Összehasonlítás',
+				google_docs : 'Google dokumentumok',
 				deff_helper : 'Deff segítő',
 				display_modes : 'Kijelző módok',
 				full_screen : 'Teljes képernyő',
@@ -1246,7 +1316,7 @@ function main_script(DATA) {
 				undo : 'Színezés visszavonása'
 			},
 			caves : {
-				stored_silver : 'Elraktározott ezüstpénzek',
+				stored_silver : 'Elraktározható ezüstpénzek',
 				name : 'Név',
 				wood : 'Fa',
 				stone : 'Kő',
@@ -1259,7 +1329,8 @@ function main_script(DATA) {
 				recruits : 'Számolja a kiképzés alatt álló egységeket',
 				outsidetown : 'Számolja a városon kívüli egységeket',
 				slowtrans : 'Számolja a szállítóhajókat',
-				fasttrans : 'Számolja a gyors szállítóhajókat'
+				fasttrans : 'Számolja a gyors szállítóhajókat',
+				disabled : 'Ideiglenesen nem elérhető'
 			},
 			culture : {
 				cityfestivals : 'Városi fesztiválok',
@@ -1271,8 +1342,10 @@ function main_script(DATA) {
 				text2 : 'Onlineszámoló',
 				text3 : 'Linkek megnyitása a menüből a játékban',
 				text4 : 'Aktiválja a többi greasemonkey scriptet',
+				text5 : 'Mutassa az egységek kiképzési sorrendjének, a mozgásoknak és a kereskedelemnek a kapcsolóit az állandó kijelzőn',
 				text6 : 'Gombsor',
 				text9 : 'Kijelzés indításkor',
+				text11 : 'A teljes eltöltött idő mentésének kikapcsolása',
 				text12 : 'Szállítási idő számláló',
 				text13 : 'Menü megjelenítés',
 				text14 : 'Menü tulajdonságok',
@@ -1298,12 +1371,20 @@ function main_script(DATA) {
 				text35 : 'Akadémia tervező',
 				text36 : 'Verem',
 				text37 : 'Engedélyezze a városok rendezését',
+				text38 : 'Engedélyezi egyszerre több mint 15ezer ezüst beírását a beviteli mezőbe',
 				text40 : 'Farmolható faluk áttekintése (Kapitány szükséges)',
 				text41 : 'Hozzáad egy "Város nézet" gombot a menühöz',
 				text42 : 'Kiírja a vesztett nyersanyagokat',
 				text43 : 'Szimulátor',
 				text44 : 'Sziget áttekintő',
+				text45 : 'Megnöveli a városlista és a farmolható faluk listájának a magasságát',
+				text47 : '[Enter] használata az aktuális városhoz ugrásra (nem [Space])',
+				text48 : 'Régi városnézet megnyitása',
+				text49 : 'Jelentések mappa ABC sorrendbe rendezése',
+				text50 : 'Küldetésnyíl mutatása',
+				text51 : 'Városok automatikus elrejtése farmolás után',
 				text52 : 'Város nézet',
+				text53 : 'Városnézet megnyitása új ablakban',
 				other : 'Másik',
 				save : 'Mentés',
 				reset : 'Beállítások visszaállítása',
@@ -1315,6 +1396,7 @@ function main_script(DATA) {
 				trans_fail : 'A fordítás nem lett elküldve',
 				trans_infotext1 : 'A fordítás nincs teljesen kész - fordíts amit szeretnél',
 				trans_infotext2 : 'Ha egy szöveg HTML-t tartalmaz ( < > között ) akkor megkérdezlek, biztosan szeretnéd-e használni.',
+				trans_infotext3 : 'Azért hogy hozzáadhassunk a készítőkhöz, a játékosneved, játékos azonosítód és a világ azonosítód is hozzá lesz kapcsolva',
 				trans_infotext4 : 'A spammelők hozzá lesznek adva a Ban-listához én nem tudják majd használni a scriptet.',
 				please_note : 'Kérlek vedd figyelembe',
 				credits : 'Készítők',
@@ -1325,8 +1407,11 @@ function main_script(DATA) {
 				enter_lang_name : 'Írd be a nyelv nevét',
 				send : 'Küldés',
 				name : 'Név',
+				ingame_name : 'Ne habozz jelezni, ha inkább a játékban használt nevedet használnád',
 				adfly : 'Szeretnél pénzt szerezni linkekkel is?',
-				donations : 'Támogatások'
+				donations : 'Támogatások',
+				update_check : 'Frissítés ellnőrzése',
+				prologue : 'Mivel kevés különböző userscript létezik a Grepolis 2.0-hoz, ez a finomhangoló program 2 éve indult és azóta is folyamatosan törekszik a játék újabb funkciókkal való bővítésére.<p />Eleinte a Grepolis 1.0-hoz készült régi userscriptek kijavítása volt és a JavaScript alapjainak megtanulása közben, de mostanra ennél sokkal több valósult meg. A finomhangoló program folyamatosan bővítve lett saját és a közösség ötleteivel és a nagy támogatásotok a folytatásra sarkall. Folyamatosan érdekes kihívások elé állítotok és szórakoztató a megoldások megkeresése.<p />Mindig nagyon boldogan segítek bármilyen formában, habár ez sok munkát és időt jelent. Ezért szeretném megköszönni mindenkinek, aki támogatta ezt a project-et - akár anyagi, AdFly-Link kattintással, tudással, kreativitással, hibajelentéssel vagy csak néhány bíztató szóval.'
 			},
 			bbcode : {
 				troops : 'Csapatok',
@@ -1336,7 +1421,8 @@ function main_script(DATA) {
 				active_grp : 'Aktív város csoport',
 				in : 'itt',
 				from : 'itt',
-				outside : 'kívül itt'
+				outside : 'kívül itt',
+				messages : 'Üzenetek'
 			},
 			stats_scripts : {
 				stats_scripts_ov : 'Statisztikák és szkriptek attekintése'
@@ -1572,8 +1658,8 @@ function main_script(DATA) {
 				player : 'Speler',
 				alliance : 'Alliantie',
 				rankings : 'Ranglijsten',
-				track_player : 'Bestuur speler',
-				track_alliance : 'Bestuur alliantie',
+				track_player : 'Volg een speler',
+				track_alliance : 'Volg een alliantie',
 				top_killers : 'Top Aanvallers',
 				maps : 'Kaart',
 				townsearches : 'Stedenzoeker',
@@ -2900,6 +2986,9 @@ function main_script(DATA) {
 			fetch : function () {
 				if (QT.Settings.values.qmenu_settings_hidesilver)
 					QT.Functions.hidesIndexIron();
+				/*if ($('.researches_queue_box').length != 0) {
+					QT.Functions.academyMarker();
+				}*/
 				//if (QT.Settings.values.qmenu_settings_hideaddpoints)
 				//QT.Functions.hidesIndexAddPoints();
 			},
@@ -3050,10 +3139,18 @@ function main_script(DATA) {
 				return winqm.getID();
 			}
 		},
-		academyMarker : function () {
+		academyMarker : function () { //DEFEKT
+			$.Observer(GameEvents.building.academy.research.buy).subscribe('QT_academy_buy', function (e, data) {
+				alert("buy");
+			})
+			$.Observer(GameEvents.building.academy.research.cancel).subscribe('QT_academy_cancel', function (e, data) {
+				alert("cancel");
+			})
 			var wndID = BuildingWindowFactory.getWnd().getID();
 			var qacmarkDIV = '<div class="qacamark green" style="width: 100%; height: 100%; position: absolute; background: none repeat scroll 0% 0% green; top: -3px; left: -3px; border: 3px solid green; opacity: 0.4"></div>';
+			
 			$("DIV#gpwnd_" + wndID).append('<div id="qacacountWrapper"><div id="qacacountGreen" class="qacacountBox" style="margin-left:25px">0</div><div id="qacacountRed" class="qacacountBox" style="margin-left:70px">0</div><a id="qacamarkResearched" class="qacaBTN green" style="left:104px; background-image: url(http://s1.directupload.net/images/130904/2tny5dlh.png)" href="#"></a><a id="qacamarkNotResearched" class="qacaBTN green" style="left:124px; background-image: url(http://s7.directupload.net/images/130904/pkeasgik.png)" href="#"></a><a id="qacamarkNone" class="qacaBTN" style="left:144px; background-image: url(http://s1.directupload.net/images/130904/yothfag9.png)" href="#"></a></div>');
+			
 			$("#qacacountWrapper").css({
 				"margin" : " 0px auto",
 				"display" : "block",
@@ -3078,6 +3175,7 @@ function main_script(DATA) {
 			$(".academy_info").css({
 				"z-index" : "1"
 			});
+			
 			$(".qacaBTN").hover(
 				function () {
 				$(this).css({
@@ -3089,9 +3187,11 @@ function main_script(DATA) {
 					"background-position" : "0px 0px"
 				});
 			});
+			
 			$('#qacamarkResearched').mousePopup(new MousePopup(QT.Lang.get("academy", "researched")));
 			$('#qacamarkNotResearched').mousePopup(new MousePopup(QT.Lang.get("academy", "notresearched")));
 			$('#qacamarkNone').mousePopup(new MousePopup(QT.Lang.get("academy", "undo")));
+			
 			function resetSelected() {
 				$(".qacamark").each(function () {
 					$(this).remove();
@@ -3943,7 +4043,7 @@ function main_script(DATA) {
 		},
 		forumMaximize : function () {
 			var qmenu_forum_finder = $(".forum_content").parent().parent().parent();
-			if (qmenu_forum_finder.find(".menu_inner").width() != 5000) {
+			if (qmenu_forum_finder.find(".menu_inner").width() != 5000 && qmenu_forum_finder.find(".menu_inner").width() > 650) {
 				var forumWidth = qmenu_forum_finder.find(".menu_inner").width();
 				qmenu_forum_finder.css({
 					"margin-left" : 0 - (forumWidth - 810) / 2 - 85,
@@ -4651,13 +4751,19 @@ function main_script(DATA) {
 		},
 		messageInputwidth : function () {
 			$('#message_recipients').css({
-				"width" : "480px"
+				"width" : "630px"
 			});
 			$('#message_subject').css({
-				"width" : "480px"
+				"width" : "630px"
 			});
 			$('#message_buttons').css({
 				"width" : "0px"
+			});
+			$('#message_buttons select').css({
+				"position" : "absolute",
+				"right" : "3px",
+				"top" : "-24px",
+				"z-index" : "1000"
 			});
 		},
 		messageViewAll : function () {
@@ -5542,11 +5648,11 @@ function main_script(DATA) {
 					DE : "Quackmaster, Scav77",
 					EN : "Quackmaster",
 					ES : "Jonh Snow, F0NT3, cuervobrujo",
-					FR : "higter, Mazelys, jbrek",
+					FR : "higter, Mazelys, jbrek, ToolFire, aldo666",
 					GR : "drmacsoft, adipas.ioannis, juvekdk, ΤζονακοςΚ",
-					HU : "Arminno, Betagamer",
+					HU : "Arminno, Betagamer, Shia-ko",
 					IT : "masale81",
-					NL : "Quackmaster, Florent15, sannelos, megaabelleke, Thodoris, HGamert",
+					NL : "Quackmaster, Florent15, sannelos, megaabelleke, Thodoris, HGamert, Siloperg47",
 					PL : "Slietie, Tropsy Kretts, Polny Konik, danon2",
 					RO : "BaietelulCelFrumusel",
 					RU : "Jest, DJEDIVER, nihondzin, Jestex"
