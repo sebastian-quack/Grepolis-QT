@@ -4,7 +4,7 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.40.04
+// @version        2.41.00
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -12,6 +12,11 @@
 // @grant          GM_info
 // @grant          GM_xmlhttpRequest
 // ==/UserScript==
+
+var GM_html2canvas = document.createElement('script'); 
+GM_html2canvas.src = ' https://github.com/niklasvh/html2canvas/releases/download/0.4.1/html2canvas.js';
+GM_html2canvas.type = 'text/javascript'; 
+document.getElementsByTagName('head')[0].appendChild(GM_html2canvas); 
 
 /************************************************************************
  * Main Script
@@ -44,14 +49,14 @@ function main_script(DATA) {
 			},
 			reports : {
 				choose_folder : 'Escolher pasta',
-				enacted : 'promulgada',
-				conquered : 'conquistado',
-				spying : 'espionagem',
+				enacted : 'lançou',
+				conquered : 'conquistou',
+				spying : 'espiando',
 				spy : 'Espião',
 				support : 'apoio',
-				supporting : 'que apoia',
-				attacking : 'atacante',
-				farming_village : 'Aldeias barbaras'
+				supporting : 'apoia',
+				attacking : 'atacando',
+				farming_village : 'Aldeia bárbara'
 			},
 			forum : {
 				delete : 'Excluir',
@@ -163,7 +168,8 @@ function main_script(DATA) {
 				recruits : 'Unidades na fila de recrutamento Contagem',
 				outsidetown : 'Contagem unidades fora da cidade',
 				slowtrans : 'Contagem navios de transporte lentos',
-				fasttrans : 'Contagem navios de transporte rápido'
+				fasttrans : 'Contagem navios de transporte rápido',
+				disabled : 'Sem funcionamento Temporario'
 			},
 			culture : {
 				cityfestivals : 'Festivais da cidade',
@@ -173,9 +179,9 @@ function main_script(DATA) {
 			},
 			settings : {
 				text2 : 'Balcão online',
-				text3 : 'Abrir links do menu de ingame',
+				text3 : 'Abrir links do menu de no jogo',
 				text4 : 'Ative a inclusão de outros scripts Greasemonkey para o menu',
-				text5 : 'Mostrar botões para exposição permanente da fila de unidade, os movimentos eo comércio',
+				text5 : 'Mostrar botões para exposição permanente da fila de unidade, os movimentos e o comércio',
 				text6 : 'Barra de botões',
 				text9 : 'Exibição no início',
 				text11 : 'Desativar economia de tempo online total',
@@ -210,9 +216,15 @@ function main_script(DATA) {
 				text42 : 'Mostrar perdas de recursos',
 				text43 : 'Simulador',
 				text44 : 'Visão geral Ilha',
-				text45 : 'Aumentar a altura da CityList ea lista das aldeias barbaras',
+				text45 : 'Aumentar a altura da lista de cidades ea lista das aldeias barbaras',
 				text46 : 'Tecla de atalho',
+				text47 : '[Enter] para saltar para a cidade atual (não [Space])',
+				text48 : 'Abrir vista da cidade antiga',
+				text49 : 'Ordenar Relatórios alfabeticamente',
+				text50 : 'Exibição da busca',
+				text51 : 'Esconder cidades após farmar automaticamente',
 				text52 : 'Vista da cidade',
+				text53 : 'Mostrar vista para a cidade em uma janela',
 				other : 'Outro',
 				save : 'Salvar',
 				reset : 'Redefinir as configurações',
@@ -239,6 +251,7 @@ function main_script(DATA) {
 				ingame_name : 'Não hesite em contactar-me se você prefere ser chamado pelo seu nome ingame',
 				adfly : 'Você quer ganhar dinheiro com as ligações, também?',
 				donations : 'Doações',
+				update_check : 'Check por update',
 				prologue : 'Devido à falta de alternativas de uma Devido Falta de Alternativas deuserscripts para Grepolis 2.0 este conjunto de ferramentas foi iniciada dois anos atrás constantemente tenta estender Grepolis com novas funções desde então.<p />Inicialmente, o objectivo era o de reparar as funções de userscripts antigos para Grepolis 1.0 e para aprender as noções básicas de JavaScript no processo, mas por agora muito mais foi realizado. O conjunto de ferramentas é constantemente prorrogado por ideias próprias ou ideias da comunidade e por causa de seu grande apoio a minha motivação para continuar ainda está lá.<p />Você apresenta constantemente me desafios interessantes e é divertido para encontrar soluções para isso. Como se trata de muito trabalho e pode ser muito Eu sou sempre muito grato por qualquer tipo de apoio demorado. Portanto, eu gostaria de agradecer a todos que ofereceram apoio para este projecto - seja através de doações ou clicar em um AdFly-Link, o conhecimento, a criatividade, relatórios de bugs ou apenas algumas palavras de incentivo.'
 			},
 			bbcode : {
@@ -257,6 +270,9 @@ function main_script(DATA) {
 			googledocs : {
 				change_url : 'Alterar URL',
 				reset : 'Restabelecer'
+			},
+			farmhelper : {
+				autohide_cities : 'Ocultar automaticamente Cidades após agricultura ON / OFF'
 			}
 		},
 		cz : {
@@ -464,7 +480,6 @@ function main_script(DATA) {
 			meta : {
 				flag : 'http://s14.directupload.net/images/140408/xpd69nmj.png',
 				changelog : 'http://adf.ly/cph8j',
-				changelog_addfree : 'https://docs.google.com/document/d/10AyoYbgB1ml30EhSyXF7lDgEw_VqgHIQoJrJPCT0Z3w/edit?usp=sharing',
 				forumlink : 'http://adf.ly/cbQaZ',
 				forumlink_addfree : 'http://forum.de.grepolis.com/showthread.php?20742',
 				donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=DE&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/de_DE/i/btn/btn_donate_LG.gif" alt="Spenden"></a>'
@@ -697,6 +712,40 @@ function main_script(DATA) {
 			},
 			farmhelper : {
 				autohide_cities : 'Städte nach dem Farmen automatisch verstecken an/aus'
+			},
+			export_window : {
+				wnd_title : 'Bilder Upload - Vorschau',
+				button_mouseover : 'Als Bild exportieren',
+				upload : 'Hochladen',
+				settings : 'Einstellungen',
+				preview : 'Vorschau',
+				chrome : 'Chrome öffnet die Seite zum Screenshot standardmäßig als Popup. Wer die Seite lieber als neuen Tab geöffnet haben will, muss ein Extra Addon dafür installieren. Hier klicken um zum Addon zu gelangen',
+				info : 'Der Hostinganbieter erlaubt täglich leider nur 1250 Uploads. Wenn wir diesen Wert monatlich 5x überschreiten, hat dies eine Sperrung des Services für den Rest des Monats zur Folge. Langfristig ist deshalb ein eigener Server geplant, aber diesen zu mieten und die benötigte Infrastruktur aufzubauen kostet viel Zeit und vor allem Geld. Meine Freizeit investiere ich dafür gerne, jedoch bin ich als Student nicht in der Lage die Kosten vollständig dafür übernehmen zu können. Zur Refinanzierung werden deshalb Sponsorlinks von Adf.ly genutzt (nur für das erste Bild pro Tag). Mit Klick auf diesen Info Button erfolgt zudem eine Weiterleitung zu der offiziellen Paypal Seite des Skriptes. Vielen Dank an alle, die dieses Projekt unterstützen oder es demnächst vorhaben!',
+				connection_fail_title : 'Verbindung zum Server nicht möglich',
+				connection_fail_text : 'Entweder ist der Server nicht erreichbar oder die maximale Hosting Kapazität wurde für heute schon erreicht. Spenden helfen einen eigenen Server zu finanzieren um zukünftig von Drittanbietern unabhängig zu sein. Möchtest du mithelfen?',
+				town : 'Stadt',
+				luck : 'Glück',
+				title : 'Titel',
+				resources : 'Rohstoffe',
+				wall : 'Stadtmauer',
+				player : 'Spieler',
+				moral : 'Moral',
+				reporttype : 'Berichttype',
+				resources_lost : 'Rohstoffkosten',
+				nightbonus : 'Nachtbonus',
+				alliance : 'Allianz',
+				troops : 'Truppen',
+				bashpoints : 'Kampfpunkte',
+				buildings : 'Gebäude',
+				payed_iron : 'Eingesetzte Silbermünzen',
+				payed_iron_storage : 'Silbermünzen im Lager',
+				date : 'Datum',
+				spell_info : 'Zauber Info',
+				spell_effect : 'Zauber Effekt',
+				message : 'Nachricht',
+				attacker : 'Angreifer',
+				defender : 'Verteidiger',
+				bonuses : 'Zauber/Boni'
 			}
 		},
 		es : {
@@ -934,6 +983,7 @@ function main_script(DATA) {
 				no_selection : 'Aucun message sélectionnés'
 			},
 			town_info : {
+				no_overload : 'sans surcharge',
 				delete : 'Effacer',
 				polissuche : 'Recherche ville',
 				inactivity : 'Inactivité',
@@ -980,7 +1030,7 @@ function main_script(DATA) {
 				alliance_forum : 'Forum d\'alliance',
 				settings : 'Réglages',
 				profile : 'Profil',
-				ranking : 'Rang',
+				ranking : 'Classement',
 				notes : 'Notes',
 				chat : 'Chat',
 				council : 'Concile des héros'
@@ -992,12 +1042,13 @@ function main_script(DATA) {
 				stats : 'Statistiques',
 				player : 'Joueur',
 				alliance : 'Alliance',
-				rankings : 'Rang',
+				rankings : 'Classement',
 				track_player : 'Trouver Joueur',
 				track_alliance : 'Trouver Alliance',
 				top_killers : 'Meilleurs combattants',
 				maps : 'Cartes',
 				townsearches : 'Ville-Recherches',
+				tonda_polissuche : 'Recherche de Ville',
 				in_town : 'Dans la ville',
 				from_town : 'De la ville',
 				outside_town : 'Extérieur de la ville',
@@ -1120,7 +1171,10 @@ function main_script(DATA) {
 			},
 			googledocs : {
 				change_url : 'Changer lien',
-				reset : 'Ràz'
+				reset : 'Remettre'
+			},
+			farmhelper : {
+				autohide_cities : 'Masquer automatiquement les villes après l\'agriculture on / off'
 			}
 		},
 		gr : {
@@ -2455,7 +2509,6 @@ function main_script(DATA) {
 			meta : {
 				flag : 'http://s14.directupload.net/images/140408/e2nfyth9.png',
 				changelog : 'http://adf.ly/cpi89',
-				changelog_addfree : 'https://docs.google.com/document/d/1Q9wIHhXUu6cDUdxr0onT8sHOcSXxpAtbg6R_oOrhiA8/edit?usp=sharing',
 				forumlink : 'http://adf.ly/fJDMD',
 				forumlink_addfree : 'http://forum.en.grepolis.com/showthread.php?51999',
 				donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=US&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate"></a>'
@@ -2689,6 +2742,40 @@ function main_script(DATA) {
 			},
 			farmhelper : {
 				autohide_cities : 'Ocultar automáticamente las Ciudades después de la agricultura encendido/apagado'
+			},
+			export_window : {
+				wnd_title : 'Image upload - preview',
+				button_mouseover : 'Export to image',
+				upload : 'Upload',
+				settings : 'Settings',
+				preview : 'Preview',
+				chrome : 'Chrome opens the window with the screenshot per default as a popup. If you prefer that the window opens as a new tab you have to install an extra addon. Click here to get to the addon.',
+				info : "The hosting provider unfortunately allows just 1250 uploads daily. They will ban this service for the rest of the month if we exceed this amount 5 times. In the long run I plan to rent an own server for this but the costs and the development need quite some time and most of all money. I invest my own free time for this with pleasure but as a student I just can't pay all of the costs involved. As a possibility for refinancing I therefore use the sponsorlinks from Adf.ly (only for the first published screenshot). With a click on this info button you will be redirected to the official Paypal donation page of this script. Thanks to all who already support this project and to those who intend to do so.",
+				connection_fail_title : 'Connection to the server failed',
+				connection_fail_text : 'The server is unreachable or the maxmimum hosting capacity is reached for today. Donations help to finance an own server to be independent from third party services. Do you want to help?',
+				town : 'Town',
+				luck : 'Luck',
+				title : 'Title',
+				resources : 'Resources',
+				wall : 'Wall',
+				player : 'Player',
+				moral : 'Moral',
+				reporttype : 'Report type',
+				resources_lost : 'Resources lost',
+				nightbonus : 'Nightbonus',
+				alliance : 'Alliance',
+				troops : 'Troops',
+				bashpoints : 'Bashpoints',
+				buildings : 'Buildings',
+				payed_iron : 'Iron payed',
+				payed_iron_storage : 'Iron in storage',
+				date : 'Date',
+				spell_info : 'Spell info',
+				spell_effect : 'Spell effect',
+				message : 'Message',
+				attacker : 'Attacker',
+				defender : 'Defender',
+				bonuses : 'Spells/Bonuses'
 			}
 		}
 	};
@@ -2749,6 +2836,23 @@ function main_script(DATA) {
 	 * Links
 	 ***********************************************************************/
 	QT.Links = {
+		sponsor_link : function (target, rawURL) {
+			var url = (rawURL) ? target : QT.Links[target];
+
+			if (QT.Settings.values.clicked_sponsor_link_last != new Date().toDateString()) {
+				QT.Settings.values.clicked_sponsor_links = 0;
+			}
+
+			if (QT.Settings.values.clicked_sponsor_links < 1 && pName != "Quackmaster") {
+				url = "http://adf.ly/2057648/" + url;
+				QT.Settings.values.clicked_sponsor_links ++;
+				QT.Settings.values.clicked_sponsor_link_last = new Date().toDateString();
+				QT.Settings.save("clicked_sponsor_links", QT.Settings.values.clicked_sponsor_links);
+				QT.Settings.save("clicked_sponsor_link_last", QT.Settings.values.clicked_sponsor_link_last);
+			}
+
+			return url;
+		},
 		GS_Spieler : "http://www." + mID + ".grepostats.com/world/" + wID + "/player/" + sID,
 		GS_Allianz : "http://www." + mID + ".grepostats.com/world/" + wID + "/alliance/" + aID,
 		GS_Bash : "http://www." + mID + ".grepostats.com/world/" + wID + "/alliance/" + aID + "/members",
@@ -2804,7 +2908,10 @@ function main_script(DATA) {
 			"qmenu_online_version" : 0,
 			"qmenu_update_next" : 0,
 			"script_version" : 0,
+			"clicked_sponsor_links" : 0,
+			"last_clicked_sponsor_link" : 0,
 			"googledocsurl" : "https://docs.google.com/spreadsheet/ccc?key=0AkpTmTnKs72_dEF3bWs3SW5iWjdyUEE0M0c3Znpmc3c",
+			"grepolistoolkit" : false,
 			"qmenu_settings_akademieplaner" : true,
 			"qmenu_settings_berichte_farben" : true,
 			"qmenu_settings_berichte_filter" : true,
@@ -2904,6 +3011,7 @@ function main_script(DATA) {
 			view : function () {
 				if (QT.Settings.values.qmenu_settings_berichte_losses)
 					QT.Functions.reportsLosses();
+				QT.Functions.reportExport();
 			}
 		},
 		alliance_forum : {
@@ -3080,27 +3188,293 @@ function main_script(DATA) {
 	};
 
 	/************************************************************************
+	 * Helper Functions
+	 ***********************************************************************/
+	QT.Helper = {
+		Screenshot : {
+			btn_preview : function (element, id, window_type, callback) {
+				$(element).append('<a id="'+ id +'" href="#"></a>');
+				$("#" + id).css({
+					"top" : "1px",
+					"right" : "1px",
+					"position" : "absolute",
+					"height" : "23px",
+					"width" : "22px",
+					"background-image" : "url(http://s14.directupload.net/images/141014/3j8vsimv.png)",
+					"background-repeat" : "no-repeat",
+					"background-position" : "0px 0px"
+				});
+				
+				$("#" + id).hover(
+					function () {
+					$(this).css({
+						"background-position" : "0px -23px"
+					});
+				},
+					function () {
+					$(this).css({
+						"background-position" : "0px 0px"
+					});
+				});
+				
+				$("#" + id).click(function () {
+					QT.Helper.Screenshot.open_window(QT.Lang.get("export_window", "wnd_title"));
+					QT.Helper.Screenshot.get_settings(window_type);
+					var elemensToChange = callback();
+					QT.Helper.Screenshot.replace_images(elemensToChange);
+					$("#qt_canvas #"+ id +"").remove();
+				});
+
+				$("#" + id).mousePopup(new MousePopup(QT.Lang.get("export_window", "button_mouseover")));
+
+			},
+			get_settings : function (settings_type) {
+				var settings_array = {};
+				switch (settings_type) {
+					case "attack":
+					case "take_over":
+					case "breach":
+						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_bonuses_a", "qt_luck", "qt_title", "qt_resources"];
+						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_bonuses_d", "qt_moral", "qt_attackmode", "qt_resources_lost"];
+						settings_array.third_row = ["qt_alliance_a", "qt_alliance_d", "", "qt_wall", "qt_bashpoints", ""];
+						settings_array.fourth_row = ["qt_troops_a", "qt_troops_d", "", "qt_nightbonus", "qt_date", ""];
+						break;
+					case "espionage_2.67":
+						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_troops", "qt_title", "", ""];
+						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_buildings", "qt_attackmode", "", ""];
+						settings_array.third_row = ["qt_alliance_a", "qt_alliance_d", "qt_payed_iron", "qt_date", "", ""];
+						settings_array.fourth_row = ["", "", "qt_resources", "", "", ""];
+						break;
+					case "my_espionage_failed":
+						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_title", "", "", "qt_payed_iron"];
+						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_attackmode", "", "", ""];
+						settings_array.third_row = ["qt_alliance_a", "qt_alliance_d", "qt_body_p", "", "", ""];
+						settings_array.fourth_row = ["", "", "qt_date", "", "", ""];
+						break;
+					case "espionage_failed_on_me":
+						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_title", "", "", "qt_payed_iron"];
+						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_attackmode", "", "", "qt_payed_iron_storage"];
+						settings_array.third_row = ["qt_alliance_a", "qt_alliance_d", "qt_body_p", "", "", ""];
+						settings_array.fourth_row = ["", "", "qt_date", "", "", ""];
+						break;
+					case "powers":
+						settings_array.first_row = ["qt_player_a", "qt_town_name_d", "qt_title", "", "", ""];
+						settings_array.second_row = ["qt_alliance_a", "qt_player_d", "qt_attackmode", "", "", ""];
+						settings_array.third_row = ["qt_power_left", "qt_alliance_d", "qt_date", "", "", ""];
+						settings_array.fourth_row = ["qt_power_right", "", "", "", "", ""];
+						break;
+					case "conquer":
+						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_title", "", "", ""];
+						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_attackmode", "", "", ""];
+						settings_array.third_row = ["qt_alliance_a", "qt_alliance_d", "qt_body_p", "", "", ""];
+						settings_array.fourth_row = ["", "", "qt_date", "", "", ""];
+						break;
+					case "raise":
+						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_title", "", "", ""];
+						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_attackmode", "", "", ""];
+						settings_array.third_row = ["qt_alliance_a", "qt_raise_right", "qt_wall", "", "", ""];
+						settings_array.fourth_row = ["qt_raise_left", "", "qt_date", "", "", ""];
+						break;
+					case "support":
+						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_title", "", "", ""];
+						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_attackmode", "", "", ""];
+						settings_array.third_row = ["qt_alliance_a", "qt_alliance_d", "qt_date", "", "", ""];
+						settings_array.fourth_row = ["qt_support", "", "", "", "", ""];
+						break;
+					case "support_failed":
+						settings_array.first_row = ["qt_title", "", "", "", "", ""];
+						settings_array.second_row = ["qt_attackmode", "", "", "", "", ""];
+						settings_array.third_row = ["qt_body_p", "", "", "", "", ""];
+						settings_array.fourth_row = ["qt_date", "", "", "", "", ""];
+						break;
+					case "support_attacked":
+						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_title", "", "", ""];
+						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_attackmode", "", "", ""];
+						settings_array.third_row = ["qt_alliance_a", "qt_alliance_d", "qt_bashpoints", "", "", ""];
+						settings_array.fourth_row = ["", "qt_troops_support_atk", "qt_date", "", "", ""];
+						break;
+					case "support_back":
+						settings_array.first_row = ["qt_title", "", "", "", "", ""];
+						settings_array.second_row = ["qt_body_p", "", "", "", "", ""];
+						settings_array.third_row = ["qt_support", "", "", "", "", ""];
+						settings_array.fourth_row = ["qt_date", "", "", "", "", ""];
+						break;
+					case "text_only":
+						settings_array.first_row = ["qt_title", "", "", "", "", ""];
+						settings_array.second_row = ["qt_body_p_all", "", "", "", "", ""];
+						settings_array.third_row = ["qt_date", "", "", "", "", ""];
+						settings_array.fourth_row = ["", "", "", "", "", ""];
+						break;
+				}
+			
+				var settings_elements = {
+					qt_town_name_a : [QT.Lang.get("export_window", "town") + " (Off)", "#report_sending_town .town_name"],
+					qt_luck : [QT.Lang.get("export_window", "luck"), ".luck"],
+					qt_title : [QT.Lang.get("export_window", "title"), "#report_report_header span"],
+					qt_resources : [QT.Lang.get("export_window", "resources"), "#resources ul, #load, #resources p"],
+					qt_town_name_d : [QT.Lang.get("export_window", "town") + " (Deff)", "#report_receiving_town .town_name"],
+					qt_wall : [QT.Lang.get("export_window", "wall"), ".oldwall"],
+					qt_player_a : [QT.Lang.get("export_window", "player") + " (Off)", "#report_sending_town .town_owner"],
+					qt_moral : [QT.Lang.get("export_window", "moral"), ".morale"],
+					qt_attackmode : [QT.Lang.get("export_window", "reporttype"), "#report_arrow img"],
+					qt_resources_lost : [QT.Lang.get("export_window", "resources_lost"), ".report_booty_bonus_fight table"],
+					qt_player_d : [QT.Lang.get("export_window", "player") + " (Deff)", "#report_receiving_town .town_owner"],
+					qt_nightbonus : [QT.Lang.get("export_window", "nightbonus"), ".nightbonus"],
+					qt_alliance_a : [QT.Lang.get("export_window", "alliance") + " (Off)", "#report_sending_town .town_owner_ally"],
+					qt_troops_a : [QT.Lang.get("export_window", "troops") + " (Off)", ".report_side_attacker_unit"],
+					qt_bashpoints : [QT.Lang.get("export_window", "bashpoints"), "#kill_points"],
+					qt_alliance_d : [QT.Lang.get("export_window", "alliance") + " (Deff)", "#report_receiving_town .town_owner_ally"],
+					qt_troops_d : [QT.Lang.get("export_window", "troops") + " (Deff)", ".report_side_defender_unit"],
+					qt_troops : [QT.Lang.get("export_window", "troops"), "#left_side > .report_unit"],
+					qt_buildings : [QT.Lang.get("export_window", "buildings"), "#spy_buildings .report_unit"],
+					qt_payed_iron : [QT.Lang.get("export_window", "payed_iron"), "#right_side p:eq(0)"],
+					qt_payed_iron_storage : [QT.Lang.get("export_window", "payed_iron_storage"), "#right_side p:eq(1)"],
+					qt_date : [QT.Lang.get("export_window", "date"), "#report_date"],
+					qt_power_left : [QT.Lang.get("export_window", "spell_info"),"#left_side, .report_god"],
+					qt_power_right : [QT.Lang.get("export_window", "spell_effect"),"#right_side"],
+					qt_body_p : [QT.Lang.get("export_window", "message"), "#report_game_body p:eq(0)"],
+					qt_body_p_all : [QT.Lang.get("export_window", "message"), "#report_game_body p"],
+					qt_raise_left : [QT.Lang.get("export_window", "attacker"),"#left_side"],
+					qt_raise_right : [QT.Lang.get("export_window", "defender"),"#right_side"],
+					qt_support : [QT.Lang.get("export_window", "troops"), "#report_game_body .report_unit"],
+					qt_troops_support_atk : [QT.Lang.get("export_window", "troops"), ".report_side_defender, .big_horizontal_report_separator .report_booty_bonus_fight, .support_report_cities"],
+					qt_bonuses_a : [QT.Lang.get("export_window", "bonuses") + " (Off)",".report_side_attacker .power_holder"],
+					qt_bonuses_d : [QT.Lang.get("export_window", "bonuses") + " (Deff)",".report_side_defender .power_holder"]
+				};
+
+				var settings_table;
+				$.each(settings_array, function( index, tr ) {
+					settings_table += "<tr>";
+					$.each(tr, function( index, td ) {
+						if (td.length > 0) {
+							settings_table += '<td><div class="checkbox_new '+td+' checked" style="padding-right: 15px"><div class="cbx_icon"></div><div class="cbx_caption">'+settings_elements[td][0]+'</div></div></td>';
+						} else {
+							settings_table += "<td></td>";
+						}
+					});
+					settings_table += "</tr>";
+				});
+				$("#qt_export_settings").append(settings_table);
+				
+				$("#qt_export_header .checkbox_new").click(function () {
+					$(this).toggleClass("checked");
+					var classList = $(this).attr('class').split(/\s+/);
+					var JQelement = $("#qt_canvas "+settings_elements[classList[1]][1]);
+
+					if ( JQelement.css('visibility') == 'hidden' ) {
+						JQelement.css('visibility','visible');
+					}
+					else {
+						JQelement.css('visibility','hidden');
+					}
+				});
+			},
+			open_window : function (title) {
+				var html = 	'<div id="qt_export_ajax"></div><div id="qt_export_container"><div id="qt_export_header" class="odd"><fieldset><legend><b>'+QT.Lang.get("export_window", "settings")+'</b></legend><table id="qt_export_settings"></table></fieldset></div><div id="qt_export_content" class="odd"><fieldset><legend><b>'+QT.Lang.get("export_window", "preview")+'</b></legend><img class="qt_transparent" src="http://cdn.grepolis.com/images/transparent.png"><div id="qt_canvas"></div></fieldset></div><div id="qt_export_footer" class="section stone recruit_button_section"></div></div>';
+
+				var wnd = GPWindowMgr.Create(GPWindowMgr.TYPE_QT_REPORTEXPORT) || GPWindowMgr.getOpenFirst(GPWindowMgr.TYPE_QT_REPORTEXPORT);
+				wnd.setTitle(title);
+				wnd.setContent(html);
+
+				$("#qt_export_footer").append(QT.Functions.helper.grepo_btn("qt_export_btn",QT.Lang.get("export_window", "upload")));
+				$("#qt_export_footer").append('<a id="qt_export_info" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=DE&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"></a>');
+
+				if(/chrom(e|ium)/.test(navigator.userAgent.toLowerCase())){
+					$("#qt_export_footer").append('<a id="qt_chrome_info" href="https://chrome.google.com/webstore/detail/one-window/papnlnnbddhckngcblfljaelgceffobn" target="_blank"></a>');
+					$("#qt_chrome_info").css({"top" : "8px", "right" : "7px", "position" : "absolute", "height" : "24px", "width" : "26px", "background-image" : "url(http://s14.directupload.net/images/141021/cqz59o6t.png)", "background-repeat" : "no-repeat", "background-position" : "0px 0px"});
+					$('#qt_chrome_info').mousePopup(new MousePopup(QT.Lang.get("export_window", "chrome")));
+				}
+
+				$("#qt_export_info").css({"top" : "8px", "left" : "7px", "position" : "absolute", "height" : "24px", "width" : "26px", "background-image" : "url(http://s14.directupload.net/images/141014/3wmopfj5.png)", "background-repeat" : "no-repeat", "background-position" : "0px 0px"});
+				$("#qt_export_ajax").css({"display" : "none", "background" : "url(http://gpde.innogamescdn.com/images/game/ajax-loader.gif) no-repeat scroll center center rgba(0, 0, 0, 0.5)", "position" : "absolute", "width" : "100%", "height" : "100%", "z-index" : "1000"});
+				$("#qt_export_header").css({"padding" : "10px", "border" : "0 none"});
+				$("#qt_export_settings").css({"border-collapse" : "collapse"});
+				$("#qt_export_container fieldset").css({"border" : "2px groove #fc6"});
+				$("#qt_export_content").css({"padding" : "0 10px 10px", "border" : "0 none"});
+				$("#qt_export_content .qt_transparent").css({"position" : "absolute", "width" : "800px", "height" : "353px", "z-index" : "100",});
+				$("#qt_canvas").css({"height" : "352px", "overflow-y" : "auto"});
+				$("#qt_export_footer").css({"position" : "absolute", "bottom" : "-3px", "text-align" : "center", "width" : "868px", "z-index" : "5"});
+				$("#qt_export_btn").css({"margin-top" : "9px"});
+				
+				$('#qt_export_info').mousePopup(new MousePopup(QT.Lang.get("export_window", "info")));
+
+				$("#qt_export_btn").click(function () {
+					QT.Helper.Screenshot.upload($("#qt_canvas div:first"));
+				});
+			},
+			replace_images : function (images) {
+				$.each(images, function( index, value ) {
+					var JQelement = $("#qt_canvas "+value);
+					if (JQelement.length != 0) {
+						var re = new RegExp("gp"+mID+".innogamescdn.com","g");
+						var url = JQelement.css("background-image").replace(re, wID+'.grepolis.com');
+						JQelement.css( "background-image", url );
+					}
+				});
+
+				$("#qt_canvas .big_horizontal_report_separator .report_booty_bonus_fight").css({"background-image" : "none"});
+			},
+			upload : function (element) {
+
+				$("#qt_export_ajax").show();
+				
+				html2canvas(element, {
+					onrendered: function(canvas) {
+
+						var img;
+						try {
+							img = canvas.toDataURL('image/jpeg', 0.9).split(',')[1];
+						} catch(e) {
+							img = canvas.toDataURL().split(',')[1];
+						}
+
+						$.ajax({
+							url: 'https://api.imgur.com/3/upload.json',
+							type: 'POST',
+							headers: {
+								Authorization: 'Client-ID ed9c3c98c1f5bba'
+							},
+							data: {
+								type: 'base64',
+								name: 'quack_toolsammlung.jpg',
+								title: 'Grepolis - Quack Toolsammlung',
+								description: 'Powered by http://www.grepolisqt.de',
+								image: img
+							},
+							dataType: 'json'
+						}).done(function (data) {
+							$("#qt_export_ajax").hide();
+							var image_url;
+							if (mID == "de") {
+								image_url = QT.Links.sponsor_link('http://grepolisqt.de/de/image-de/?url=' + data.data.id, true);
+							} else {
+								image_url = QT.Links.sponsor_link('http://grepolisqt.de/en/image-en/?url=' + data.data.id, true);
+							}
+
+							if(/chrom(e|ium)/.test(navigator.userAgent.toLowerCase())){
+								window.open(image_url, '_blank', 'width=1000,height=600');
+							} else {
+								window.open(image_url, '_blank');
+							}
+							//window.open(QT.Links.sponsor_link('http://imgur.com/' + data.data.id + '?tags', true),'_blank');
+						}).fail(function() {
+							$("#qt_export_ajax").hide();
+							hOpenWindow.showConfirmDialog(QT.Lang.get("export_window", "connection_fail_title"), QT.Lang.get("export_window", "connection_fail_text"), function () {
+								window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=DE&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted','_blank');
+							});
+						});
+
+					}
+				});
+
+			}
+		}
+	};
+
+	/************************************************************************
 	 * Functions
 	 ***********************************************************************/
 	QT.Functions = {
-		testButtons : function () {
-			$('#ui_box').append('<div id="qt_buttons" style="position: relative;top: 54px;z-index: 100"><button id="qt_save">Save</button><button id="qt_saveall">Save all</button><button id="qt_delete">Delete</button><button id="qt_deleteall">Delete all</button></div>');
-			$("#qt_save").click(function () {
-				QT.Settings.save("messageOpenAlert", false);
-			});
-			$("#qt_saveall").click(function () {
-				var values = {};
-				values.messageOpenAlert = false;
-				values.reportOpenAlert = false;
-				QT.Settings.save_all(values);
-			});
-			$("#qt_delete").click(function () {
-				QT.Settings.delete("messageOpenAlert");
-			});
-			$("#qt_deleteall").click(function () {
-				QT.Settings.delete_all();
-			});
-		},
 		test : function () {
 			alert("Test funktioniert");
 		},
@@ -4960,6 +5334,321 @@ function main_script(DATA) {
 			$(d[0]).append("<a target=_blank href=http://" + mID + ".grepostats.com/world/" + wID + "/player/" + b[1] + '><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a>')
 		},
 		qtoolbox : function () {
+			$('#ui_box .nui_main_menu .leaves').hide();
+			$('#ui_box .nui_main_menu .content ul li:last-child').removeClass("last");
+			$('#ui_box .nui_main_menu .content ul li:last-child span.button_wrapper').css({
+				"height" : "15px"
+			});
+			
+			$('#ui_box .nui_main_menu .bottom').append('\
+				<div id="qt_gtk_fix"></div>\
+				<div id="qtbox_wrapper">\
+					<div id="qt_mainmenu_top"><a id="qtbox_main_btn" href="#"></a></div>\
+					<ol id="qt_mainmenu_list"></ol>\
+					<div id="qt_border_bottom"></div>\
+				</div>');
+
+			if (!QT.Settings.values.grepolistoolkit) {
+				$('#ui_box .nui_main_menu .content ul').css({
+					"height" : "330px"
+				});
+				$('#ui_box .nui_main_menu .content ul').append('<li class="main_menu_item"></li>');
+			} else {
+				$('#ui_box .nui_main_menu .bottom').css({
+					"bottom" : "-15px"
+				});
+				$('#qt_gtk_fix').css({
+					"background" : "url(http://s14.directupload.net/images/141020/6zzbzb3l.png) no-repeat",
+					"position" : "absolute",
+					"top" : "-73px",
+					"width" : "144px",
+					"height" : "20px"
+				});
+				$('<style id="qt_gtk_fix" type="text/css">\
+				.nui_main_menu .content ul li.last .button_wrapper {background: url("http://gpfr.innogamescdn.com/images/game/layout/layout_2.71.png") no-repeat scroll -784px -162px rgba(0, 0, 0, 0); width: 20px; height: 18px}\
+				.nui_main_menu .content ul li.last {height: 34px}\
+				#ui_box .nui_main_menu .content ul {height: 381px !important}\
+				#gtkMainMenu {height: 344px;}\
+				</style>').appendTo('head');
+			}
+
+			$('#ui_box .nui_main_menu .bottom').css({
+				"z-index" : "999"
+			});
+			$('#qtbox_wrapper').css({
+				"position" : "absolute",
+				"bottom" : "36px",
+				"left" : "-2px",
+				"z-index" : "1000"
+			});
+			$('#qt_mainmenu_top').css({
+				"background" : "url(http://s7.directupload.net/images/140119/duowfxnl.png) no-repeat",
+				"width" : "144px",
+				"height" : "35px",
+				"position" : "absolute",
+				"margin-top" : "-22px"
+			});
+			$('#qt_border_bottom').css({
+				"background" : "url(http://s7.directupload.net/images/140119/jltfmtqi.png) no-repeat center center",
+				"width" : "144px",
+				"height" : "14px"
+			});
+			$('#qtbox_main_btn').css({
+				"background" : "url(http://s7.directupload.net/images/140119/nebf5887.png) no-repeat",
+				"position" : "absolute",
+				"top" : "14px",
+				"left" : "60px",
+				"width" : "20px",
+				"height" : "17px"
+			});
+			$('#qt_mainmenu_list').css({
+				"background" : "url(http://s7.directupload.net/images/140120/6waopcew.png) repeat-y",
+				"padding" : "13px 4px 3px 9px",
+				"display" : "none",
+				"margin" : "0 0 -2px"
+			});
+
+			$("#qtbox_main_btn").hover(
+				function () {
+				$(this).css({
+					"background-image" : "url(http://s7.directupload.net/images/140119/ywi4jbg2.png)"
+				});
+			},
+				function () {
+				$(this).css({
+					"background-image" : "url(http://s7.directupload.net/images/140119/nebf5887.png)"
+				});
+			});
+			
+			var qtbox_main_array = [
+				[QT.Lang.get("qtoolbox", "stats"), "http://s1.directupload.net/images/140125/vnghthhz.png", "",
+					[QT.Lang.get("qtoolbox", "grepostats"), "http://s1.directupload.net/images/121012/zzydmra8.png", "",
+						[QT.Lang.get("qtoolbox", "player"), "http://s1.directupload.net/images/121012/8xgicpg7.png", "link_gs_player"],
+						[QT.Lang.get("qtoolbox", "alliance"), "http://s7.directupload.net/images/121012/4kfl493a.png", "link_gs_alliance"],
+						[QT.Lang.get("qtoolbox", "rankings"), "http://s14.directupload.net/images/121012/p2otvkuz.png", "link_gs_rankings"]],
+					[QT.Lang.get("qtoolbox", "grepo_intel"), "http://s14.directupload.net/images/130403/u33cb3b8.jpg", "",
+						[QT.Lang.get("qtoolbox", "track_player"), "http://s1.directupload.net/images/121012/8xgicpg7.png", "link_gi_player"],
+						[QT.Lang.get("qtoolbox", "track_alliance"), "http://s7.directupload.net/images/121012/4kfl493a.png", "link_gi_alliance"],
+						[QT.Lang.get("qtoolbox", "top_killers"), "http://s14.directupload.net/images/121012/p2otvkuz.png", "link_gi_topkillers"]],
+					[QT.Lang.get("qtoolbox", "grepo_bash"), "http://s14.directupload.net/images/140615/x766ldmm.png", "link_grepobash"],
+					[QT.Lang.get("qtoolbox", "quo"), "http://s7.directupload.net/images/140615/fhkhdsdc.png", "link_quo"]],
+				[QT.Lang.get("qtoolbox", "maps"), "http://s1.directupload.net/images/121012/4hbt2ofa.png", "",
+					[QT.Lang.get("qtoolbox", "grepo_maps"), "http://s1.directupload.net/images/121012/4hbt2ofa.png", "link_maps_grepomaps"],
+					[QT.Lang.get("qtoolbox", "grepo_intel"), "http://s14.directupload.net/images/130403/u33cb3b8.jpg", "link_maps_grepointel"]],
+				[QT.Lang.get("qtoolbox", "townsearches"), "http://s14.directupload.net/images/121012/vlnknenk.png", "",
+					[QT.Lang.get("qtoolbox", "tonda_polissuche"), "http://polissuche.marco93.de/favicon.ico", "link_polissuche"],
+					[QT.Lang.get("qtoolbox", "grepo_finder"), "http://s14.directupload.net/images/140913/5c6ak7br.jpg", "link_grepofinder"]],
+				[QT.Lang.get("qtoolbox", "bb_codes"), "http://s14.directupload.net/images/140124/8tzken7v.png", "",
+					[QT.Lang.get("bbcode", "troops"), "http://s1.directupload.net/images/121012/a2w2xe8r.png", "",
+						[QT.Lang.get("qtoolbox", "in_town"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_intown"],
+						[QT.Lang.get("qtoolbox", "from_town"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_fromtown"]],
+					//[QT.Lang.get("qtoolbox","outside"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_outer"]
+					[QT.Lang.get("bbcode", "cities"), "http://s7.directupload.net/images/140121/3l6c8vw4.png", "",
+						[QT.Lang.get("bbcode", "all"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_cities_all"],
+						[QT.Lang.get("bbcode", "active_grp"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_cities_grp"]],
+					[QT.Lang.get("bbcode", "building"), "http://cdn.grepolis.com/images/game/overviews/main_20x20.png", "bbcode_buildings"]],
+				[QT.Lang.get("qtoolbox", "display_modes"), "http://s7.directupload.net/images/121012/2erjlsv4.png", "",
+					[QT.Lang.get("qtoolbox", "full_screen"), "http://s7.directupload.net/images/121012/2erjlsv4.png", "fullscreenmode"]],
+				[QT.Lang.get("qtoolbox", "unit_comparison"), "http://s7.directupload.net/images/121012/xli4g4p8.png", "unitcomparison"],
+				[QT.Lang.get("qtoolbox", "google_docs"), "http://s14.directupload.net/images/121012/cbromm2l.png", "googledocs"],
+				[QT.Lang.get("qtoolbox", "stats_scripts"), "http://s14.directupload.net/images/130418/rpccjan7.png", "statsandscripts"],
+				[QT.Lang.get("qtoolbox", "settings"), "http://s14.directupload.net/images/121012/xg4fgyo5.png", "scriptmanager"]
+			];
+
+			var linkArray = {
+				gs_player : [QT.Links.GS_Spieler, "970", "500", QT.Lang.get("qtoolbox", "player"), "TYPE_QT_GREPOSTATS"],
+				gs_alliance : [QT.Links.GS_Allianz, "970", "500", QT.Lang.get("qtoolbox", "alliance"), "TYPE_QT_GREPOSTATS"],
+				gs_rankings : [QT.Links.GS_Bash, "970", "500", QT.Lang.get("qtoolbox", "rankings"), "TYPE_QT_GREPOSTATS"],
+				gi_player : [QT.Links.GrepoIntelPlayer, "1010", "500", QT.Lang.get("qtoolbox", "track_player"), "TYPE_QT_GREPOINTEL"],
+				gi_alliance : [QT.Links.GrepoIntelAlliance, "1010", "500", QT.Lang.get("qtoolbox", "track_alliance"), "TYPE_QT_GREPOINTEL"],
+				gi_topkillers : [QT.Links.GrepoIntelKillers, "1010", "500", QT.Lang.get("qtoolbox", "top_killers"), "TYPE_QT_GREPOINTEL"],
+				grepobash : [QT.Links.GrepoBash, "970", "500", QT.Lang.get("qtoolbox", "grepo_bash"), "TYPE_QT_BASHLISTS"],
+				quo : [QT.Links.quo, "970", "500", QT.Lang.get("qtoolbox", "quo"), "TYPE_QT_BASHLISTS"],
+				maps_grepomaps : [QT.Links.GrepoMaps, "1035", "500", QT.Lang.get("qtoolbox", "grepo_maps"), "TYPE_QT_SERVERMAPS"],
+				maps_grepointel : [QT.Links.GrepoIntelMap, "1035", "500", QT.Lang.get("qtoolbox", "grepo_intel"), "TYPE_QT_SERVERMAPS"],
+				grepofinder : [QT.Links.Grepofinder, "970", "500", QT.Lang.get("qtoolbox", "grepo_finder"), "TYPE_QT_TOWNSEARCHES"],
+				polissuche : [QT.Links.Polissuche, "970", "500", QT.Lang.get("qtoolbox", "tonda_polissuche"), "TYPE_QT_TOWNSEARCHES"]
+			};
+
+			var qtbox_main_items = [];
+			$.each(qtbox_main_array, function (i, e) {
+				qtbox_main_items.push('<li id="' + e[2] + '" style="background-image: url(' + e[1] + ')"><span>' + e[0] + '</span>');
+				if (e.length > 3) {
+					qtbox_main_items.push("<span class='qmenu_arrow_span'></span>");
+					qtbox_main_items.push('<ol class="qmenu_window"><li class="qmenu_window_first"></li>');
+					$.each(e.slice(3), function (j, f) {
+						qtbox_main_items.push('<li id="' + f[2] + '" style="background-image: url(' + f[1] + ')"><span>' + f[0] + '</span>');
+						if (f.length > 3) {
+							qtbox_main_items.push("<span class='qmenu_arrow_span'></span>");
+							qtbox_main_items.push('<ol class="qmenu_window"><li class="qmenu_window_first"></li>');
+							$.each(f.slice(3), function (k, g) {
+								qtbox_main_items.push('<li id="' + g[2] + '" style="background-image: url(' + g[1] + ')"><span>' + g[0] + '</span>');
+								qtbox_main_items.push('</li>');
+							});
+							qtbox_main_items.push('<li class="qmenu_window_last"></li></ol>');
+						}
+						qtbox_main_items.push('</li>');
+					});
+					qtbox_main_items.push('<li class="qmenu_window_last"></li></ol>');
+				}
+				qtbox_main_items.push('</li>');
+			});
+
+			$('#qt_mainmenu_list').append(qtbox_main_items.join(''));
+			
+			$('#qt_mainmenu_list li').click(function () {
+				if ($(this).prop("id").length > 0) {
+					if (this.id.substring(0, 6) === "bbcode") {
+						QT.Functions.bbcodes(this.id);
+					} else if (this.id.substring(0, 4) === "link") {
+						QT.Functions.openLink(linkArray[this.id.substr(5)]);
+					} else {
+						QT.Functions[this.id]();
+					}
+					$("#qtbox_main_btn").click();
+				}
+			});
+			$("#qt_mainmenu_list ol").css({
+				"padding" : "0"
+			});
+			$("#qt_mainmenu_list li").css({
+				"background-size" : "10px 10px",
+				"background-repeat" : "no-repeat",
+				"background-position" : "left 2px",
+				"padding-left" : "14px",
+				"line-height" : "14px",
+				"cursor" : "pointer",
+				"color" : "#ecb44d",
+				"text-align" : "left",
+				"font-size" : "10px",
+				"text-shadow" : "0 0 2px #000",
+				"list-style" : "none",
+				"margin" : "0"
+			});
+			$("#qt_mainmenu_list li span:first-child").css({
+				"display" : "inline-block",
+				"max-width" : "102px",
+				"width" : "102px"
+			});
+			$(".qmenu_arrow_span").css({
+				"display" : "inline-block",
+				"width" : "9px",
+				"height" : "7px",
+				"background" : "url(http://s14.directupload.net/images/141020/noivoqy4.png) no-repeat center center"
+			});
+			$(".qmenu_window").css({
+				"display" : "none",
+				"position" : "absolute",
+				"left" : "134px",
+				"margin-top" : "-22px",
+				"width" : "142px",
+				"background" : "url(http://s7.directupload.net/images/140120/6waopcew.png)"
+			});
+			$(".qmenu_window li").css({
+				"margin-left" : "9px"
+			});
+			$(".qmenu_window ol").css({
+				"z-index" : "3"
+			});
+			$(".qmenu_window_first").css({
+				"height" : "10px",
+				"max-width" : "142px",
+				"padding" : "0",
+				"margin" : "-2px 0 0 0",
+				"background" : "url(http://s7.directupload.net/images/140119/gxng9w7z.png)"
+			});
+			$(".qmenu_window_last").css({
+				"height" : "8px",
+				"max-width" : "142px",
+				"padding" : "0",
+				"margin" : "2px 0 0 0",
+				"background" : "url(http://s1.directupload.net/images/140119/y7dq3n8j.png)"
+			});
+
+			$("#qt_mainmenu_list li").hover(function () {
+				$(this).css({"color":"#edb"});
+				$(this).children("ol").show();
+			}, function () {
+				$(this).css({"color":"#ecb44d"});
+				$(this).children("ol").hide();
+			});
+			
+			$("#qtbox_main_btn").click(function () {
+				$("#qt_mainmenu_list").slideToggle();
+			});
+		
+			// Buttonbox
+			if (QT.Settings.values.qmenu_settings_buttonbar) {
+				$('#qtbox_wrapper').append('<div id="qtbox_buttons_wrapper" style="display: block; position: relative; height: 26px; width: 100%; left: 2px; bottom: 0px; background:url(http://s7.directupload.net/images/131007/wh2uwdro.png) no-repeat"></div>');
+				$('#ui_box .nui_main_menu .bottom, #ui_box .nui_main_menu .leaves').css({
+					"bottom" : "-=27px"
+				});
+				$('#qtbox_buttons_wrapper').append('<a id="qtbox_button1" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 3px;" target="_blank" href="' + QT.Links.GS_Spieler + '"><img src="http://s1.directupload.net/images/131008/ktvkyrx8.png"></a><a id="qtbox_button2" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 29px;" target="_blank" href="' + QT.Links.GrepoIntelPlayer + '"><img src="http://s1.directupload.net/images/131008/2hr8vbhw.png"></a><a id="qtbox_button3" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 55px;" target="_blank" href="' + QT.Links.GrepoBash + '"><img src="http://s14.directupload.net/images/131008/wfe9ficd.png"></a><a id="qtbox_button4" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 81px;" target="_blank" href="' + QT.Links.GrepoMaps + '"><img src="http://s7.directupload.net/images/131007/hdh4farx.png"></a><a id="qtbox_button5" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 107px;" target="_blank" href="' + QT.Links.Polissuche + '"><img src="http://s7.directupload.net/images/131008/5zj4ujmi.png"></a>');
+				$('#qtbox_button1').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepostats")));
+				$('#qtbox_button2').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepo_intel")));
+				$('#qtbox_button3').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepo_bash")));
+				$('#qtbox_button4').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepo_maps")));
+				$('#qtbox_button5').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "tonda_polissuche")));
+
+				$(".qtbox_button").hover(
+					function () {
+					$(this).css({
+						"background" : "url(http://s7.directupload.net/images/131008/vyhnznhd.png)"
+					});
+				},
+					function () {
+					$(this).css({
+						"background" : "none"
+					});
+				});
+			}
+			
+			//Online Counter
+			if (QT.Settings.values.qmenu_settings_counter) {
+				$('#qtbox_wrapper').append('<div id="qtbox_clock_wrapper" style="display: block; position: relative; height: 21px; left: 2px; width: 100%; background:url(http://s7.directupload.net/images/131007/desspey5.png) no-repeat"><a id="qt_clock_clock" style="display: block; position: absolute; height: 17px; background: url(http://s7.directupload.net/images/131007/qqcsqnfm.png) no-repeat scroll 0px 2px transparent; margin-left: 5px; width: 127px;" href="#"><span id="qt_clock_span" style="display: block; color: #EEDDBB; font-size: 9px; width: 110px; position: absolute; bottom: 2px; margin-left: 10px;"></span></a></div>');
+				$('#ui_box .nui_main_menu .bottom, #ui_box .nui_main_menu .leaves').css({
+					"bottom" : "-=21px"
+				});
+				$("#qt_clock_clock").click(function () {
+					(counterview === 0) ? counterview = 1 : counterview = 0;
+				});
+				$('#qt_clock_clock').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "onlinecounter_switch")));
+				sec = -1;
+				min = 0;
+				hour = 0;
+				counterview = 0;
+				function counttime() {
+					QT.Settings.values.onlinetotal++;
+					sec++;
+					if (sec === 60) {
+						sec = 0;
+						min = min + 1;
+					}
+					if (min === 60) {
+						min = 0;
+						hour += 1;
+					}
+					var hour_total = parseInt(QT.Settings.values.onlinetotal / 3600);
+					var min_total = parseInt(QT.Settings.values.onlinetotal / 60 - hour_total * 60);
+					var sec_total = QT.Settings.values.onlinetotal - (hour_total * 3600) - (min_total * 60);
+					if (counterview === 0) {
+						timer = QT.Lang.get("qtoolbox", "onlinecounter_now") + ": " + ((hour <= 9) ? "0" + hour : hour) + ":" + ((min <= 9) ? "0" + min : min) + ":" + ((sec <= 9) ? "0" + sec : sec);
+					} else if (counterview === 1) {
+						timer = QT.Lang.get("qtoolbox", "onlinecounter_total") + ": " + ((hour_total <= 9) ? "0" + hour_total : hour_total) + ":" + ((min_total <= 9) ? "0" + min_total : min_total) + ":" + ((sec_total <= 9) ? "0" + sec_total : sec_total);
+					}
+					if (!QT.Settings.values.qmenu_settings_counter_aktiv) {
+						QT.Settings.save("onlinetotal", QT.Settings.values.onlinetotal);
+					}
+					$("#qt_clock_span").html(timer);
+					window.setTimeout(function () {
+						counttime();
+					}, 1000);
+				}
+				counttime();
+			}		
+		
+
+		/*
 			$('#ui_box .nui_main_menu .bottom').append('<div id="qtbox_wrapper" style="position: absolute; display: block; width: 100%; bottom: 31px;"><div id="qtbox_header" style="display: block; position: relative; height: 14px; width: 100%; top: 0px; background:url(http://s7.directupload.net/images/140119/jltfmtqi.png) no-repeat"></div></div>');
 			$('#ui_box .nui_main_menu .bottom').css({
 				"bottom" : "-3px"
@@ -5231,7 +5920,7 @@ function main_script(DATA) {
 				counttime();
 			}
 		
-		},
+		*/},
 		questlist : function () {
 			$('#quest_overview').prepend("<li id='q_qadd'><ul><li id='q_lock'></li><li id='q_qarrow'></li><li id='q_qhide'></li></ul></li>");
 			$('#q_qadd').css({
@@ -5454,6 +6143,7 @@ function main_script(DATA) {
 			if ($("DIV#gpwnd_" + c + " DIV#report_arrow img").length <= 0) {
 				return;
 			}
+			//$("DIV#gpwnd_" + c + " .report_booty_bonus_fight hr").remove();
 			var report_type = $("DIV#gpwnd_" + c + " DIV#report_arrow img").attr("src").replace(/.*\/([a-z_]*)\.png.*/, "$1");
 			switch (report_type) {
 			case "attack":
@@ -5486,10 +6176,10 @@ function main_script(DATA) {
 				if ($("DIV#gpwnd_" + c + " DIV#resources").length) {
 					$("DIV#gpwnd_" + c + " .report_side_attacker_unit").each(function (index, value) {
 						var unitNumber = $("span.report_losts", this).text();
-						var unitName = $("div.report_unit", this).attr("class").split(/\s/);
-						unitName = unitName[5];
+						var unitClass = $("div.report_unit", this).attr("class").split(/\s/);
+						unitName = unitClass[5];
 
-						if (unitName != "militia" && unitNumber != "-?") {
+						if (unitName != "militia" && !unitClass[6] && unitNumber != "-?") {
 							AttackUnitsRessources.unit_w = Math.abs(GameData.units[unitName].resources.wood * unitNumber);
 							AttackUnitsRessources.unit_s = Math.abs(GameData.units[unitName].resources.stone * unitNumber);
 							AttackUnitsRessources.unit_i = Math.abs(GameData.units[unitName].resources.iron * unitNumber);
@@ -5506,10 +6196,10 @@ function main_script(DATA) {
 					});
 					$("DIV#gpwnd_" + c + " .report_side_defender_unit").each(function (index, value) {
 						var unitNumber = $("span.report_losts", this).text();
-						var unitName = $("div.report_unit", this).attr("class").split(/\s/);
-						unitName = unitName[5];
-
-						if (unitName != "militia" && unitNumber != "-?") {
+						var unitClass = $("div.report_unit", this).attr("class").split(/\s/);
+						unitName = unitClass[5];
+						
+						if (unitName != "militia" && !unitClass[6] && unitNumber != "-?") {
 							DefenseUnitsRessources.unit_w = Math.abs(GameData.units[unitName].resources.wood * unitNumber);
 							DefenseUnitsRessources.unit_s = Math.abs(GameData.units[unitName].resources.stone * unitNumber);
 							DefenseUnitsRessources.unit_i = Math.abs(GameData.units[unitName].resources.iron * unitNumber);
@@ -5524,7 +6214,9 @@ function main_script(DATA) {
 							$("div.report_unit", this).mousePopup(new MousePopup(unitPopup));
 						}
 					});
-					$("DIV#gpwnd_" + c + " DIV#resources").append('<p><table><tr><td width="50%">' + AttackUnitsRessources.total_w + '</td><td><img class="unit_order_res wood" alt="' + GameData.resources.wood + '" src="http://cdn.grepolis.com/images/game/res/wood.png" width="20" height="20"/></td><td width="50%">' + DefenseUnitsRessources.total_w + '</td></tr><tr><td>' + AttackUnitsRessources.total_s + '</td><td><img class="unit_order_res stone" alt="' + GameData.resources.stone + '" src="http://cdn.grepolis.com/images/game/res/stone.png" width="20" height="20"/></td><td>' + DefenseUnitsRessources.total_s + '</td></tr><tr><td>' + AttackUnitsRessources.total_i + '</td><td><img class="unit_order_res iron" alt="' + GameData.resources.iron + '" src="http://cdn.grepolis.com/images/game/res/iron.png" width="20" height="20"/></td><td>' + DefenseUnitsRessources.total_i + '</td></tr><tr><td>' + AttackUnitsRessources.total_f + '</td><td><img class="unit_order_res favor" alt="' + GameData.favor + '" src="http://cdn.grepolis.com/images/game/res/favor.png" width="20" height="20"/></td><td>' + DefenseUnitsRessources.total_f + '</td></tr><tr><td>' + AttackUnitsRessources.total_p + '</td><td><img class="unit_order_res population" alt="' + GameData.population + '" src="http://cdn.grepolis.com/images/game/res/pop.png" width="20" height="20"/></td><td>' + DefenseUnitsRessources.total_p + "</td></tr></table>")
+					
+					var JQselector = ($("DIV#gpwnd_" + c + " DIV#resources #load").length > 0) ? $("DIV#gpwnd_" + c + " DIV#resources #load") : $("DIV#gpwnd_" + c + " DIV#resources");
+					JQselector.after('<hr><table><tr><td width="50%">' + AttackUnitsRessources.total_w + '</td><td><div class="resources_small wood"></div></td><td width="50%">' + DefenseUnitsRessources.total_w + '</td></tr><tr><td>' + AttackUnitsRessources.total_s + '</td><td><div class="resources_small stone"></td><td>' + DefenseUnitsRessources.total_s + '</td></tr><tr><td>' + AttackUnitsRessources.total_i + '</td><td><div class="resources_small iron"></td><td>' + DefenseUnitsRessources.total_i + '</td></tr><tr><td>' + AttackUnitsRessources.total_f + '</td><td><div class="resources_small favor"></td><td>' + DefenseUnitsRessources.total_f + '</td></tr><tr><td>' + AttackUnitsRessources.total_p + '</td><td><div class="resources_small population"></td><td>' + DefenseUnitsRessources.total_p + "</td></tr></table>")
 				}
 			}
 		},
@@ -5578,6 +6270,69 @@ function main_script(DATA) {
 				return 0;
 			});
 			folders.appendTo(foldersContainer);
+		},
+		reportExport : function () {
+			var b = GPWindowMgr.getOpen(Layout.wnd.TYPE_REPORT);
+			if (b.length == 0)
+				return;
+			var c = b[b.length - 1];
+			var d = c.getID();
+
+			var report_type;
+			if ($("DIV#gpwnd_" + d + " .support_report_cities").length > 0) {
+				report_type = "support_attacked";
+			} else if ($("DIV#gpwnd_" + d + " #report_header").length <= 0) {
+				if ($("DIV#gpwnd_" + d + " #report_game_body .report_unit").length > 0) {
+					report_type = "support_back";
+				} else {
+					report_type = "text_only";
+				}
+			} else {
+				report_type = $("DIV#gpwnd_" + d + " DIV#report_arrow img").attr("src").replace(/.*\/([A-Za-z0-9_.]*)\.png.*/, "$1");
+				if (report_type == "support" && $("DIV#gpwnd_" + d + " #report_game_body > p").length > 0) {
+					report_type = "support_failed";
+				} else if (report_type == "espionage_2.67" && $("DIV#gpwnd_" + d + " #spy_buildings").length == 0) {
+					if ($("DIV#gpwnd_" + d + " #right_side p").length > 1) {
+						report_type = "espionage_failed_on_me";
+					} else {
+						report_type = "my_espionage_failed";
+					}
+				}
+			}
+			
+			QT.Helper.Screenshot.btn_preview("DIV#gpwnd_" + d + " #report_report_header", "qt_reportexport", report_type, function() {
+				// General 
+				$("#report_report").clone().appendTo("#qt_canvas"); //.cloneNode(true);
+				$("#qt_canvas #report_report_header").contents().filter(function(){return this.nodeType === 3}).wrap('<span />');
+				$("#qt_canvas .game_list_footer").append('<p style="float: right; margin-top: 7px; font-size: 10px;">Powered by &copy; grepolisqt.de</p>');
+
+				// Elements to remove
+				$("#qt_canvas #select_folder_id").remove();
+				$("#qt_canvas .game_list_footer a").remove();
+				
+				// General Style
+				$("#qt_canvas #report_report").css({"display": "inline-block"});
+				$("#qt_canvas #report_report_header").css({"max-width":"780px"});
+				$("#qt_canvas hr").css({"border": "0", "border-bottom": "1px solid #b38f48"});
+				
+				// Elements to change
+				var elemensToChange = [
+				// Borders
+				".game_border_top", ".game_border_bottom", ".game_border_left", ".game_border_right", ".game_border_corner",
+				// Header
+				"#report_report_header", ".game_arrow_left", ".game_arrow_right", ".game_arrow_delete", "#report_action_bg", "#report_arrow", ".report_town_bg", ".report_town_bg .island_bg", ".town_icon", ".flagpole",
+				// Body
+				"#report_game_body", ".hero40x40", ".unit_icon40x40", ".resources_small", ".report_booty_bonus_fight", "#resources .res_background", "#resources .res_background div", ".report_icon", ".button.simulate_units", ".power_icon45x45", ".power_icon86x86", ".big_horizontal_report_separator",
+				// Footer
+				".game_list_footer",
+				// Buildings
+				".building_main", ".building_storage", ".building_hide", ".building_farm", ".building_place", ".building_lumber", ".building_stoner",
+				".building_ironer", ".building_market", ".building_docks", ".building_wall", ".building_academy", ".building_temple", ".building_barracks",
+				".building_tower", ".building_lighthouse", ".building_library", ".building_thermal", ".building_theatre", ".building_oracle", ".building_statue", ".building_trade_office"
+				];
+				
+				return elemensToChange;
+			});
 		},
 		scriptmanager : function () {
 			var grepoGameBorder = '<div class="game_border"><div class="game_border_top"></div><div class="game_border_bottom"></div><div class="game_border_left"></div><div class="game_border_right"></div><div class="game_border_corner corner1"></div><div class="game_border_corner corner2"></div><div class="game_border_corner corner3"></div><div class="game_border_corner corner4"></div><div class="game_header bold" style="height:18px;padding:3px 11px">';
@@ -5643,12 +6398,12 @@ function main_script(DATA) {
 				});
 				var HTML_tab2 = '';
 				var q_translations = {
-					BR : "==CrAZyWoW==, douglasgoclv",
+					BR : "==CrAZyWoW==, douglasgoclv, tesseus",
 					CZ : "jarajanos, Apolon Foibos, jarajanos",
 					DE : "Quackmaster, Scav77",
 					EN : "Quackmaster",
 					ES : "Jonh Snow, F0NT3, cuervobrujo",
-					FR : "higter, Mazelys, jbrek, ToolFire, aldo666",
+					FR : "higter, Mazelys, jbrek, ToolFire, aldo666, jojopt",
 					GR : "drmacsoft, adipas.ioannis, juvekdk, ΤζονακοςΚ",
 					HU : "Arminno, Betagamer, Shia-ko",
 					IT : "masale81",
@@ -6133,7 +6888,7 @@ function main_script(DATA) {
 				}
 			}
 		},
-		townTradeImprovement : function () { //name
+		townTradeImprovement : function () {
 			var wndArray = GPWindowMgr.getOpen(Layout.wnd.TYPE_TOWN);
 			for (var e in wndArray) {
 				if (wndArray.hasOwnProperty(e)) {
@@ -6719,6 +7474,22 @@ function main_script(DATA) {
 				}
 			};
 			GPWindowMgr.addWndType("QT_TOWNOVERVIEW", "qttownoverview", WndHandlerQTtownoverview, 1);
+			//Report Export
+			function WndHandlerQTreportexport(wndhandle) {
+				this.wnd = wndhandle;
+			}
+			Function.prototype.inherits.call(WndHandlerQTreportexport, WndHandlerDefault);
+			WndHandlerQTreportexport.prototype.getDefaultWindowOptions = function () {
+				return {
+					position : ["center", "center"],
+					width : 850, //827
+					height : 600, //733
+					minimizable : true,
+					fullwindow : true,
+					title : "Report Export"
+				};
+			};
+			GPWindowMgr.addWndType("QT_REPORTEXPORT", "qtreportexport", WndHandlerQTreportexport, 1);
 			//Rest
 			function WndHandlerQTstandard(wndhandle) {
 				this.wnd = wndhandle;
@@ -6740,6 +7511,14 @@ function main_script(DATA) {
 	/************************************************************************
 	 * Observer
 	 ***********************************************************************/
+	if (mID == "fr") {
+		$(document).ajaxComplete(function (event, xhr, settings) {
+			var url = settings.url.split("?");
+			if (url == "http://script.cdn.grepolistoolkit.com/prod/php/controler.php") {
+				QT.Settings.values.grepolistoolkit = true;
+			}
+		});
+	}
 	$.Observer(GameEvents.game.load).subscribe('QT', function (e, data) {
 		QT.Settings.setValues();
 		QT_sendStats(mID, sID, QT.Settings.values.script_version);
