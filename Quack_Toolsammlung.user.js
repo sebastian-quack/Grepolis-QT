@@ -4,7 +4,7 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.41.00
+// @version        2.41.01
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -3446,9 +3446,9 @@ function main_script(DATA) {
 							$("#qt_export_ajax").hide();
 							var image_url;
 							if (mID == "de") {
-								image_url = QT.Links.sponsor_link('http://grepolisqt.de/de/image-de/?url=' + data.data.id, true);
+								image_url = QT.Links.sponsor_link('http://grepolisqt.de/de/image-de/' + data.data.id, true);
 							} else {
-								image_url = QT.Links.sponsor_link('http://grepolisqt.de/en/image-en/?url=' + data.data.id, true);
+								image_url = QT.Links.sponsor_link('http://grepolisqt.de/en/image-en/' + data.data.id, true);
 							}
 
 							if(/chrom(e|ium)/.test(navigator.userAgent.toLowerCase())){
