@@ -4,19 +4,16 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.41.01
+// @version        2.42.00
+// @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_deleteValue
 // @grant          GM_info
 // @grant          GM_xmlhttpRequest
+// @grant          GM_getResourceText
 // ==/UserScript==
-
-var GM_html2canvas = document.createElement('script'); 
-GM_html2canvas.src = ' https://github.com/niklasvh/html2canvas/releases/download/0.4.1/html2canvas.js';
-GM_html2canvas.type = 'text/javascript'; 
-document.getElementsByTagName('head')[0].appendChild(GM_html2canvas); 
 
 /************************************************************************
  * Main Script
@@ -51,7 +48,7 @@ function main_script(DATA) {
 				choose_folder : 'Escolher pasta',
 				enacted : 'lançou',
 				conquered : 'conquistou',
-				spying : 'espiando',
+				spying : 'espia',
 				spy : 'Espião',
 				support : 'apoio',
 				supporting : 'apoia',
@@ -60,7 +57,7 @@ function main_script(DATA) {
 			},
 			forum : {
 				delete : 'Excluir',
-				delete_sure : 'Você realmente deseja excluir essas mensagens?',
+				delete_sure : 'Você realmente deseja eliminar essas mensagens?',
 				no_selection : 'Não existem mensagens selecionadas'
 			},
 			town_info : {
@@ -745,7 +742,15 @@ function main_script(DATA) {
 				message : 'Nachricht',
 				attacker : 'Angreifer',
 				defender : 'Verteidiger',
-				bonuses : 'Zauber/Boni'
+				bonuses : 'Zauber/Boni',
+				command_type : 'Befehlsart',
+				town_left : 'Stadt (links)',
+				town_right : 'Stadt (rechts)',
+				player_left : 'Spieler (links)',
+				player_right : 'Spieler (rechts)',
+				travel_time : 'Laufzeit',
+				time_of_arrival : 'Ankunftszeit',
+				command : 'Befehl'
 			}
 		},
 		es : {
@@ -1257,7 +1262,13 @@ function main_script(DATA) {
 				rankings : 'Κατάταξη',
 				track_player : 'Εύρεση παίκτη',
 				track_alliance : 'Εύρεση συμμαχίας',
-				maps : 'Χάρτης'
+				maps : 'Χάρτης',
+				tonda_polissuche : 'Αναζήτηση πολης'
+			},
+			academy : {
+				researched : 'Χρωματισμός εξερευνηθέντων',
+				notresearched : 'Χρωματισμός μη εξερευνηθέντων',
+				undo : 'Αναιρεση χρωματισμού'
 			}
 		},
 		hu : {
@@ -2775,7 +2786,15 @@ function main_script(DATA) {
 				message : 'Message',
 				attacker : 'Attacker',
 				defender : 'Defender',
-				bonuses : 'Spells/Bonuses'
+				bonuses : 'Spells/Bonuses',
+				command_type : 'Command type',
+				town_left : 'Town (left)',
+				town_right : 'Town (right)',
+				player_left : 'Player (left)',
+				player_right : 'Player (right)',
+				travel_time : 'Travel time',
+				time_of_arrival : 'Time of arrival',
+				command : 'Command'
 			}
 		}
 	};
@@ -3031,6 +3050,7 @@ function main_script(DATA) {
 			},
 			command_overview : function (event, xhr, settings) {
 				QT.Functions.commandOverview(event, xhr, settings);
+				QT.Functions.commandOverviewExport();
 			},
 			culture_overview : function () {
 				QT.Functions.cultureOverview();
@@ -3083,6 +3103,9 @@ function main_script(DATA) {
 		building_place : {
 			units_beyond : function () {
 				QT.Functions.unitsBeyondView();
+			},
+			simulator : function () {
+				QT.Functions.simulatorExport();
 			}
 		},
 		units_beyond_info : {
@@ -3223,6 +3246,17 @@ function main_script(DATA) {
 					var elemensToChange = callback();
 					QT.Helper.Screenshot.replace_images(elemensToChange);
 					$("#qt_canvas #"+ id +"").remove();
+					$("#qt_canvas :first").append('<div id="qt_copyright">Powered by &copy; www.grepolisqt.de</div>');
+					$("#qt_copyright").css({
+						//"background" : "url(http://gpde.innogamescdn.com/images/game/layout/progressbars-sprite_2.70_compressed.png) repeat-x scroll 0 -14px rgba(0, 0, 0, 0)",
+						"background-color" : "#000000",
+						"height" : "15px",
+						"color" : "#eeddbb",
+						"font-size" : "9px",
+						"text-shadow" : "0 0 2px #000",
+						"padding-right" : "3px",
+						"text-align" : "right"
+					});
 				});
 
 				$("#" + id).mousePopup(new MousePopup(QT.Lang.get("export_window", "button_mouseover")));
@@ -3234,112 +3268,133 @@ function main_script(DATA) {
 					case "attack":
 					case "take_over":
 					case "breach":
-						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_bonuses_a", "qt_luck", "qt_title", "qt_resources"];
-						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_bonuses_d", "qt_moral", "qt_attackmode", "qt_resources_lost"];
-						settings_array.third_row = ["qt_alliance_a", "qt_alliance_d", "", "qt_wall", "qt_bashpoints", ""];
-						settings_array.fourth_row = ["qt_troops_a", "qt_troops_d", "", "qt_nightbonus", "qt_date", ""];
+						settings_array.first_row = ["rp_town_name_a", "rp_town_name_d", "rp_bonuses_a", "rp_luck", "rp_title", "rp_resources"];
+						settings_array.second_row = ["rp_player_a", "rp_player_d", "rp_bonuses_d", "rp_moral", "rp_attackmode", "rp_resources_lost"];
+						settings_array.third_row = ["rp_alliance_a", "rp_alliance_d", "", "rp_wall", "rp_bashpoints", ""];
+						settings_array.fourth_row = ["rp_troops_a", "rp_troops_d", "", "rp_nightbonus", "rp_date", ""];
 						break;
 					case "espionage_2.67":
-						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_troops", "qt_title", "", ""];
-						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_buildings", "qt_attackmode", "", ""];
-						settings_array.third_row = ["qt_alliance_a", "qt_alliance_d", "qt_payed_iron", "qt_date", "", ""];
-						settings_array.fourth_row = ["", "", "qt_resources", "", "", ""];
+						settings_array.first_row = ["rp_town_name_a", "rp_town_name_d", "rp_troops", "rp_title", "", ""];
+						settings_array.second_row = ["rp_player_a", "rp_player_d", "rp_buildings", "rp_attackmode", "", ""];
+						settings_array.third_row = ["rp_alliance_a", "rp_alliance_d", "rp_payed_iron", "rp_date", "", ""];
+						settings_array.fourth_row = ["", "", "rp_resources", "", "", ""];
 						break;
 					case "my_espionage_failed":
-						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_title", "", "", "qt_payed_iron"];
-						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_attackmode", "", "", ""];
-						settings_array.third_row = ["qt_alliance_a", "qt_alliance_d", "qt_body_p", "", "", ""];
-						settings_array.fourth_row = ["", "", "qt_date", "", "", ""];
+						settings_array.first_row = ["rp_town_name_a", "rp_town_name_d", "rp_title", "", "", "rp_payed_iron"];
+						settings_array.second_row = ["rp_player_a", "rp_player_d", "rp_attackmode", "", "", ""];
+						settings_array.third_row = ["rp_alliance_a", "rp_alliance_d", "rp_body_p", "", "", ""];
+						settings_array.fourth_row = ["", "", "rp_date", "", "", ""];
 						break;
 					case "espionage_failed_on_me":
-						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_title", "", "", "qt_payed_iron"];
-						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_attackmode", "", "", "qt_payed_iron_storage"];
-						settings_array.third_row = ["qt_alliance_a", "qt_alliance_d", "qt_body_p", "", "", ""];
-						settings_array.fourth_row = ["", "", "qt_date", "", "", ""];
+						settings_array.first_row = ["rp_town_name_a", "rp_town_name_d", "rp_title", "", "", "rp_payed_iron"];
+						settings_array.second_row = ["rp_player_a", "rp_player_d", "rp_attackmode", "", "", "rp_payed_iron_storage"];
+						settings_array.third_row = ["rp_alliance_a", "rp_alliance_d", "rp_body_p", "", "", ""];
+						settings_array.fourth_row = ["", "", "rp_date", "", "", ""];
 						break;
 					case "powers":
-						settings_array.first_row = ["qt_player_a", "qt_town_name_d", "qt_title", "", "", ""];
-						settings_array.second_row = ["qt_alliance_a", "qt_player_d", "qt_attackmode", "", "", ""];
-						settings_array.third_row = ["qt_power_left", "qt_alliance_d", "qt_date", "", "", ""];
-						settings_array.fourth_row = ["qt_power_right", "", "", "", "", ""];
+						settings_array.first_row = ["rp_player_a", "rp_town_name_d", "rp_title", "", "", ""];
+						settings_array.second_row = ["rp_alliance_a", "rp_player_d", "rp_attackmode", "", "", ""];
+						settings_array.third_row = ["rp_power_left", "rp_alliance_d", "rp_date", "", "", ""];
+						settings_array.fourth_row = ["rp_power_right", "", "", "", "", ""];
 						break;
 					case "conquer":
-						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_title", "", "", ""];
-						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_attackmode", "", "", ""];
-						settings_array.third_row = ["qt_alliance_a", "qt_alliance_d", "qt_body_p", "", "", ""];
-						settings_array.fourth_row = ["", "", "qt_date", "", "", ""];
+						settings_array.first_row = ["rp_town_name_a", "rp_town_name_d", "rp_title", "", "", ""];
+						settings_array.second_row = ["rp_player_a", "rp_player_d", "rp_attackmode", "", "", ""];
+						settings_array.third_row = ["rp_alliance_a", "rp_alliance_d", "rp_body_p", "", "", ""];
+						settings_array.fourth_row = ["", "", "rp_date", "", "", ""];
 						break;
 					case "raise":
-						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_title", "", "", ""];
-						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_attackmode", "", "", ""];
-						settings_array.third_row = ["qt_alliance_a", "qt_raise_right", "qt_wall", "", "", ""];
-						settings_array.fourth_row = ["qt_raise_left", "", "qt_date", "", "", ""];
+						settings_array.first_row = ["rp_town_name_a", "rp_town_name_d", "rp_title", "", "", ""];
+						settings_array.second_row = ["rp_player_a", "rp_player_d", "rp_attackmode", "", "", ""];
+						settings_array.third_row = ["rp_alliance_a", "rp_raise_right", "rp_wall", "", "", ""];
+						settings_array.fourth_row = ["rp_raise_left", "", "rp_date", "", "", ""];
 						break;
 					case "support":
-						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_title", "", "", ""];
-						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_attackmode", "", "", ""];
-						settings_array.third_row = ["qt_alliance_a", "qt_alliance_d", "qt_date", "", "", ""];
-						settings_array.fourth_row = ["qt_support", "", "", "", "", ""];
+						settings_array.first_row = ["rp_town_name_a", "rp_town_name_d", "rp_title", "", "", ""];
+						settings_array.second_row = ["rp_player_a", "rp_player_d", "rp_attackmode", "", "", ""];
+						settings_array.third_row = ["rp_alliance_a", "rp_alliance_d", "rp_date", "", "", ""];
+						settings_array.fourth_row = ["rp_support", "", "", "", "", ""];
 						break;
 					case "support_failed":
-						settings_array.first_row = ["qt_title", "", "", "", "", ""];
-						settings_array.second_row = ["qt_attackmode", "", "", "", "", ""];
-						settings_array.third_row = ["qt_body_p", "", "", "", "", ""];
-						settings_array.fourth_row = ["qt_date", "", "", "", "", ""];
+						settings_array.first_row = ["rp_title", "", "", "", "", ""];
+						settings_array.second_row = ["rp_attackmode", "", "", "", "", ""];
+						settings_array.third_row = ["rp_body_p", "", "", "", "", ""];
+						settings_array.fourth_row = ["rp_date", "", "", "", "", ""];
 						break;
 					case "support_attacked":
-						settings_array.first_row = ["qt_town_name_a", "qt_town_name_d", "qt_title", "", "", ""];
-						settings_array.second_row = ["qt_player_a", "qt_player_d", "qt_attackmode", "", "", ""];
-						settings_array.third_row = ["qt_alliance_a", "qt_alliance_d", "qt_bashpoints", "", "", ""];
-						settings_array.fourth_row = ["", "qt_troops_support_atk", "qt_date", "", "", ""];
+						settings_array.first_row = ["rp_town_name_a", "rp_town_name_d", "rp_title", "", "", ""];
+						settings_array.second_row = ["rp_player_a", "rp_player_d", "rp_attackmode", "", "", ""];
+						settings_array.third_row = ["rp_alliance_a", "rp_alliance_d", "rp_bashpoints", "", "", ""];
+						settings_array.fourth_row = ["", "rp_troops_support_atk", "rp_date", "", "", ""];
 						break;
 					case "support_back":
-						settings_array.first_row = ["qt_title", "", "", "", "", ""];
-						settings_array.second_row = ["qt_body_p", "", "", "", "", ""];
-						settings_array.third_row = ["qt_support", "", "", "", "", ""];
-						settings_array.fourth_row = ["qt_date", "", "", "", "", ""];
+						settings_array.first_row = ["rp_title", "", "", "", "", ""];
+						settings_array.second_row = ["rp_body_p", "", "", "", "", ""];
+						settings_array.third_row = ["rp_support", "", "", "", "", ""];
+						settings_array.fourth_row = ["rp_date", "", "", "", "", ""];
 						break;
 					case "text_only":
-						settings_array.first_row = ["qt_title", "", "", "", "", ""];
-						settings_array.second_row = ["qt_body_p_all", "", "", "", "", ""];
-						settings_array.third_row = ["qt_date", "", "", "", "", ""];
+						settings_array.first_row = ["rp_title", "", "", "", "", ""];
+						settings_array.second_row = ["rp_body_p_all", "", "", "", "", ""];
+						settings_array.third_row = ["rp_date", "", "", "", "", ""];
+						settings_array.fourth_row = ["", "", "", "", "", ""];
+						break;
+					case "command_overview":
+						settings_array.first_row = ["co_command_type", "co_command", "", "", "", ""];
+						settings_array.second_row = ["co_gp_town_link_l", "co_gp_player_link_l", "", "", "", ""];
+						settings_array.third_row = ["co_gp_town_link_r", "co_gp_player_link_r", "", "", "", ""];
+						settings_array.fourth_row = ["co_countdown", "co_arrival", "", "", "", ""];
+						break;
+					default:
+						settings_array.first_row = ["", "", "", "", "", ""];
+						settings_array.second_row = ["", "", "", "", "", ""];
+						settings_array.third_row = ["", "", "", "", "", ""];
 						settings_array.fourth_row = ["", "", "", "", "", ""];
 						break;
 				}
 			
 				var settings_elements = {
-					qt_town_name_a : [QT.Lang.get("export_window", "town") + " (Off)", "#report_sending_town .town_name"],
-					qt_luck : [QT.Lang.get("export_window", "luck"), ".luck"],
-					qt_title : [QT.Lang.get("export_window", "title"), "#report_report_header span"],
-					qt_resources : [QT.Lang.get("export_window", "resources"), "#resources ul, #load, #resources p"],
-					qt_town_name_d : [QT.Lang.get("export_window", "town") + " (Deff)", "#report_receiving_town .town_name"],
-					qt_wall : [QT.Lang.get("export_window", "wall"), ".oldwall"],
-					qt_player_a : [QT.Lang.get("export_window", "player") + " (Off)", "#report_sending_town .town_owner"],
-					qt_moral : [QT.Lang.get("export_window", "moral"), ".morale"],
-					qt_attackmode : [QT.Lang.get("export_window", "reporttype"), "#report_arrow img"],
-					qt_resources_lost : [QT.Lang.get("export_window", "resources_lost"), ".report_booty_bonus_fight table"],
-					qt_player_d : [QT.Lang.get("export_window", "player") + " (Deff)", "#report_receiving_town .town_owner"],
-					qt_nightbonus : [QT.Lang.get("export_window", "nightbonus"), ".nightbonus"],
-					qt_alliance_a : [QT.Lang.get("export_window", "alliance") + " (Off)", "#report_sending_town .town_owner_ally"],
-					qt_troops_a : [QT.Lang.get("export_window", "troops") + " (Off)", ".report_side_attacker_unit"],
-					qt_bashpoints : [QT.Lang.get("export_window", "bashpoints"), "#kill_points"],
-					qt_alliance_d : [QT.Lang.get("export_window", "alliance") + " (Deff)", "#report_receiving_town .town_owner_ally"],
-					qt_troops_d : [QT.Lang.get("export_window", "troops") + " (Deff)", ".report_side_defender_unit"],
-					qt_troops : [QT.Lang.get("export_window", "troops"), "#left_side > .report_unit"],
-					qt_buildings : [QT.Lang.get("export_window", "buildings"), "#spy_buildings .report_unit"],
-					qt_payed_iron : [QT.Lang.get("export_window", "payed_iron"), "#right_side p:eq(0)"],
-					qt_payed_iron_storage : [QT.Lang.get("export_window", "payed_iron_storage"), "#right_side p:eq(1)"],
-					qt_date : [QT.Lang.get("export_window", "date"), "#report_date"],
-					qt_power_left : [QT.Lang.get("export_window", "spell_info"),"#left_side, .report_god"],
-					qt_power_right : [QT.Lang.get("export_window", "spell_effect"),"#right_side"],
-					qt_body_p : [QT.Lang.get("export_window", "message"), "#report_game_body p:eq(0)"],
-					qt_body_p_all : [QT.Lang.get("export_window", "message"), "#report_game_body p"],
-					qt_raise_left : [QT.Lang.get("export_window", "attacker"),"#left_side"],
-					qt_raise_right : [QT.Lang.get("export_window", "defender"),"#right_side"],
-					qt_support : [QT.Lang.get("export_window", "troops"), "#report_game_body .report_unit"],
-					qt_troops_support_atk : [QT.Lang.get("export_window", "troops"), ".report_side_defender, .big_horizontal_report_separator .report_booty_bonus_fight, .support_report_cities"],
-					qt_bonuses_a : [QT.Lang.get("export_window", "bonuses") + " (Off)",".report_side_attacker .power_holder"],
-					qt_bonuses_d : [QT.Lang.get("export_window", "bonuses") + " (Deff)",".report_side_defender .power_holder"]
+					rp_town_name_a : [QT.Lang.get("export_window", "town") + " (Off)", ["#report_sending_town .town_name"]],
+					rp_luck : [QT.Lang.get("export_window", "luck"), [".luck"]],
+					rp_title : [QT.Lang.get("export_window", "title"), ["#report_report_header span"]],
+					rp_resources : [QT.Lang.get("export_window", "resources"), ["#resources ul", "#load", "#resources p"]],
+					rp_town_name_d : [QT.Lang.get("export_window", "town") + " (Deff)", ["#report_receiving_town .town_name"]],
+					rp_wall : [QT.Lang.get("export_window", "wall"), [".oldwall"]],
+					rp_player_a : [QT.Lang.get("export_window", "player") + " (Off)", ["#report_sending_town .town_owner"]],
+					rp_moral : [QT.Lang.get("export_window", "moral"), [".morale"]],
+					rp_attackmode : [QT.Lang.get("export_window", "reporttype"), ["#report_arrow img"]],
+					rp_resources_lost : [QT.Lang.get("export_window", "resources_lost"), [".report_booty_bonus_fight table"]],
+					rp_player_d : [QT.Lang.get("export_window", "player") + " (Deff)", ["#report_receiving_town .town_owner"]],
+					rp_nightbonus : [QT.Lang.get("export_window", "nightbonus"), [".nightbonus"]],
+					rp_alliance_a : [QT.Lang.get("export_window", "alliance") + " (Off)", ["#report_sending_town .town_owner_ally"]],
+					rp_troops_a : [QT.Lang.get("export_window", "troops") + " (Off)", [".report_side_attacker_unit"]],
+					rp_bashpoints : [QT.Lang.get("export_window", "bashpoints"), ["#kill_points"]],
+					rp_alliance_d : [QT.Lang.get("export_window", "alliance") + " (Deff)", ["#report_receiving_town .town_owner_ally"]],
+					rp_troops_d : [QT.Lang.get("export_window", "troops") + " (Deff)", [".report_side_defender_unit"]],
+					rp_troops : [QT.Lang.get("export_window", "troops"), ["#left_side > .report_unit"]],
+					rp_buildings : [QT.Lang.get("export_window", "buildings"), ["#spy_buildings .report_unit"]],
+					rp_payed_iron : [QT.Lang.get("export_window", "payed_iron"), ["#right_side p:eq(0)"]],
+					rp_payed_iron_storage : [QT.Lang.get("export_window", "payed_iron_storage"), ["#right_side p:eq(1)"]],
+					rp_date : [QT.Lang.get("export_window", "date"), ["#report_date"]],
+					rp_power_left : [QT.Lang.get("export_window", "spell_info"), ["#left_side", ".report_god"]],
+					rp_power_right : [QT.Lang.get("export_window", "spell_effect"), ["#right_side"]],
+					rp_body_p : [QT.Lang.get("export_window", "message"), ["#report_game_body p:eq(0)"]],
+					rp_body_p_all : [QT.Lang.get("export_window", "message"), ["#report_game_body p"]],
+					rp_raise_left : [QT.Lang.get("export_window", "attacker"), ["#left_side"]],
+					rp_raise_right : [QT.Lang.get("export_window", "defender"), ["#right_side"]],
+					rp_support : [QT.Lang.get("export_window", "troops"), ["#report_game_body .report_unit"]],
+					rp_troops_support_atk : [QT.Lang.get("export_window", "troops"), [".report_side_defender", ".big_horizontal_report_separator .report_booty_bonus_fight", ".support_report_cities"]],
+					rp_bonuses_a : [QT.Lang.get("export_window", "bonuses") + " (Off)", [".report_side_attacker .power_holder"]],
+					rp_bonuses_d : [QT.Lang.get("export_window", "bonuses") + " (Deff)", [".report_side_defender .power_holder"]],
+					
+					co_command_type : [QT.Lang.get("export_window", "command_type"), [".command_type"]],
+					co_gp_town_link_l : [QT.Lang.get("export_window", "town_left"), [".gp_town_link:nth-child(1)"]],
+					co_gp_town_link_r : [QT.Lang.get("export_window", "town_right"), [".gp_town_link:nth-child(4)"]],
+					co_gp_player_link_l : [QT.Lang.get("export_window", "player_left"), [".gp_player_link:nth-child(2)"]],
+					co_gp_player_link_r : [QT.Lang.get("export_window", "player_right"), [".gp_player_link:nth-child(4)", ".gp_player_link:nth-child(5)"]],
+					co_countdown : [QT.Lang.get("export_window", "travel_time"), [".countdown"]],
+					co_arrival : [QT.Lang.get("export_window", "time_of_arrival"), [".troops_arrive_at"]],
+					co_command : [QT.Lang.get("export_window", "command"), [".command_overview_units", ".command_overview_booty"]]
 				};
 
 				var settings_table;
@@ -3358,15 +3413,19 @@ function main_script(DATA) {
 				
 				$("#qt_export_header .checkbox_new").click(function () {
 					$(this).toggleClass("checked");
-					var classList = $(this).attr('class').split(/\s+/);
-					var JQelement = $("#qt_canvas "+settings_elements[classList[1]][1]);
 
-					if ( JQelement.css('visibility') == 'hidden' ) {
-						JQelement.css('visibility','visible');
-					}
-					else {
-						JQelement.css('visibility','hidden');
-					}
+					var classList = $(this).attr('class').split(/\s+/);
+
+					$.each(settings_elements[classList[1]][1], function(key, value) {
+						var JQelement = $("#qt_canvas " + value);
+
+						if ( JQelement.css('visibility') == 'hidden' ) {
+							JQelement.css('visibility','visible');
+						}
+						else {
+							JQelement.css('visibility','hidden');
+						}
+					});
 				});
 			},
 			open_window : function (title) {
@@ -3393,13 +3452,14 @@ function main_script(DATA) {
 				$("#qt_export_content").css({"padding" : "0 10px 10px", "border" : "0 none"});
 				$("#qt_export_content .qt_transparent").css({"position" : "absolute", "width" : "800px", "height" : "353px", "z-index" : "100",});
 				$("#qt_canvas").css({"height" : "352px", "overflow-y" : "auto"});
+
 				$("#qt_export_footer").css({"position" : "absolute", "bottom" : "-3px", "text-align" : "center", "width" : "868px", "z-index" : "5"});
 				$("#qt_export_btn").css({"margin-top" : "9px"});
-				
+		
 				$('#qt_export_info').mousePopup(new MousePopup(QT.Lang.get("export_window", "info")));
 
 				$("#qt_export_btn").click(function () {
-					QT.Helper.Screenshot.upload($("#qt_canvas div:first"));
+					QT.Helper.Screenshot.upload($("#qt_canvas :first"));
 				});
 			},
 			replace_images : function (images) {
@@ -3417,9 +3477,25 @@ function main_script(DATA) {
 			upload : function (element) {
 
 				$("#qt_export_ajax").show();
-				
+
+				/*$.ajax({
+					url: 'https://api.imgur.com/3/credits.json',
+					type: 'GET',
+					headers: {
+						Authorization: 'Client-ID ed9c3c98c1f5bba'
+					},
+					dataType: 'json'
+				}).done(function (data) {
+					console.log(data);
+					$("#qt_export_ajax").hide();
+				});*/
+
 				html2canvas(element, {
+					onpreloaded: function() {
+						$("#qt_canvas").css({"overflow-y":"visible"});
+					},
 					onrendered: function(canvas) {
+						$("#qt_canvas").css({"overflow-y":"auto"});
 
 						var img;
 						try {
@@ -3427,7 +3503,7 @@ function main_script(DATA) {
 						} catch(e) {
 							img = canvas.toDataURL().split(',')[1];
 						}
-
+					
 						$.ajax({
 							url: 'https://api.imgur.com/3/upload.json',
 							type: 'POST',
@@ -3456,7 +3532,7 @@ function main_script(DATA) {
 							} else {
 								window.open(image_url, '_blank');
 							}
-							//window.open(QT.Links.sponsor_link('http://imgur.com/' + data.data.id + '?tags', true),'_blank');
+
 						}).fail(function() {
 							$("#qt_export_ajax").hide();
 							hOpenWindow.showConfirmDialog(QT.Lang.get("export_window", "connection_fail_title"), QT.Lang.get("export_window", "connection_fail_text"), function () {
@@ -4026,6 +4102,29 @@ function main_script(DATA) {
 				$(h[5]).mousePopup(new MousePopup("Befehle: " + f.abort));
 				$(h[6]).mousePopup(new MousePopup("Befehle: " + f.attack_takeover))
 			}
+		},
+		commandOverviewExport : function () {
+			QT.Helper.Screenshot.btn_preview("#place_defense .game_border .game_header", "qt_commandoverviewexport", "command_overview", function() {
+				
+				$("#command_overview").clone().appendTo("#qt_canvas");
+				$("#qt_canvas .rename_command").remove();
+				$("#qt_canvas .do_rename_command").remove();
+				$("#qt_canvas #command_overview").css({"height":"auto"});
+				$("#qt_canvas #command_overview li").removeAttr("id")
+
+				$("#qt_canvas #command_overview .cmd_span").html(function(_, html) {
+					return html.replace(/(\()/g, '<span>$1</span>').replace(/(\))/g, '<span>$1</span>');
+				});
+
+				// Elements to change
+				var elemensToChange = [
+				//Backgrounds
+				".game_list .even", ".game_list .odd",
+				".hero25x25, .unit_icon25x25", ".attack_type32x32", ".overview_incoming.icon, .overview_outgoing.icon", ".game_arrow_delete", ".resource_iron_icon", ".power_icon16x16"
+				];
+				return elemensToChange;
+			});
+			$("#qt_commandoverviewexport").css({"top":"0px"});
 		},
 		cultureOverview : function () {
 			var a = $("ul#cultur_overview_towns");
@@ -6302,9 +6401,9 @@ function main_script(DATA) {
 			
 			QT.Helper.Screenshot.btn_preview("DIV#gpwnd_" + d + " #report_report_header", "qt_reportexport", report_type, function() {
 				// General 
-				$("#report_report").clone().appendTo("#qt_canvas"); //.cloneNode(true);
+				$("#report_report").clone().appendTo("#qt_canvas");
 				$("#qt_canvas #report_report_header").contents().filter(function(){return this.nodeType === 3}).wrap('<span />');
-				$("#qt_canvas .game_list_footer").append('<p style="float: right; margin-top: 7px; font-size: 10px;">Powered by &copy; grepolisqt.de</p>');
+				//$("#qt_canvas .game_list_footer").append('<p style="float: right; margin-top: 7px; font-size: 10px;">Powered by &copy; grepolisqt.de</p>');
 
 				// Elements to remove
 				$("#qt_canvas #select_folder_id").remove();
@@ -6314,7 +6413,8 @@ function main_script(DATA) {
 				$("#qt_canvas #report_report").css({"display": "inline-block"});
 				$("#qt_canvas #report_report_header").css({"max-width":"780px"});
 				$("#qt_canvas hr").css({"border": "0", "border-bottom": "1px solid #b38f48"});
-				
+				$("#qt_canvas .game_border").css({"margin":"3px 4px 3px 3px"});
+
 				// Elements to change
 				var elemensToChange = [
 				// Borders
@@ -6322,7 +6422,7 @@ function main_script(DATA) {
 				// Header
 				"#report_report_header", ".game_arrow_left", ".game_arrow_right", ".game_arrow_delete", "#report_action_bg", "#report_arrow", ".report_town_bg", ".report_town_bg .island_bg", ".town_icon", ".flagpole",
 				// Body
-				"#report_game_body", ".hero40x40", ".unit_icon40x40", ".resources_small", ".report_booty_bonus_fight", "#resources .res_background", "#resources .res_background div", ".report_icon", ".button.simulate_units", ".power_icon45x45", ".power_icon86x86", ".big_horizontal_report_separator",
+				"#report_game_body", ".hero40x40", ".unit_icon40x40", ".resources_small", ".report_booty_bonus_fight", "#resources .res_background", "#resources .res_background div", ".report_icon", ".button.simulate_units", ".power_icon45x45.attack_boost.lvl", ".power_icon45x45.defense_boost.lvl", ".power_icon45x45.unit_movement_boost.lvl", ".power_icon45x45:not(.lvl)", ".power_icon86x86", ".big_horizontal_report_separator",
 				// Footer
 				".game_list_footer",
 				// Buildings
@@ -6398,13 +6498,13 @@ function main_script(DATA) {
 				});
 				var HTML_tab2 = '';
 				var q_translations = {
-					BR : "==CrAZyWoW==, douglasgoclv, tesseus",
+					BR : "==CrAZyWoW==, douglasgoclv, tesseus, Stelvins",
 					CZ : "jarajanos, Apolon Foibos, jarajanos",
 					DE : "Quackmaster, Scav77",
 					EN : "Quackmaster",
 					ES : "Jonh Snow, F0NT3, cuervobrujo",
 					FR : "higter, Mazelys, jbrek, ToolFire, aldo666, jojopt",
-					GR : "drmacsoft, adipas.ioannis, juvekdk, ΤζονακοςΚ",
+					GR : "drmacsoft, adipas.ioannis, juvekdk, ΤζονακοςΚ, genial",
 					HU : "Arminno, Betagamer, Shia-ko",
 					IT : "masale81",
 					NL : "Quackmaster, Florent15, sannelos, megaabelleke, Thodoris, HGamert, Siloperg47",
@@ -6433,7 +6533,8 @@ function main_script(DATA) {
 					["Falk T. - 5€", "Christian B. - 1€", "Christian P. - 25€", "Maik S. - 2€"],
 					["Dennis B. - 1€", "Sinnaman - 15€", "Marcel N. - 10€", "Edith M. - 10€"],
 					["Nepomuk P. - 50€", "Kevin T. - 5€", "Thomas R. - 10€", "Claines C. C. - 3€"],
-					["Carsten R. - 5€", "Nick K. - 0,74€", "Eduard R. - 3€"]
+					["Carsten R. - 5€", "Nick K. - 0,74€", "Eduard R. - 3€", "Christian P. - 5€"],
+					["Martin S. - 5€", "Ian O. - 10€", "Michael W. K. - 1$"],
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
@@ -6631,6 +6732,35 @@ function main_script(DATA) {
 			scriptEl.setAttribute('type', 'text/javascript');
 			scriptEl.appendChild(document.createTextNode("	var gt_bl_unitPopulation={sword:1,slinger:1,archer:1,hoplite:1,rider:3,chariot:4,catapult:15,minotaur:30,zyklop:40,medusa:18,cerberus:30,fury:55,centaur:12};	var gt_bl_groundUnits=new Array('sword','slinger','archer','hoplite','rider','chariot','catapult','minotaur','zyklop','medusa','cerberus','fury','centaur','calydonian_boar','godsent');	function gt_bl_process(wndid)	{		var wnd=GPWindowMgr.GetByID(wndid);		if (!wnd)			return;		var handler=wnd.getHandler();		if (!handler)			return;		var units=new Array();		var item;		for (var i=0; i<gt_bl_groundUnits.length; i++)		{			if (handler.data.units[gt_bl_groundUnits[i]])			{				item={name:gt_bl_groundUnits[i], count:handler.data.units[gt_bl_groundUnits[i]].count, population:handler.data.units[gt_bl_groundUnits[i]].population};				units.push(item);			}		}		if (handler.data.researches && handler.data.researches.berth)			var berth=handler.data.researches.berth;		else			var berth=0;		var totalCap=handler.data.units.big_transporter.count*(handler.data.units.big_transporter.capacity+berth)+handler.data.units.small_transporter.count*(handler.data.units.small_transporter.capacity+berth);						units.sort(function(a,b){			return b.population-a.population;		});		for (i=0; i<units.length; i++)			gt_db_Debug('i='+i+ ' name='+units[i].name+' pop='+units[i].population+' c='+units[i].count);		for (i=0; i<units.length; i++)			if (units[i].count==0)			{				units.splice(i,1);				i=i-1;			};		gt_db_Debug('---');		for (i=0; i<units.length; i++)			gt_db_Debug('i='+i+ ' name='+units[i].name+' pop='+units[i].population+' c='+units[i].count);								var restCap=totalCap;		var sendUnits=new Array();		for (i=0; i<units.length; i++)		{			item={name:units[i].name, count:0};			sendUnits[units[i].name]=item;		};		for (j=0; j<gt_bl_groundUnits.length; j++)		{			if (sendUnits[gt_bl_groundUnits[j]])				gt_db_Debug(sendUnits[gt_bl_groundUnits[j]].name+' '+sendUnits[gt_bl_groundUnits[j]].count);		}						var hasSent;		k=0;		while (units.length>0)		{			hasSent=false;			k=k+1;			for (i=0; i<units.length; i++)			{				if (units[i].population<=restCap)				{					hasSent=true;					units[i].count=units[i].count-1;					sendUnits[units[i].name].count=sendUnits[units[i].name].count+1;					restCap=restCap-units[i].population;				}			}			for (i=0; i<units.length; i++)				if (units[i].count==0)				{					units.splice(i,1);					i=i-1;				};			if (!hasSent)			{				gt_db_Debug('Abbruch nach '+k+' loops');				break;			}		}		gt_db_Debug('nach '+k+'---- rest='+restCap);		for (i=0; i<gt_bl_groundUnits.length; i++)		{			if (sendUnits[gt_bl_groundUnits[i]])				gt_db_Debug(sendUnits[gt_bl_groundUnits[i]].name+' '+sendUnits[gt_bl_groundUnits[i]].count);		}		handler.getUnitInputs().each(function ()		{			if (!sendUnits[this.name])			{				if (handler.data.units[this.name].count>0)					this.value=handler.data.units[this.name].count;				else					this.value='';			}		});		for (i=0; i<gt_bl_groundUnits.length; i++)		{			if (sendUnits[gt_bl_groundUnits[i]])			{				if (sendUnits[gt_bl_groundUnits[i]].count>0)					$('DIV#gpwnd_'+wndid+' INPUT.unit_type_'+gt_bl_groundUnits[i]).val(sendUnits[gt_bl_groundUnits[i]].count);				else					$('DIV#gpwnd_'+wndid+' INPUT.unit_type_'+gt_bl_groundUnits[i]).val('');			}		}		$('DIV#gpwnd_'+wndid+' INPUT.unit_type_sword').trigger('change');	}	function gt_bl_delete(wndid)	{		var wnd=GPWindowMgr.GetByID(wndid);		if (!wnd)			return;		var handler=wnd.getHandler();		if (!handler)			return;		handler.getUnitInputs().each(function ()		{			this.value='';		});		$('DIV#gpwnd_'+wndid+' INPUT.unit_type_sword').trigger('change');	}	function gt_bl_initWnd()	{		var wnds=GPWindowMgr.getOpen(Layout.wnd.TYPE_TOWN);		if (wnds.length==0)		{			return;		}		var testel=$('DIV#gpwnd_'+wndid+' A.gt_balanced');		if (testel.length>0) return;		var wnd=wnds[wnds.length-1];		var wndid=wnd.getID();		var ael=$('DIV#gpwnd_'+wndid+' A.select_all_units');		$(ael).after('&nbsp;|&nbsp;<a class=gt_balanced style=\\\'position:relative; top:3px\\\' href=javascript:gt_bl_process('+wndid+')>" + QT.Lang.get("town_info", "no_overload") + "</a>		&nbsp;|&nbsp;<a style=\\\'position:relative; top:3px\\\' href=javascript:gt_bl_delete('+wndid+')>" + QT.Lang.get("town_info", "delete") + "</a>');	}"));
 			document.body.appendChild(scriptEl);
+		},
+		simulatorExport : function () {
+			QT.Helper.Screenshot.btn_preview("#place_simulator_form .game_header", "qt_simulatorexport", "simulator", function() {
+				
+				$("#place_simulator").clone().appendTo("#qt_canvas");
+				
+				//$("#qt_canvas .place_sim_select_gods_wrap select")
+				$("#qt_canvas #place_simulator").css({"padding-top":"1px"});
+				$("#qt_canvas .game_border").css({"margin":"2px 3px 2px 3px"});
+				
+				var select_god_att = $('#place_simulator .place_sim_select_gods.att select option:selected').val();
+				var select_god_def = $('#place_simulator .place_sim_select_gods.def select option:selected').val();
+				var select_strategies = $('#place_simulator .place_sim_select_strategies select option:selected').val();
+				var select_units = $('#place_simulator .place_sim_insert_units select option:selected').val();
+				$('#qt_canvas .place_sim_select_gods.att select option[value="'+select_god_att+'"]').prop('selected', true);
+				$('#qt_canvas .place_sim_select_gods.def select option[value="'+select_god_def+'"]').prop('selected', true);
+				$('#qt_canvas .place_sim_select_strategies select option[value="'+select_strategies+'"]').prop('selected', true);
+				$('#qt_canvas .place_sim_insert_units select option[value="'+select_units+'"]').prop('selected', true);
+				
+				// Elements to change
+				var elemensToChange = [
+				".game_border_top", ".game_border_bottom", ".game_border_left", ".game_border_right", ".game_border_corner",
+				".game_header", ".game_body", ".place_simulator_odd, .place_simulator_odd2", ".place_simulator_even, .place_simulator_even2", ".game_list_footer",
+				".hero40x40, .unit_icon40x40", ".place_symbol.place_attack", "td .place_symbol, .place_sim_select_gods .place_symbol", ".place_insert_field",
+				"a.button .left, a.button .middle, a.button .right", ".place_sim_showhide", ".place_image .is_night", ".power_icon16x16"
+				];
+				return elemensToChange;
+			});
+			$("#qt_simulatorexport").css({"top":"0px"});
 		},
 		statsandscripts : function () {
 			var grepoGameBorder = '<div class="game_border"><div class="game_border_top"></div><div class="game_border_bottom"></div><div class="game_border_left"></div><div class="game_border_right"></div><div class="game_border_corner corner1"></div><div class="game_border_corner corner2"></div><div class="game_border_corner corner3"></div><div class="game_border_corner corner4"></div><div class="game_header bold" style="height:18px;padding:3px 11px">';
@@ -7730,10 +7860,17 @@ if (typeof exportFunction == 'function') {
 
 function appendScript() {
 	if (unsafeWindow.Game) {
+
 		var QT_script = document.createElement('script');
 		QT_script.type = 'text/javascript';
 		QT_script.textContent = main_script.toString() + "\n main_script(" + JSON.stringify(DATA) + ");";
 		document.body.appendChild(QT_script);
+		
+		var QT_HTML2Canvas = document.createElement('script'); 
+		QT_HTML2Canvas.type = 'text/javascript';
+		QT_HTML2Canvas.innerHTML = GM_getResourceText('HTML2Canvas');
+		document.getElementsByTagName('head')[0].appendChild(QT_HTML2Canvas);
+
 	} else {
 		setTimeout(function () {
 			appendScript();
