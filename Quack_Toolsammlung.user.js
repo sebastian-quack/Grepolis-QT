@@ -4,7 +4,7 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.43.00
+// @version        2.44.00
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @grant          GM_listValues
 // @grant          GM_getValue
@@ -718,8 +718,7 @@ function main_script(DATA) {
 				preview : 'Vorschau',
 				chrome : 'Chrome öffnet die Seite zum Screenshot standardmäßig als Popup. Wer die Seite lieber als neuen Tab geöffnet haben will, muss ein Extra Addon dafür installieren. Hier klicken um zum Addon zu gelangen',
 				info : 'Der Hostinganbieter erlaubt täglich leider nur 1250 Uploads. Wenn wir diesen Wert monatlich 5x überschreiten, hat dies eine Sperrung des Services für den Rest des Monats zur Folge. Langfristig ist deshalb ein eigener Server geplant, aber diesen zu mieten und die benötigte Infrastruktur aufzubauen kostet viel Zeit und vor allem Geld. Meine Freizeit investiere ich dafür gerne, jedoch bin ich als Student nicht in der Lage die Kosten vollständig dafür übernehmen zu können. Zur Refinanzierung werden deshalb Sponsorlinks von Adf.ly genutzt (nur für das erste Bild pro Tag). Mit Klick auf diesen Info Button erfolgt zudem eine Weiterleitung zu der offiziellen Paypal Seite des Skriptes. Vielen Dank an alle, die dieses Projekt unterstützen oder es demnächst vorhaben!',
-				connection_fail_title : 'Verbindung zum Server nicht möglich',
-				connection_fail_text : 'Entweder ist der Server nicht erreichbar oder die maximale Hosting Kapazität wurde für heute schon erreicht. Spenden helfen einen eigenen Server zu finanzieren um zukünftig von Drittanbietern unabhängig zu sein. Möchtest du mithelfen?',
+				connection_fail_text : 'Verbindung zum Server nicht möglich. Entweder ist der Server nicht erreichbar oder die maximale Hosting Kapazität wurde für heute schon erreicht (1250 Bilder pro Tag / 50 Bilder pro User).',
 				town : 'Stadt',
 				luck : 'Glück',
 				title : 'Titel',
@@ -856,6 +855,7 @@ function main_script(DATA) {
 			},
 			caves : {
 				stored_silver : 'Monedas de plata almacenables',
+				silver_to_store : 'Monedas de plata Almacenadas',
 				name : 'Nombre',
 				wood : 'Madera',
 				stone : 'Piedra',
@@ -969,6 +969,24 @@ function main_script(DATA) {
 			googledocs : {
 				change_url : 'Cambiar URL',
 				reset : 'Resetear'
+			},
+			farmhelper : {
+				autohide_cities : 'Ocultar automáticamente las Ciudades después de la agricultura encendido/apagado'
+			},
+			export_window : {
+				town : 'Ciudad',
+				luck : 'Suerte',
+				title : 'Titulo',
+				resources : 'Recursos',
+				wall : 'Muralla',
+				player : 'Jugador',
+				reporttype : 'Tipo de reporte',
+				resources_lost : 'Recursos perdidos',
+				nightbonus : 'Bonus nocturno',
+				alliance : 'Alianza',
+				troops : 'Tropas',
+				attacker : 'Atacante',
+				defender : 'Defensor'
 			}
 		},
 		fr : {
@@ -1507,25 +1525,37 @@ function main_script(DATA) {
 				donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=IT&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/it_IT/i/btn/btn_donate_LG.gif" alt="Donate"></a>'
 			},
 			reports : {
+				choose_folder : 'Scegli cartella',
 				enacted : 'lavorato',
-				conquered : 'catturato',
-				spying : 'spia',
+				conquered : 'conquistato',
+				spying : 'spiato',
 				spy : 'Spia',
-				support : 'di stanza',
+				support : 'supporti',
 				supporting : 'supporta',
 				attacking : 'attacca',
 				farming_village : 'villaggio rurale'
 			},
 			forum : {
-				delete : 'Cancella'
+				delete : 'Cancella',
+				delete_sure : 'Vuoi veramente cancellare questo post?',
+				no_selection : 'Nessun posts selezionato'
+			},
+			town_info : {
+				delete : 'Cancella',
+				polissuche : 'cerca città',
+				inactivity : 'Inattività',
+				days : 'giorni',
+				no_data : 'Il player non è nel database'
 			},
 			grepo_mainmenu : {
 				city_view : 'Panoramica città',
-				delete : 'Cancella'
+				island_view : 'Visuale isola'
 			},
 			messages : {
 				ghosttown : 'Città fantasma',
-				no_cities : 'Nessuna città su quest\'isola'
+				no_cities : 'Nessuna città su quest\'isola',
+				all : 'tutti',
+				export : 'Converti messagi in BB-Code'
 			},
 			hotkeys : {
 				hotkeys : 'Tasti di scelta rapida',
@@ -1560,6 +1590,9 @@ function main_script(DATA) {
 				council : 'Concilio degli eroi'
 			},
 			qtoolbox : {
+				onlinecounter_now : 'Attuale',
+				onlinecounter_total : 'Totale',
+				onlinecounter_switch : 'Online Attuale/Totale',
 				stats : 'Statistiche',
 				player : 'Giocatore',
 				alliance : 'Alleanza',
@@ -1579,8 +1612,14 @@ function main_script(DATA) {
 				minimal : 'Minima',
 				stats_scripts : 'Statistiche/script'
 			},
+			academy : {
+				researched : 'Colora ricercate',
+				notresearched : 'Decolora ricercate',
+				undo : 'Annulla colorazione',
+			},
 			caves : {
-				stored_silver : 'Monete d\'argento incorporati',
+				stored_silver : 'Monete d\'argento incorporate',
+				silver_to_store : 'Monete d\'argento immagazinabili',
 				name : 'Nome',
 				wood : 'Legname',
 				stone : 'Pietre',
@@ -1589,7 +1628,12 @@ function main_script(DATA) {
 			transport_calc : {
 				btn_main : 'Calcolo trasporti',
 				available : 'Capacità di trasporto disponibile',
-				transportable : 'Unità trasportabili'
+				transportable : 'Unità trasportabili',
+				recruits : 'Calcola le truppe in reclutamento',
+				outsidetown : 'Calcola le unità esterne',
+				slowtrans : 'Conta trasporti lenti',
+				fasttrans : 'Conta trasporti veloci',
+				disabled : 'Temporaneamente disabilitato'
 			},
 			culture : {
 				cityfestivals : 'Festa cittadina',
@@ -1604,23 +1648,24 @@ function main_script(DATA) {
 				text5 : 'Mostra pulsanti per la visualizzazione permanente delle code di unità, movimenti e commercio',
 				text6 : 'Barra dei pulsanti',
 				text9 : 'Mostra all\'avvio',
-				text11 : 'Disattiva il salvataggio del totale tempo online',
+				text11 : 'Disattiva il salvataggio del tempo totale online',
 				text12 : 'Calcolo trasporti',
+				text13 : 'Visualizza menu',
 				text14 : 'Caratteristiche menu',
 				text15 : 'Rapporti',
 				text16 : 'Aggiungi colore',
 				text17 : 'Aggiungi filtro',
-				text18 : 'Attiva display',
+				text18 : 'Attiva visualizzazione',
 				text19 : 'Cancella tutte le impostazioni e le tracce dello script nella cache del browser?',
 				text21 : 'Espandi la larghezza del forum',
 				text22 : 'Immagine tasti di scelta rapida',
 				text23 : 'Menu Grepolis',
 				text24 : 'Senato',
 				text25 : 'Mostra il numero di punti assegnati per la costruzione del prossimo livello di un edificio',
-				text26 : 'Trading finestra',
+				text26 : 'Finestra commercio',
 				text27 : 'Attiva estensione',
 				text28 : 'Lista città',
-				text29 : 'Lista di quest',
+				text29 : 'Lista delle missioni',
 				text34 : 'Panoramica caverna (Amministratore)',
 				text35 : 'Accademia pianificatori',
 				text36 : 'Caverna',
@@ -1749,6 +1794,7 @@ function main_script(DATA) {
 			},
 			caves : {
 				stored_silver : 'Opgeslagen zilverstukken',
+				silver_to_store : 'Maximaal op te slaan zilverstukken',
 				name : 'Naam',
 				wood : 'Hout',
 				stone : 'Steen',
@@ -1805,7 +1851,14 @@ function main_script(DATA) {
 				text41 : 'Een button voor het openen van de stadsoverzicht aan het zijkant menu toevoegen',
 				text42 : 'Toon de verloren grondstoffen',
 				text44 : 'Eiland overzicht',
+				text45 : 'Verhoog de hoogte van de stadslijst en van de boerendorpen',
+				text46 : 'Sneltoetsen',
+				text47 : 'Gebruik [Enter] als de knop om naar de huidige stad te springen (geen [Spatie])',
+				text48 : 'Open het oude stadsoverzicht',
+				text49 : 'Sorteer de rapportfolders alfabetisch',
+				text51 : 'Verberg steden automatisch na opeisen',
 				text52 : 'Stadsoverzicht',
+				text53 : 'Laat het stadsoverzicht zien in een scherm',
 				other : 'Overige',
 				save : 'Opslaan',
 				reset : 'Reset instellingen',
@@ -2547,7 +2600,7 @@ function main_script(DATA) {
 			town_info : {
 				no_overload : 'No overloading',
 				delete : 'Delete',
-				polissuche : 'townsearch',
+				polissuche : 'town search',
 				inactivity : 'Inactivity',
 				days : 'days',
 				no_data : 'The player is not yet listed in the database'
@@ -2612,7 +2665,7 @@ function main_script(DATA) {
 				maps : 'Maps',
 				grepo_maps : 'Grepo Maps',
 				grepo_intel : 'Grepo Intel',
-				townsearches : 'Townsearches',
+				townsearches : 'Town searches',
 				grepo_finder : 'Grepo Finder',
 				tonda_polissuche : 'Townsearch',
 				bb_codes : 'BB-Codes',
@@ -2661,13 +2714,13 @@ function main_script(DATA) {
 				theater : 'Theater plays'
 			},
 			settings : {
-				text2 : 'Onlinecounter',
+				text2 : 'Online counter',
 				text3 : 'Open links from the menu ingame',
 				text4 : 'Activate the inclusion of other greasemonkey scripts to the menu',
 				text5 : 'Show buttons for permanent display of the unit queue, movements and trade',
 				text6 : 'Button bar',
 				text9 : 'Display at start',
-				text11 : 'Deactivate saving of the total onlinetime',
+				text11 : 'Deactivate saving of the total online time',
 				text12 : 'Transport calculator',
 				text13 : 'Menu display',
 				text14 : 'Menu features',
@@ -2682,7 +2735,7 @@ function main_script(DATA) {
 				text23 : 'Grepolis menu',
 				text24 : 'Senate',
 				text25 : 'Show the number of points awarded for constructing the next level of a building',
-				text26 : 'Tradingwindow',
+				text26 : 'Trading window',
 				text27 : 'Activate extension',
 				text28 : 'Town list',
 				text29 : 'Quest list',
@@ -2704,7 +2757,7 @@ function main_script(DATA) {
 				text47 : 'Use [Enter] as the button to jump to the current city (not [Space])',
 				text48 : 'Open the old cityview',
 				text49 : 'Sort report folders alphabetically',
-				text50 : 'Display of the questarrow',
+				text50 : 'Display of the quest arrow',
 				text51 : 'Autohide cities after farming',
 				text52 : 'City view',
 				text53 : 'Display the city view in a window',
@@ -2716,7 +2769,7 @@ function main_script(DATA) {
 				settings : 'Settings',
 				translations : 'Translations',
 				trans_sure : 'Are you sure that your translation is ready to send?',
-				trans_success : 'The translation has been send successfully',
+				trans_success : 'The translation has been sent successfully',
 				trans_fail : 'The translation could not be sent',
 				trans_infotext1 : 'The translation does not have to be complete - just translate what you want',
 				trans_infotext2 : 'When a text contains HTML tags (thus everything which is surrounded by <> brackets) I ask you to keep them where you found them',
@@ -2735,7 +2788,7 @@ function main_script(DATA) {
 				adfly : 'Do you want to earn money with links, too?',
 				donations : 'Donations',
 				update_check : 'Check for update',
-				prologue : 'Due to the lack of alternatives of userscripts for Grepolis 2.0 this toolset was started two year ago und constantly tries to extend Grepolis with new functions ever since.<p />Initially the goal was to repair the functions of old userscripts for Grepolis 1.0 and to learn the basics of JavaScript in the process but by now much more was accomplished. The toolset is constantly extended by own ideas or ideas from the community and because of your great support my motivation to continue is still there. You constantly present me interesting challenges and it is fun to find solutions for that.<p />Since this is much work and can be very time-consuming I am always very grateful for any type of support. Therefore I like to thank everyone who offered support for this project - whether through donations or clicking an AdFly-Link, knowledge, creativity, bug reports or just some encouraging words.'
+				prologue : 'Due to the lack of alternatives of userscripts for Grepolis 2.0 this toolset was started two years ago and constantly tries to extend Grepolis with new functions ever since.<p />Initially the goal was to repair the functions of old userscripts for Grepolis 1.0 and to learn the basics of JavaScript in the process but by now much more has been accomplished. The toolset is constantly extended by our own ideas or ideas from the community, because of your great support my motivation to continue is still there. You constantly present me with interesting challenges and it is fun to find solutions for that.<p />Since this is a great deal of work that can be very time-consuming I am always very grateful for any type of support. Therefore I would like to thank everyone who has offered support for this project - whether through donations or clicking an AdFly-Link, knowledge, creativity, bug reports or just some encouraging words.'
 			},
 			bbcode : {
 				troops : 'Troops',
@@ -2756,7 +2809,7 @@ function main_script(DATA) {
 				reset : 'Reset'
 			},
 			farmhelper : {
-				autohide_cities : 'Ocultar automáticamente las Ciudades después de la agricultura encendido/apagado'
+				autohide_cities : 'Auto Hide Farming Villages after farming or looting on/off'
 			},
 			export_window : {
 				wnd_title : 'Image upload - preview',
@@ -2766,8 +2819,7 @@ function main_script(DATA) {
 				preview : 'Preview',
 				chrome : 'Chrome opens the window with the screenshot per default as a popup. If you prefer that the window opens as a new tab you have to install an extra addon. Click here to get to the addon.',
 				info : "The hosting provider unfortunately allows just 1250 uploads daily. They will ban this service for the rest of the month if we exceed this amount 5 times. In the long run I plan to rent an own server for this but the costs and the development need quite some time and most of all money. I invest my own free time for this with pleasure but as a student I just can't pay all of the costs involved. As a possibility for refinancing I therefore use the sponsorlinks from Adf.ly (only for the first published screenshot). With a click on this info button you will be redirected to the official Paypal donation page of this script. Thanks to all who already support this project and to those who intend to do so.",
-				connection_fail_title : 'Connection to the server failed',
-				connection_fail_text : 'The server is unreachable or the maxmimum hosting capacity is reached for today. Donations help to finance an own server to be independent from third party services. Do you want to help?',
+				connection_fail_text : 'Connection to the server failed. The server is unreachable or the maxmimum hosting capacity is reached for today (1250 images per day / 50 images per user).',
 				town : 'Town',
 				luck : 'Luck',
 				title : 'Title',
@@ -2782,7 +2834,7 @@ function main_script(DATA) {
 				troops : 'Troops',
 				bashpoints : 'Bashpoints',
 				buildings : 'Buildings',
-				payed_iron : 'Iron payed',
+				payed_iron : 'Iron paid',
 				payed_iron_storage : 'Iron in storage',
 				date : 'Date',
 				spell_info : 'Spell info',
@@ -3172,11 +3224,17 @@ function main_script(DATA) {
 		town_info : {
 			info : function () {
 				QT.Functions.townInactivity();
-				QT.Functions.townGSButton();
+				QT.Functions.townStatsButtons();
 			},
 			trading : function () {
 				if (QT.Settings.values.qmenu_settings_tradeimprovement)
 					QT.Functions.townTradeImprovement();
+			},
+			support : function () {
+				QT.Functions.selectunitshelper();
+			},
+			attack : function () {
+				QT.Functions.selectunitshelper();
 			}
 		},
 		player : {
@@ -3198,7 +3256,7 @@ function main_script(DATA) {
 		},
 		alliance : {
 			profile : function (event, xhr, settings) {
-				QT.Functions.allianceGSButton(event, xhr, settings);
+				QT.Functions.allianceStatsButtons(event, xhr, settings);
 				QT.Functions.allianceInactivity(event, xhr, settings);
 			}
 		},
@@ -3504,7 +3562,6 @@ function main_script(DATA) {
 						JQelement.css( "background-image", url );
 					}
 				});
-
 				$("#qt_canvas .big_horizontal_report_separator .report_booty_bonus_fight").css({"background-image" : "none"});
 			},
 			upload : function (element) {
@@ -3568,15 +3625,236 @@ function main_script(DATA) {
 
 						}).fail(function() {
 							$("#qt_export_ajax").hide();
-							hOpenWindow.showConfirmDialog(QT.Lang.get("export_window", "connection_fail_title"), QT.Lang.get("export_window", "connection_fail_text"), function () {
-								window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=DE&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted','_blank');
-							});
+							Layout.dialogWindow.open(QT.Lang.get("export_window", "connection_fail_text"), "Quack Toolsammlung", 300, 150, function () {}, !0)
 						});
 
 					}
 				});
 
 			}
+		},
+		Mutationobserver : function () {
+			var observer = new MutationObserver(function (mutations) {
+					mutations.forEach(function (mutation) {
+						if (mutation.addedNodes[0]) {
+							if (mutation.addedNodes[0].id === "town_groups_list") {
+								if (QT.Settings.values.qmenu_settings_stadtliste)
+									QT.Functions.townslist();
+								QT.Functions.fix_Zindex();
+							}
+						}
+					});
+				});
+			observer.observe($('body').get(0), {
+				attributes : false,
+				childList : true,
+				characterData : false
+			});
+		},
+		openLink : function (linkArray) {
+			if (QT.Settings.values.qmenu_settings_links) {
+				var html = $('<iframe />', {
+						id : "win_gs_s_frame",
+						src : linkArray[0],
+						style : 'width:'+linkArray[1]+'px;height:'+linkArray[2]+'px;border:1px solid black;'
+					});
+				var wnd = GPWindowMgr.Create(GPWindowMgr[linkArray[4]]) || GPWindowMgr.getOpenFirst(GPWindowMgr[linkArray[4]]);
+				wnd.setTitle(linkArray[3]);
+				wnd.setContent(html);
+			} else {
+				window.open(linkArray[0]);
+			}
+		},
+		Windowmanager : function () {
+			//BB-Codes
+			function WndHandlerQTbbcode(wndhandle) {
+				this.wnd = wndhandle;
+			}
+			Function.prototype.inherits.call(WndHandlerQTbbcode, WndHandlerDefault);
+			WndHandlerQTbbcode.prototype.getDefaultWindowOptions = function () {
+				return {
+					position : ["center", "center"],
+					width : 700,
+					height : 330,
+					minimizable : true,
+					title : "BB-Code"
+				};
+			};
+			GPWindowMgr.addWndType("QT_BBCODE", "qtbbcode", WndHandlerQTbbcode, 1);
+			//Grepo Stats
+			function WndHandlerQTgrepostats(wndhandle) {
+				this.wnd = wndhandle;
+			}
+			Function.prototype.inherits.call(WndHandlerQTgrepostats, WndHandlerDefault);
+			WndHandlerQTgrepostats.prototype.getDefaultWindowOptions = function () {
+				return {
+					position : ["center", "center"],
+					width : 972,
+					height : 565,
+					minimizable : true,
+					title : "Grepo Stats"
+				};
+			};
+			GPWindowMgr.addWndType("QT_GREPOSTATS", "qtgs", WndHandlerQTgrepostats, 1);
+			//Grepo Intel
+			function WndHandlerQTgrepointel(wndhandle) {
+				this.wnd = wndhandle;
+			}
+			Function.prototype.inherits.call(WndHandlerQTgrepointel, WndHandlerDefault);
+			WndHandlerQTgrepointel.prototype.getDefaultWindowOptions = function () {
+				return {
+					position : ["center", "center"],
+					width : 1013,
+					height : 565,
+					minimizable : true,
+					title : "Grepo Intel"
+				};
+			};
+			GPWindowMgr.addWndType("QT_GREPOINTEL", "qtgi", WndHandlerQTgrepointel, 1);
+			//Server Maps
+			function WndHandlerQTservermaps(wndhandle) {
+				this.wnd = wndhandle;
+			}
+			Function.prototype.inherits.call(WndHandlerQTservermaps, WndHandlerDefault);
+			WndHandlerQTservermaps.prototype.getDefaultWindowOptions = function () {
+				return {
+					position : ["center", "center"],
+					width : 1038,
+					height : 565,
+					minimizable : true,
+					title : "Server Map"
+				};
+			};
+			GPWindowMgr.addWndType("QT_SERVERMAPS", "qtservermaps", WndHandlerQTservermaps, 1);
+			//Townsearches
+			function WndHandlerQTtownsearches(wndhandle) {
+				this.wnd = wndhandle;
+			}
+			Function.prototype.inherits.call(WndHandlerQTtownsearches, WndHandlerDefault);
+			WndHandlerQTtownsearches.prototype.getDefaultWindowOptions = function () {
+				return {
+					position : ["center", "center"],
+					width : 972,
+					height : 565,
+					minimizable : true,
+					title : "Townsearch"
+				};
+			};
+			GPWindowMgr.addWndType("QT_TOWNSEARCHES", "qttownsearches", WndHandlerQTtownsearches, 1);
+			//Bashlists
+			function WndHandlerQTbashlists(wndhandle) {
+				this.wnd = wndhandle;
+			}
+			Function.prototype.inherits.call(WndHandlerQTbashlists, WndHandlerDefault);
+			WndHandlerQTbashlists.prototype.getDefaultWindowOptions = function () {
+				return {
+					position : ["center", "center"],
+					width : 972,
+					height : 563,
+					minimizable : true,
+					title : "Bashlist"
+				};
+			};
+			GPWindowMgr.addWndType("QT_BASHLISTS", "qtbashlists", WndHandlerQTbashlists, 1);
+			//Scriptmanager
+			function WndHandlerQTscriptmanager(wndhandle) {
+				this.wnd = wndhandle;
+			}
+			Function.prototype.inherits.call(WndHandlerQTscriptmanager, WndHandlerDefault);
+			WndHandlerQTscriptmanager.prototype.getDefaultWindowOptions = function () {
+				return {
+					position : ["center", "center"],
+					width : 750,
+					height : 500,
+					minimizable : true,
+					title : "Scriptmanager"
+				};
+			};
+			GPWindowMgr.addWndType("QT_SCRIPTMANAGER", "qtscriptmanager", WndHandlerQTscriptmanager, 1);
+			//Stats&Scripts
+			function WndHandlerQTstatsandscripts(wndhandle) {
+				this.wnd = wndhandle;
+			}
+			Function.prototype.inherits.call(WndHandlerQTstatsandscripts, WndHandlerDefault);
+			WndHandlerQTstatsandscripts.prototype.getDefaultWindowOptions = function () {
+				return {
+					position : ["center", "center"],
+					width : 750,
+					height : 500,
+					minimizable : true,
+					title : "Stats & Scripts"
+				};
+			};
+			GPWindowMgr.addWndType("QT_STATSANDSCRIPTS", "qtstatsandscripts", WndHandlerQTstatsandscripts, 1);
+			//Google Docs
+			function WndHandlerQTgoogledocs(wndhandle) {
+				this.wnd = wndhandle;
+			}
+			Function.prototype.inherits.call(WndHandlerQTgoogledocs, WndHandlerDefault);
+			WndHandlerQTgoogledocs.prototype.getDefaultWindowOptions = function () {
+				return {
+					position : ["center", "center"],
+					width : 852,
+					height : 600,
+					minimizable : true,
+					title : "Google Docs"
+				};
+			};
+			GPWindowMgr.addWndType("QT_GOOGLEDOCS", "qtgoogledocs", WndHandlerQTgoogledocs, 1);
+			//Townoverview
+			function WndHandlerQTtownoverview(wndhandle) {
+				this.wnd = wndhandle;
+			}
+			Function.prototype.inherits.call(WndHandlerQTtownoverview, WndHandlerDefault);
+			WndHandlerQTtownoverview.prototype.getDefaultWindowOptions = function () {
+				return {
+					position : ["center", "center"],
+					height : 600,
+					width : 800,
+					minimizable : true,
+					title : QT.Lang.get("grepo_mainmenu", "city_view")
+				};
+			};
+			WndHandlerQTtownoverview.prototype.onClose = function () {
+				$('#ui_box').append($('DIV.ui_city_overview')).append($('DIV.ui_construction_queue'));
+				if ($("#minimap_canvas").hasClass('expanded')) {
+					$.Observer(GameEvents.ui.bull_eye.radiobutton.strategic_map.click).publish({});
+				} else {
+					$.Observer(GameEvents.ui.bull_eye.radiobutton.island_view.click).publish({});
+				}
+			};
+			GPWindowMgr.addWndType("QT_TOWNOVERVIEW", "qttownoverview", WndHandlerQTtownoverview, 1);
+			//Report Export
+			function WndHandlerQTreportexport(wndhandle) {
+				this.wnd = wndhandle;
+			}
+			Function.prototype.inherits.call(WndHandlerQTreportexport, WndHandlerDefault);
+			WndHandlerQTreportexport.prototype.getDefaultWindowOptions = function () {
+				return {
+					position : ["center", "center"],
+					width : 850, //827
+					height : 600, //733
+					minimizable : true,
+					fullwindow : true,
+					title : "Report Export"
+				};
+			};
+			GPWindowMgr.addWndType("QT_REPORTEXPORT", "qtreportexport", WndHandlerQTreportexport, 1);
+			//Rest
+			function WndHandlerQTstandard(wndhandle) {
+				this.wnd = wndhandle;
+			}
+			Function.prototype.inherits.call(WndHandlerQTstandard, WndHandlerDefault);
+			WndHandlerQTstandard.prototype.getDefaultWindowOptions = function () {
+				return {
+					position : ["center", "center"],
+					height : 500,
+					width : 750,
+					minimizable : true,
+					title : ""
+				};
+			};
+			GPWindowMgr.addWndType("QT_STANDARD", "qtstandard", WndHandlerQTstandard, 1);
 		}
 	};
 
@@ -3613,13 +3891,6 @@ function main_script(DATA) {
 			},
 			grepo_playerlink : function (name, id) {
 				return '<a class="gp_player_link" href="#' + btoa('{"name":"' + name + '","id":' + id + '}') + '">' + name + '</a>';
-			},
-			windowbuilder : function (name, width, height, content) {
-				var winqm = Layout.wnd.Create(Layout.wnd.TYPE_QT_STANDARD, name);
-				winqm.setWidth(width);
-				winqm.setHeight(height);
-				winqm.setContent(content);
-				return winqm.getID();
 			}
 		},
 		academyMarker : function () { //DEFEKT
@@ -3859,7 +4130,7 @@ function main_script(DATA) {
 				return elemensToChange;
 			});
 		},
-		allianceGSButton : function (event, xhr, settings) {
+		allianceStatsButtons : function (event, xhr, settings) {
 			var b = settings.url.match(/alliance_id%22%3A(\d*)%2C/);
 			var c = GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_ALLIANCE_PROFILE);
 			if (!c)
@@ -3868,7 +4139,10 @@ function main_script(DATA) {
 			$(d[0]).find(".ally_msg_leader, .ally_msg_founder").css({
 				"float" : "left"
 			});
-			$(d[0]).append("<a target=_blank href=http://" + mID + ".grepostats.com/world/" + wID + "/alliance/" + b[1] + '><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a>')
+			$(d[0]).append("<a target=_blank href=http://" + mID + ".grepostats.com/world/" + wID + "/alliance/" + b[1] + '><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a>');
+			if (mID === "de") {
+				$(d[0]).append('<a target="_blank" href="http://marekblomkvist.com/quo/'+ wID +'/'+ b[1] +'"><img src="http://s7.directupload.net/images/140615/fhkhdsdc.png"></a>')
+			}
 		},
 		allianceInactivity : function () {
 			var wnd = GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_ALLIANCE_PROFILE);
@@ -3956,6 +4230,7 @@ function main_script(DATA) {
 			var bbcodeBild = "[*]";
 			var bbcodeAnzahl = "[*]";
 			var bb_content = "";
+			var bb_count = 0;
 			var bb_windowtitle = "";
 			if (mode === "bbcode_intown") {
 				$.each(units_own, function (unit, number) {
@@ -4045,14 +4320,18 @@ function main_script(DATA) {
 				bb_windowtitle = QT.Lang.get("bbcode", "building") + " " + QT.Lang.get("bbcode", "in") + " " + Game.townName;
 			} else if (mode === "bbcode_cities_all") {
 				bb_content = "";
+				bb_count = 0;
 				$.each(cities_own, function (key, town) {
-					bb_content += "[town]" + town.id + "[/town] (" + town.attributes.points + ") " + town.attributes.island_x + "|" + town.attributes.island_y + "\n";
+					bb_count++;
+					bb_content += ""+ bb_count +". [town]" + town.id + "[/town] (" + town.attributes.points + ") " + town.attributes.island_x + "|" + town.attributes.island_y + "\n";
 				});
 				bb_windowtitle = QT.Lang.get("bbcode", "cities");
 			} else if (mode === "bbcode_cities_grp") {
 				var bb_content = "";
+				bb_count = 0;
 				$.each(cities_towngroup, function (key, town) {
-					bb_content += "[town]" + town.attributes.town_id + "[/town] (" + town.town_model.attributes.points + ") " + town.town_model.attributes.island_x + "|" + town.town_model.attributes.island_y + "\n";
+					bb_count++;
+					bb_content += ""+ bb_count +". [town]" + town.attributes.town_id + "[/town] (" + town.town_model.attributes.points + ") " + town.town_model.attributes.island_x + "|" + town.town_model.attributes.island_y + "\n";
 				});
 				bb_windowtitle = QT.Lang.get("bbcode", "cities");
 			}
@@ -5476,38 +5755,6 @@ function main_script(DATA) {
 				});
 			});
 		},
-		mutationobserver : function () {
-			var observer = new MutationObserver(function (mutations) {
-					mutations.forEach(function (mutation) {
-						if (mutation.addedNodes[0]) {
-							if (mutation.addedNodes[0].id === "town_groups_list") {
-								if (QT.Settings.values.qmenu_settings_stadtliste)
-									QT.Functions.townslist();
-								QT.Functions.fix_Zindex();
-							}
-						}
-					});
-				});
-			observer.observe($('body').get(0), {
-				attributes : false,
-				childList : true,
-				characterData : false
-			});
-		},
-		openLink : function (linkArray) {
-			if (QT.Settings.values.qmenu_settings_links) {
-				var html = $('<iframe />', {
-						id : "win_gs_s_frame",
-						src : linkArray[0],
-						style : 'width:'+linkArray[1]+'px;height:'+linkArray[2]+'px;border:1px solid black;'
-					});
-				var wnd = GPWindowMgr.Create(GPWindowMgr[linkArray[4]]) || GPWindowMgr.getOpenFirst(GPWindowMgr[linkArray[4]]);
-				wnd.setTitle(linkArray[3]);
-				wnd.setContent(html);
-			} else {
-				window.open(linkArray[0]);
-			}
-		},
 		playerGSButton : function (event, xhr, settings) {
 			var b = settings.url.match(/player_id%22%3A(\d*)%2C/);
 			var c = GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_PLAYER_PROFILE);
@@ -5684,7 +5931,7 @@ function main_script(DATA) {
 					if (this.id.substring(0, 6) === "bbcode") {
 						QT.Functions.bbcodes(this.id);
 					} else if (this.id.substring(0, 4) === "link") {
-						QT.Functions.openLink(linkArray[this.id.substr(5)]);
+						QT.Helper.openLink(linkArray[this.id.substr(5)]);
 					} else {
 						QT.Functions[this.id]();
 					}
@@ -5829,281 +6076,7 @@ function main_script(DATA) {
 				}
 				counttime();
 			}		
-		
-
-		/*
-			$('#ui_box .nui_main_menu .bottom').append('<div id="qtbox_wrapper" style="position: absolute; display: block; width: 100%; bottom: 31px;"><div id="qtbox_header" style="display: block; position: relative; height: 14px; width: 100%; top: 0px; background:url(http://s7.directupload.net/images/140119/jltfmtqi.png) no-repeat"></div></div>');
-			$('#ui_box .nui_main_menu .bottom').css({
-				"bottom" : "-3px"
-			});
-			$('#ui_box .nui_main_menu .leaves').hide();
-			$('#ui_box .nui_main_menu .content ul li:last-child').removeClass("last");
-			$('#ui_box .nui_main_menu .content ul li:last-child span.button_wrapper').css({
-				"height" : "15px"
-			});
-			$('#ui_box .nui_main_menu .content ul').append('<li style="height: 10px; z-index: 1"><div id="qt_mainmenu_top" style="z-index: 1; background: url(http://s7.directupload.net/images/140119/duowfxnl.png) repeat scroll 0% 0% transparent; position: absolute; width: 144px; height: 35px; margin-top: -12px;)"><a id="qtbox_main_btn" class="" style="top: 14px; left: 60px; width: 20px; height: 17px; display: block; position: absolute; background: url(http://s7.directupload.net/images/140119/nebf5887.png)" href="#"></a></div><div id="qt_mainmenu_content" style="width: 133px; position: absolute; bottom: 0px; opacity: 0.95; background: #0C1727"><ul id="qt_mainmenu_list"></ul></div></li>');
-			$('#ui_box .nui_main_menu .content ul').css({
-				"height" : "315px"
-			});
-			$("#qtbox_main_btn").hover(
-				function () {
-				$(this).css({
-					"background-image" : "url(http://s7.directupload.net/images/140119/ywi4jbg2.png)"
-				});
-			},
-				function () {
-				$(this).css({
-					"background-image" : "url(http://s7.directupload.net/images/140119/nebf5887.png)"
-				});
-			});
-
-			var qtbox_main_array = [
-				[QT.Lang.get("qtoolbox", "stats"), "http://s1.directupload.net/images/140125/vnghthhz.png", "",
-					[QT.Lang.get("qtoolbox", "grepostats"), "http://s1.directupload.net/images/121012/zzydmra8.png", "",
-						[QT.Lang.get("qtoolbox", "player"), "http://s1.directupload.net/images/121012/8xgicpg7.png", "link_gs_player"],
-						[QT.Lang.get("qtoolbox", "alliance"), "http://s7.directupload.net/images/121012/4kfl493a.png", "link_gs_alliance"],
-						[QT.Lang.get("qtoolbox", "rankings"), "http://s14.directupload.net/images/121012/p2otvkuz.png", "link_gs_rankings"]],
-					[QT.Lang.get("qtoolbox", "grepo_intel"), "http://s14.directupload.net/images/130403/u33cb3b8.jpg", "",
-						[QT.Lang.get("qtoolbox", "track_player"), "http://s1.directupload.net/images/121012/8xgicpg7.png", "link_gi_player"],
-						[QT.Lang.get("qtoolbox", "track_alliance"), "http://s7.directupload.net/images/121012/4kfl493a.png", "link_gi_alliance"],
-						[QT.Lang.get("qtoolbox", "top_killers"), "http://s14.directupload.net/images/121012/p2otvkuz.png", "link_gi_topkillers"]],
-					[QT.Lang.get("qtoolbox", "grepo_bash"), "http://s14.directupload.net/images/140615/x766ldmm.png", "link_grepobash"],
-					[QT.Lang.get("qtoolbox", "quo"), "http://s7.directupload.net/images/140615/fhkhdsdc.png", "link_quo"]],
-				[QT.Lang.get("qtoolbox", "maps"), "http://s1.directupload.net/images/121012/4hbt2ofa.png", "",
-					[QT.Lang.get("qtoolbox", "grepo_maps"), "http://s1.directupload.net/images/121012/4hbt2ofa.png", "link_maps_grepomaps"],
-					[QT.Lang.get("qtoolbox", "grepo_intel"), "http://s14.directupload.net/images/130403/u33cb3b8.jpg", "link_maps_grepointel"]],
-				[QT.Lang.get("qtoolbox", "townsearches"), "http://s14.directupload.net/images/121012/vlnknenk.png", "",
-					[QT.Lang.get("qtoolbox", "tonda_polissuche"), "http://polissuche.marco93.de/favicon.ico", "link_polissuche"],
-					[QT.Lang.get("qtoolbox", "grepo_finder"), "http://s14.directupload.net/images/140913/5c6ak7br.jpg", "link_grepofinder"]],
-				[QT.Lang.get("qtoolbox", "bb_codes"), "http://s14.directupload.net/images/140124/8tzken7v.png", "",
-					[QT.Lang.get("bbcode", "troops"), "http://s1.directupload.net/images/121012/a2w2xe8r.png", "",
-						[QT.Lang.get("qtoolbox", "in_town"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_intown"],
-						[QT.Lang.get("qtoolbox", "from_town"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_fromtown"]],
-					//[QT.Lang.get("qtoolbox","outside"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_outer"]
-					[QT.Lang.get("bbcode", "cities"), "http://s7.directupload.net/images/140121/3l6c8vw4.png", "",
-						[QT.Lang.get("bbcode", "all"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_cities_all"],
-						[QT.Lang.get("bbcode", "active_grp"), "http://s14.directupload.net/images/140124/8tzken7v.png", "bbcode_cities_grp"]],
-					[QT.Lang.get("bbcode", "building"), "http://cdn.grepolis.com/images/game/overviews/main_20x20.png", "bbcode_buildings"]],
-				[QT.Lang.get("qtoolbox", "display_modes"), "http://s7.directupload.net/images/121012/2erjlsv4.png", "",
-					[QT.Lang.get("qtoolbox", "full_screen"), "http://s7.directupload.net/images/121012/2erjlsv4.png", "fullscreenmode"]],
-				[QT.Lang.get("qtoolbox", "unit_comparison"), "http://s7.directupload.net/images/121012/xli4g4p8.png", "unitcomparison"],
-				[QT.Lang.get("qtoolbox", "google_docs"), "http://s14.directupload.net/images/121012/cbromm2l.png", "googledocs"],
-				[QT.Lang.get("qtoolbox", "stats_scripts"), "http://s14.directupload.net/images/130418/rpccjan7.png", "statsandscripts"],
-				[QT.Lang.get("qtoolbox", "settings"), "http://s14.directupload.net/images/121012/xg4fgyo5.png", "scriptmanager"]
-			];
-			
-			var linkArray = {
-				gs_player : [QT.Links.GS_Spieler, "970", "500", QT.Lang.get("qtoolbox", "player"), "TYPE_QT_GREPOSTATS"],
-				gs_alliance : [QT.Links.GS_Allianz, "970", "500", QT.Lang.get("qtoolbox", "alliance"), "TYPE_QT_GREPOSTATS"],
-				gs_rankings : [QT.Links.GS_Bash, "970", "500", QT.Lang.get("qtoolbox", "rankings"), "TYPE_QT_GREPOSTATS"],
-				gi_player : [QT.Links.GrepoIntelPlayer, "1010", "500", QT.Lang.get("qtoolbox", "track_player"), "TYPE_QT_GREPOINTEL"],
-				gi_alliance : [QT.Links.GrepoIntelAlliance, "1010", "500", QT.Lang.get("qtoolbox", "track_alliance"), "TYPE_QT_GREPOINTEL"],
-				gi_topkillers : [QT.Links.GrepoIntelKillers, "1010", "500", QT.Lang.get("qtoolbox", "top_killers"), "TYPE_QT_GREPOINTEL"],
-				grepobash : [QT.Links.GrepoBash, "970", "500", QT.Lang.get("qtoolbox", "grepo_bash"), "TYPE_QT_BASHLISTS"],
-				quo : [QT.Links.quo, "970", "500", QT.Lang.get("qtoolbox", "quo"), "TYPE_QT_BASHLISTS"],
-				maps_grepomaps : [QT.Links.GrepoMaps, "1035", "500", QT.Lang.get("qtoolbox", "grepo_maps"), "TYPE_QT_SERVERMAPS"],
-				maps_grepointel : [QT.Links.GrepoIntelMap, "1035", "500", QT.Lang.get("qtoolbox", "grepo_intel"), "TYPE_QT_SERVERMAPS"],
-				grepofinder : [QT.Links.Grepofinder, "970", "500", QT.Lang.get("qtoolbox", "grepo_finder"), "TYPE_QT_TOWNSEARCHES"],
-				polissuche : [QT.Links.Polissuche, "970", "500", QT.Lang.get("qtoolbox", "tonda_polissuche"), "TYPE_QT_TOWNSEARCHES"],
-
-			};
-			
-			var qtbox_main_items = [];
-			var qt_mainmenu_content_h = -12;
-			qt_mainmenu_content_h -= 18;
-			$.each(qtbox_main_array, function (i, e) {
-				qt_mainmenu_content_h -= 12;
-				qtbox_main_items.push('<li><div class="qmenu_nav_cat" style="background-image: url(' + e[1] + ')"><span id="' + e[2] + '">' + e[0] + '</span></div>');
-				if (e.length > 3) {
-					qtbox_main_items.push("<span class='qmenu_arrow_span'> &#9658;</span>");
-					qtbox_main_items.push('<ul class="qmenu_window"><li class="qmenu_window_first"></li>');
-					$.each(e.slice(3), function (j, f) {
-						qtbox_main_items.push('<li><div class="qmenu_nav_cat" style="background-image: url(' + f[1] + ')"><span id="' + f[2] + '">' + f[0] + '</span></div>');
-						if (f.length > 3) {
-							qtbox_main_items.push("<span class='qmenu_arrow_span'> &#9658;</span>");
-							qtbox_main_items.push('<ul class="qmenu_window"><li class="qmenu_window_first"></li>');
-							$.each(f.slice(3), function (k, g) {
-								qtbox_main_items.push('<li><div class="qmenu_nav_cat" style="background-image: url(' + g[1] + ')"><span id="' + g[2] + '">' + g[0] + '</span></div>');
-								qtbox_main_items.push('</li>');
-							});
-							qtbox_main_items.push('<li class="qmenu_window_last"></li></ul>');
-						}
-						qtbox_main_items.push('</li>');
-					});
-					qtbox_main_items.push('<li class="qmenu_window_last"></li></ul>');
-				}
-				qtbox_main_items.push('</li>');
-			});
-
-			$('#qt_mainmenu_list').append(qtbox_main_items.join(''));
-			
-			$('.qmenu_nav_cat span').click(function () {
-				if ($(this).prop("id").length > 0) {
-					if (this.id.substring(0, 6) === "bbcode") {
-						QT.Functions.bbcodes(this.id);
-					} else if (this.id.substring(0, 4) === "link") {
-						QT.Functions.openLink(linkArray[this.id.substr(5)]);
-					} else {
-						QT.Functions[this.id]();
-					}
-					$("#qtbox_main_btn").click();
-				}
-			});
-
-			$("#qt_mainmenu_list").css({
-				"display" : "none",
-				"height" : "100%",
-				"text-align" : "left",
-				"padding" : "10px 0px 5px 0px"
-			});
-			$("#qt_mainmenu_list li").css({
-				"background" : "none",
-				"height" : "12px"
-			});
-			$(".qmenu_nav_cat").css({
-				"display" : "block",
-				"width" : "9px",
-				"height" : "10px",
-				"margin-top" : "1px",
-				"padding" : "0px 5px",
-				"background-size" : "10px 9px",
-				"float" : "left",
-				"background-repeat" : "no-repeat",
-				"background-position" : "center 2px"
-			});
-			$(".qmenu_nav_cat span").css({
-				"width" : "114px",
-				"padding-left" : "14px",
-				"display" : "block"
-			});
-			$(".qmenu_arrow_span").css({
-				"position" : "absolute",
-				"right" : "5px"
-			});
-			$(".qmenu_window").css({
-				"display" : "none",
-				"position" : "absolute",
-				"left" : "135px",
-				"top" : "-8px",
-				"width" : "142px",
-				"background" : "url(http://s7.directupload.net/images/140120/6waopcew.png)"
-			});
-			$(".qmenu_window ul").css({
-				"z-index" : "3"
-			});
-			$(".qmenu_window li").css({
-				"padding-left" : "3px"
-			});
-			$(".qmenu_window_first").css({
-				"height" : "10px",
-				"width" : "142px",
-				"padding" : "0",
-				"margin-top" : "-2px",
-				"background" : "url(http://s7.directupload.net/images/140119/gxng9w7z.png)"
-			});
-			$(".qmenu_window_last").css({
-				"height" : "8px",
-				"width" : "142px",
-				"padding" : "0",
-				"margin-top" : "2px",
-				"background" : "url(http://s1.directupload.net/images/140119/y7dq3n8j.png)"
-			});
-
-			$("#qt_mainmenu_list li").hover(function () {
-				$(this).children("ul").show();
-			}, function () {
-				$(this).children("ul").hide();
-			}); //
-			$("#qtbox_main_btn").click(function () {
-				if ($("#qt_mainmenu_list").is(':hidden')) {
-					$('#qt_mainmenu_top').css({
-						"margin-top" : "-26px"
-					});
-					$('#qt_mainmenu_top').animate({
-						marginTop : qt_mainmenu_content_h + "px"
-					}, 400);
-				} else {
-					$('#qt_mainmenu_top').animate({
-						marginTop : "-12px"
-					}, 400);
-				}
-				$("#qt_mainmenu_list").slideToggle();
-			});
-
-			//http://s1.directupload.net/images/131007/lmgv3ubf.png
-			//$('#ui_box .nui_left_box').append('<div id="qtbar_wrapper" style="position: absolute; width: 143px; height: 32px; top: 191px; background:url(http://s1.directupload.net/images/131031/u9atg7v6.png) no-repeat"></div>');
-			//$('#ui_box .nui_main_menu').css({"top": "+=32px"});
-
-			// Buttonbox
-			if (QT.Settings.values.qmenu_settings_buttonbar) {
-				$('#qtbox_wrapper').append('<div id="qtbox_buttons_wrapper" style="display: block; position: relative; height: 26px; width: 100%; bottom: 0px; background:url(http://s7.directupload.net/images/131007/wh2uwdro.png) no-repeat"></div>');
-				$('#ui_box .nui_main_menu .bottom, #ui_box .nui_main_menu .leaves').css({
-					"bottom" : "-=27px"
-				});
-				$('#qtbox_buttons_wrapper').append('<a id="qtbox_button1" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 3px;" target="_blank" href="' + QT.Links.GS_Spieler + '"><img src="http://s1.directupload.net/images/131008/ktvkyrx8.png"></a><a id="qtbox_button2" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 29px;" target="_blank" href="' + QT.Links.GrepoIntelPlayer + '"><img src="http://s1.directupload.net/images/131008/2hr8vbhw.png"></a><a id="qtbox_button3" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 55px;" target="_blank" href="' + QT.Links.GrepoBash + '"><img src="http://s14.directupload.net/images/131008/wfe9ficd.png"></a><a id="qtbox_button4" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 81px;" target="_blank" href="' + QT.Links.GrepoMaps + '"><img src="http://s7.directupload.net/images/131007/hdh4farx.png"></a><a id="qtbox_button5" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 107px;" target="_blank" href="' + QT.Links.Polissuche + '"><img src="http://s7.directupload.net/images/131008/5zj4ujmi.png"></a>');
-				$('#qtbox_button1').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepostats")));
-				$('#qtbox_button2').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepo_intel")));
-				$('#qtbox_button3').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepo_bash")));
-				$('#qtbox_button4').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepo_maps")));
-				$('#qtbox_button5').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "tonda_polissuche")));
-
-				$(".qtbox_button").hover(
-					function () {
-					$(this).css({
-						"background" : "url(http://s7.directupload.net/images/131008/vyhnznhd.png)"
-					});
-				},
-					function () {
-					$(this).css({
-						"background" : "none"
-					});
-				});
-			}
-			//Online Counter
-			if (QT.Settings.values.qmenu_settings_counter) {
-				$('#qtbox_wrapper').append('<div id="qtbox_clock_wrapper" style="display: block; position: relative; height: 21px; width: 100%; background:url(http://s7.directupload.net/images/131007/desspey5.png) no-repeat"><a id="qt_clock_clock" style="display: block; position: absolute; height: 17px; background: url(http://s7.directupload.net/images/131007/qqcsqnfm.png) no-repeat scroll 0px 2px transparent; margin-left: 5px; width: 127px;" href="#"><span id="qt_clock_span" style="display: block; color: #EEDDBB; font-size: 9px; width: 110px; position: absolute; bottom: 2px; margin-left: 10px;"></span></a></div>');
-				$('#ui_box .nui_main_menu .bottom, #ui_box .nui_main_menu .leaves').css({
-					"bottom" : "-=21px"
-				});
-				$("#qt_clock_clock").click(function () {
-					(counterview === 0) ? counterview = 1 : counterview = 0;
-				});
-				$('#qt_clock_clock').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "onlinecounter_switch")));
-				sec = -1;
-				min = 0;
-				hour = 0;
-				counterview = 0;
-				function counttime() {
-					QT.Settings.values.onlinetotal++;
-					sec++;
-					if (sec === 60) {
-						sec = 0;
-						min = min + 1;
-					}
-					if (min === 60) {
-						min = 0;
-						hour += 1;
-					}
-					var hour_total = parseInt(QT.Settings.values.onlinetotal / 3600);
-					var min_total = parseInt(QT.Settings.values.onlinetotal / 60 - hour_total * 60);
-					var sec_total = QT.Settings.values.onlinetotal - (hour_total * 3600) - (min_total * 60);
-					if (counterview === 0) {
-						timer = QT.Lang.get("qtoolbox", "onlinecounter_now") + ": " + ((hour <= 9) ? "0" + hour : hour) + ":" + ((min <= 9) ? "0" + min : min) + ":" + ((sec <= 9) ? "0" + sec : sec);
-					} else if (counterview === 1) {
-						timer = QT.Lang.get("qtoolbox", "onlinecounter_total") + ": " + ((hour_total <= 9) ? "0" + hour_total : hour_total) + ":" + ((min_total <= 9) ? "0" + min_total : min_total) + ":" + ((sec_total <= 9) ? "0" + sec_total : sec_total);
-					}
-					if (!QT.Settings.values.qmenu_settings_counter_aktiv) {
-						QT.Settings.save("onlinetotal", QT.Settings.values.onlinetotal);
-					}
-					$("#qt_clock_span").html(timer);
-					window.setTimeout(function () {
-						counttime();
-					}, 1000);
-				}
-				counttime();
-			}
-		
-		*/},
+		},
 		questlist : function () {
 			$('#quest_overview').prepend("<li id='q_qadd'><ul><li id='q_lock'></li><li id='q_qarrow'></li><li id='q_qhide'></li></ul></li>");
 			$('#q_qadd').css({
@@ -6505,7 +6478,7 @@ function main_script(DATA) {
 				// Header
 				"#report_report_header", ".game_arrow_left", ".game_arrow_right", ".game_arrow_delete", "#report_action_bg", "#report_arrow", ".report_town_bg", ".report_town_bg .island_bg", ".town_icon", ".flagpole",
 				// Body
-				"#report_game_body", ".hero40x40", ".unit_icon40x40", ".resources_small", ".report_booty_bonus_fight", "#resources .res_background", "#resources .res_background div", ".report_icon", ".button.simulate_units", ".power_icon45x45.attack_boost.lvl", ".power_icon45x45.defense_boost.lvl", ".power_icon45x45.unit_movement_boost.lvl", ".power_icon45x45:not(.lvl)", ".power_icon86x86", ".big_horizontal_report_separator",
+				"#report_game_body", ".hero40x40", ".unit_icon40x40", ".resources_small", ".report_booty_bonus_fight", "#resources .res_background", "#resources .res_background div", ".report_icon", ".button.simulate_units", ".power_icon45x45.attack_boost.lvl", ".power_icon45x45.defense_boost.lvl", ".power_icon45x45.unit_movement_boost.lvl", ".power_icon45x45:not(.lvl)", ".power_icon86x86", ".big_horizontal_report_separator", ".god_mini",
 				// Footer
 				".game_list_footer",
 				// Buildings
@@ -6585,12 +6558,12 @@ function main_script(DATA) {
 					BR : "==CrAZyWoW==, douglasgoclv, tesseus, Stelvins",
 					CZ : "jarajanos, Apolon Foibos, jarajanos",
 					DE : "Quackmaster, Scav77",
-					EN : "Quackmaster",
-					ES : "Jonh Snow, F0NT3, cuervobrujo",
+					EN : "Quackmaster, cedomaiori",
+					ES : "Jonh Snow, F0NT3, cuervobrujo, Guerrero2013",
 					FR : "higter, Mazelys, jbrek, ToolFire, aldo666, jojopt",
 					GR : "drmacsoft, adipas.ioannis, juvekdk, ΤζονακοςΚ, genial",
 					HU : "Arminno, Betagamer, Shia-ko",
-					IT : "masale81",
+					IT : "masale81, Psy17",
 					NL : "Quackmaster, Florent15, sannelos, megaabelleke, Thodoris, HGamert, Siloperg47",
 					PL : "Slietie, Tropsy Kretts, Polny Konik, danon2",
 					RO : "BaietelulCelFrumusel",
@@ -6618,7 +6591,8 @@ function main_script(DATA) {
 					["Dennis B. - 1€", "Sinnaman - 15€", "Marcel N. - 10€", "Edith M. - 10€"],
 					["Nepomuk P. - 50€", "Kevin T. - 5€", "Thomas R. - 10€", "Claines C. C. - 3€"],
 					["Carsten R. - 5€", "Nick K. - 0,74€", "Eduard R. - 3€", "Christian P. - 5€"],
-					["Martin S. - 5€", "Ian O. - 10€", "Michael W. K. - 1$"],
+					["Martin S. - 5€", "Ian O. - 10€", "Michael W. K. - 1$", "	Ines L. - 10€"],
+					["David M. - 10€", "Thomas M. W. - 3 €"],
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
@@ -6802,20 +6776,109 @@ function main_script(DATA) {
 			});
 		},
 		selectunitshelper : function () {
-			var scriptEl = document.createElement("script");
-			scriptEl.setAttribute('type', 'text/javascript');
-			scriptEl.appendChild(document.createTextNode("	var gt_db_debugger=false;	var gt_db_content=new Array();	var gt_db_MaxContentLength=14;	function gt_db_FormatTime(t)	{		var h=t.getHours();		if (h<10) h='0'+h;		var m=t.getMinutes();		if (m<10) m='0'+m;		var s=t.getSeconds();		if (s<10) s='0'+s;		return h+':'+m+':'+s;	};	function gt_db_RefreshContent()	{		if (!gt_db_debugger) return;		var gt_wnd;		gt_wnd=GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_CUSTOM);		if (!gt_wnd)		{			Layout.wnd.Create(Layout.wnd.TYPE_CUSTOM, 'G.Tio Tools Console');			gt_wnd=GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_CUSTOM);		}		if (gt_db_content.length==gt_db_MaxContentLength)		{			gt_db_content.shift();		}		var gt_temp_content='';		for (var i=0; i<gt_db_content.length; i++)		{			gt_temp_content=gt_temp_content+gt_db_content[i];		}		gt_wnd.setContent(gt_temp_content);	}	function gt_db_Debug(message)	{		var now=new Date();		gt_db_content.push(gt_db_FormatTime(now)+' '+message+'<br>');		gt_db_RefreshContent();	};	(function(){		gt_db_content.push('Tools startet...<br>');		window.setTimeout(gt_db_RefreshContent, 3000);	})();	"));
-			document.body.appendChild(scriptEl);
+			var wnds = GPWindowMgr.getOpen(Layout.wnd.TYPE_TOWN);
+			for (var e in wnds) {
+				if (wnds.hasOwnProperty(e)) {
+					var wndid = wnds[e].getID();
+					
+					var testel = $('DIV#gpwnd_'+wndid+' A.gt_balanced');
+					if (testel.length > 0) continue;
+					
+					var handler=wnds[e].getHandler();
 
-			var scriptEl = document.createElement("script");
-			scriptEl.setAttribute('type', 'text/javascript');
-			scriptEl.appendChild(document.createTextNode("	function gt_st_ajaxComplete(e, xhr, settings)	{		var url = settings.url.split('?'); var action = url[0].substr(5) + '/' + url[1].split(/&/)[1].substr(7);		if (action=='/town_info/support' || action=='/town_info/attack')		{			gt_bl_initWnd();		}			};	$(document).ajaxComplete(gt_st_ajaxComplete);"));
-			document.body.appendChild(scriptEl);
+					$('DIV#gpwnd_'+wndid+' A.select_all_units').after(' | <a class="gt_balanced" style="position:relative; top:3px" href="#">'+QT.Lang.get("town_info", "no_overload")+'</a> | <a class="gt_delete" style="position:relative; top:3px" href="#">'+QT.Lang.get("town_info", "delete")+'</a>');
 
-			var scriptEl = document.createElement("script");
-			scriptEl.setAttribute('type', 'text/javascript');
-			scriptEl.appendChild(document.createTextNode("	var gt_bl_unitPopulation={sword:1,slinger:1,archer:1,hoplite:1,rider:3,chariot:4,catapult:15,minotaur:30,zyklop:40,medusa:18,cerberus:30,fury:55,centaur:12};	var gt_bl_groundUnits=new Array('sword','slinger','archer','hoplite','rider','chariot','catapult','minotaur','zyklop','medusa','cerberus','fury','centaur','calydonian_boar','godsent');	function gt_bl_process(wndid)	{		var wnd=GPWindowMgr.GetByID(wndid);		if (!wnd)			return;		var handler=wnd.getHandler();		if (!handler)			return;		var units=new Array();		var item;		for (var i=0; i<gt_bl_groundUnits.length; i++)		{			if (handler.data.units[gt_bl_groundUnits[i]])			{				item={name:gt_bl_groundUnits[i], count:handler.data.units[gt_bl_groundUnits[i]].count, population:handler.data.units[gt_bl_groundUnits[i]].population};				units.push(item);			}		}		if (handler.data.researches && handler.data.researches.berth)			var berth=handler.data.researches.berth;		else			var berth=0;		var totalCap=handler.data.units.big_transporter.count*(handler.data.units.big_transporter.capacity+berth)+handler.data.units.small_transporter.count*(handler.data.units.small_transporter.capacity+berth);						units.sort(function(a,b){			return b.population-a.population;		});		for (i=0; i<units.length; i++)			gt_db_Debug('i='+i+ ' name='+units[i].name+' pop='+units[i].population+' c='+units[i].count);		for (i=0; i<units.length; i++)			if (units[i].count==0)			{				units.splice(i,1);				i=i-1;			};		gt_db_Debug('---');		for (i=0; i<units.length; i++)			gt_db_Debug('i='+i+ ' name='+units[i].name+' pop='+units[i].population+' c='+units[i].count);								var restCap=totalCap;		var sendUnits=new Array();		for (i=0; i<units.length; i++)		{			item={name:units[i].name, count:0};			sendUnits[units[i].name]=item;		};		for (j=0; j<gt_bl_groundUnits.length; j++)		{			if (sendUnits[gt_bl_groundUnits[j]])				gt_db_Debug(sendUnits[gt_bl_groundUnits[j]].name+' '+sendUnits[gt_bl_groundUnits[j]].count);		}						var hasSent;		k=0;		while (units.length>0)		{			hasSent=false;			k=k+1;			for (i=0; i<units.length; i++)			{				if (units[i].population<=restCap)				{					hasSent=true;					units[i].count=units[i].count-1;					sendUnits[units[i].name].count=sendUnits[units[i].name].count+1;					restCap=restCap-units[i].population;				}			}			for (i=0; i<units.length; i++)				if (units[i].count==0)				{					units.splice(i,1);					i=i-1;				};			if (!hasSent)			{				gt_db_Debug('Abbruch nach '+k+' loops');				break;			}		}		gt_db_Debug('nach '+k+'---- rest='+restCap);		for (i=0; i<gt_bl_groundUnits.length; i++)		{			if (sendUnits[gt_bl_groundUnits[i]])				gt_db_Debug(sendUnits[gt_bl_groundUnits[i]].name+' '+sendUnits[gt_bl_groundUnits[i]].count);		}		handler.getUnitInputs().each(function ()		{			if (!sendUnits[this.name])			{				if (handler.data.units[this.name].count>0)					this.value=handler.data.units[this.name].count;				else					this.value='';			}		});		for (i=0; i<gt_bl_groundUnits.length; i++)		{			if (sendUnits[gt_bl_groundUnits[i]])			{				if (sendUnits[gt_bl_groundUnits[i]].count>0)					$('DIV#gpwnd_'+wndid+' INPUT.unit_type_'+gt_bl_groundUnits[i]).val(sendUnits[gt_bl_groundUnits[i]].count);				else					$('DIV#gpwnd_'+wndid+' INPUT.unit_type_'+gt_bl_groundUnits[i]).val('');			}		}		$('DIV#gpwnd_'+wndid+' INPUT.unit_type_sword').trigger('change');	}	function gt_bl_delete(wndid)	{		var wnd=GPWindowMgr.GetByID(wndid);		if (!wnd)			return;		var handler=wnd.getHandler();		if (!handler)			return;		handler.getUnitInputs().each(function ()		{			this.value='';		});		$('DIV#gpwnd_'+wndid+' INPUT.unit_type_sword').trigger('change');	}	function gt_bl_initWnd()	{		var wnds=GPWindowMgr.getOpen(Layout.wnd.TYPE_TOWN);		if (wnds.length==0)		{			return;		}		var testel=$('DIV#gpwnd_'+wndid+' A.gt_balanced');		if (testel.length>0) return;		var wnd=wnds[wnds.length-1];		var wndid=wnd.getID();		var ael=$('DIV#gpwnd_'+wndid+' A.select_all_units');		$(ael).after('&nbsp;|&nbsp;<a class=gt_balanced style=\\\'position:relative; top:3px\\\' href=javascript:gt_bl_process('+wndid+')>" + QT.Lang.get("town_info", "no_overload") + "</a>		&nbsp;|&nbsp;<a style=\\\'position:relative; top:3px\\\' href=javascript:gt_bl_delete('+wndid+')>" + QT.Lang.get("town_info", "delete") + "</a>');	}"));
-			document.body.appendChild(scriptEl);
+					var gt_bl_groundUnits=new Array('sword','slinger','archer','hoplite','rider','chariot','catapult','minotaur','zyklop','medusa','cerberus','fury','centaur','calydonian_boar','godsent');
+
+					$('DIV#gpwnd_'+wndid+' A.gt_balanced').click(function () {
+						var units=new Array();
+						var item;
+						
+						for (var i=0; i<gt_bl_groundUnits.length; i++)		{
+							if (handler.data.units[gt_bl_groundUnits[i]])			{
+								item={name:gt_bl_groundUnits[i], count:handler.data.units[gt_bl_groundUnits[i]].count, population:handler.data.units[gt_bl_groundUnits[i]].population};
+								units.push(item);
+							}
+						}
+						
+						if (handler.data.researches && handler.data.researches.berth) {
+							var berth=handler.data.researches.berth;
+						} else {
+							var berth=0;
+						}
+						
+						var totalCap=handler.data.units.big_transporter.count*(handler.data.units.big_transporter.capacity+berth)+handler.data.units.small_transporter.count*(handler.data.units.small_transporter.capacity+berth);
+						units.sort(function(a,b){
+							return b.population-a.population;
+						});
+
+						for (i=0; i<units.length; i++) {
+							if (units[i].count==0)			{
+								units.splice(i,1);
+								i=i-1;
+							};
+						}
+
+						var restCap=totalCap;
+						var sendUnits=new Array();
+						for (i=0; i<units.length; i++)		{
+							item={name:units[i].name, count:0};
+							sendUnits[units[i].name]=item;
+						};
+
+						var hasSent;
+						k=0;
+						while (units.length>0)		{
+							hasSent=false;
+							k=k+1;
+							for (i=0; i<units.length; i++)			{
+								if (units[i].population<=restCap)				{
+									hasSent=true;
+									units[i].count=units[i].count-1;
+									sendUnits[units[i].name].count=sendUnits[units[i].name].count+1;
+									restCap=restCap-units[i].population;
+								}
+							}
+							for (i=0; i<units.length; i++)
+								if (units[i].count==0)				{
+									units.splice(i,1);
+									i=i-1;				
+								};
+								if (!hasSent)			{
+									break;
+								}
+						}
+
+						handler.getUnitInputs().each(function ()		{
+							if (!sendUnits[this.name])			{
+								if (handler.data.units[this.name].count>0)
+									this.value=handler.data.units[this.name].count;
+								else
+									this.value='';
+							}
+						});
+						
+						for (i=0; i<gt_bl_groundUnits.length; i++)		{
+							if (sendUnits[gt_bl_groundUnits[i]])			{
+								if (sendUnits[gt_bl_groundUnits[i]].count>0)
+									$('DIV#gpwnd_'+wndid+' INPUT.unit_type_'+gt_bl_groundUnits[i]).val(sendUnits[gt_bl_groundUnits[i]].count);
+								else
+									$('DIV#gpwnd_'+wndid+' INPUT.unit_type_'+gt_bl_groundUnits[i]).val('');
+							}
+						}
+						
+						$('DIV#gpwnd_'+wndid+' INPUT.unit_type_sword').trigger('change');
+					});
+
+					$('DIV#gpwnd_'+wndid+' A.gt_delete').click(function () {
+						handler.getUnitInputs().each(function ()		{
+							this.value='';
+						});
+						$('DIV#gpwnd_'+wndid+' INPUT.unit_type_sword').trigger('change');
+					});
+
+				}
+			}
 		},
 		simulatorExport : function () {
 			QT.Helper.Screenshot.btn_preview("#place_simulator_form .game_header", "qt_simulatorexport", "simulator", function() {
@@ -7047,7 +7110,7 @@ function main_script(DATA) {
 			}
 
 		},
-		townGSButton : function () {
+		townStatsButtons : function () {
 			var wndArray = GPWindowMgr.getOpen(Layout.wnd.TYPE_TOWN);
 			for (var e in wndArray) {
 				if (wndArray.hasOwnProperty(e)) {
@@ -7067,9 +7130,13 @@ function main_script(DATA) {
 						continue;
 					var k = $('DIV#gpwnd_' + c + ' a[onclick^="Layout.allianceProfile"]').attr("onclick").replace(")", "").split(",")[1];
 					var l = $('DIV#gpwnd_' + c + ' a[onclick^="Layout.allianceProfile"]').parent().find(".list_item_right");
-					l.prepend('<span class="qt_gsbutton"><a class="qt_gsbutton" target="_blank" href="http://' + i + ".grepostats.com/world/" + h + "/alliance/" + k + '"><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a></span>');
-					l.css("width", "60px")
-
+					//var x = $("DIV#gpwnd_" + c + " .assign_ally_color").parent();
+					l.css("width", "+=26px");
+					l.append('<span class="qt_gsbutton"><a class="qt_gsbutton" target="_blank" href="http://' + i + ".grepostats.com/world/" + h + "/alliance/" + k + '"><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a></span>');
+					if (mID === "de") {
+						l.css("width", "+=26px");
+						l.append('<a class="qt_quobutton" target="_blank" href="http://marekblomkvist.com/quo/'+ h +'/'+ k +'"><img src="http://s7.directupload.net/images/140615/fhkhdsdc.png"></a>');
+					}
 				}
 			}
 		},
@@ -7250,8 +7317,10 @@ function main_script(DATA) {
 				var towngrp_id = $(this).parent().data('groupid');
 				var cities_towngroup = ITowns.town_group_towns.getTowns(towngrp_id);
 				var bb_content = "";
+				var bb_count = 0;
 				$.each(cities_towngroup, function (key, town) {
-					bb_content += "[town]" + town.attributes.town_id + "[/town] (" + town.town_model.attributes.points + ") " + town.town_model.attributes.island_x + "|" + town.town_model.attributes.island_y + "\n";
+					bb_count++;
+					bb_content += ""+ bb_count +". [town]" + town.attributes.town_id + "[/town] (" + town.town_model.attributes.points + ") " + town.town_model.attributes.island_x + "|" + town.town_model.attributes.island_y + "\n";
 				});
 				var expRahmen_a = "<div class='inner_box'><div class='game_border'><div class='game_border_top'></div><div class='game_border_bottom'></div><div class='game_border_left'></div><div class='game_border_right'></div><div class='game_border_corner corner1'></div><div class='game_border_corner corner2'></div><div class='game_border_corner corner3'></div><div class='game_border_corner corner4'></div><div class='game_header bold' style='height:18px;'><div style='float:left; padding-right:10px;'></div>";
 				var expRahmen_b = "</div><textarea id='expTextarea' style=\"height: 228px; width: 685px;\">";
@@ -7544,197 +7613,6 @@ function main_script(DATA) {
 				];
 				return elemensToChange;
 			});
-		},
-		windowmanager : function () {
-			//BB-Codes
-			function WndHandlerQTbbcode(wndhandle) {
-				this.wnd = wndhandle;
-			}
-			Function.prototype.inherits.call(WndHandlerQTbbcode, WndHandlerDefault);
-			WndHandlerQTbbcode.prototype.getDefaultWindowOptions = function () {
-				return {
-					position : ["center", "center"],
-					width : 700,
-					height : 330,
-					minimizable : true,
-					title : "BB-Code"
-				};
-			};
-			GPWindowMgr.addWndType("QT_BBCODE", "qtbbcode", WndHandlerQTbbcode, 1);
-			//Grepo Stats
-			function WndHandlerQTgrepostats(wndhandle) {
-				this.wnd = wndhandle;
-			}
-			Function.prototype.inherits.call(WndHandlerQTgrepostats, WndHandlerDefault);
-			WndHandlerQTgrepostats.prototype.getDefaultWindowOptions = function () {
-				return {
-					position : ["center", "center"],
-					width : 972,
-					height : 565,
-					minimizable : true,
-					title : "Grepo Stats"
-				};
-			};
-			GPWindowMgr.addWndType("QT_GREPOSTATS", "qtgs", WndHandlerQTgrepostats, 1);
-			//Grepo Intel
-			function WndHandlerQTgrepointel(wndhandle) {
-				this.wnd = wndhandle;
-			}
-			Function.prototype.inherits.call(WndHandlerQTgrepointel, WndHandlerDefault);
-			WndHandlerQTgrepointel.prototype.getDefaultWindowOptions = function () {
-				return {
-					position : ["center", "center"],
-					width : 1013,
-					height : 565,
-					minimizable : true,
-					title : "Grepo Intel"
-				};
-			};
-			GPWindowMgr.addWndType("QT_GREPOINTEL", "qtgi", WndHandlerQTgrepointel, 1);
-			//Server Maps
-			function WndHandlerQTservermaps(wndhandle) {
-				this.wnd = wndhandle;
-			}
-			Function.prototype.inherits.call(WndHandlerQTservermaps, WndHandlerDefault);
-			WndHandlerQTservermaps.prototype.getDefaultWindowOptions = function () {
-				return {
-					position : ["center", "center"],
-					width : 1038,
-					height : 565,
-					minimizable : true,
-					title : "Server Map"
-				};
-			};
-			GPWindowMgr.addWndType("QT_SERVERMAPS", "qtservermaps", WndHandlerQTservermaps, 1);
-			//Townsearches
-			function WndHandlerQTtownsearches(wndhandle) {
-				this.wnd = wndhandle;
-			}
-			Function.prototype.inherits.call(WndHandlerQTtownsearches, WndHandlerDefault);
-			WndHandlerQTtownsearches.prototype.getDefaultWindowOptions = function () {
-				return {
-					position : ["center", "center"],
-					width : 972,
-					height : 565,
-					minimizable : true,
-					title : "Townsearch"
-				};
-			};
-			GPWindowMgr.addWndType("QT_TOWNSEARCHES", "qttownsearches", WndHandlerQTtownsearches, 1);
-			//Bashlists
-			function WndHandlerQTbashlists(wndhandle) {
-				this.wnd = wndhandle;
-			}
-			Function.prototype.inherits.call(WndHandlerQTbashlists, WndHandlerDefault);
-			WndHandlerQTbashlists.prototype.getDefaultWindowOptions = function () {
-				return {
-					position : ["center", "center"],
-					width : 972,
-					height : 563,
-					minimizable : true,
-					title : "Bashlist"
-				};
-			};
-			GPWindowMgr.addWndType("QT_BASHLISTS", "qtbashlists", WndHandlerQTbashlists, 1);
-			//Scriptmanager
-			function WndHandlerQTscriptmanager(wndhandle) {
-				this.wnd = wndhandle;
-			}
-			Function.prototype.inherits.call(WndHandlerQTscriptmanager, WndHandlerDefault);
-			WndHandlerQTscriptmanager.prototype.getDefaultWindowOptions = function () {
-				return {
-					position : ["center", "center"],
-					width : 750,
-					height : 500,
-					minimizable : true,
-					title : "Scriptmanager"
-				};
-			};
-			GPWindowMgr.addWndType("QT_SCRIPTMANAGER", "qtscriptmanager", WndHandlerQTscriptmanager, 1);
-			//Stats&Scripts
-			function WndHandlerQTstatsandscripts(wndhandle) {
-				this.wnd = wndhandle;
-			}
-			Function.prototype.inherits.call(WndHandlerQTstatsandscripts, WndHandlerDefault);
-			WndHandlerQTstatsandscripts.prototype.getDefaultWindowOptions = function () {
-				return {
-					position : ["center", "center"],
-					width : 750,
-					height : 500,
-					minimizable : true,
-					title : "Stats & Scripts"
-				};
-			};
-			GPWindowMgr.addWndType("QT_STATSANDSCRIPTS", "qtstatsandscripts", WndHandlerQTstatsandscripts, 1);
-			//Google Docs
-			function WndHandlerQTgoogledocs(wndhandle) {
-				this.wnd = wndhandle;
-			}
-			Function.prototype.inherits.call(WndHandlerQTgoogledocs, WndHandlerDefault);
-			WndHandlerQTgoogledocs.prototype.getDefaultWindowOptions = function () {
-				return {
-					position : ["center", "center"],
-					width : 852,
-					height : 600,
-					minimizable : true,
-					title : "Google Docs"
-				};
-			};
-			GPWindowMgr.addWndType("QT_GOOGLEDOCS", "qtgoogledocs", WndHandlerQTgoogledocs, 1);
-			//Townoverview
-			function WndHandlerQTtownoverview(wndhandle) {
-				this.wnd = wndhandle;
-			}
-			Function.prototype.inherits.call(WndHandlerQTtownoverview, WndHandlerDefault);
-			WndHandlerQTtownoverview.prototype.getDefaultWindowOptions = function () {
-				return {
-					position : ["center", "center"],
-					height : 600,
-					width : 800,
-					minimizable : true,
-					title : QT.Lang.get("grepo_mainmenu", "city_view")
-				};
-			};
-			WndHandlerQTtownoverview.prototype.onClose = function () {
-				$('#ui_box').append($('DIV.ui_city_overview')).append($('DIV.ui_construction_queue'));
-				if ($("#minimap_canvas").hasClass('expanded')) {
-					$.Observer(GameEvents.ui.bull_eye.radiobutton.strategic_map.click).publish({});
-				} else {
-					$.Observer(GameEvents.ui.bull_eye.radiobutton.island_view.click).publish({});
-				}
-			};
-			GPWindowMgr.addWndType("QT_TOWNOVERVIEW", "qttownoverview", WndHandlerQTtownoverview, 1);
-			//Report Export
-			function WndHandlerQTreportexport(wndhandle) {
-				this.wnd = wndhandle;
-			}
-			Function.prototype.inherits.call(WndHandlerQTreportexport, WndHandlerDefault);
-			WndHandlerQTreportexport.prototype.getDefaultWindowOptions = function () {
-				return {
-					position : ["center", "center"],
-					width : 850, //827
-					height : 600, //733
-					minimizable : true,
-					fullwindow : true,
-					title : "Report Export"
-				};
-			};
-			GPWindowMgr.addWndType("QT_REPORTEXPORT", "qtreportexport", WndHandlerQTreportexport, 1);
-			//Rest
-			function WndHandlerQTstandard(wndhandle) {
-				this.wnd = wndhandle;
-			}
-			Function.prototype.inherits.call(WndHandlerQTstandard, WndHandlerDefault);
-			WndHandlerQTstandard.prototype.getDefaultWindowOptions = function () {
-				return {
-					position : ["center", "center"],
-					height : 500,
-					width : 750,
-					minimizable : true,
-					title : ""
-				};
-			};
-			GPWindowMgr.addWndType("QT_STANDARD", "qtstandard", WndHandlerQTstandard, 1);
 		}
 	};
 
@@ -7753,9 +7631,8 @@ function main_script(DATA) {
 		QT.Settings.setValues();
 		QT_sendStats(mID, sID, QT.Settings.values.script_version);
 		QT_updater(QT.Lang.get("meta", "changelog"), QT.Lang.get("meta", "forumlink"));
-		QT.Functions.mutationobserver();
-		QT.Functions.windowmanager();
-		QT.Functions.selectunitshelper();
+		QT.Helper.Mutationobserver();
+		QT.Helper.Windowmanager();
 		QT.Functions.qtoolbox();
 		if (QT.Settings.values.qmenu_settings_hotkey_active)
 			QT.Functions.hotkeys();
