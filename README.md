@@ -3,4 +3,4 @@ Grepolis-QT
 
 Userscript for Grepolis
 
-powered by grepolisqt.de
+powered by www.grepolisqt.de
