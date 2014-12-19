@@ -4,7 +4,7 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.44.00
+// @version        2.45.00
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @grant          GM_listValues
 // @grant          GM_getValue
@@ -47,13 +47,13 @@ function main_script(DATA) {
 			reports : {
 				choose_folder : 'Escolher pasta',
 				enacted : 'lançou',
-				conquered : 'conquistou',
-				spying : 'espia',
+				conquered : 'Você',
+				spying : 'espiando',
 				spy : 'Espião',
-				support : 'apoio',
-				supporting : 'apoia',
+				support : 'apoia',
+				supporting : 'tropas alocadas',
 				attacking : 'atacando',
-				farming_village : 'Aldeia bárbara'
+				farming_village : 'aldeia bárbara'
 			},
 			forum : {
 				delete : 'Excluir',
@@ -153,6 +153,7 @@ function main_script(DATA) {
 			},
 			caves : {
 				stored_silver : 'Moedas de prata armazenados',
+				silver_to_store : 'Moedas de prata armazenáveis',
 				name : 'Nome',
 				wood : 'Madeira',
 				stone : 'Pedra',
@@ -169,13 +170,13 @@ function main_script(DATA) {
 				disabled : 'Sem funcionamento Temporario'
 			},
 			culture : {
-				cityfestivals : 'Festivais da cidade',
+				cityfestivals : 'Festival urbano',
 				olympicgames : 'Jogos Olímpicos',
-				triumph : 'Procissões de Vitória',
+				triumph : 'Desfile da vitória',
 				theater : 'Peças de teatro'
 			},
 			settings : {
-				text2 : 'Balcão online',
+				text2 : 'Contar tempo no jogo',
 				text3 : 'Abrir links do menu de no jogo',
 				text4 : 'Ative a inclusão de outros scripts Greasemonkey para o menu',
 				text5 : 'Mostrar botões para exposição permanente da fila de unidade, os movimentos e o comércio',
@@ -204,7 +205,7 @@ function main_script(DATA) {
 				text31 : 'Botão para o código BB da cidade atual',
 				text32 : 'Selecione e exclua mensagens',
 				text34 : 'Visão geral Caves (Administrador)',
-				text35 : 'Academia planejador',
+				text35 : 'Planejador de Academia',
 				text36 : 'Gruta',
 				text37 : 'Permitir que a triagem de cidades',
 				text38 : 'Digite prata acima 15000 automaticamente no campo de entrada',
@@ -248,7 +249,7 @@ function main_script(DATA) {
 				ingame_name : 'Não hesite em contactar-me se você prefere ser chamado pelo seu nome ingame',
 				adfly : 'Você quer ganhar dinheiro com as ligações, também?',
 				donations : 'Doações',
-				update_check : 'Check por update',
+				update_check : 'Checar por atualizações',
 				prologue : 'Devido à falta de alternativas de uma Devido Falta de Alternativas deuserscripts para Grepolis 2.0 este conjunto de ferramentas foi iniciada dois anos atrás constantemente tenta estender Grepolis com novas funções desde então.<p />Inicialmente, o objectivo era o de reparar as funções de userscripts antigos para Grepolis 1.0 e para aprender as noções básicas de JavaScript no processo, mas por agora muito mais foi realizado. O conjunto de ferramentas é constantemente prorrogado por ideias próprias ou ideias da comunidade e por causa de seu grande apoio a minha motivação para continuar ainda está lá.<p />Você apresenta constantemente me desafios interessantes e é divertido para encontrar soluções para isso. Como se trata de muito trabalho e pode ser muito Eu sou sempre muito grato por qualquer tipo de apoio demorado. Portanto, eu gostaria de agradecer a todos que ofereceram apoio para este projecto - seja através de doações ou clicar em um AdFly-Link, o conhecimento, a criatividade, relatórios de bugs ou apenas algumas palavras de incentivo.'
 			},
 			bbcode : {
@@ -270,6 +271,46 @@ function main_script(DATA) {
 			},
 			farmhelper : {
 				autohide_cities : 'Ocultar automaticamente Cidades após agricultura ON / OFF'
+			},
+			export_window : {
+				settings : 'Configurações',
+				chrome : 'Chrome abre a janela com a imagem por padrão como um pop-up. Se preferir que a janela se abre como uma nova guia, você tem que instalar um addon extra. Clique aqui para chegar ao addon.',
+				info : 'O provedor de hospedagem, infelizmente, permite que apenas 1.250 uploads diariamente. Eles vão proibir este serviço para o resto do mês, se eu exceder esse valor 5 vezes. No longo prazo, eu pretendo alugar um servidor próprio para isso, mas os custos e o desenvolvimento precisam de algum tempo e, acima de tudo dinheiro. Eu invisto meu tempo livre para isso com prazer, mas como um estudante Eu simplesmente não pode pagar todos os custos envolvidos. Como uma possibilidade de refinanciamento, por isso, usar os sponsorlinks de Adf.ly (apenas para a primeira imagem publicada). Com um clique neste botão informação que você será redirecionado para a página oficial de doação Paypal deste script. Obrigado a todos que já apoiam este projecto e para aqueles que pretendem fazê-lo.',
+				connection_fail_text : 'A conexão com o servidor falhou. O servidor está inacessível ou o maxmimum capacidade de hospedagem é alcançado para hoje (1250 imagens por dia / 50 imagens por usuário).',
+				town : 'Cidade',
+				luck : 'Sorte',
+				title : 'Titulo',
+				resources : 'Recursos',
+				wall : 'Muralha',
+				player : 'Jogador',
+				reporttype : 'Tipo de Relatório',
+				resources_lost : 'Recursos Perdido',
+				nightbonus : 'Bônus Noturno',
+				alliance : 'Aliança',
+				troops : 'Tropas',
+				bashpoints : 'Pontos de Combate',
+				buildings : 'Construções',
+				payed_iron : 'Prata usada',
+				payed_iron_storage : 'Prata guardada',
+				date : 'Data',
+				spell_info : 'Informação do Feitiço',
+				spell_effect : 'Efeito do Feitiço',
+				message : 'Messagem',
+				attacker : 'Ataque',
+				defender : 'Defendesa',
+				bonuses : 'Feitiços/Bônus',
+				command_type : 'Tipo de Comando',
+				town_left : 'Cidade (esquerda)',
+				town_right : 'Cidade (direita)',
+				player_left : 'Jogador (esquerda)',
+				player_right : 'Jogador (direita)',
+				travel_time : 'Tempo de viagem',
+				time_of_arrival : 'Hora da chegada',
+				command : 'Comandos',
+				defeated_atk : 'Derrotado como atacante',
+				defeated_def : 'Derrotado como defensor',
+				losses_atk : 'Perdas como atacante',
+				losses_def : 'Perdas como defensor'
 			}
 		},
 		cz : {
@@ -753,7 +794,25 @@ function main_script(DATA) {
 				defeated_atk : 'Besiegt als Angreifer',
 				defeated_def : 'Besiegt als Verteidiger',
 				losses_atk : 'Verluste als Angreifer',
-				losses_def : 'Verluste als Verteidiger'
+				losses_def : 'Verluste als Verteidiger',
+				brush_size : 'Pinselstärke',
+				color : 'Farbe',
+				eraser : 'Radiergummi',
+				pencil : 'Zeichenstift',
+				arrow : 'Pfeil',
+				rectangel : 'Rechteck',
+				line : 'Linie',
+				arc : 'Kreis',
+				delete_drawing : 'Zeichnung löschen',
+				fill : 'Füllen'
+			},
+			colors : {
+				black : "schwarz",
+				blue : "blau",
+				red : "rot",
+				green : "grün",
+				yellow : "gelb",
+				gray : "grau"
 			}
 		},
 		es : {
@@ -2854,7 +2913,25 @@ function main_script(DATA) {
 				defeated_atk : 'Defeated as an attacker',
 				defeated_def : 'Defeated as a defender',
 				losses_atk : 'Losses as an attacker',
-				losses_def : 'Losses as a defender'
+				losses_def : 'Losses as a defender',
+				brush_size : 'Brush Size',
+				color : 'Color',
+				eraser : 'Eraser',
+				pencil : 'Pencil',
+				arrow : 'Arrow',
+				rectangel : 'Rectangel',
+				line : 'Line',
+				arc : 'Arc',
+				delete_drawing : 'Delete drawing',
+				fill : 'Fill'
+			},
+			colors : {
+				black : "black",
+				blue : "blue",
+				red : "red",
+				green : "green",
+				yellow : "yellow",
+				gray : "gray"
 			}
 		}
 	};
@@ -3289,6 +3366,126 @@ function main_script(DATA) {
 	 * Helper Functions
 	 ***********************************************************************/
 	QT.Helper = {
+		grepo_btn : function (ID, Text) {
+			return $('<a id="' + ID + '" href="#" class="button"><span class="left"><span class="right"><span class="middle"><small>' + Text + '</small></span></span></span></a>');
+		},
+		grepo_dropdown : function (ID, Options) {
+			var str = '<span class="grepo_input"><span class="left"><span class="right"><select name="' + ID + '" id="' + ID + '" type="text">';
+			$.each(Options, function (a, b) {
+				if (b[1]) {
+					str += '<option value="' + b[0] + '">' + b[1] + '</option>'
+				} else {
+					str += '<option value="' + b + '">' + b + '</option>'
+				}
+			});
+			str += '</select></span></span></span>';
+			return str;
+		},
+		grepo_dropdown_flag : function (ID, Options) {
+			var str = '<span class="grepo_input"><span class="left"><span class="right"><select name="' + ID + '" id="' + ID + '" type="text">';
+			$.each(Options, function (a, b) {
+				if (QT.Lang[b]) {
+					var option_image = QT.Lang[b].meta.flag;
+				} else {
+					var option_image = "";
+				}
+				var option_name = (QT.Lang[b]) ? b.toUpperCase() : b;
+				str += '<option style="background: url(' + option_image + ') no-repeat scroll left center #EEDDBB; padding-left: 22px" value="' + b + '">' + option_name + '</option>'
+			});
+			str += '</select></span></span></span>';
+			return $(str);
+		},
+		grepo_input : function (Style, ID, Text) {
+			return $('<div class="input_box" style="' + Style + '"><span class="grepo_input"><span class="left"><span class="right"><input id="' + ID + '" type="text" value="' + Text + '"></span></span></span></div>');
+		},
+		grepo_submenu : function (ID, Title) {
+			return $('<li><a id="' + ID + '" class="submenu_link" href="#"><span class="left"><span class="right"><span class="middle" title="' + Title + '">' + Title + '</span></span></span></a></li>');
+		},
+		grepo_playerlink : function (name, id) {
+			return '<a class="gp_player_link" href="#' + btoa('{"name":"' + name + '","id":' + id + '}') + '">' + name + '</a>';
+		},
+		Inactivity : {
+			cache : {},
+			addToCache : function (players) {
+				$.extend(QT.Helper.Inactivity.cache, players);
+			},
+			isCached : function (ID) {
+				return (ID in QT.Helper.Inactivity.cache) ? true : false;
+			},
+			getData : function (players) {
+				var playersString = players.toString();
+				var Ajax = $.ajax({
+						url : "http://marco93.de/grepolis/player_inactivity.php",
+						dataType : "jsonp",
+						data : {
+							"world" : wID,
+							"players" : playersString
+						}
+					}).done(function (data) {
+						QT.Helper.Inactivity.addToCache(QT.Helper.Inactivity.calcDays(data));
+					});
+				return Ajax;
+			},
+			calcDays : function (data) {
+				var date_now = new Date();
+				var playerArray = {};
+				var dataArray = data.split(',');
+				$.each(dataArray, function (index, value) {
+					var obj_temp = value.split(':');
+					var date_user = new Date(parseInt(obj_temp[1], 10) * 1000);
+					var date_diff = date_now - date_user;
+					var inactive_days = date_diff / 1000 / 60 / 60 / 24;
+					var inactive_days_quarter = Math.floor(inactive_days * 4) / 4;
+					playerArray[obj_temp[0]] = inactive_days_quarter;
+				});
+				return playerArray;
+			},
+			getBG : function (inactive_days) {
+				var bgImage = "http://s14.directupload.net/images/140415/mju99vog.png";
+				var bgPos = "";
+				if (inactive_days < 2) {
+					bgPos = "0 -12px";
+				} else if (inactive_days >= 2 && inactive_days < 5) {
+					bgPos = "0 -24px";
+				} else if (inactive_days >= 5) {
+					bgPos = "0 -36px";
+				}
+				return 'url(' + bgImage + ') no-repeat ' + bgPos + '';
+			},
+			createPopup : function (inactive_days) {
+				var popupHTML = '';
+				if (typeof inactive_days === 'undefined') {
+					popupHTML += QT.Lang.get("town_info", "no_data");
+				} else {
+					popupHTML += '<b>' + QT.Lang.get("town_info", "inactivity") + ':</b> ' + inactive_days + ' ' + QT.Lang.get("town_info", "days");
+				}
+				popupHTML += '<p/><span style="font-size:10px">powered by Tondas ' + QT.Lang.get("town_info", "polissuche") + '</span>';
+				return popupHTML;
+			},
+			addDisplay : function (style, link) {
+				var p_link = (link) ? link : QT.Links.Polissuche;
+				return '<a class="qt_activity" style="display:block; float:left; width:20px; height:12px; background:url(http://s1.directupload.net/images/140416/7fwyuv54.gif) no-repeat;' + style + '" href="' + p_link + '" target="_blank"><span class="qt_activity_number" style="display:block; margin-top:1px; font-size: 8px; color:#EEDDBB; text-shadow:1px 1px #000000; text-align:center"></span></a>';
+			},
+			changeDisplay : function (JQelement, inactive_days) {
+				var number_days = Math.floor(inactive_days);
+				var background = QT.Helper.Inactivity.getBG(number_days);
+				if (typeof inactive_days === 'undefined') {
+					number_days = '-';
+				}
+				$(JQelement).find(".qt_activity_number").text(number_days);
+				$(JQelement).css({
+					"background" : background
+				});
+				$(JQelement).mousePopup(new MousePopup(QT.Helper.Inactivity.createPopup(inactive_days)));
+			},
+			Filter : {
+				coordinates : function () {
+					var currentTownX = ITowns.getCurrentTown().getIslandCoordinateX();
+					var currentTownY = ITowns.getCurrentTown().getIslandCoordinateY();
+					return ';order_type:distance;order_x:' + currentTownX + ';order_y:' + currentTownY;
+				}
+			}
+		},
 		Screenshot : {
 			btn_preview : function (element, id, window_type, callback) {
 				$(element).append('<a id="'+ id +'" href="#"></a>');
@@ -3323,7 +3520,6 @@ function main_script(DATA) {
 					$("#qt_canvas #"+ id +"").remove();
 					$("#qt_canvas :first").append('<div id="qt_copyright">Powered by &copy; www.grepolisqt.de</div>');
 					$("#qt_copyright").css({
-						//"background" : "url(http://gpde.innogamescdn.com/images/game/layout/progressbars-sprite_2.70_compressed.png) repeat-x scroll 0 -14px rgba(0, 0, 0, 0)",
 						"background-color" : "#000000",
 						"height" : "15px",
 						"color" : "#eeddbb",
@@ -3332,10 +3528,231 @@ function main_script(DATA) {
 						"padding-right" : "3px",
 						"text-align" : "right"
 					});
+					QT.Helper.Screenshot.canvasDraw.addElements();
 				});
 
 				$("#" + id).mousePopup(new MousePopup(QT.Lang.get("export_window", "button_mouseover")));
 
+			},
+			canvasDraw : {
+				addElements : function () {
+
+					$("#qt_export_content fieldset").append('\
+						<div id="qt_canvas_toolbar">\
+							<a id="eraser" class="qt_canvas_tool" href="#"></a>\
+							<a id="pencil" class="qt_canvas_tool active" href="#"></a>\
+							<a id="arrow" class="qt_canvas_tool" href="#"></a>\
+							<a id="line" class="qt_canvas_tool" href="#"></a>\
+							<a id="rectangel" class="qt_canvas_tool" href="#"></a>\
+							<a id="arc" class="qt_canvas_tool" href="#"></a>\
+							<div class="checkbox_new">'+QT.Lang.get("export_window", "fill")+'<div class="cbx_icon"></div></div>\
+							<div class="qt_canvas_tools_select">'+QT.Lang.get("export_window", "brush_size")+'\
+								'+QT.Helper.grepo_dropdown("selWidth", [1,3,5,7,9,11,13,15])+'\
+							</div>\
+							<div class="qt_canvas_tools_select">'+QT.Lang.get("export_window", "color")+'\
+								'+QT.Helper.grepo_dropdown("selColor", [["black",""+QT.Lang.get("colors", "black")+""],["blue",""+QT.Lang.get("colors", "blue")+""],["red",""+QT.Lang.get("colors", "red")+""],["green",""+QT.Lang.get("colors", "green")+""],["yellow",""+QT.Lang.get("colors", "yellow")+""],["gray",""+QT.Lang.get("colors", "gray")+""]])+'\
+							</div>\
+							<a id="qt_canvas_delete" class="cancel" href="#"></a>\
+						</div>\
+					');
+					
+					$("#selWidth").val("5");
+					$("#selColor").val("red");
+					
+					var qt_canvas_height = $("#qt_canvas :first").outerHeight();
+
+					$("#qt_canvas").append('<div id="qt_canvas_wrapper"><canvas id="myCanvas" class="qt_canvas_el" width="800" height="'+qt_canvas_height+'"></canvas><canvas id="canvasTemp" class="qt_canvas_el" width="800" height="'+qt_canvas_height+'"></canvas></div>');
+					
+					$("#qt_canvas_toolbar").css({"position":"absolute", "right":"40px", "top":"123px", "z-index":"2", "height":"23px", "padding":"0 8px", "background":"url(http://gpde.innogamescdn.com/images/game/border/odd.png)"});
+					$(".qt_canvas_tool").css({"width":"22px", "height":"23px", "display":"inline-block","background-position":"0px 0px"});
+					$("#qt_canvas_delete").css({"display":"inline-block", "margin-left": "5px"});
+					$("#eraser").css({"background" : "url(http://fs1.directupload.net/images/141218/5u8ojvzq.png)"});
+					$("#pencil").css({"background" : "url(http://fs1.directupload.net/images/141213/9rjcrqfy.png)", "background-position":"0px -23px"});
+					$("#arrow").css({"background" : "url(http://fs1.directupload.net/images/141214/tapgcj8q.png)"});
+					$("#rectangel").css({"background" : "url(http://fs1.directupload.net/images/141213/xi25lbk7.png)"});
+					$("#line").css({"background" : "url(http://fs1.directupload.net/images/141213/8pyhdwes.png)"});
+					$("#arc").css({"background" : "url(http://fs1.directupload.net/images/141213/eufhyzin.png)"});
+					$("#qt_canvas_toolbar .checkbox_new").css({"padding":"0", "margin-bottom":"14px"});
+					$("#qt_canvas_toolbar .cbx_icon").css({"float":"right", "margin-left":"5px"});
+					$(".qt_canvas_tools_select").css({"bottom":"6px", "position":"relative", "display":"inline-block"});
+					$("#qt_canvas_wrapper").css({"position":"relative", "width":"800px", "top":"-"+qt_canvas_height+"px", "z-index":"10", "cursor":"crosshair"});
+					$(".qt_canvas_el").css({"position" : "absolute"});
+
+					$("#eraser").mousePopup(new MousePopup(QT.Lang.get("export_window", "eraser")));
+					$("#pencil").mousePopup(new MousePopup(QT.Lang.get("export_window", "pencil")));
+					$("#arrow").mousePopup(new MousePopup(QT.Lang.get("export_window", "arrow")));
+					$("#rectangel").mousePopup(new MousePopup(QT.Lang.get("export_window", "rectangel")));
+					$("#line").mousePopup(new MousePopup(QT.Lang.get("export_window", "line")));
+					$("#arc").mousePopup(new MousePopup(QT.Lang.get("export_window", "arc")));
+					$("#qt_canvas_delete").mousePopup(new MousePopup(QT.Lang.get("export_window", "delete_drawing")));
+					
+					$("#qt_canvas_toolbar .checkbox_new").click(function () {
+						$(this).toggleClass("checked");
+					});
+					
+					QT.Helper.Screenshot.canvasDraw.init();
+				},
+				init : function () {
+					
+					var lastX, lastY;
+					var startX, startY;
+					var tool;
+					var fill = false;
+					var mousePressed = false;
+					var canvasEl, canvasTemp;
+					var ctx, ctxTemp;
+
+					var tools = {};
+					tools.arc = function (x, y) {
+						ctxTemp.beginPath();
+						ctxTemp.clearRect(0, 0, ctxTemp.canvas.width, ctxTemp.canvas.height);
+						ctxTemp.arc(x, y, Math.abs(x-startX), 0, Math.PI*2, true);
+						ctxTemp.closePath();
+						ctxTemp.stroke();
+						if (fill) {
+							ctxTemp.fill();
+						}
+					};
+					tools.arrow = function (x, y) {
+						ctxTemp.clearRect(0, 0, ctxTemp.canvas.width, ctxTemp.canvas.height);
+						ctxTemp.beginPath();
+						ctxTemp.moveTo(startX, startY);
+						ctxTemp.lineTo(x,y);
+						ctxTemp.stroke();
+						
+						var endRadians=Math.atan((y-startY)/(x-startX));
+						endRadians+=((x>=startX)?90:-90)*Math.PI/180;
+						
+						ctxTemp.save();
+						ctxTemp.translate(x,y);
+						ctxTemp.rotate(endRadians);
+						ctxTemp.moveTo(0,-1.9*ctxTemp.lineWidth);
+						ctxTemp.lineTo(2.5*ctxTemp.lineWidth,3.2*ctxTemp.lineWidth);
+						ctxTemp.lineTo(-2.5*ctxTemp.lineWidth,3.2*ctxTemp.lineWidth);
+						ctxTemp.closePath();
+						ctxTemp.restore();
+						ctxTemp.fill();
+					};
+					tools.eraser = function (x, y) {
+						ctx.beginPath();
+						ctx.lineJoin = "round";
+						ctx.globalCompositeOperation = "destination-out";
+						ctx.strokeStyle = 'rgba(0,0,0,1.0)';
+						ctx.moveTo(lastX, lastY);
+						ctx.lineTo(x, y);
+						ctx.closePath();
+						ctx.stroke();
+					};
+					tools.line = function (x, y) {
+						ctxTemp.clearRect(0, 0, ctxTemp.canvas.width, ctxTemp.canvas.height);
+						ctxTemp.beginPath();
+						ctxTemp.moveTo(startX, startY);
+						ctxTemp.lineTo(x,y);
+						ctxTemp.stroke();
+						ctxTemp.closePath();
+					};
+					tools.pencil = function (x, y) {
+						ctxTemp.beginPath();
+						ctxTemp.lineJoin = "round";
+						ctxTemp.moveTo(lastX, lastY);
+						ctxTemp.lineTo(x, y);
+						ctxTemp.closePath();
+						ctxTemp.stroke();
+					};
+					tools.rectangel = function (x, y) {
+						ctxTemp.beginPath();
+						ctxTemp.clearRect(0, 0, ctxTemp.canvas.width, ctxTemp.canvas.height);
+						ctxTemp.rect(startX, startY, x-startX, y-startY);
+						ctxTemp.closePath();
+						ctxTemp.stroke();
+						if (fill) {
+							ctxTemp.fill();
+						}
+					};
+
+					canvasEl = document.getElementById('myCanvas');
+					ctx = canvasEl.getContext("2d");
+					canvasTemp = document.getElementById('canvasTemp');
+					ctxTemp = canvasTemp.getContext("2d");
+
+					$('#canvasTemp').mousedown(function (e) {
+						mousePressed = true;
+						if ($("#qt_canvas_toolbar .checkbox_new").hasClass("checked")) {
+							fill = true;
+						} else {
+							fill = false;
+						}
+						ctxTemp.lineWidth = $('#selWidth').val();
+						ctxTemp.strokeStyle = $('#selColor').val();
+						ctxTemp.fillStyle = $('#selColor').val();
+						ctx.lineWidth = $('#selWidth').val();
+						ctx.globalCompositeOperation = "source-over";
+						startX = e.pageX - $(this).offset().left;
+						startY = e.pageY - $(this).offset().top;
+						tool = $('.qt_canvas_tool.active').prop('id');
+						Draw(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, tool, false);
+					});
+
+					$('#canvasTemp').mousemove(function (e) {
+						if (mousePressed) {
+							Draw(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, tool, true);
+						}
+					});
+
+					$('#canvasTemp').mouseup(function (e) {
+						mousePressed = false;
+						img_update();
+					});
+
+					$('#canvasTemp').mouseleave(function (e) {
+						mousePressed = false;
+						img_update();
+					});
+					
+					$(".qt_canvas_tool").hover(
+						function () {
+						$(this).not(".active").css({
+							"background-position" : "0px -23px"
+						});
+					},
+						function () {
+						$(this).not(".active").css({
+							"background-position" : "0px 0px"
+						});
+					});
+					
+					$(".qt_canvas_tool").click(function () {
+						$(".qt_canvas_tool").removeClass("active").css({
+							"background-position" : "0px 0px"
+						});
+						$(this).addClass("active").css({
+							"background-position" : "0px -23px"
+						});
+					});
+					
+					$("#qt_canvas_delete").click(function () {
+						clearArea();
+					});
+					
+					function Draw(x, y, tool, isDown) {
+						if (isDown) {
+							tools[tool](x, y);
+						}
+						lastX = x;
+						lastY = y;
+					}
+
+					function img_update () {
+						ctx.drawImage(canvasTemp, 0, 0);
+						ctxTemp.clearRect(0, 0, canvasTemp.width, canvasTemp.height);
+					}
+
+					function clearArea() {
+						ctx.setTransform(1, 0, 0, 1, 0, 0);
+						ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+					}
+
+				}
 			},
 			get_settings : function (settings_type) {
 				var settings_array = {};
@@ -3522,15 +3939,17 @@ function main_script(DATA) {
 				}
 			},
 			open_window : function (title) {
-				var html = 	'<div id="qt_export_ajax"></div><div id="qt_export_container"><div id="qt_export_content" class="odd"><fieldset><legend><b>'+QT.Lang.get("export_window", "preview")+'</b></legend><img class="qt_transparent" src="http://cdn.grepolis.com/images/transparent.png"><div id="qt_canvas"></div></fieldset></div><div id="qt_export_footer" class="section stone recruit_button_section"></div></div>';
-
-				var wnd = GPWindowMgr.Create(GPWindowMgr.TYPE_QT_REPORTEXPORT) || GPWindowMgr.getOpenFirst(GPWindowMgr.TYPE_QT_REPORTEXPORT);
+				var html = 	'<div id="qt_export_ajax"></div><div id="qt_export_container"><div id="qt_export_content" class="odd"><fieldset><legend><b>'+QT.Lang.get("export_window", "preview")+'</b>\
+				</legend><div id="qt_canvas">\
+				</div></fieldset></div><div id="qt_export_footer" class="section stone recruit_button_section"></div></div>';
+				
+				var wnd = GPWindowMgr.Create(GPWindowMgr.TYPE_QT_REPORTEXPORT) || GPWindowMgr.getOpenFirst(GPWindowMgr.TYPE_QT_REPORTEXPORT); //<img class="qt_transparent" src="http://cdn.grepolis.com/images/transparent.png">
 				wnd.setTitle(title);
 				wnd.setContent(html);
 
-				$("#qt_export_footer").append(QT.Functions.helper.grepo_btn("qt_export_btn",QT.Lang.get("export_window", "upload")));
+				$("#qt_export_footer").append(QT.Helper.grepo_btn("qt_export_btn",QT.Lang.get("export_window", "upload")));
 				$("#qt_export_footer").append('<a id="qt_export_info" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=DE&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"></a>');
-
+				
 				if(/chrom(e|ium)/.test(navigator.userAgent.toLowerCase())){
 					$("#qt_export_footer").append('<a id="qt_chrome_info" href="https://chrome.google.com/webstore/detail/one-window/papnlnnbddhckngcblfljaelgceffobn" target="_blank"></a>');
 					$("#qt_chrome_info").css({"top" : "8px", "right" : "7px", "position" : "absolute", "height" : "24px", "width" : "26px", "background-image" : "url(http://s14.directupload.net/images/141021/cqz59o6t.png)", "background-repeat" : "no-repeat", "background-position" : "0px 0px"});
@@ -3538,17 +3957,16 @@ function main_script(DATA) {
 				}
 
 				$("#qt_export_info").css({"top" : "8px", "left" : "7px", "position" : "absolute", "height" : "24px", "width" : "26px", "background-image" : "url(http://s14.directupload.net/images/141014/3wmopfj5.png)", "background-repeat" : "no-repeat", "background-position" : "0px 0px"});
-				$("#qt_export_ajax").css({"display" : "none", "background" : "url(http://gpde.innogamescdn.com/images/game/ajax-loader.gif) no-repeat scroll center center rgba(0, 0, 0, 0.5)", "position" : "absolute", "width" : "100%", "height" : "100%", "z-index" : "1000"});
+				$("#qt_export_ajax").css({"display" : "none", "background" : "url(http://gpde.innogamescdn.com/images/game/ajax-loader_2.76.gif) no-repeat scroll center center rgba(0, 0, 0, 0.5)", "position" : "absolute", "width" : "100%", "height" : "100%", "z-index" : "1000"});
 				$("#qt_export_container fieldset").css({"border" : "2px groove #fc6"});
 				$("#qt_export_content").css({"padding" : "0 10px 10px", "border" : "0 none"});
-				$("#qt_export_content .qt_transparent").css({"position" : "absolute", "width" : "800px", "height" : "353px", "z-index" : "100",});
 				$("#qt_canvas").css({"height" : "352px", "overflow-y" : "auto"});
-
 				$("#qt_export_footer").css({"position" : "absolute", "bottom" : "-3px", "text-align" : "center", "width" : "868px", "z-index" : "5"});
 				$("#qt_export_btn").css({"margin-top" : "9px"});
 		
 				$('#qt_export_info').mousePopup(new MousePopup(QT.Lang.get("export_window", "info")));
 
+				
 				$("#qt_export_btn").click(function () {
 					QT.Helper.Screenshot.upload($("#qt_canvas :first"));
 				});
@@ -3586,54 +4004,60 @@ function main_script(DATA) {
 					},
 					onrendered: function(canvas) {
 						$("#qt_canvas").css({"overflow-y":"auto"});
+						
+						var image = new Image();
+						image.src = document.getElementById("myCanvas").toDataURL();
+						image.onload = function() {
+							var ctx = canvas.getContext("2d");
+							ctx.drawImage(image, 0, 3);
 
-						var img;
-						try {
-							img = canvas.toDataURL('image/jpeg', 0.9).split(',')[1];
-						} catch(e) {
-							img = canvas.toDataURL().split(',')[1];
-						}
-					
-						$.ajax({
-							url: 'https://api.imgur.com/3/upload.json',
-							type: 'POST',
-							headers: {
-								Authorization: 'Client-ID ed9c3c98c1f5bba'
-							},
-							data: {
-								type: 'base64',
-								name: 'quack_toolsammlung.jpg',
-								title: 'Grepolis - Quack Toolsammlung',
-								description: 'Powered by http://www.grepolisqt.de',
-								image: img
-							},
-							dataType: 'json'
-						}).done(function (data) {
-							$("#qt_export_ajax").hide();
-							var image_url;
-							if (mID == "de") {
-								image_url = QT.Links.sponsor_link('http://grepolisqt.de/de/image-de/' + data.data.id, true);
-							} else {
-								image_url = QT.Links.sponsor_link('http://grepolisqt.de/en/image-en/' + data.data.id, true);
+							var img;
+							try {
+								img = canvas.toDataURL('image/jpeg', 0.9).split(',')[1];
+							} catch(e) {
+								img = canvas.toDataURL().split(',')[1];
 							}
+						
+							$.ajax({
+								url: 'https://api.imgur.com/3/upload.json',
+								type: 'POST',
+								headers: {
+									Authorization: 'Client-ID ed9c3c98c1f5bba'
+								},
+								data: {
+									type: 'base64',
+									name: 'quack_toolsammlung.jpg',
+									title: 'Grepolis - Quack Toolsammlung',
+									description: 'Powered by http://www.grepolisqt.de',
+									image: img
+								},
+								dataType: 'json'
+							}).done(function (data) {
+								$("#qt_export_ajax").hide();
+								var image_url;
+								if (mID == "de") {
+									image_url = QT.Links.sponsor_link('http://grepolisqt.de/de/image-de/' + data.data.id, true);
+								} else {
+									image_url = QT.Links.sponsor_link('http://grepolisqt.de/en/image-en/' + data.data.id, true);
+								}
 
-							if(/chrom(e|ium)/.test(navigator.userAgent.toLowerCase())){
-								window.open(image_url, '_blank', 'width=1000,height=600');
-							} else {
-								window.open(image_url, '_blank');
-							}
+								if(/chrom(e|ium)/.test(navigator.userAgent.toLowerCase())){
+									window.open(image_url, '_blank', 'width=1000,height=600');
+								} else {
+									window.open(image_url, '_blank');
+								}
 
-						}).fail(function() {
-							$("#qt_export_ajax").hide();
-							Layout.dialogWindow.open(QT.Lang.get("export_window", "connection_fail_text"), "Quack Toolsammlung", 300, 150, function () {}, !0)
-						});
-
+							}).fail(function() {
+								$("#qt_export_ajax").hide();
+								Layout.dialogWindow.open(QT.Lang.get("export_window", "connection_fail_text"), "Quack Toolsammlung", 300, 150, function () {}, !0)
+							});
+						};
 					}
 				});
 
 			}
 		},
-		Mutationobserver : function () {
+		mutationobserver : function () {
 			var observer = new MutationObserver(function (mutations) {
 					mutations.forEach(function (mutation) {
 						if (mutation.addedNodes[0]) {
@@ -3665,7 +4089,7 @@ function main_script(DATA) {
 				window.open(linkArray[0]);
 			}
 		},
-		Windowmanager : function () {
+		addWindowTypes : function () {
 			//BB-Codes
 			function WndHandlerQTbbcode(wndhandle) {
 				this.wnd = wndhandle;
@@ -3864,34 +4288,6 @@ function main_script(DATA) {
 	QT.Functions = {
 		test : function () {
 			alert("Test funktioniert");
-		},
-		helper : {
-			grepo_btn : function (ID, Text) {
-				return $('<a id="' + ID + '" href="#" class="button"><span class="left"><span class="right"><span class="middle"><small>' + Text + '</small></span></span></span></a>');
-			},
-			grepo_dropdown : function (ID, Options) {
-				var str = '<span class="grepo_input"><span class="left"><span class="right"><select name="' + ID + '" id="' + ID + '" type="text">';
-				$.each(Options, function (a, b) {
-					if (QT.Lang[b]) {
-						var option_image = QT.Lang[b].meta.flag;
-					} else {
-						var option_image = "";
-					}
-					var option_name = (QT.Lang[b]) ? b.toUpperCase() : b;
-					str += '<option style="background: url(' + option_image + ') no-repeat scroll left center #EEDDBB; padding-left: 22px" value="' + b + '">' + option_name + '</option>'
-				});
-				str += '</select></span></span></span>';
-				return $(str);
-			},
-			grepo_input : function (Style, ID, Text) {
-				return $('<div class="input_box" style="' + Style + '"><span class="grepo_input"><span class="left"><span class="right"><input id="' + ID + '" type="text" value="' + Text + '"></span></span></span></div>');
-			},
-			grepo_submenu : function (ID, Title) {
-				return $('<li><a id="' + ID + '" class="submenu_link" href="#"><span class="left"><span class="right"><span class="middle" title="' + Title + '">' + Title + '</span></span></span></a></li>');
-			},
-			grepo_playerlink : function (name, id) {
-				return '<a class="gp_player_link" href="#' + btoa('{"name":"' + name + '","id":' + id + '}') + '">' + name + '</a>';
-			}
 		},
 		academyMarker : function () { //DEFEKT
 			$.Observer(GameEvents.building.academy.research.buy).subscribe('QT_academy_buy', function (e, data) {
@@ -4151,8 +4547,8 @@ function main_script(DATA) {
 			var wndID = wnd.getID();
 			//$("DIV#gpwnd_" + wndID + " DIV#ally_towns UL.members_list > LI > UL > LI:not(.error_message):not(.sub_header):not(.header):not(:has(ul))")
 			//$("DIV#gpwnd_" + wndID + " DIV#ally_towns UL.members_list UL LI:not(.error_message):not(.sub_header):not(.header):not(:has(ul))")
-			$("DIV#gpwnd_" + wndID + " DIV#ally_towns UL.members_list > LI > UL > LI:not(.error_message):not(.sub_header):not(.header):not(:has(ul))").prepend(QT.Functions.Inactivity.addDisplay("margin:3px 4px 0 0;"));
-			var currentTownXY = QT.Functions.Inactivity.Filter.coordinates();
+			$("DIV#gpwnd_" + wndID + " DIV#ally_towns UL.members_list > LI > UL > LI:not(.error_message):not(.sub_header):not(.header):not(:has(ul))").prepend(QT.Helper.Inactivity.addDisplay("margin:3px 4px 0 0;"));
+			var currentTownXY = QT.Helper.Inactivity.Filter.coordinates();
 
 			var JQelement_qt_activity = $("DIV#gpwnd_" + wndID + " DIV#ally_towns UL.members_list UL LI A.qt_activity");
 			var players = [];
@@ -4161,9 +4557,9 @@ function main_script(DATA) {
 				var qt_activityElement = $(this).find(".qt_activity");
 				var href = gpElement.attr("href").split(/#/);
 				var id = $.parseJSON(atob(href[1] || href[0])).id;
-				if (QT.Functions.Inactivity.isCached(id)) {
-					var inactive_days_cached = QT.Functions.Inactivity.cache[id];
-					QT.Functions.Inactivity.changeDisplay(qt_activityElement, inactive_days_cached);
+				if (QT.Helper.Inactivity.isCached(id)) {
+					var inactive_days_cached = QT.Helper.Inactivity.cache[id];
+					QT.Helper.Inactivity.changeDisplay(qt_activityElement, inactive_days_cached);
 				} else {
 					players.push(id);
 				}
@@ -4173,10 +4569,10 @@ function main_script(DATA) {
 			if (!players.length > 0)
 				return;
 
-			QT.Functions.Inactivity.getData(players).done(function (data) {
+			QT.Helper.Inactivity.getData(players).done(function (data) {
 				JQelement_qt_activity.each(function (index, element) {
 					var dataID = $(this).data('id');
-					QT.Functions.Inactivity.changeDisplay(this, QT.Functions.Inactivity.cache[dataID]);
+					QT.Helper.Inactivity.changeDisplay(this, QT.Helper.Inactivity.cache[dataID]);
 				});
 			});
 		},
@@ -5017,9 +5413,9 @@ function main_script(DATA) {
 			var wnd = GPWindowMgr.Create(GPWindowMgr.TYPE_QT_GOOGLEDOCS) || GPWindowMgr.getOpenFirst(GPWindowMgr.TYPE_QT_GOOGLEDOCS);
 			wnd.setTitle("Google Docs");
 			wnd.setContent(html);
-			QT.Functions.helper.grepo_input("margin-left:-5px;margin-top:3px;float:left", "googledocsURL_CHANGE_TEXTFELD", QT.Settings.values.googledocsurl).insertAfter('#googledocs_frame');
-			QT.Functions.helper.grepo_btn("googledocsURL_RESET_BUTTON", QT.Lang.get("googledocs", "reset")).insertAfter('#googledocs_frame');
-			QT.Functions.helper.grepo_btn("googledocsURL_CHANGE_BUTTON", QT.Lang.get("googledocs", "change_url")).insertAfter('#googledocs_frame');
+			QT.Helper.grepo_input("margin-left:-5px;margin-top:3px;float:left", "googledocsURL_CHANGE_TEXTFELD", QT.Settings.values.googledocsurl).insertAfter('#googledocs_frame');
+			QT.Helper.grepo_btn("googledocsURL_RESET_BUTTON", QT.Lang.get("googledocs", "reset")).insertAfter('#googledocs_frame');
+			QT.Helper.grepo_btn("googledocsURL_CHANGE_BUTTON", QT.Lang.get("googledocs", "change_url")).insertAfter('#googledocs_frame');
 			$("#googledocsURL_CHANGE_TEXTFELD").css({
 				"width" : "580px"
 			});
@@ -5078,7 +5474,7 @@ function main_script(DATA) {
 		},
 		hidesSort : function () {
 			$("#hides_overview_wrapper").parent().parent().append('<div id="hides_sort_control" class="overview_search_bar" style="width:741px;margin-left:6px"><span class="grepo_input" style="margin:2px"><span class="left"><span class="right"><select name="qsort_towns" id="qsort_towns" type="text"><option value="ironinstore">' + QT.Lang.get("caves", "stored_silver") + '</option><option value="name">' + QT.Lang.get("caves", "name") + '</option><option value="wood">' + QT.Lang.get("caves", "wood") + '</option><option value="stone">' + QT.Lang.get("caves", "stone") + '</option><option value="iron">' + QT.Lang.get("caves", "silver") + '</option></select></span></span></span><div id="qsortinit" class="button_order_by active" style="margin: 3px 0 0 3px"></div></div>');
-			QT.Functions.helper.grepo_input("margin-top:0px","qsortfilterbox","").appendTo('#hides_sort_control');
+			QT.Helper.grepo_input("margin-top:0px","qsortfilterbox","").appendTo('#hides_sort_control');
 			$('#hides_overview_towns').css({
 				"margin-top" : "39px"
 			});
@@ -5366,88 +5762,6 @@ function main_script(DATA) {
 				}*/
 			});
 		},
-		Inactivity : {
-			cache : {},
-			addToCache : function (players) {
-				$.extend(QT.Functions.Inactivity.cache, players);
-			},
-			isCached : function (ID) {
-				return (ID in QT.Functions.Inactivity.cache) ? true : false;
-			},
-			getData : function (players) {
-				var playersString = players.toString();
-				var Ajax = $.ajax({
-						url : "http://marco93.de/grepolis/player_inactivity.php",
-						dataType : "jsonp",
-						data : {
-							"world" : wID,
-							"players" : playersString
-						}
-					}).done(function (data) {
-						QT.Functions.Inactivity.addToCache(QT.Functions.Inactivity.calcDays(data));
-					});
-				return Ajax;
-			},
-			calcDays : function (data) {
-				var date_now = new Date();
-				var playerArray = {};
-				var dataArray = data.split(',');
-				$.each(dataArray, function (index, value) {
-					var obj_temp = value.split(':');
-					var date_user = new Date(parseInt(obj_temp[1], 10) * 1000);
-					var date_diff = date_now - date_user;
-					var inactive_days = date_diff / 1000 / 60 / 60 / 24;
-					var inactive_days_quarter = Math.floor(inactive_days * 4) / 4;
-					playerArray[obj_temp[0]] = inactive_days_quarter;
-				});
-				return playerArray;
-			},
-			getBG : function (inactive_days) {
-				var bgImage = "http://s14.directupload.net/images/140415/mju99vog.png";
-				var bgPos = "";
-				if (inactive_days < 2) {
-					bgPos = "0 -12px";
-				} else if (inactive_days >= 2 && inactive_days < 5) {
-					bgPos = "0 -24px";
-				} else if (inactive_days >= 5) {
-					bgPos = "0 -36px";
-				}
-				return 'url(' + bgImage + ') no-repeat ' + bgPos + '';
-			},
-			createPopup : function (inactive_days) {
-				var popupHTML = '';
-				if (typeof inactive_days === 'undefined') {
-					popupHTML += QT.Lang.get("town_info", "no_data");
-				} else {
-					popupHTML += '<b>' + QT.Lang.get("town_info", "inactivity") + ':</b> ' + inactive_days + ' ' + QT.Lang.get("town_info", "days");
-				}
-				popupHTML += '<p/><span style="font-size:10px">powered by Tondas ' + QT.Lang.get("town_info", "polissuche") + '</span>';
-				return popupHTML;
-			},
-			addDisplay : function (style, link) {
-				var p_link = (link) ? link : QT.Links.Polissuche;
-				return '<a class="qt_activity" style="display:block; float:left; width:20px; height:12px; background:url(http://s1.directupload.net/images/140416/7fwyuv54.gif) no-repeat;' + style + '" href="' + p_link + '" target="_blank"><span class="qt_activity_number" style="display:block; margin-top:1px; font-size: 8px; color:#EEDDBB; text-shadow:1px 1px #000000; text-align:center"></span></a>';
-			},
-			changeDisplay : function (JQelement, inactive_days) {
-				var number_days = Math.floor(inactive_days);
-				var background = QT.Functions.Inactivity.getBG(number_days);
-				if (typeof inactive_days === 'undefined') {
-					number_days = '-';
-				}
-				$(JQelement).find(".qt_activity_number").text(number_days);
-				$(JQelement).css({
-					"background" : background
-				});
-				$(JQelement).mousePopup(new MousePopup(QT.Functions.Inactivity.createPopup(inactive_days)));
-			},
-			Filter : {
-				coordinates : function () {
-					var currentTownX = ITowns.getCurrentTown().getIslandCoordinateX();
-					var currentTownY = ITowns.getCurrentTown().getIslandCoordinateY();
-					return ';order_type:distance;order_x:' + currentTownX + ';order_y:' + currentTownY;
-				}
-			}
-		},
 		islandAddPlayerlinks : function (event, xhr, settings) {
 			var b = GPWindowMgr.getOpen(Layout.wnd.TYPE_ISLAND);
 			if (b.length == 0)
@@ -5463,7 +5777,7 @@ function main_script(DATA) {
 				var name = $(this).text();
 				var id = playerIdArray[name];
 				if (id)
-					$(this).html(QT.Functions.helper.grepo_playerlink(name, id));
+					$(this).html(QT.Helper.grepo_playerlink(name, id));
 			});
 		},
 		islandFarmingVillages : function () {
@@ -5516,19 +5830,19 @@ function main_script(DATA) {
 				townInfoArray[town.id] = town.pid;
 			});
 			var JQelement = $("DIV#gpwnd_" + c + " DIV.island_info_left UL LI");
-			var currentTownXY = QT.Functions.Inactivity.Filter.coordinates();
+			var currentTownXY = QT.Helper.Inactivity.Filter.coordinates();
 			var players = [];
-			JQelement.prepend(QT.Functions.Inactivity.addDisplay("margin:2px 3px 0 0;"));
+			JQelement.prepend(QT.Helper.Inactivity.addDisplay("margin:2px 3px 0 0;"));
 			JQelement.each(function () {
 				var e = $(this).find(".gp_town_link").attr("href");
 				var f = e.split(/#/);
 				var g = $.parseJSON(atob(f[1] || f[0]));
 				var qt_activityElement = $(this).find(".qt_activity");
 				if (!townInfoArray[g.id]) {
-					QT.Functions.Inactivity.changeDisplay(qt_activityElement);
-				} else if (QT.Functions.Inactivity.isCached(townInfoArray[g.id])) {
-					var inactive_days_cached = QT.Functions.Inactivity.cache[townInfoArray[g.id]];
-					QT.Functions.Inactivity.changeDisplay(qt_activityElement, inactive_days_cached);
+					QT.Helper.Inactivity.changeDisplay(qt_activityElement);
+				} else if (QT.Helper.Inactivity.isCached(townInfoArray[g.id])) {
+					var inactive_days_cached = QT.Helper.Inactivity.cache[townInfoArray[g.id]];
+					QT.Helper.Inactivity.changeDisplay(qt_activityElement, inactive_days_cached);
 				} else {
 					players.push(townInfoArray[g.id]);
 				}
@@ -5538,10 +5852,10 @@ function main_script(DATA) {
 			if (!players.length > 0)
 				return;
 
-			QT.Functions.Inactivity.getData(players).done(function (data) {
+			QT.Helper.Inactivity.getData(players).done(function (data) {
 				JQelement.find(".qt_activity").each(function (index, element) {
 					var dataID = $(this).data('id');
-					QT.Functions.Inactivity.changeDisplay(this, QT.Functions.Inactivity.cache[dataID]);
+					QT.Helper.Inactivity.changeDisplay(this, QT.Helper.Inactivity.cache[dataID]);
 				});
 			});
 		},
@@ -6542,8 +6856,8 @@ function main_script(DATA) {
 					HTML_tab1 += '</div>';
 				});
 				HTML_tab1 += '</div></div>';
-				HTML_tab1 += QT.Functions.helper.grepo_btn("qmenu_einstellungen_reset_BTN", QT.Lang.get("settings", "reset"))[0].outerHTML;
-				HTML_tab1 += QT.Functions.helper.grepo_btn("qmenu_einstellungen_safe_BTN", QT.Lang.get("settings", "save"))[0].outerHTML;
+				HTML_tab1 += QT.Helper.grepo_btn("qmenu_einstellungen_reset_BTN", QT.Lang.get("settings", "reset"))[0].outerHTML;
+				HTML_tab1 += QT.Helper.grepo_btn("qmenu_einstellungen_safe_BTN", QT.Lang.get("settings", "save"))[0].outerHTML;
 				return HTML_tab1;
 			}
 			function tab2() {
@@ -6555,7 +6869,7 @@ function main_script(DATA) {
 				});
 				var HTML_tab2 = '';
 				var q_translations = {
-					BR : "==CrAZyWoW==, douglasgoclv, tesseus, Stelvins",
+					BR : "==CrAZyWoW==, douglasgoclv, tesseus, Stelvins, Jonh Snow",
 					CZ : "jarajanos, Apolon Foibos, jarajanos",
 					DE : "Quackmaster, Scav77",
 					EN : "Quackmaster, cedomaiori",
@@ -6569,15 +6883,14 @@ function main_script(DATA) {
 					RO : "BaietelulCelFrumusel",
 					RU : "Jest, DJEDIVER, nihondzin, Jestex"
 				};
-				HTML_tab2 += grepoGameBorder + QT.Lang.get("settings", "translations") + '<div style="float: right; margin-top: -2px; margin-right: -5px">' + QT.Functions.helper.grepo_dropdown("langdiv", supported_lang)[0].outerHTML + '</div></div>';
+				HTML_tab2 += grepoGameBorder + QT.Lang.get("settings", "translations") + '<div style="float: right; margin-top: -2px; margin-right: -5px">' + QT.Helper.grepo_dropdown_flag("langdiv", supported_lang)[0].outerHTML + '</div></div>';
 				HTML_tab2 += '<div id="trans_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:369px"><b>' + QT.Lang.get("settings", "please_note") + ':</b><br/><ul style="list-style:square outside;padding-left: 13px"><li>' + QT.Lang.get("settings", "trans_infotext1") + '</li><li>' + QT.Lang.get("settings", "trans_infotext2") + '</li><li>' + QT.Lang.get("settings", "trans_infotext3") + '</li><li>' + QT.Lang.get("settings", "trans_infotext4") + '</li></ul><div style="margin-top:30px"><b>' + QT.Lang.get("settings", "credits") + ':</b><br/><ul style="list-style:square outside;padding-left: 13px">';
 				$.each(q_translations, function (a, b) {
 					HTML_tab2 += '<li>' + a + ': ' + b + '</li>';
 				});
 				HTML_tab2 += '</ul></div></div>';
 				HTML_tab2 += '</div>';
-				HTML_tab2 += QT.Functions.helper.grepo_btn("qmenu_einstellungen_sendmail", QT.Lang.get("settings", "send"))[0].outerHTML;
-				HTML_tab2 += '<div id="qtajaxloader" style="width:100%; height:100%; display:none; position:absolute; z-index:1000; top:0; left:0; background: url(http://gpde.innogamescdn.com/images/game/ajax-loader.gif) 50% 50% no-repeat;"></div>';
+				HTML_tab2 += QT.Helper.grepo_btn("qmenu_einstellungen_sendmail", QT.Lang.get("settings", "send"))[0].outerHTML;
 				return HTML_tab2;
 			}
 			function tab3() {
@@ -6592,7 +6905,7 @@ function main_script(DATA) {
 					["Nepomuk P. - 50€", "Kevin T. - 5€", "Thomas R. - 10€", "Claines C. C. - 3€"],
 					["Carsten R. - 5€", "Nick K. - 0,74€", "Eduard R. - 3€", "Christian P. - 5€"],
 					["Martin S. - 5€", "Ian O. - 10€", "Michael W. K. - 1$", "	Ines L. - 10€"],
-					["David M. - 10€", "Thomas M. W. - 3 €"],
+					["David M. - 10€", "Thomas M. W. - 3€", "Benedikt K. - 2€"],
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
@@ -6633,9 +6946,7 @@ function main_script(DATA) {
 						return;
 					}
 					hOpenWindow.showConfirmDialog('', QT.Lang.get("settings", "trans_sure"), function () {
-						$("#qtajaxloader").css({
-							"display" : "block"
-						});
+						$("#ajax_loader").css({"visibility":"visible"});
 						var trans_HTML_send = pName + "<br/>" + sID + "<br/>" + wID + "<p/>";
 						$("#trans_content > DIV").each(function (i) {
 							if ($(".toSend", this).length != 0) {
@@ -6664,9 +6975,7 @@ function main_script(DATA) {
 								}
 							});
 						xhr.done(function (data) {
-							$("#qtajaxloader").css({
-								"display" : "none"
-							});
+							$("#ajax_loader").css({"visibility":"hidden"});
 							HumanMessage.success(QT.Lang.get("settings", "trans_success"));
 						});
 						xhr.fail(function (jqXHR, textStatus, errorThrown) {
@@ -6763,7 +7072,7 @@ function main_script(DATA) {
 			wnd.setTitle(QT.Lang.get("qtoolbox", "settings"));
 			wnd.setContent(inhalte.qset_tab1);
 			if ($("#qmenu_settings_tabs").length === 0) {
-				wnd.getJQElement().append('<div class="menu_wrapper minimize closable" style="left: 1px; right: 33px"><ul id="qmenu_settings_tabs" class="menu_inner">' + QT.Functions.helper.grepo_submenu("qset_tab3", QT.Lang.get("settings", "info"))[0].outerHTML + QT.Functions.helper.grepo_submenu("qset_tab2", QT.Lang.get("settings", "translations"))[0].outerHTML + QT.Functions.helper.grepo_submenu("qset_tab1", QT.Lang.get("settings", "settings"))[0].outerHTML + '</ul></div>');
+				wnd.getJQElement().append('<div class="menu_wrapper minimize closable" style="left: 1px; right: 33px"><ul id="qmenu_settings_tabs" class="menu_inner">' + QT.Helper.grepo_submenu("qset_tab3", QT.Lang.get("settings", "info"))[0].outerHTML + QT.Helper.grepo_submenu("qset_tab2", QT.Lang.get("settings", "translations"))[0].outerHTML + QT.Helper.grepo_submenu("qset_tab1", QT.Lang.get("settings", "settings"))[0].outerHTML + '</ul></div>');
 			}
 			$("#qmenu_settings_tabs li a").removeClass("active");
 			$("#qset_tab1").addClass("active");
@@ -7152,18 +7461,18 @@ function main_script(DATA) {
 						var e = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.gp_player_link").attr("href");
 					var f = e.split(/#/);
 					var g = $.parseJSON(atob(f[1] || f[0]));
-					var currentTownXY = QT.Functions.Inactivity.Filter.coordinates();
-					$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left").prepend(QT.Functions.Inactivity.addDisplay("margin:2px 3px 0 0;", 'http://polissuche.marco93.de/' + wID + '.html?filter=player_id:' + g.id + currentTownXY + ''));
+					var currentTownXY = QT.Helper.Inactivity.Filter.coordinates();
+					$("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left").prepend(QT.Helper.Inactivity.addDisplay("margin:2px 3px 0 0;", 'http://polissuche.marco93.de/' + wID + '.html?filter=player_id:' + g.id + currentTownXY + ''));
 					var JQelement = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_left A.qt_activity");
 
-					if (QT.Functions.Inactivity.isCached(g.id)) {
-						var inactive_days_cached = QT.Functions.Inactivity.cache[g.id];
-						QT.Functions.Inactivity.changeDisplay(JQelement, inactive_days_cached);
+					if (QT.Helper.Inactivity.isCached(g.id)) {
+						var inactive_days_cached = QT.Helper.Inactivity.cache[g.id];
+						QT.Helper.Inactivity.changeDisplay(JQelement, inactive_days_cached);
 						continue;
 					}
 
-					QT.Functions.Inactivity.getData(g.id).done(function (data) {
-						QT.Functions.Inactivity.changeDisplay(JQelement, QT.Functions.Inactivity.cache[g.id]);
+					QT.Helper.Inactivity.getData(g.id).done(function (data) {
+						QT.Helper.Inactivity.changeDisplay(JQelement, QT.Helper.Inactivity.cache[g.id]);
 					});
 
 				}
@@ -7631,8 +7940,8 @@ function main_script(DATA) {
 		QT.Settings.setValues();
 		QT_sendStats(mID, sID, QT.Settings.values.script_version);
 		QT_updater(QT.Lang.get("meta", "changelog"), QT.Lang.get("meta", "forumlink"));
-		QT.Helper.Mutationobserver();
-		QT.Helper.Windowmanager();
+		QT.Helper.mutationobserver();
+		QT.Helper.addWindowTypes();
 		QT.Functions.qtoolbox();
 		if (QT.Settings.values.qmenu_settings_hotkey_active)
 			QT.Functions.hotkeys();
