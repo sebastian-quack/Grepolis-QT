@@ -1,10 +1,10 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           Quack Toolsammlung
 // @namespace      Quack
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.45.00
+// @version        2.46.00
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @grant          GM_listValues
 // @grant          GM_getValue
@@ -73,7 +73,7 @@ function main_script(DATA) {
 				island_view : 'Vista Ilha'
 			},
 			messages : {
-				ghosttown : 'Cidade fantasma',
+				ghosttown : 'Cidade-fantasma',
 				no_cities : 'Nenhuma cidade nesta ilha',
 				all : 'Tudo',
 				export : 'Converta mensagem em BB-Code'
@@ -310,7 +310,25 @@ function main_script(DATA) {
 				defeated_atk : 'Derrotado como atacante',
 				defeated_def : 'Derrotado como defensor',
 				losses_atk : 'Perdas como atacante',
-				losses_def : 'Perdas como defensor'
+				losses_def : 'Perdas como defensor',
+				brush_size : 'Tamanho do Pincel',
+				color : 'Cor',
+				eraser : 'Apagar',
+				pencil : 'Pincel',
+				arrow : 'Seta',
+				rectangel : 'Retângulo',
+				line : 'Linha',
+				arc : 'Circulo',
+				delete_drawing : 'Excluir desenho',
+				fill : 'Preencher'
+			},
+			colors : {
+				black : 'preto',
+				blue : 'azul',
+				red : 'vermelho',
+				green : 'verde',
+				yellow : 'amarelo',
+				gray : 'cinza'
 			}
 		},
 		cz : {
@@ -1941,6 +1959,7 @@ function main_script(DATA) {
 				ingame_name : 'Aarzel niet om mij te contacteren indien u liever genoemd wilt worden door uw ingame naam',
 				adfly : 'Wil je ook geld verdienen met links?',
 				donations : 'Donaties',
+				update_check : 'Controleer op updates'
 			},
 			bbcode : {
 				troops : 'Troepen',
@@ -1950,7 +1969,8 @@ function main_script(DATA) {
 				active_grp : 'Actieve Stadsgroep',
 				in : 'in',
 				from : 'van',
-				outside : 'buiten'
+				outside : 'buiten',
+				messages : 'Berichten'
 			},
 			stats_scripts : {
 				stats_scripts_ov : 'Overzicht over statistieken en scripten'
@@ -1960,6 +1980,45 @@ function main_script(DATA) {
 			},
 			farmhelper : {
 				autohide_cities : 'Steden automatisch verbergen na farmen aan/af'
+			},
+			export_window : {
+				wnd_title : 'Afbeelding uploaden - voorbeeld',
+				button_mouseover : 'Exporteren naar afbeelding',
+				settings : 'instellingen',
+				preview : 'Voorbeeld',
+				town : 'Stad',
+				luck : 'Geluk',
+				title : 'Titel',
+				resources : 'grondstoffen',
+				wall : 'Muur',
+				player : 'Speler',
+				moral : 'Moraal',
+				reporttype : 'Rapport type',
+				resources_lost : 'verloren grondstoffen',
+				nightbonus : 'Nachtbonus',
+				alliance : 'Alliantie',
+				troops : 'Troepen',
+				bashpoints : 'Gevechtpunten',
+				buildings : 'Gebouwen',
+				date : 'Datum',
+				spell_info : 'Spreuk info',
+				spell_effect : 'Spreuk effect',
+				message : 'Bericht',
+				attacker : 'Aanvaller',
+				defender : 'Verdediger',
+				bonuses : 'Spreuken/bonussen',
+				command_type : 'opdracht type',
+				town_left : 'Stad (links)',
+				town_right : 'Stad (rechts)',
+				player_left : 'Speler (Links)',
+				player_right : 'Speler (rechts)',
+				travel_time : 'Looptijd',
+				time_of_arrival : 'Aankomsttijd',
+				command : 'Opdracht',
+				defeated_atk : 'Verslagen als aanvaller',
+				defeated_def : 'Verslagen als verdediger',
+				losses_atk : 'Verliezen als aanvaller',
+				losses_def : 'Verliezen als verdediger'
 			}
 		},
 		pl : {
@@ -3317,6 +3376,7 @@ function main_script(DATA) {
 		player : {
 			get_profile_html : function (event, xhr, settings) {
 				QT.Functions.playerGSButton(event, xhr, settings);
+				QT.Functions.playerInactivity(event, xhr, settings);
 			},
 			index : function () {
 				QT.Functions.addsettingsbutton();
@@ -3464,7 +3524,7 @@ function main_script(DATA) {
 			},
 			addDisplay : function (style, link) {
 				var p_link = (link) ? link : QT.Links.Polissuche;
-				return '<a class="qt_activity" style="display:block; float:left; width:20px; height:12px; background:url(http://s1.directupload.net/images/140416/7fwyuv54.gif) no-repeat;' + style + '" href="' + p_link + '" target="_blank"><span class="qt_activity_number" style="display:block; margin-top:1px; font-size: 8px; color:#EEDDBB; text-shadow:1px 1px #000000; text-align:center"></span></a>';
+				return '<a class="qt_activity" style="display:block; float:left; width:20px; height:12px; text-decoration:none; background:url(http://s1.directupload.net/images/140416/7fwyuv54.gif) no-repeat;' + style + '" href="' + p_link + '" target="_blank"><span class="qt_activity_number" style="display:block; margin-top:1px; font-size: 8px; color:#EEDDBB; text-shadow:1px 1px #000000; text-align:center"></span></a>';
 			},
 			changeDisplay : function (JQelement, inactive_days) {
 				var number_days = Math.floor(inactive_days);
@@ -5473,7 +5533,7 @@ function main_script(DATA) {
 			$(".hide_storage_level").text(addPoints(hideSilver));
 		},
 		hidesSort : function () {
-			$("#hides_overview_wrapper").parent().parent().append('<div id="hides_sort_control" class="overview_search_bar" style="width:741px;margin-left:6px"><span class="grepo_input" style="margin:2px"><span class="left"><span class="right"><select name="qsort_towns" id="qsort_towns" type="text"><option value="ironinstore">' + QT.Lang.get("caves", "stored_silver") + '</option><option value="name">' + QT.Lang.get("caves", "name") + '</option><option value="wood">' + QT.Lang.get("caves", "wood") + '</option><option value="stone">' + QT.Lang.get("caves", "stone") + '</option><option value="iron">' + QT.Lang.get("caves", "silver") + '</option></select></span></span></span><div id="qsortinit" class="button_order_by active" style="margin: 3px 0 0 3px"></div></div>');
+			$("#hides_overview_wrapper").parent().parent().append('<div id="hides_sort_control" class="overview_search_bar" style="z-index:1000;width:741px;margin-left:6px"><span class="grepo_input" style="margin:2px"><span class="left"><span class="right"><select name="qsort_towns" id="qsort_towns" type="text"><option value="ironinstore">' + QT.Lang.get("caves", "stored_silver") + '</option><option value="name">' + QT.Lang.get("caves", "name") + '</option><option value="wood">' + QT.Lang.get("caves", "wood") + '</option><option value="stone">' + QT.Lang.get("caves", "stone") + '</option><option value="iron">' + QT.Lang.get("caves", "silver") + '</option></select></span></span></span><div id="qsortinit" class="button_order_by active" style="margin: 3px 0 0 3px"></div></div>');
 			QT.Helper.grepo_input("margin-top:0px","qsortfilterbox","").appendTo('#hides_sort_control');
 			$('#hides_overview_towns').css({
 				"margin-top" : "39px"
@@ -6076,6 +6136,25 @@ function main_script(DATA) {
 				return;
 			var d = $("DIV#gpwnd_" + c.getID() + " DIV#player_buttons ");
 			$(d[0]).append("<a target=_blank href=http://" + mID + ".grepostats.com/world/" + wID + "/player/" + b[1] + '><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a>')
+		},
+		playerInactivity : function (event, xhr, settings) {
+			var b = settings.url.match(/player_id%22%3A(\d*)%2C/);
+			var c = GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_PLAYER_PROFILE);
+			if (!c)
+				return;
+			var d = $("DIV#gpwnd_" + c.getID() + " DIV#player_info h3 ");
+			var currentTownXY = QT.Helper.Inactivity.Filter.coordinates();
+			$(d[0]).append(QT.Helper.Inactivity.addDisplay("margin:7px 0 0 5px; float:right;", 'http://polissuche.marco93.de/' + wID + '.html?filter=player_id:' + b[1] + currentTownXY + ''));
+			var JQelement = $("DIV#gpwnd_" + c.getID() + " DIV#player_info A.qt_activity");
+			
+			if (QT.Helper.Inactivity.isCached(b[1])) {
+				var inactive_days_cached = QT.Helper.Inactivity.cache[b[1]];
+				QT.Helper.Inactivity.changeDisplay(JQelement, inactive_days_cached);
+			} else {
+				QT.Helper.Inactivity.getData(b[1]).done(function (data) {
+					QT.Helper.Inactivity.changeDisplay(JQelement, QT.Helper.Inactivity.cache[b[1]]);
+				});
+			}
 		},
 		qtoolbox : function () {
 			$('#ui_box .nui_main_menu .leaves').hide();
@@ -6905,14 +6984,16 @@ function main_script(DATA) {
 					["Nepomuk P. - 50€", "Kevin T. - 5€", "Thomas R. - 10€", "Claines C. C. - 3€"],
 					["Carsten R. - 5€", "Nick K. - 0,74€", "Eduard R. - 3€", "Christian P. - 5€"],
 					["Martin S. - 5€", "Ian O. - 10€", "Michael W. K. - 1$", "	Ines L. - 10€"],
-					["David M. - 10€", "Thomas M. W. - 3€", "Benedikt K. - 2€"],
+					["David M. - 10€", "Thomas M. W. - 3€", "Benedikt K. - 2€", "Sandra M. - 5€"],
+					["Lea Renate G. - 10€", "Helena E. - 5€", "Mercedes G. - 1€", "Alexander S. - 10 €"],
+					["Peter F. - 1€, Martina S - 1€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
 				HTML_tab3 += '<table width="100%" cellspacing="0" border="0"><tbody><tr><td width="33%"><a href="http://adf.ly/AAMwY" target="_blank">Quack Toolsammlung ' + QT.Settings.values.script_version + '</a><br />';
 				HTML_tab3 += '<small><a href="' + QT.Links.quacktools + '" target="_blank">Direktlink</a> | <a href="' + QT.Lang.get("meta", "changelog") + '" target="_blank">Changelog</a> | <a href="https://github.com/Quackmaster/Grepolis-QT" target="_blank">Github</a></small><br />';
 				HTML_tab3 += '<p><iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fgrepolisqt&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true"></iframe></p>';
-				HTML_tab3 += '<p><b>' + QT.Lang.get("settings", "contact") + ':</b><br />E-Mail: <a href="mailto:Quackmaster@web.de">Quackmaster@web.de</a><br />Forum: <a target="_blank" href="' + QT.Lang.get("meta", "forumlink_addfree") + '">Grepolis-Forum</a><br />Website: <a target="_blank" href="' + QT.Links.grepolisqt_main + '">www.grepolisqt.de</a><br />Facebook: <a target="_blank" href="' + QT.Links.grepolisqt_facebook + '">Grepolis QT</a></p></td>';
+				HTML_tab3 += '<p><b>' + QT.Lang.get("settings", "contact") + ':</b><br />E-Mail: <a href="mailto:Quackmaster@web.de">Quackmaster@web.de</a><br />Forum: <a target="_blank" href="' + QT.Lang.get("meta", "forumlink_addfree") + '">Grepolis-Forum</a><br />Website: <a target="_blank" href="' + QT.Links.grepolisqt_main + '">grepolisqt.de</a><br />Facebook: <a target="_blank" href="' + QT.Links.grepolisqt_facebook + '">Grepolis QT</a></p></td>';
 				HTML_tab3 += '<td width="33%" style="text-align:center">' + QT.Lang.get("meta", "donation_btn") + '</td>';
 				HTML_tab3 += '<td width="33%" style="text-align:right"><img style="margin-right: -10px" src="http://s7.directupload.net/images/140711/bl938hld.png"></td></tr></tbody></table>';
 				HTML_tab3 += '<div style="text-align: justify"><p />' + QT.Lang.get("settings", "prologue") + '</div>';
