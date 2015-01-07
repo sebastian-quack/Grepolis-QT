@@ -4,7 +4,7 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.46.00
+// @version        2.47.00
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @grant          GM_listValues
 // @grant          GM_getValue
@@ -831,6 +831,9 @@ function main_script(DATA) {
 				green : "grün",
 				yellow : "gelb",
 				gray : "grau"
+			},
+			command_ov : {
+				commands : "Befehle"
 			}
 		},
 		es : {
@@ -1063,7 +1066,25 @@ function main_script(DATA) {
 				alliance : 'Alianza',
 				troops : 'Tropas',
 				attacker : 'Atacante',
-				defender : 'Defensor'
+				defender : 'Defensor',
+				brush_size : 'Tamaño de pincel',
+				color : 'Color',
+				eraser : 'Borrador',
+				pencil : 'Lápiz',
+				arrow : 'Flecha',
+				rectangel : 'Rectángulo',
+				line : 'Linea',
+				arc : 'Circulo',
+				delete_drawing : 'Eliminar dibujo',
+				fill : 'Llenar'
+			},
+			colors : {
+				black : "negro",
+				blue : "azul",
+				red : "rojo",
+				green : "verde",
+				yellow : "amarillo",
+				gray : "gris"
 			}
 		},
 		fr : {
@@ -1286,31 +1307,32 @@ function main_script(DATA) {
 				flag : 'http://s7.directupload.net/images/140725/ki6kli48.png',
 			},
 			reports : {
-				choose_folder : 'επιλογή φακέλου',
-				enacted : 'θεσπιστεί',
-				conquered : 'κατακτήθηκε',
-				spying : 'κατασκοπεία',
+				choose_folder : 'Επιλογή φακέλου',
+				enacted : 'Θεσπιστεί',
+				conquered : 'Κατακτήθηκε',
+				spying : 'Κατασκοπεία',
 				spy : 'Κατάκσοπος',
 				support : 'Υποστήριξη',
-				supporting : 'Υποστηρίξεις',
-				attacking : 'Επιθέσεις',
+				supporting : 'Υποστηρίζει',
+				attacking : 'Επιτίθεται',
 				farming_village : 'Αγροτικό χωριό'
 			},
 			forum : {
 				delete : 'Διαγραφή',
 				delete_sure : 'Θέλετε να διαγραφεί αυτή η ανάρτηση?',
-				no_selection : 'Δεν έχετε επιλέξειανάρτηση'
+				no_selection : 'Δεν έχετε επιλέξει ανάρτηση'
 			},
 			town_info : {
+				no_overload : 'Μη υπερφόρτωση',
 				delete : 'Διαγραφή',
 				polissuche : 'Εύρεση πόλης',
 				inactivity : 'Ανενεργός',
 				days : 'Ημέρες',
-				no_data : 'Ο παιχτης δεν εχει μπει ακομα στν database'
+				no_data : 'Ο παίχτης δεν έχει μπει ακόμα στην βάση δεδομένων'
 			},
 			grepo_mainmenu : {
-				city_view : 'Μπες στην πολη',
-				island_view : 'Δες το νησι'
+				city_view : 'Προβολή πόλης',
+				island_view : 'Προβολή νησιού'
 			},
 			messages : {
 				ghosttown : 'Πόλη φάντασμα',
@@ -1332,7 +1354,7 @@ function main_script(DATA) {
 				troop_ov : 'Επισκοπηση Στρατευματων',
 				troops_outside : 'Στρατευματα Εξω',
 				building_ov : 'Κτίρια',
-				culture_ov : 'Κουλτούρα',
+				culture_ov : 'Πολιτισμός',
 				gods_ov : 'Θεότητες',
 				cave_ov : 'Σπηλιές',
 				city_groups_ov : 'Ομάδες πόλεων',
@@ -1349,25 +1371,139 @@ function main_script(DATA) {
 				profile : 'Προφίλ',
 				ranking : 'Κατάταξη',
 				notes : 'Σημειώσεις',
-				chat : 'Συνομηλία',
+				chat : 'Συνομιλία',
 				council : 'Συμβούλιο Ηρώων'
 			},
 			qtoolbox : {
+				onlinecounter_now : 'Τρέχουσα',
 				onlinecounter_total : 'Σύνολο',
 				stats : 'Στατιστικά',
 				grepostats : 'Στατιστικά Grepolis',
 				player : 'Παίκτης',
 				alliance : 'Συμμαχία',
+				top_killers : 'Κορυφαίοι μαχητές',
 				rankings : 'Κατάταξη',
 				track_player : 'Εύρεση παίκτη',
 				track_alliance : 'Εύρεση συμμαχίας',
 				maps : 'Χάρτης',
-				tonda_polissuche : 'Αναζήτηση πολης'
+				townsearches : 'Εύρεση πόλεων',
+				tonda_polissuche : 'Αναζήτηση πολης',
+				in_town : 'Εντός πόλεως',
+				from_town : 'Από την πόλη',
+				outside_town : 'Εκτός πόλεως',
+				tools : 'Εργαλεία',
+				unit_comparison : 'Σύγκριση μονάδων',
+				google_docs : 'Έγγραφα Google',
+				display_modes : 'Μέθοδοι προβολής',
+				full_screen : 'Πλήρης οθόνη'
 			},
 			academy : {
 				researched : 'Χρωματισμός εξερευνηθέντων',
 				notresearched : 'Χρωματισμός μη εξερευνηθέντων',
 				undo : 'Αναιρεση χρωματισμού'
+			},
+			caves : {
+				stored_silver : 'Αποθηκευμένα Ασημένια νομίσματα',
+				silver_to_store : 'Ασημένια νομίσματα προς αποθήκευση',
+				name : 'Όνομα',
+				wood : 'Ξύλο',
+				stone : 'Πέτρα',
+				silver : 'Ασημένια νομίσματα'
+			},
+			transport_calc : {
+				btn_main : 'Υπολογισμός μεταφορικών',
+				available : 'Διαθέσιμες θέσεις μεταφοράς',
+				transportable : 'Μεταφερόμενες μονάδες',
+				recruits : 'Μέτρηση μονάδων στην σειρά παραγωγής',
+				outsidetown : 'Μέτρηση μονάδων εκτός πόλεως',
+				slowtrans : 'Μέτρηση αργών μταφορικών',
+				fasttrans : 'Μέτρηση γρήγορων μεταφορικών',
+				disabled : 'Προσωρινά μη διαθέσιμο'
+			},
+			culture : {
+				cityfestivals : 'Γιορτές Πόλης',
+				olympicgames : 'Ολυμπιακοί αγώνεσ',
+				triumph : 'Παρελάσεις θριάμβου',
+				theater : 'Θεατρικές παραστάσεις'
+			},
+			settings : {
+				text2 : 'Μετρητής ώρας online',
+				text3 : 'Άνοιγμα συνδέσμων από το μενού εντός παιχνιδιού',
+				text4 : 'Ενεργοποίησε να περιλαμβάνονται και άλλα scripts στο μενού από το greasemonkey',
+				text5 : 'Προβολή κουμπιών για την μόνιμη προβολή των κινήσεων μοναδων και εμπορίου',
+				text9 : 'Προβολή στο ξεκίνημα'
+			},
+			bbcode : {
+				troops : 'Στρατεύματα',
+				building : 'Επίπεδα κτιρίων',
+				cities : 'Πόλεις',
+				all : 'Όλα',
+				active_grp : 'Ενεργοποίση ομάδων πόλεων',
+				in : 'Μέσα',
+				from : 'Από',
+				outside : 'Εκτός',
+				messages : 'Μηνύματα'
+			},
+			stats_scripts : {
+				stats_scripts_ov : 'Προβολή στατιστικών και scripts'
+			},
+			googledocs : {
+				change_url : 'Αλλαγή URL'
+			},
+			export_window : {
+				town : 'Πόλη',
+				luck : 'Τύχη',
+				title : 'Τίτλος',
+				resources : 'Λάφυρα',
+				wall : 'Τείχος',
+				player : 'Παίκτης',
+				moral : 'Ηθικό',
+				reporttype : 'Τύπος αναφοράς',
+				resources_lost : 'Απώλεια λαφύρων',
+				nightbonus : 'Μπόνους νύχτας',
+				alliance : 'Συμμαχία',
+				troops : 'Στρατεύματα',
+				bashpoints : 'Πόντοι μάχης',
+				buildings : 'Κτίρια',
+				payed_iron : 'Νομίσματα που εστάλησαν',
+				payed_iron_storage : 'Αποθηκευμάνα νομίσματα',
+				date : 'Ημερομηνία',
+				spell_info : 'Πληροφορίες θεϊκής δύναμης',
+				spell_effect : 'Αποτέλεσμα θεϊκής δύναμης',
+				message : 'Μήνυμα',
+				attacker : 'Επιτιθέμενος',
+				defender : 'Αμυνόμενος',
+				bonuses : 'Θεϊκες δυνάμεις/Μπόνους',
+				command_type : 'Τύπος εντολής',
+				town_left : 'Πόλη (αριστερά)',
+				town_right : 'Πόλη (δεξιά)',
+				player_left : 'Παίχτης (αριστερά)',
+				player_right : 'Παίχτης (δεξιά)',
+				travel_time : 'Διάρκεια ταξιδιού',
+				time_of_arrival : 'Ώρα άφιξης',
+				command : 'Εντολή',
+				defeated_atk : 'Ήττα επιτιθέμενου',
+				defeated_def : 'Ήττα αμυνόμενου',
+				losses_atk : 'Απώλειες επιτιθέμενου',
+				losses_def : 'Απώλειες αμυνόμενου',
+				brush_size : 'Μέγεθος βούρτσας',
+				color : 'Χρώμα',
+				eraser : 'Γόμα',
+				pencil : 'Μολύβι',
+				arrow : 'Βέλος',
+				rectangel : 'Τετράγωνο',
+				line : 'Γραμμή',
+				arc : 'Κύκλος',
+				delete_drawing : 'Διαγραφή ζωγραφιάς',
+				fill : 'Γέμισμα'
+			},
+			colors : {
+				black : 'Μαύρο',
+				blue : 'Μπλε',
+				red : 'Κόκκινο',
+				green : 'Πράσινο',
+				yellow : 'Κίτρινο',
+				gray : 'Γκρι'
 			}
 		},
 		hu : {
@@ -1923,7 +2059,7 @@ function main_script(DATA) {
 				text35 : 'Academie planner',
 				text36 : 'Grot',
 				text37 : 'Het sorteren van steden mogelijk maken',
-				text38 : 'Silver over 15000 automatisch in het invoerveld toevoegen',
+				text38 : 'Zilver over 15000 automatisch in het invoerveld toevoegen',
 				text40 : 'Boerendorpen overzicht (Kapitein)',
 				text41 : 'Een button voor het openen van de stadsoverzicht aan het zijkant menu toevoegen',
 				text42 : 'Toon de verloren grondstoffen',
@@ -2019,6 +2155,14 @@ function main_script(DATA) {
 				defeated_def : 'Verslagen als verdediger',
 				losses_atk : 'Verliezen als aanvaller',
 				losses_def : 'Verliezen als verdediger'
+			},
+			colors : {
+				black : 'zwart',
+				blue : 'blauw',
+				red : 'rood',
+				green : 'groen',
+				yellow : 'geel',
+				gray : 'grijs'
 			}
 		},
 		pl : {
@@ -2991,6 +3135,9 @@ function main_script(DATA) {
 				green : "green",
 				yellow : "yellow",
 				gray : "gray"
+			},
+			command_ov : {
+				commands : "Commands"
 			}
 		}
 	};
@@ -3179,250 +3326,6 @@ function main_script(DATA) {
 	};
 
 	/************************************************************************
-	 * Ajax Call functions
-	 ***********************************************************************/
-	QT.CallAjaxFunction = {
-		index : {
-			switch_town : function () {
-				if ($("#tr_wrapper").css('display') != 'none')
-					QT.Functions.transportcalculator.refresh();
-				if (QT.Settings.values.qmenu_settings_hidesilver)
-					QT.Functions.hidesIndexIron();
-				if (QT.Settings.values.qmenu_settings_cityview_window)
-					QT.Functions.city_view_windowTitle();
-			}
-		},
-		report : {
-			index : function () {
-				if (QT.Settings.values.qmenu_settings_berichte_sortfolders)
-					QT.Functions.reportFoldersort();
-				if (QT.Settings.values.qmenu_settings_berichte_farben)
-					QT.Functions.reportsColor();
-				if (QT.Settings.values.qmenu_settings_berichte_move)
-					QT.Functions.reportsMove();
-				if (QT.Settings.values.qmenu_settings_berichte_filter)
-					QT.Functions.reportsFilter();
-			},
-			move : function () {
-				if (QT.Settings.values.qmenu_settings_berichte_sortfolders)
-					QT.Functions.reportFoldersort();
-				if (QT.Settings.values.qmenu_settings_berichte_farben)
-					QT.Functions.reportsColor();
-				if (QT.Settings.values.qmenu_settings_berichte_move)
-					QT.Functions.reportsMove();
-				if (QT.Settings.values.qmenu_settings_berichte_filter)
-					QT.Functions.reportsFilter();
-			},
-			delete_many : function () {
-				if (QT.Settings.values.qmenu_settings_berichte_sortfolders)
-					QT.Functions.reportFoldersort();
-				if (QT.Settings.values.qmenu_settings_berichte_farben)
-					QT.Functions.reportsColor();
-				if (QT.Settings.values.qmenu_settings_berichte_move)
-					QT.Functions.reportsMove();
-				if (QT.Settings.values.qmenu_settings_berichte_filter)
-					QT.Functions.reportsFilter();
-			},
-			view : function () {
-				if (QT.Settings.values.qmenu_settings_berichte_losses)
-					QT.Functions.reportsLosses();
-				QT.Functions.reportExport();
-			}
-		},
-		alliance_forum : {
-			forum : function () {
-				if (QT.Settings.values.qmenu_settings_maximize_forum)
-					QT.Functions.forumMaximize();
-				if (QT.Settings.values.qmenu_settings_forumdelete)
-					QT.Functions.forumDeleteMultiple();
-			}
-		},
-		town_overviews : {
-			hides_overview : function () {
-				if (QT.Settings.values.qmenu_settings_hidessilver)
-					QT.Functions.hidesoverviewiron();
-				if (QT.Settings.values.qmenu_settings_hidessort)
-					QT.Functions.hidesSort();
-			},
-			command_overview : function (event, xhr, settings) {
-				QT.Functions.commandOverview(event, xhr, settings);
-				QT.Functions.commandOverviewExport();
-			},
-			culture_overview : function () {
-				QT.Functions.cultureOverview();
-			},
-			start_celebration : function () {
-				QT.Functions.cultureOverview();
-			},
-			start_all_celebrations : function () {
-				QT.Functions.cultureOverview();
-			}
-		},
-		building_main : {
-			index : function (event, xhr, settings) {
-				if (QT.Settings.values.qmenu_settings_grepopoints)
-					QT.Functions.grepopoints(event, xhr, settings);
-			},
-			build : function (event, xhr, settings) {
-				if (QT.Settings.values.qmenu_settings_grepopoints)
-					QT.Functions.grepopoints(event, xhr, settings);
-			},
-			cancel : function (event, xhr, settings) {
-				if (QT.Settings.values.qmenu_settings_grepopoints)
-					QT.Functions.grepopoints(event, xhr, settings);
-			},
-			tear_down : function (event, xhr, settings) {
-				if (QT.Settings.values.qmenu_settings_grepopoints)
-					QT.Functions.grepopoints(event, xhr, settings);
-			}
-		},
-		building_barracks : {
-			build : function () {
-				if ($("#tr_wrapper").css('display') != 'none')
-					QT.Functions.transportcalculator.refresh();
-			},
-			cancel : function () {
-				if ($("#tr_wrapper").css('display') != 'none')
-					QT.Functions.transportcalculator.refresh();
-			}
-		},
-		building_docks : {
-			build : function () {
-				if ($("#tr_wrapper").css('display') != 'none')
-					QT.Functions.transportcalculator.refresh();
-			},
-			cancel : function () {
-				if ($("#tr_wrapper").css('display') != 'none')
-					QT.Functions.transportcalculator.refresh();
-			}
-		},
-		building_place : {
-			index : function () {
-				QT.Functions.agoraIndexExport();
-			},
-			units_beyond : function () {
-				QT.Functions.unitsBeyondView();
-				QT.Functions.agoraUnitsBeyondExport();
-			},
-			simulator : function () {
-				QT.Functions.simulatorExport();
-			}
-		},
-		building_wall : {
-			index : function () {
-				QT.Functions.wallExport();
-			}
-		},
-		units_beyond_info : {
-			send_back_part : function () {
-				QT.Functions.unitsBeyondView();
-			}
-		},
-		frontend_bridge : {
-			fetch : function () {
-				if (QT.Settings.values.qmenu_settings_hidesilver)
-					QT.Functions.hidesIndexIron();
-				/*if ($('.researches_queue_box').length != 0) {
-					QT.Functions.academyMarker();
-				}*/
-				//if (QT.Settings.values.qmenu_settings_hideaddpoints)
-				//QT.Functions.hidesIndexAddPoints();
-			},
-			execute : function () {
-				if ($("#tr_wrapper").css('display') != 'none')
-					QT.Functions.transportcalculator.refresh();
-				if (QT.Settings.values.qmenu_settings_stadtliste && $('#town_groups_list').is(':visible'))
-					QT.Functions.townslist();
-				if (QT.Settings.values.qmenu_settings_hidesilver)
-					QT.Functions.hidesIndexIron();
-				//if (QT.Settings.values.qmenu_settings_hideaddpoints)
-				//QT.Functions.hidesIndexAddPoints();
-			}
-		},
-		building_academy : {
-			index : function () {
-				if (QT.Settings.values.qmenu_settings_akademieplaner)
-					QT.Functions.academyMarker();
-			},
-			research : function () {
-				if (QT.Settings.values.qmenu_settings_akademieplaner)
-					QT.Functions.academyMarker();
-			},
-			cancel : function () {
-				if (QT.Settings.values.qmenu_settings_akademieplaner)
-					QT.Functions.academyMarker();
-			},
-			revert_research : function () {
-				if (QT.Settings.values.qmenu_settings_akademieplaner)
-					QT.Functions.academyMarker();
-			}
-		},
-		town_info : {
-			info : function () {
-				QT.Functions.townInactivity();
-				QT.Functions.townStatsButtons();
-			},
-			trading : function () {
-				if (QT.Settings.values.qmenu_settings_tradeimprovement)
-					QT.Functions.townTradeImprovement();
-			},
-			support : function () {
-				QT.Functions.selectunitshelper();
-			},
-			attack : function () {
-				QT.Functions.selectunitshelper();
-			}
-		},
-		player : {
-			get_profile_html : function (event, xhr, settings) {
-				QT.Functions.playerGSButton(event, xhr, settings);
-				QT.Functions.playerInactivity(event, xhr, settings);
-			},
-			index : function () {
-				QT.Functions.addsettingsbutton();
-			}
-		},
-		island_info : {
-			index : function (event, xhr, settings) {
-				QT.Functions.islandMessage();
-				QT.Functions.islandInactivity(event, xhr, settings);
-				QT.Functions.islandAddPlayerlinks(event, xhr, settings);
-				if (QT.Settings.values.qmenu_settings_island_villages)
-					QT.Functions.islandFarmingVillages();
-			}
-		},
-		alliance : {
-			profile : function (event, xhr, settings) {
-				QT.Functions.allianceStatsButtons(event, xhr, settings);
-				QT.Functions.allianceInactivity(event, xhr, settings);
-			}
-		},
-		farm_town_overviews : {
-			claim_loads : function () {
-				if (QT.Settings.values.qmenu_settings_farmhelper)
-					QT.Functions.farmingvillageshelper.rememberloot();
-					QT.Functions.farmingvillageshelper.indicateLoot();
-			},
-			get_farm_towns_for_town : function () {
-				if (QT.Settings.values.qmenu_settings_farmhelper && typeof activeFarm != 'undefined')
-					QT.Functions.farmingvillageshelper.setloot();
-			},
-			index : function () {
-				QT.Functions.farmingvillageshelper.islandHeader();
-			}
-		},
-		message : {
-			view : function (event, xhr, settings) {
-				QT.Functions.messageViewAll();
-				QT.Functions.messageExport();
-			},
-			new : function () {
-				QT.Functions.messageInputwidth();
-			}
-		}
-	};
-
-	/************************************************************************
 	 * Helper Functions
 	 ***********************************************************************/
 	QT.Helper = {
@@ -3596,8 +3499,7 @@ function main_script(DATA) {
 			},
 			canvasDraw : {
 				addElements : function () {
-
-					$("#qt_export_content fieldset").append('\
+					$("#qt_export_content fieldset legend").append('\
 						<div id="qt_canvas_toolbar">\
 							<a id="eraser" class="qt_canvas_tool" href="#"></a>\
 							<a id="pencil" class="qt_canvas_tool active" href="#"></a>\
@@ -3623,7 +3525,7 @@ function main_script(DATA) {
 
 					$("#qt_canvas").append('<div id="qt_canvas_wrapper"><canvas id="myCanvas" class="qt_canvas_el" width="800" height="'+qt_canvas_height+'"></canvas><canvas id="canvasTemp" class="qt_canvas_el" width="800" height="'+qt_canvas_height+'"></canvas></div>');
 					
-					$("#qt_canvas_toolbar").css({"position":"absolute", "right":"40px", "top":"123px", "z-index":"2", "height":"23px", "padding":"0 8px", "background":"url(http://gpde.innogamescdn.com/images/game/border/odd.png)"});
+					$("#qt_canvas_toolbar").css({"position":"absolute", "right":"40px", "margin-top":"-22px", "z-index":"2", "height":"23px", "padding":"0 8px", "background":"url(http://gpde.innogamescdn.com/images/game/border/odd.png)"});
 					$(".qt_canvas_tool").css({"width":"22px", "height":"23px", "display":"inline-block","background-position":"0px 0px"});
 					$("#qt_canvas_delete").css({"display":"inline-block", "margin-left": "5px"});
 					$("#eraser").css({"background" : "url(http://fs1.directupload.net/images/141218/5u8ojvzq.png)"});
@@ -4349,7 +4251,7 @@ function main_script(DATA) {
 		test : function () {
 			alert("Test funktioniert");
 		},
-		academyMarker : function () { //DEFEKT
+		academyMarker : function () {
 			$.Observer(GameEvents.building.academy.research.buy).subscribe('QT_academy_buy', function (e, data) {
 				alert("buy");
 			})
@@ -4586,7 +4488,7 @@ function main_script(DATA) {
 				return elemensToChange;
 			});
 		},
-		allianceStatsButtons : function (event, xhr, settings) {
+		allianceStatsButtons : function (settings) {
 			var b = settings.url.match(/alliance_id%22%3A(\d*)%2C/);
 			var c = GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_ALLIANCE_PROFILE);
 			if (!c)
@@ -4680,7 +4582,7 @@ function main_script(DATA) {
 			var units_support = ITowns.getTown(parseInt(Game.townId)).unitsSupport();
 			var units_outer = ITowns.getTown(parseInt(Game.townId)).unitsOuter();
 			var cities_own = ITowns.towns_collection.models;
-			var active_towngroup = MM.collections.TownGroup[0].getActiveGroupId();
+			var active_towngroup = ITowns.getActiveTownGroupId();
 			var cities_towngroup = ITowns.town_group_towns.getTowns(active_towngroup);
 			var bbcodeArray = [];
 			var bbcodeBild = "[*]";
@@ -4892,12 +4794,12 @@ function main_script(DATA) {
 			if (wnd)
 				wnd.setTitle(QT.Lang.get("grepo_mainmenu", "city_view") + " - " + Game.townName);
 		},
-		commandOverview : function (a, b, c) {
-			var d = b.responseText.match(/{(.+)}/);
+		commandOverview : function (xhr) {
+			var d = xhr.responseText.match(/{(.+)}/);
 			var e = $.parseJSON("{" + d[1] + "}");
-			if (e.json.data != undefined) {
-				if (e.json.data.total_commands.length > 0)
-					$("#place_defense .game_border .game_header").html($("#place_defense .game_border .game_header").html().split(" (")[0] + " (" + e.json.data.total_commands + ")");
+			if (e.json.data.total_commands.length > 0)
+				$("#place_defense .game_border .game_header").html($("#place_defense .game_border .game_header").html().split(" (")[0] + " (" + e.json.data.total_commands + ")");
+			if (e.json.data.commands.length > 0) {
 				var f = {
 					attack_land : 0,
 					support : 0,
@@ -4905,18 +4807,20 @@ function main_script(DATA) {
 					attack_spy : 0,
 					farm_attack : 0,
 					abort : 0,
-					attack_takeover : 0
+					attack_takeover : 0,
+					breakthrough : 0
 				};
-				for (var g = 0; g < e.json.data.total_commands.length; g++)
+				for (var g = 0; g < e.json.data.commands.length; g++)
 					f[e.json.data.commands[g].type]++;
 				var h = $("div .support_filter");
-				$(h[0]).mousePopup(new MousePopup("Befehle: " + f.attack_land));
-				$(h[1]).mousePopup(new MousePopup("Befehle: " + f.support));
-				$(h[2]).mousePopup(new MousePopup("Befehle: " + f.attack_sea));
-				$(h[3]).mousePopup(new MousePopup("Befehle: " + f.attack_spy));
-				$(h[4]).mousePopup(new MousePopup("Befehle: " + f.farm_attack));
-				$(h[5]).mousePopup(new MousePopup("Befehle: " + f.abort));
-				$(h[6]).mousePopup(new MousePopup("Befehle: " + f.attack_takeover))
+				$(h[0]).mousePopup(new MousePopup(QT.Lang.get("command_ov", "commands") + ": " + f.attack_land));
+				$(h[1]).mousePopup(new MousePopup(QT.Lang.get("command_ov", "commands") + ": " + f.support));
+				$(h[2]).mousePopup(new MousePopup(QT.Lang.get("command_ov", "commands") + ": " + f.attack_sea));
+				$(h[3]).mousePopup(new MousePopup(QT.Lang.get("command_ov", "commands") + ": " + f.attack_spy));
+				$(h[4]).mousePopup(new MousePopup(QT.Lang.get("command_ov", "commands") + ": " + f.farm_attack));
+				$(h[5]).mousePopup(new MousePopup(QT.Lang.get("command_ov", "commands") + ": " + f.abort));
+				$(h[6]).mousePopup(new MousePopup(QT.Lang.get("command_ov", "commands") + ": " + f.attack_takeover));
+				$(h[7]).mousePopup(new MousePopup(QT.Lang.get("command_ov", "commands") + ": " + f.breakthrough));
 			}
 		},
 		commandOverviewExport : function () {
@@ -5253,7 +5157,7 @@ function main_script(DATA) {
 		forumDeleteMultiple : function () {
 			if ($('#forum #postlist').length) {
 				if (!$('.qdeletecheckbox').length) {
-					$("div.post_functions").each(function( index ) {
+					$("div.post_functions:not(:first)").each(function( index ) {
 						if ($(this).find('a').length > 2) {
 							$(this).append('<input class="qdeletecheckbox" type="checkbox">');
 						}
@@ -5360,7 +5264,7 @@ function main_script(DATA) {
 				$("#vb_back").remove();
 			});
 		},
-		grepopoints : function (event, xhr, settings) {
+		grepopoints : function () {
 			var a = GPWindowMgr.getOpen(Layout.wnd.TYPE_BUILDING);
 			if (a.length == 0)
 				return;
@@ -5517,7 +5421,7 @@ function main_script(DATA) {
 				}, 10);
 			}
 		},
-		hidesIndexAddPoints : function () { //DEFEKT
+		hidesIndexAddPoints : function () {
 			function addPoints(nStr) {
 				nStr += '';
 				x = nStr.split('.');
@@ -5822,7 +5726,7 @@ function main_script(DATA) {
 				}*/
 			});
 		},
-		islandAddPlayerlinks : function (event, xhr, settings) {
+		islandAddPlayerlinks : function (xhr) {
 			var b = GPWindowMgr.getOpen(Layout.wnd.TYPE_ISLAND);
 			if (b.length == 0)
 				return;
@@ -5878,7 +5782,7 @@ function main_script(DATA) {
 				"top" : "486px",
 			});
 		},
-		islandInactivity : function (event, xhr, settings) {
+		islandInactivity : function (xhr) {
 			var b = GPWindowMgr.getOpen(Layout.wnd.TYPE_ISLAND);
 			if (b.length == 0)
 				return;
@@ -6002,7 +5906,7 @@ function main_script(DATA) {
 				pagesLoad();
 				var prevPage = $("#paginator_selected").text();
 				var paginatorOnclick = "'message_message_list', " + prevPage + ", " + params.id + ", 'message', 'view'";
-				$("#paginator_selected").replaceWith('<a class="paginator_bg" onclick="paginatorTabsGotoPage(' + paginatorOnclick + ')" href="javascript:void(0)">' + prevPage + '</a>');
+				$("#paginator_selected").replaceWith('<a class="paginator_bg" onclick="DeprecatedHelper.paginatorTabsGotoPage(' + paginatorOnclick + ')" href="javascript:void(0)">' + prevPage + '</a>');
 				$("#QT_viewAll").replaceWith('<strong id="paginator_selected" class="paginator_bg paginator_qt">' + QT.Lang.get("messages", "all") + '</strong>');
 			});
 		},
@@ -6129,7 +6033,7 @@ function main_script(DATA) {
 				});
 			});
 		},
-		playerGSButton : function (event, xhr, settings) {
+		playerGSButton : function (settings) {
 			var b = settings.url.match(/player_id%22%3A(\d*)%2C/);
 			var c = GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_PLAYER_PROFILE);
 			if (!c)
@@ -6137,7 +6041,7 @@ function main_script(DATA) {
 			var d = $("DIV#gpwnd_" + c.getID() + " DIV#player_buttons ");
 			$(d[0]).append("<a target=_blank href=http://" + mID + ".grepostats.com/world/" + wID + "/player/" + b[1] + '><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a>')
 		},
-		playerInactivity : function (event, xhr, settings) {
+		playerInactivity : function (settings) {
 			var b = settings.url.match(/player_id%22%3A(\d*)%2C/);
 			var c = GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_PLAYER_PROFILE);
 			if (!c)
@@ -6871,7 +6775,9 @@ function main_script(DATA) {
 				// Header
 				"#report_report_header", ".game_arrow_left", ".game_arrow_right", ".game_arrow_delete", "#report_action_bg", "#report_arrow", ".report_town_bg", ".report_town_bg .island_bg", ".town_icon", ".flagpole",
 				// Body
-				"#report_game_body", ".hero40x40", ".unit_icon40x40", ".resources_small", ".report_booty_bonus_fight", "#resources .res_background", "#resources .res_background div", ".report_icon", ".button.simulate_units", ".power_icon45x45.attack_boost.lvl", ".power_icon45x45.defense_boost.lvl", ".power_icon45x45.unit_movement_boost.lvl", ".power_icon45x45:not(.lvl)", ".power_icon86x86", ".big_horizontal_report_separator", ".god_mini",
+				"#report_game_body", ".hero40x40", ".unit_icon40x40", ".resources_small", ".report_booty_bonus_fight", "#resources .res_background", "#resources .res_background div",
+				".report_icon", ".button.simulate_units", ".power_icon45x45.attack_boost.lvl", ".power_icon45x45.defense_boost.lvl", ".power_icon45x45.unit_movement_boost.lvl",
+				".power_icon45x45:not(.lvl)", ".power_icon86x86", ".big_horizontal_report_separator", ".god_mini", ".longterm_attack_boost", ".power_icon45x45.longterm_defense_boost", ".power_icon45x45.longterm_unit_order_boost",
 				// Footer
 				".game_list_footer",
 				// Buildings
@@ -6954,10 +6860,10 @@ function main_script(DATA) {
 					EN : "Quackmaster, cedomaiori",
 					ES : "Jonh Snow, F0NT3, cuervobrujo, Guerrero2013",
 					FR : "higter, Mazelys, jbrek, ToolFire, aldo666, jojopt",
-					GR : "drmacsoft, adipas.ioannis, juvekdk, ΤζονακοςΚ, genial",
+					GR : "drmacsoft, adipas.ioannis, juvekdk, ΤζονακοςΚ, genial, Tassos.28",
 					HU : "Arminno, Betagamer, Shia-ko",
 					IT : "masale81, Psy17",
-					NL : "Quackmaster, Florent15, sannelos, megaabelleke, Thodoris, HGamert, Siloperg47",
+					NL : "Quackmaster, Florent15, sannelos, megaabelleke, Thodoris, HGamert, Siloperg47, necromancer97, nijtram1236",
 					PL : "Slietie, Tropsy Kretts, Polny Konik, danon2",
 					RO : "BaietelulCelFrumusel",
 					RU : "Jest, DJEDIVER, nihondzin, Jestex"
@@ -6986,7 +6892,8 @@ function main_script(DATA) {
 					["Martin S. - 5€", "Ian O. - 10€", "Michael W. K. - 1$", "	Ines L. - 10€"],
 					["David M. - 10€", "Thomas M. W. - 3€", "Benedikt K. - 2€", "Sandra M. - 5€"],
 					["Lea Renate G. - 10€", "Helena E. - 5€", "Mercedes G. - 1€", "Alexander S. - 10 €"],
-					["Peter F. - 1€, Martina S - 1€"]
+					["Peter F. - 1€", "Martina S - 1€", "Wilhelm B. - 2€", "Anna G. - 0,01€"],
+					["Maria N. - 5€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
@@ -8038,12 +7945,171 @@ function main_script(DATA) {
 			QT.Functions.transportcalculator.init();
 		if (QT.Settings.values.qmenu_settings_questliste && $('#quest_overview li').length !== 0)
 			QT.Functions.questlist();
+		
 		$(document).ajaxComplete(function (event, xhr, settings) {
-			var a = settings.url.split("?");
-			var b = a[0].substr(6);
-			var c = a[1].split("&")[1].substr(7);
-			if (b in QT.CallAjaxFunction && c in QT.CallAjaxFunction[b]) {
-				QT.CallAjaxFunction[b][c](event, xhr, settings);
+			var ajaxUrl = settings.url.split("?");
+			var ajaxType = ajaxUrl[0].substr(6) + "/" + ajaxUrl[1].split("&")[1].substr(7);
+			var QTF = QT.Functions;
+			var wnd = GPWindowMgr.getFocusedWindow() || false;
+			if (wnd) {
+				QTF.wndId = wnd.getID();
+				QTF.wndEl = wnd.getJQElement();
+			}
+
+			switch (ajaxType) {
+				case "index/switch_town":
+					if ($("#tr_wrapper").css('display') != 'none')
+						QTF.transportcalculator.refresh();
+					if (QT.Settings.values.qmenu_settings_hidesilver)
+						QTF.hidesIndexIron();
+					if (QT.Settings.values.qmenu_settings_cityview_window)
+						QTF.city_view_windowTitle();
+					if (QT.Settings.values.qmenu_settings_stadtliste && $('#town_groups_list').is(':visible'))
+						QTF.townslist();
+				break;
+				case "report/index":
+				case "report/move":
+				case "report/delete_many":
+					if (QT.Settings.values.qmenu_settings_berichte_sortfolders)
+						QTF.reportFoldersort();
+					if (QT.Settings.values.qmenu_settings_berichte_farben)
+						QTF.reportsColor();
+					if (QT.Settings.values.qmenu_settings_berichte_move)
+						QTF.reportsMove();
+					if (QT.Settings.values.qmenu_settings_berichte_filter)
+						QTF.reportsFilter();
+				break;
+				case "report/view":
+					if (QT.Settings.values.qmenu_settings_berichte_losses)
+						QTF.reportsLosses();
+					QTF.reportExport();
+				break;
+				case "alliance_forum/forum":
+					if (QT.Settings.values.qmenu_settings_maximize_forum)
+						QTF.forumMaximize();
+					if (QT.Settings.values.qmenu_settings_forumdelete) // GRC BUG - Fenster wird breiter
+						QTF.forumDeleteMultiple();
+				break;
+				case "town_overviews/hides_overview":
+					if (QT.Settings.values.qmenu_settings_hidessilver)
+						QTF.hidesoverviewiron();
+					if (QT.Settings.values.qmenu_settings_hidessort)
+						QTF.hidesSort();
+				break;
+				case "town_overviews/command_overview":
+					QTF.commandOverviewExport(); // Canvas width inkorrekt, wenn Scrollleiste nicht vorhanden
+					QTF.commandOverview(xhr);
+				break;
+				case "town_overviews/culture_overview":
+				case "town_overviews/start_celebration":
+				case "town_overviews/start_all_celebrations":
+					QTF.cultureOverview();
+				break;
+				case "building_main/index":
+				case "building_main/build":
+				case "building_main/cancel":
+				case "building_main/tear_down":
+					if (QT.Settings.values.qmenu_settings_grepopoints)
+						QTF.grepopoints();
+				break;
+				case "building_barracks/build":
+				case "building_barracks/cancel":
+				case "building_docks/build":
+				case "building_docks/cancel":
+					if ($("#tr_wrapper").css('display') != 'none')
+						QTF.transportcalculator.refresh();
+				break;
+				case "building_place/index":
+					QTF.agoraIndexExport();
+				break;
+				case "building_place/units_beyond":
+					QTF.unitsBeyondView();
+					QTF.agoraUnitsBeyondExport(); // Grafiken von unitsBeyondView werden nicht angezeigt
+				break;
+				case "building_place/simulator":
+					QTF.simulatorExport();
+				break;
+				case "building_wall/index":
+					QTF.wallExport();
+				break;
+				case "units_beyond_info/send_back_part":
+					QTF.unitsBeyondView();
+				break;
+				case "frontend_bridge/fetch":
+					if (QT.Settings.values.qmenu_settings_hidesilver)
+						QTF.hidesIndexIron();
+					/*if ($('.researches_queue_box').length != 0) {
+						QTF.academyMarker();
+					}*/
+					//if (QT.Settings.values.qmenu_settings_hideaddpoints)
+					//QTF.hidesIndexAddPoints();
+				break;
+				case "frontend_bridge/execute":
+					if ($("#tr_wrapper").css('display') != 'none')
+						QTF.transportcalculator.refresh();
+					if (QT.Settings.values.qmenu_settings_stadtliste && $('#town_groups_list').is(':visible'))
+						QTF.townslist();
+					if (QT.Settings.values.qmenu_settings_hidesilver)
+						QTF.hidesIndexIron();
+					//if (QT.Settings.values.qmenu_settings_hideaddpoints)
+					//QTF.hidesIndexAddPoints();
+				break;
+				/*case "building_academy/index":
+				case "building_academy/research":
+				case "building_academy/cancel":
+				case "building_academy/revert_research":
+					if (QT.Settings.values.qmenu_settings_akademieplaner) // funktioniert nicht - läuft jetzt via frontend bridge
+						QTF.academyMarker();
+				break;*/
+				case "town_info/info":
+					QTF.townInactivity();
+					QTF.townStatsButtons();
+				break;
+				case "town_info/trading":
+					if (QT.Settings.values.qmenu_settings_tradeimprovement)
+						QTF.townTradeImprovement();
+				break;
+				case "town_info/support":
+				case "town_info/attack":
+					QTF.selectunitshelper();
+				break;
+				case "player/get_profile_html":
+					QTF.playerGSButton(settings);
+					QTF.playerInactivity(settings);
+				break;
+				case "player/index":
+					QTF.addsettingsbutton();
+				break;
+				case "island_info/index":
+					QTF.islandMessage();
+					QTF.islandInactivity(xhr);
+					QTF.islandAddPlayerlinks(xhr);
+					if (QT.Settings.values.qmenu_settings_island_villages)
+						QTF.islandFarmingVillages();
+				break;
+				case "alliance/profile":
+					QTF.allianceStatsButtons(settings);
+					QTF.allianceInactivity();
+				break;
+				case "farm_town_overviews/claim_loads":
+					if (QT.Settings.values.qmenu_settings_farmhelper)
+						QTF.farmingvillageshelper.rememberloot();
+						QTF.farmingvillageshelper.indicateLoot();
+				break;
+				case "farm_town_overviews/get_farm_towns_for_town":
+					if (QT.Settings.values.qmenu_settings_farmhelper && typeof activeFarm != 'undefined')
+						QTF.farmingvillageshelper.setloot();
+				break;
+				case "farm_town_overviews/index":
+					QTF.farmingvillageshelper.islandHeader();
+				break;
+				case "message/view":
+					QTF.messageViewAll();
+					QTF.messageExport();
+				break;
+				case "message/new":
+					QTF.messageInputwidth();
+				break;
 			}
 		});
 	});
