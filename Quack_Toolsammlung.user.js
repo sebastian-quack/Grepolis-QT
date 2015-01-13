@@ -4,7 +4,7 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.47.00
+// @version        2.47.01
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @grant          GM_listValues
 // @grant          GM_getValue
@@ -47,7 +47,7 @@ function main_script(DATA) {
 			reports : {
 				choose_folder : 'Escolher pasta',
 				enacted : 'lançou',
-				conquered : 'Você',
+				conquered : 'conquistado',
 				spying : 'espiando',
 				spy : 'Espião',
 				support : 'apoia',
@@ -57,13 +57,13 @@ function main_script(DATA) {
 			},
 			forum : {
 				delete : 'Excluir',
-				delete_sure : 'Você realmente deseja eliminar essas mensagens?',
-				no_selection : 'Não existem mensagens selecionadas'
+				delete_sure : 'Você realmente deseja excluir essas mensagens?',
+				no_selection : 'Nenhuma mensagem selecionada'
 			},
 			town_info : {
 				no_overload : 'Sem sobrecarga',
 				delete : 'Excluir',
-				polissuche : 'Pesquisa cidade',
+				polissuche : 'Pesquisar cidade',
 				inactivity : 'Inatividade',
 				days : 'dias',
 				no_data : 'O jogador ainda não está listado no banco de dados'
@@ -76,7 +76,7 @@ function main_script(DATA) {
 				ghosttown : 'Cidade-fantasma',
 				no_cities : 'Nenhuma cidade nesta ilha',
 				all : 'Tudo',
-				export : 'Converta mensagem em BB-Code'
+				export : 'Converter mensagem em BB-Code'
 			},
 			hotkeys : {
 				hotkeys : 'Teclas de atalho',
@@ -86,20 +86,20 @@ function main_script(DATA) {
 				jump_city : 'Ir para a cidade atual',
 				administrator : 'Administrador',
 				captain : 'Capitão',
-				trade_ov : 'Comércio',
+				trade_ov : 'Troca',
 				command_ov : 'Comandos',
 				recruitment_ov : 'Recrutamento',
-				troop_ov : 'Visão geral Tropa',
-				troops_outside : 'Tropas fora',
-				building_ov : 'Edifício',
+				troop_ov : 'Visão geral das tropasa',
+				troops_outside : 'Tropas no exterior',
+				building_ov : 'Edifícios',
 				culture_ov : 'Cultura',
 				gods_ov : 'Deuses',
-				cave_ov : 'Gruta',
-				city_groups_ov : 'Grupos da cidade',
-				city_list : 'Lista da Cidade',
-				attack_planner : 'Planejador de ataque',
-				farming_villages : 'Aldeias barbaras',
-				menu : 'Menu.',
+				cave_ov : 'Grutas',
+				city_groups_ov : 'Grupos de cidades',
+				city_list : 'Lista de cidades',
+				attack_planner : 'Planejador de ataques',
+				farming_villages : 'Aldeias bárbaras',
+				menu : 'Menu',
 				city_view : 'Vista da cidade',
 				messages : 'Mensagens',
 				reports : 'Relatórios',
@@ -110,49 +110,49 @@ function main_script(DATA) {
 				ranking : 'Posição',
 				notes : 'Notas',
 				chat : 'Chat',
-				council : 'Conselho de heróis'
+				council : 'Conselho de Heróis'
 			},
 			qtoolbox : {
 				onlinecounter_now : 'Tempo',
 				onlinecounter_total : 'Total',
 				onlinecounter_switch : 'Atual Online',
-				stats : 'Estatística',
-				grepostats : 'Estatísticas Grepo',
+				stats : 'Estatísticas',
+				grepostats : 'Grepo Stats',
 				player : 'Jogador',
 				alliance : 'Aliança',
 				rankings : 'Classificação',
-				grepo_bash : 'Grepo atacante',
+				grepo_bash : 'Grepo Bash',
 				track_player : 'Rastrear um Jogador',
 				track_alliance : 'Acompanhe uma Aliança',
-				top_killers : 'Top atacante',
-				maps : 'Maaps',
-				grepo_maps : 'Grepo Mapas',
-				grepo_intel : 'Grepo Intel.',
-				townsearches : 'Pesquisas Cidade',
-				grepo_finder : 'Grepo Localizador',
+				top_killers : 'Top Atacantes',
+				maps : 'Mapas',
+				grepo_maps : 'Grepo Maps',
+				grepo_intel : 'Grepo Intel',
+				townsearches : 'Pesquisar Cidades',
+				grepo_finder : 'Grepo Finder',
 				tonda_polissuche : 'Procurar Cidade',
 				bb_codes : 'BB-Codes',
 				in_town : 'Na cidade',
 				from_town : 'Da cidade',
 				outside_town : 'Fora da cidade',
 				tools : 'Ferramentas',
-				unit_comparison : 'Comparação Unit',
+				unit_comparison : 'Comparação de unidades',
 				google_docs : 'Google Docs',
 				deff_helper : 'Deff Helper',
 				display_modes : 'Exibir',
 				full_screen : 'Tela cheia',
 				minimal : 'Mínimo',
 				standard : 'Padrão',
-				stats_scripts : 'Est. / Scripts',
+				stats_scripts : 'Scripts',
 				settings : 'Opções'
 			},
 			academy : {
-				researched : 'Colorize pesquisado',
-				notresearched : 'Colorize não pesquisou',
+				researched : 'Colorir pesquisado',
+				notresearched : 'Colorir não pesquisado',
 				undo : 'Desfazer coloração'
 			},
 			caves : {
-				stored_silver : 'Moedas de prata armazenados',
+				stored_silver : 'Moedas de prata armazenadss',
 				silver_to_store : 'Moedas de prata armazenáveis',
 				name : 'Nome',
 				wood : 'Madeira',
@@ -161,25 +161,25 @@ function main_script(DATA) {
 			},
 			transport_calc : {
 				btn_main : 'Calc. Transporte',
-				available : 'Disponível capacidade de transporte',
+				available : 'Capacidade de transporte disponível',
 				transportable : 'Unidades transportáveis',
-				recruits : 'Unidades na fila de recrutamento Contagem',
-				outsidetown : 'Contagem unidades fora da cidade',
-				slowtrans : 'Contagem navios de transporte lentos',
-				fasttrans : 'Contagem navios de transporte rápido',
-				disabled : 'Sem funcionamento Temporario'
+				recruits : 'Contagem das unidades na fila de recrutamento',
+				outsidetown : 'Contagem das unidades fora da cidade',
+				slowtrans : 'Contagem de navios de transporte lento',
+				fasttrans : 'Contagem de navios de transporte rápido',
+				disabled : 'Temporariamente desabilitado'
 			},
 			culture : {
-				cityfestivals : 'Festival urbano',
+				cityfestivals : 'Festival Urbano',
 				olympicgames : 'Jogos Olímpicos',
-				triumph : 'Desfile da vitória',
-				theater : 'Peças de teatro'
+				triumph : 'Desfile da Vitória',
+				theater : 'Peças de Teatro'
 			},
 			settings : {
 				text2 : 'Contar tempo no jogo',
-				text3 : 'Abrir links do menu de no jogo',
-				text4 : 'Ative a inclusão de outros scripts Greasemonkey para o menu',
-				text5 : 'Mostrar botões para exposição permanente da fila de unidade, os movimentos e o comércio',
+				text3 : 'Abrir links do menu no jogo',
+				text4 : 'Ativar a inclusão de outros scripts Greasemonkey para o menu',
+				text5 : 'Mostrar botões para mostrar permanente a fila de unidade, movimentos e o comércio',
 				text6 : 'Barra de botões',
 				text9 : 'Exibição no início',
 				text11 : 'Desativar economia de tempo online total',
@@ -187,38 +187,38 @@ function main_script(DATA) {
 				text13 : 'Tela do Menu',
 				text14 : 'Funções do menu',
 				text15 : 'Relatórios',
-				text16 : 'Adicione cor',
+				text16 : 'Adicionar cor',
 				text17 : 'Adicionar filtro',
-				text18 : 'Ative exibição',
-				text19 : 'Apagar todas as configurações e traços do roteiro no cache do navegador?',
+				text18 : 'Ativar exibição',
+				text19 : 'Apagar todas as configurações e traços do script no cache do navegador?',
 				text20 : 'Fórum',
 				text21 : 'Maximizar a largura do fórum',
-				text22 : 'Imagem Hotkey',
+				text22 : 'Imagem tecla de atalho',
 				text23 : 'Menu Grepolis',
 				text24 : 'Senado',
 				text25 : 'Mostrar o número de pontos atribuídos para a construção do próximo nível de um edifício',
-				text26 : 'Janela de negociação',
-				text27 : 'Ative extensão',
-				text28 : 'Lista da Cidade',
+				text26 : 'Janela de troca',
+				text27 : 'Ativar extensão',
+				text28 : 'Lista de Cidades',
 				text29 : 'Lista de Missões',
 				text30 : 'Adicionar uma lista suspensa com suas pastas',
-				text31 : 'Botão para o código BB da cidade atual',
+				text31 : 'Botão para o BB-code da cidade atual',
 				text32 : 'Selecione e exclua mensagens',
-				text34 : 'Visão geral Caves (Administrador)',
+				text34 : 'Visão geral das Grutas (Administrador)',
 				text35 : 'Planejador de Academia',
 				text36 : 'Gruta',
-				text37 : 'Permitir que a triagem de cidades',
-				text38 : 'Digite prata acima 15000 automaticamente no campo de entrada',
-				text40 : 'Aldeias barbaras visão geral (Capitão)',
-				text41 : 'Adicionar um botão para abrir a vista da cidade ao sidemenu de Greplis',
+				text37 : 'Permitir o filtro de cidades',
+				text38 : 'Digite prata acima 15000 automaticamente no campo',
+				text40 : 'Visão geral aldeias bárbaras (Capitão)',
+				text41 : 'Adicionar um botão para abrir a vista da cidade ao menu lateral',
 				text42 : 'Mostrar perdas de recursos',
 				text43 : 'Simulador',
-				text44 : 'Visão geral Ilha',
-				text45 : 'Aumentar a altura da lista de cidades ea lista das aldeias barbaras',
+				text44 : 'Visão geral da Ilha',
+				text45 : 'Aumentar a altura da lista de cidades e a lista das aldeias bárbaras',
 				text46 : 'Tecla de atalho',
-				text47 : '[Enter] para saltar para a cidade atual (não [Space])',
-				text48 : 'Abrir vista da cidade antiga',
-				text49 : 'Ordenar Relatórios alfabeticamente',
+				text47 : 'Usar [Enter] para ir para a cidade atual ao invés da barra de espaço',
+				text48 : 'Abrir vista antiga de cidade',
+				text49 : 'Ordenar relatórios alfabeticamente',
 				text50 : 'Exibição da busca',
 				text51 : 'Esconder cidades após farmar automaticamente',
 				text52 : 'Vista da cidade',
@@ -230,24 +230,24 @@ function main_script(DATA) {
 				info : 'Informações',
 				settings : 'Configurações',
 				translations : 'Traduções',
-				trans_sure : 'Você tem certeza que sua tradução está pronto para enviar?',
-				trans_success : 'A tradução foi enviar com êxito',
-				trans_fail : 'A tradução não poderia ser enviado',
-				trans_infotext1 : 'A tradução não precisa ser completo - apenas traduzir o que você quer',
-				trans_infotext2 : 'Quando um texto contém tags HTML (assim tudo que é cercada por <> parênteses) Peço-lhe para mantê-los onde você os encontrou',
+				trans_sure : 'Você tem certeza que sua tradução está pronta para ser enviada?',
+				trans_success : 'A tradução foi enviada com sucesso',
+				trans_fail : 'A tradução não pode ser enviada',
+				trans_infotext1 : 'A tradução não precisa ser completa - apenas traduzir o que você precisa',
+				trans_infotext2 : 'Quando um texto contém tags HTML (assim como tudo que é cercado por <> parênteses) Mantenha da mesma forma',
 				trans_infotext3 : 'A fim de ser capaz de adicioná-lo aos créditos seu nome de jogador, jogador id eo id mundo será transmitido também',
-				trans_infotext4 : 'Spammers irá ser adicionado à lista de banidos interno e excluídos da utilização do script',
+				trans_infotext4 : 'Spammers irão ser adicionados à lista de banidos interna e excluídos da utilização do script',
 				please_note : 'Por favor, note',
-				credits : 'Creditos',
-				no_translation : 'Sem tradução encontrada',
+				credits : 'Créditos',
+				no_translation : 'Tradução não encontrada',
 				choose_lang : 'Escolha o idioma',
 				add_lang : 'Adicionar um novo idioma',
-				language : 'Lingua',
-				enter_lang_name : 'Por favor insira um nome de idioma',
+				language : 'Idioma',
+				enter_lang_name : 'Por favor insira um nome para o idioma',
 				send : 'Enviar',
 				name : 'Nome',
-				ingame_name : 'Não hesite em contactar-me se você prefere ser chamado pelo seu nome ingame',
-				adfly : 'Você quer ganhar dinheiro com as ligações, também?',
+				ingame_name : 'Não hesite em me contatar se você prefere ser chamado pelo seu nick de jogo',
+				adfly : 'Você quer ganhar dinheiro com links?',
 				donations : 'Doações',
 				update_check : 'Checar por atualizações',
 				prologue : 'Devido à falta de alternativas de uma Devido Falta de Alternativas deuserscripts para Grepolis 2.0 este conjunto de ferramentas foi iniciada dois anos atrás constantemente tenta estender Grepolis com novas funções desde então.<p />Inicialmente, o objectivo era o de reparar as funções de userscripts antigos para Grepolis 1.0 e para aprender as noções básicas de JavaScript no processo, mas por agora muito mais foi realizado. O conjunto de ferramentas é constantemente prorrogado por ideias próprias ou ideias da comunidade e por causa de seu grande apoio a minha motivação para continuar ainda está lá.<p />Você apresenta constantemente me desafios interessantes e é divertido para encontrar soluções para isso. Como se trata de muito trabalho e pode ser muito Eu sou sempre muito grato por qualquer tipo de apoio demorado. Portanto, eu gostaria de agradecer a todos que ofereceram apoio para este projecto - seja através de doações ou clicar em um AdFly-Link, o conhecimento, a criatividade, relatórios de bugs ou apenas algumas palavras de incentivo.'
@@ -257,34 +257,39 @@ function main_script(DATA) {
 				building : 'Níveis de construção',
 				cities : 'Cidades',
 				all : 'Tudo',
-				active_grp : 'Atividade grupo cidade',
-				in : 'Dentro',
-				from : 'a partir de',
-				outside : 'Fora'
+				active_grp : 'Grupo de cidade ativo',
+				in : 'dentro',
+				from : 'de',
+				outside : 'fora',
+				messages : 'Mensagens'
 			},
 			stats_scripts : {
-				stats_scripts_ov : 'Visão geral das estatísticas e os scripts'
+				stats_scripts_ov : 'Visão geral das estatísticas e scripts'
 			},
 			googledocs : {
 				change_url : 'Alterar URL',
-				reset : 'Restabelecer'
+				reset : 'Resetar'
 			},
 			farmhelper : {
-				autohide_cities : 'Ocultar automaticamente Cidades após agricultura ON / OFF'
+				autohide_cities : 'Ocultar automaticamente aldeias bárbaras após farmar ON / OFF'
 			},
 			export_window : {
+				wnd_title : 'Upload de Imagem - visualização',
+				button_mouseover : 'Exportar para imagem',
+				upload : 'Fazer upload',
 				settings : 'Configurações',
+				preview : 'Visualização',
 				chrome : 'Chrome abre a janela com a imagem por padrão como um pop-up. Se preferir que a janela se abre como uma nova guia, você tem que instalar um addon extra. Clique aqui para chegar ao addon.',
 				info : 'O provedor de hospedagem, infelizmente, permite que apenas 1.250 uploads diariamente. Eles vão proibir este serviço para o resto do mês, se eu exceder esse valor 5 vezes. No longo prazo, eu pretendo alugar um servidor próprio para isso, mas os custos e o desenvolvimento precisam de algum tempo e, acima de tudo dinheiro. Eu invisto meu tempo livre para isso com prazer, mas como um estudante Eu simplesmente não pode pagar todos os custos envolvidos. Como uma possibilidade de refinanciamento, por isso, usar os sponsorlinks de Adf.ly (apenas para a primeira imagem publicada). Com um clique neste botão informação que você será redirecionado para a página oficial de doação Paypal deste script. Obrigado a todos que já apoiam este projecto e para aqueles que pretendem fazê-lo.',
 				connection_fail_text : 'A conexão com o servidor falhou. O servidor está inacessível ou o maxmimum capacidade de hospedagem é alcançado para hoje (1250 imagens por dia / 50 imagens por usuário).',
 				town : 'Cidade',
 				luck : 'Sorte',
-				title : 'Titulo',
+				title : 'T Título',
 				resources : 'Recursos',
 				wall : 'Muralha',
 				player : 'Jogador',
 				reporttype : 'Tipo de Relatório',
-				resources_lost : 'Recursos Perdido',
+				resources_lost : 'Recursos Perdidos',
 				nightbonus : 'Bônus Noturno',
 				alliance : 'Aliança',
 				troops : 'Tropas',
@@ -295,9 +300,9 @@ function main_script(DATA) {
 				date : 'Data',
 				spell_info : 'Informação do Feitiço',
 				spell_effect : 'Efeito do Feitiço',
-				message : 'Messagem',
-				attacker : 'Ataque',
-				defender : 'Defendesa',
+				message : 'Mensagem',
+				attacker : 'Atacante',
+				defender : 'Defensor',
 				bonuses : 'Feitiços/Bônus',
 				command_type : 'Tipo de Comando',
 				town_left : 'Cidade (esquerda)',
@@ -311,14 +316,14 @@ function main_script(DATA) {
 				defeated_def : 'Derrotado como defensor',
 				losses_atk : 'Perdas como atacante',
 				losses_def : 'Perdas como defensor',
-				brush_size : 'Tamanho do Pincel',
+				brush_size : 'Tamanho do pincel',
 				color : 'Cor',
 				eraser : 'Apagar',
-				pencil : 'Pincel',
+				pencil : 'Lápis',
 				arrow : 'Seta',
 				rectangel : 'Retângulo',
 				line : 'Linha',
-				arc : 'Circulo',
+				arc : 'Arco',
 				delete_drawing : 'Excluir desenho',
 				fill : 'Preencher'
 			},
@@ -329,6 +334,9 @@ function main_script(DATA) {
 				green : 'verde',
 				yellow : 'amarelo',
 				gray : 'cinza'
+			},
+			command_ov : {
+				commands : 'Comandos'
 			}
 		},
 		cz : {
@@ -562,7 +570,7 @@ function main_script(DATA) {
 				polissuche : 'Polissuche',
 				inactivity : 'Inaktivität',
 				days : 'Tage',
-				no_data : 'Der Spieler befindet sich noch nicht in der Datenbank'
+				no_data : 'Der Spieler befindet sich nicht in der Datenbank'
 			},
 			grepo_mainmenu : {
 				city_view : 'Stadtansicht',
@@ -1739,26 +1747,27 @@ function main_script(DATA) {
 			},
 			reports : {
 				choose_folder : 'Scegli cartella',
-				enacted : 'lavorato',
-				conquered : 'conquistato',
-				spying : 'spiato',
+				enacted : 'Eseguito',
+				conquered : 'Conquistato',
+				spying : 'Spiando',
 				spy : 'Spia',
 				support : 'supporti',
-				supporting : 'supporta',
-				attacking : 'attacca',
+				supporting : 'supportando',
+				attacking : 'attaccando',
 				farming_village : 'villaggio rurale'
 			},
 			forum : {
 				delete : 'Cancella',
-				delete_sure : 'Vuoi veramente cancellare questo post?',
-				no_selection : 'Nessun posts selezionato'
+				delete_sure : 'Vuoi davvero cancellare questo post?',
+				no_selection : 'Nessun post selezionato'
 			},
 			town_info : {
+				no_overload : 'Nessun sovraccarico',
 				delete : 'Cancella',
 				polissuche : 'cerca città',
 				inactivity : 'Inattività',
 				days : 'giorni',
-				no_data : 'Il player non è nel database'
+				no_data : 'Il player non esiste ancora nel database'
 			},
 			grepo_mainmenu : {
 				city_view : 'Panoramica città',
@@ -2865,7 +2874,7 @@ function main_script(DATA) {
 				polissuche : 'town search',
 				inactivity : 'Inactivity',
 				days : 'days',
-				no_data : 'The player is not yet listed in the database'
+				no_data : 'This player is not listed in the database'
 			},
 			grepo_mainmenu : {
 				city_view : 'City view',
@@ -3395,10 +3404,14 @@ function main_script(DATA) {
 				var dataArray = data.split(',');
 				$.each(dataArray, function (index, value) {
 					var obj_temp = value.split(':');
-					var date_user = new Date(parseInt(obj_temp[1], 10) * 1000);
-					var date_diff = date_now - date_user;
-					var inactive_days = date_diff / 1000 / 60 / 60 / 24;
-					var inactive_days_quarter = Math.floor(inactive_days * 4) / 4;
+					if (parseInt(obj_temp[1]) === 0) {
+						var inactive_days_quarter = "undefined";
+					} else {
+						var date_user = new Date(parseInt(obj_temp[1], 10) * 1000);
+						var date_diff = date_now - date_user;
+						var inactive_days = date_diff / 1000 / 60 / 60 / 24;
+						var inactive_days_quarter = Math.floor(inactive_days * 4) / 4;
+					}
 					playerArray[obj_temp[0]] = inactive_days_quarter;
 				});
 				return playerArray;
@@ -3412,12 +3425,14 @@ function main_script(DATA) {
 					bgPos = "0 -24px";
 				} else if (inactive_days >= 5) {
 					bgPos = "0 -36px";
+				} else {
+					bgPos = "0 0";
 				}
 				return 'url(' + bgImage + ') no-repeat ' + bgPos + '';
 			},
 			createPopup : function (inactive_days) {
 				var popupHTML = '';
-				if (typeof inactive_days === 'undefined') {
+				if (typeof inactive_days === 'undefined' || inactive_days === 'undefined') {
 					popupHTML += QT.Lang.get("town_info", "no_data");
 				} else {
 					popupHTML += '<b>' + QT.Lang.get("town_info", "inactivity") + ':</b> ' + inactive_days + ' ' + QT.Lang.get("town_info", "days");
@@ -3432,7 +3447,7 @@ function main_script(DATA) {
 			changeDisplay : function (JQelement, inactive_days) {
 				var number_days = Math.floor(inactive_days);
 				var background = QT.Helper.Inactivity.getBG(number_days);
-				if (typeof inactive_days === 'undefined') {
+				if (typeof inactive_days === 'undefined' || inactive_days === 'undefined') {
 					number_days = '-';
 				}
 				$(JQelement).find(".qt_activity_number").text(number_days);
@@ -3462,7 +3477,7 @@ function main_script(DATA) {
 					"background-repeat" : "no-repeat",
 					"background-position" : "0px 0px"
 				});
-				
+
 				$("#" + id).hover(
 					function () {
 					$(this).css({
@@ -3474,7 +3489,7 @@ function main_script(DATA) {
 						"background-position" : "0px 0px"
 					});
 				});
-				
+
 				$("#" + id).click(function () {
 					QT.Helper.Screenshot.open_window(QT.Lang.get("export_window", "wnd_title"));
 					QT.Helper.Screenshot.get_settings(window_type);
@@ -4831,7 +4846,6 @@ function main_script(DATA) {
 			var c = wnd.getID();
 
 			QT.Helper.Screenshot.btn_preview("DIV#gpwnd_" + c + " #place_defense .game_header", "qt_commandoverviewexport", "command_overview", function() {
-				
 				$("DIV#gpwnd_" + c + " #command_overview").clone().appendTo("#qt_canvas");
 				$("#qt_canvas .rename_command").remove();
 				$("#qt_canvas .do_rename_command").remove();
@@ -6854,7 +6868,7 @@ function main_script(DATA) {
 				});
 				var HTML_tab2 = '';
 				var q_translations = {
-					BR : "==CrAZyWoW==, douglasgoclv, tesseus, Stelvins, Jonh Snow",
+					BR : "==CrAZyWoW==, douglasgoclv, tesseus, Stelvins, Jonh Snow, BeerCode",
 					CZ : "jarajanos, Apolon Foibos, jarajanos",
 					DE : "Quackmaster, Scav77",
 					EN : "Quackmaster, cedomaiori",
@@ -6862,7 +6876,7 @@ function main_script(DATA) {
 					FR : "higter, Mazelys, jbrek, ToolFire, aldo666, jojopt",
 					GR : "drmacsoft, adipas.ioannis, juvekdk, ΤζονακοςΚ, genial, Tassos.28",
 					HU : "Arminno, Betagamer, Shia-ko",
-					IT : "masale81, Psy17",
+					IT : "masale81, Psy17, Sluggish",
 					NL : "Quackmaster, Florent15, sannelos, megaabelleke, Thodoris, HGamert, Siloperg47, necromancer97, nijtram1236",
 					PL : "Slietie, Tropsy Kretts, Polny Konik, danon2",
 					RO : "BaietelulCelFrumusel",
@@ -6893,7 +6907,7 @@ function main_script(DATA) {
 					["David M. - 10€", "Thomas M. W. - 3€", "Benedikt K. - 2€", "Sandra M. - 5€"],
 					["Lea Renate G. - 10€", "Helena E. - 5€", "Mercedes G. - 1€", "Alexander S. - 10 €"],
 					["Peter F. - 1€", "Martina S - 1€", "Wilhelm B. - 2€", "Anna G. - 0,01€"],
-					["Maria N. - 5€"]
+					["Maria N. - 5€", "Katharine S. - 10€", "Herbert W. - 5€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
@@ -7997,8 +8011,8 @@ function main_script(DATA) {
 						QTF.hidesSort();
 				break;
 				case "town_overviews/command_overview":
-					QTF.commandOverviewExport(); // Canvas width inkorrekt, wenn Scrollleiste nicht vorhanden
 					QTF.commandOverview(xhr);
+					QTF.commandOverviewExport(); // Canvas width inkorrekt, wenn Scrollleiste nicht vorhanden
 				break;
 				case "town_overviews/culture_overview":
 				case "town_overviews/start_celebration":
