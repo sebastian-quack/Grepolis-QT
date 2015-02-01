@@ -4,9 +4,8 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.47.01
+// @version        2.48.00
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
-// @grant          GM_listValues
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_deleteValue
@@ -3280,7 +3279,7 @@ function main_script(DATA) {
 			"qmenu_update_next" : 0,
 			"script_version" : 0,
 			"clicked_sponsor_links" : 0,
-			"last_clicked_sponsor_link" : 0,
+			"clicked_sponsor_link_last" : 0,
 			"googledocsurl" : "https://docs.google.com/spreadsheet/ccc?key=0AkpTmTnKs72_dEF3bWs3SW5iWjdyUEE0M0c3Znpmc3c",
 			"grepolistoolkit" : false,
 			"qmenu_settings_akademieplaner" : true,
@@ -8133,13 +8132,46 @@ function main_script(DATA) {
  * Start Method
  ***********************************************************************/
 var DATA = {
-	script_version : GM_info.script.version
+	script_version : GM_info.script.version,
+	onlinetotal : GM_getValue("onlinetotal", 0),
+	qmenu_online_version : GM_getValue("qmenu_online_version", 0),
+	qmenu_update_next : GM_getValue("qmenu_update_next", 0),
+	clicked_sponsor_links : GM_getValue("clicked_sponsor_links", 0),
+	clicked_sponsor_link_last : GM_getValue("clicked_sponsor_link_last", 0),
+	googledocsurl : GM_getValue("googledocsurl", "https://docs.google.com/spreadsheet/ccc?key=0AkpTmTnKs72_dEF3bWs3SW5iWjdyUEE0M0c3Znpmc3c"),
+	grepolistoolkit : GM_getValue("grepolistoolkit", false),
+	qmenu_settings_akademieplaner : GM_getValue("qmenu_settings_akademieplaner", true),
+	qmenu_settings_berichte_farben : GM_getValue("qmenu_settings_berichte_farben", true),
+	qmenu_settings_berichte_filter : GM_getValue("qmenu_settings_berichte_filter", true),
+	qmenu_settings_berichte_losses : GM_getValue("qmenu_settings_berichte_losses", true),
+	qmenu_settings_berichte_move : GM_getValue("qmenu_settings_berichte_move", true),
+	qmenu_settings_berichte_sortfolders : GM_getValue("qmenu_settings_berichte_sortfolders", true),
+	qmenu_settings_buttonbar : GM_getValue("qmenu_settings_buttonbar", true),
+	qmenu_settings_cityview_BTN : GM_getValue("qmenu_settings_cityview_BTN", true),
+	qmenu_settings_cityview_window : GM_getValue("qmenu_settings_cityview_window", true),
+	qmenu_settings_counter : GM_getValue("qmenu_settings_counter", true),
+	qmenu_settings_counter_aktiv : GM_getValue("qmenu_settings_counter_aktiv", true),
+	qmenu_settings_farmhelper : GM_getValue("qmenu_settings_farmhelper", true),
+	qmenu_settings_farmhelper_hidecities : GM_getValue("qmenu_settings_farmhelper_hidecities", true),
+	qmenu_settings_forumdelete : GM_getValue("qmenu_settings_forumdelete", true),
+	qmenu_settings_grepopoints : GM_getValue("qmenu_settings_grepopoints", true),
+	qmenu_settings_hidesilver : GM_getValue("qmenu_settings_hidesilver", true),
+	qmenu_settings_hidessilver : GM_getValue("qmenu_settings_hidessilver", true),
+	qmenu_settings_hidessort : GM_getValue("qmenu_settings_hidessort", true),
+	qmenu_settings_hotkey_anzeige : GM_getValue("qmenu_settings_hotkey_anzeige", true),
+	qmenu_settings_hotkey_jump : GM_getValue("qmenu_settings_hotkey_jump", true),
+	qmenu_settings_hotkey_active : GM_getValue("qmenu_settings_hotkey_active", true),
+	qmenu_settings_island_villages : GM_getValue("qmenu_settings_island_villages", true),
+	qmenu_settings_links : GM_getValue("qmenu_settings_links", true),
+	qmenu_settings_maximize_forum : GM_getValue("qmenu_settings_maximize_forum", true),
+	qmenu_settings_plusmenu : GM_getValue("qmenu_settings_plusmenu", true),
+	qmenu_settings_questliste : GM_getValue("qmenu_settings_questliste", true),
+	qmenu_settings_questpfeil : GM_getValue("qmenu_settings_questpfeil", true),
+	qmenu_settings_stadtliste : GM_getValue("qmenu_settings_stadtliste", true),
+	qmenu_settings_tradeimprovement : GM_getValue("qmenu_settings_tradeimprovement", true),
+	qmenu_settings_transport_rechner : GM_getValue("qmenu_settings_transport_rechner", true),
+	qmenu_settings_townbb : GM_getValue("qmenu_settings_townbb", true)
 };
-
-var keys = GM_listValues();
-for (var i = 0, key = null; key = keys[i]; i++) {
-	DATA[key] = GM_getValue(key);
-}
 
 unsafeWindow.QT_saveValue = function (name, val) {
 	setTimeout(function () {
@@ -8148,17 +8180,19 @@ unsafeWindow.QT_saveValue = function (name, val) {
 };
 unsafeWindow.QT_saveAllValues = function (values) {
 	setTimeout(function () {
-		var exceptions = ["qmenu_update_next", "qmenu_online_version", "onlinetotal, googledocsurl"];
-		var keys = GM_listValues();
-		for (var i = 0, key = null; key = keys[i]; i++) {
+		var exceptions = ["qmenu_update_next", "qmenu_online_version", "onlinetotal", "googledocsurl", "clicked_sponsor_links", "clicked_sponsor_link_last"];
+	
+		for (key in DATA) {
 			if (exceptions.indexOf(key) > -1) {
 				continue;
 			}
 			GM_deleteValue(key);
 		}
+		
 		for (key in values) {
 			GM_setValue(key, values[key]);
 		}
+		
 		window.location.reload();
 	}, 0);
 };
@@ -8169,8 +8203,7 @@ unsafeWindow.QT_deleteValue = function (name) {
 };
 unsafeWindow.QT_deleteAllValues = function () {
 	setTimeout(function () {
-		var keys = GM_listValues();
-		for (var i = 0, key = null; key = keys[i]; i++) {
+		for (key in DATA) {
 			GM_deleteValue(key);
 		}
 		window.location.reload();
