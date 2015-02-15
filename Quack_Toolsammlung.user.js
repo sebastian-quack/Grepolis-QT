@@ -4,7 +4,7 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.48.00
+// @version        2.48.01
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -1006,6 +1006,7 @@ function main_script(DATA) {
 				text45 : 'Agrandar la altura de la lista de ciudades y la lista de las aldeas agrícolas',
 				text46 : 'Atajos de teclado',
 				text47 : 'Utilizar [Enter] como el botón para saltar a la ciudad actual (no [Space])',
+				text48 : 'Abrir la vista de la ciudad antigua',
 				text49 : 'Ordenar por orden alfabético los informes',
 				text51 : 'Ocultar automáticamente Ciudades después de la agricultura',
 				text52 : 'Vista de la ciudad',
@@ -1061,6 +1062,10 @@ function main_script(DATA) {
 				autohide_cities : 'Ocultar automáticamente las Ciudades después de la agricultura encendido/apagado'
 			},
 			export_window : {
+				button_mouseover : 'Exportar a imagen',
+				upload : 'Subir',
+				settings : 'Opciones',
+				preview : 'Vista previa',
 				town : 'Ciudad',
 				luck : 'Suerte',
 				title : 'Titulo',
@@ -1072,8 +1077,27 @@ function main_script(DATA) {
 				nightbonus : 'Bonus nocturno',
 				alliance : 'Alianza',
 				troops : 'Tropas',
+				buildings : 'Edificios',
+				payed_iron : 'Hierro pagado',
+				payed_iron_storage : 'Hierro almacenado',
+				date : 'Fecha',
+				spell_info : 'Información del hechizo',
+				spell_effect : 'Efecto del hechizo',
+				message : 'Mensaje',
 				attacker : 'Atacante',
 				defender : 'Defensor',
+				bonuses : 'Hechizos/beneficios',
+				town_left : 'Ciudad (izquierda)',
+				town_right : 'Ciudad (derecha)',
+				player_left : 'Jugador (izquierda)',
+				player_right : 'Jugador (derecha)',
+				travel_time : 'Tiempo de viaje',
+				time_of_arrival : 'Tiempo de llegada',
+				command : 'Comando',
+				defeated_atk : 'Derrotado como atacante',
+				defeated_def : 'Derrotado como defensor',
+				losses_atk : 'Perdidas como atacante',
+				losses_def : 'Perdidas como defensor',
 				brush_size : 'Tamaño de pincel',
 				color : 'Color',
 				eraser : 'Borrador',
@@ -1092,6 +1116,9 @@ function main_script(DATA) {
 				green : "verde",
 				yellow : "amarillo",
 				gray : "gris"
+			},
+			command_ov : {
+				commands : 'Comandos'
 			}
 		},
 		fr : {
@@ -1615,7 +1642,8 @@ function main_script(DATA) {
 				full_screen : 'Teljes képernyő',
 				minimal : 'Minimális',
 				standard : 'Alap',
-				stats_scripts : 'Statisztikák/Scriptek'
+				stats_scripts : 'Statisztikák/Scriptek',
+				settings : 'Script kezelő'
 			},
 			academy : {
 				researched : 'Kifejlesztett színezése',
@@ -1646,7 +1674,7 @@ function main_script(DATA) {
 				theater : 'Színházi játékok'
 			},
 			settings : {
-				text2 : 'Onlineszámoló',
+				text2 : 'Online-idő számláló',
 				text3 : 'Linkek megnyitása a menüből a játékban',
 				text4 : 'Aktiválja a többi greasemonkey scriptet',
 				text5 : 'Mutassa az egységek kiképzési sorrendjének, a mozgásoknak és a kereskedelemnek a kapcsolóit az állandó kijelzőn',
@@ -1685,6 +1713,7 @@ function main_script(DATA) {
 				text43 : 'Szimulátor',
 				text44 : 'Sziget áttekintő',
 				text45 : 'Megnöveli a városlista és a farmolható faluk listájának a magasságát',
+				text46 : 'Gyorsparancsok',
 				text47 : '[Enter] használata az aktuális városhoz ugrásra (nem [Space])',
 				text48 : 'Régi városnézet megnyitása',
 				text49 : 'Jelentések mappa ABC sorrendbe rendezése',
@@ -1710,7 +1739,7 @@ function main_script(DATA) {
 				no_translation : 'Nem találtunk fordítást',
 				choose_lang : 'Válaszz nyelvet',
 				add_lang : 'Új nyelv hozzáadása',
-				language : 'Nyeév',
+				language : 'Nyelv',
 				enter_lang_name : 'Írd be a nyelv nevét',
 				send : 'Küldés',
 				name : 'Név',
@@ -1737,6 +1766,17 @@ function main_script(DATA) {
 			googledocs : {
 				change_url : 'Link cserélése',
 				reset : 'Újra'
+			},
+			colors : {
+				black : 'fekete',
+				blue : 'kék',
+				red : 'piros',
+				green : 'zöld',
+				yellow : 'sárga',
+				gray : 'szürke'
+			},
+			command_ov : {
+				commands : 'Parancsok'
 			}
 		},
 		it : {
@@ -1898,19 +1938,64 @@ function main_script(DATA) {
 				reset : 'Resetta impostazioni',
 				contact : 'Contatto',
 				translations : 'Traduzioni',
+				trans_success : 'La traduzione è stata inviata con successo',
+				trans_fail : 'Non è stato possibile inviare la traduzione',
+				trans_infotext1 : 'La traduzione non deve essere completa - traduci solo quello che ti senti',
+				trans_infotext3 : 'Per essere in grado di aggiungere il vostro nome ai crediti, verranno trasmessi anche l\'id giocatore e l\'id del mondo',
+				trans_infotext4 : 'Gli spammer saranno aggiunti alla lista ban interna ed esclusi dall\'uso dello script',
+				credits : 'Crediti',
+				no_translation : 'Nessuna traduzione trovata',
+				choose_lang : 'Scegli linguaggio',
+				add_lang : 'Aggiungi un nuovo linguaggio',
+				language : 'Linguaggio',
+				enter_lang_name : 'Per favore inserisci il nome del linguaggio',
+				send : 'Invia',
+				name : 'Nome',
+				ingame_name : 'Non esitare a contattarmi se preferisci essere chiamato con il tuo nickname',
+				update_check : 'Verifica per aggiornamenti',
 				donations : 'Donazioni'
 			},
 			bbcode : {
 				troops : 'Truppe',
 				building : 'Livelli di costruzione',
+				cities : 'Città',
+				all : 'Tutte',
+				active_grp : 'Gruppo città attive',
 				from : 'da',
-				outside : 'fuori da'
+				outside : 'fuori da',
+				messages : 'Messaggi'
 			},
 			stats_scripts : {
 				stats_scripts_ov : 'Panoramica di statistiche e script'
 			},
 			googledocs : {
-				change_url : 'Cambia URL'
+				change_url : 'Cambia URL',
+				reset : 'Resetta'
+			},
+			farmhelper : {
+				autohide_cities : 'Nascondi automaticamente i villaggi dopo la richiesta o il saccheggio on/off',
+			},
+			export_window : {
+				wnd_title : 'upload immagine - anteprima',
+				button_mouseover : 'Esporta come immagine',
+				settings : 'Impostazioni',
+				preview : 'Anteprima',
+				chrome : 'Con Chrome la schermata si apre di default come un popup. Se si preferisce che si apra come una nuova scheda è necessario installare un addon in più. Clicca qui per arrivare all\'addon.',
+				info : 'Il fornitore di hosting purtroppo consente solo 1.250 uploads al giorno. Il fornitore bloccherà questo servizio per il resto del mese se superiamo questo importo 5 volte. Per questo prossimamente ho intenzione di affittare un proprio server, ma i costi e lo sviluppo hanno bisogno di un po\' di tempo e soprattutto denaro. Investo il mio tempo libero per questo con piacere, ma come studente non riesco proprio a pagare tutti i costi. Come possibilità di rifinanziamento pertanto sto utilizzando lo sponsorlinks di Adf.ly (solo per il primo screenshot pubblicato). Con un clic su questo pulsante di Info sarete reindirizzati alla pagina ufficiale delle donazioni Paypal per questo script. Grazie a tutti coloro che già sostengono questo progetto e a coloro che intendono farlo.',
+				connection_fail_text : 'La connessione al server non è riuscita. Il server non è raggiungibile o è stata raggiunta la massima capacità di accoglienza per oggi (1250 immagini al giorno / 50 immagini per utente).',
+				town : 'Città',
+				luck : 'Fortuna'
+			},
+			colors : {
+				black : 'nero',
+				blue : 'blu',
+				red : 'rosso',
+				green : 'verde',
+				yellow : 'giallo',
+				gray : 'grigio'
+			},
+			command_ov : {
+				commands : 'Comandi'
 			}
 		},
 		nl : {
@@ -2403,6 +2488,283 @@ function main_script(DATA) {
 			},
 			farmhelper : {
 				autohide_cities : 'Autoukrywanie miast po zebraniu surowców z wiosek rolniczych wł/wył'
+			}
+		},
+		pt : {
+			meta : {
+				flag : 'http://fs1.directupload.net/images/150205/37p8cy33.png',
+			},
+			reports : {
+				choose_folder : 'Escolha pasta',
+				enacted : 'Aprovada',
+				conquered : 'Conquistada',
+				spying : 'a espiar',
+				spy : 'Espião',
+				support : 'suporte',
+				supporting : 'a suportar',
+				attacking : 'a atacar',
+				farming_village : 'A pilhar a cidade'
+			},
+			forum : {
+				delete : 'Eliminar',
+				delete_sure : 'Queres mesmo eliminar este comentário?',
+				no_selection : 'Sem comentários seleccionados'
+			},
+			town_info : {
+				no_overload : 'Sem sobrecarga',
+				delete : 'Eliminar',
+				polissuche : 'pesquisa de cidade',
+				inactivity : 'Inactividade',
+				days : 'dias',
+				no_data : 'Este jogador não consta na base de dados'
+			},
+			grepo_mainmenu : {
+				city_view : 'Vista da cidade',
+				island_view : 'Vista da ilha'
+			},
+			messages : {
+				ghosttown : 'Cidade Fantasma',
+				no_cities : 'Sem cidades nest ilha',
+				all : 'todas',
+				export : 'Converter mensagem em BB-Code'
+			},
+			hotkeys : {
+				hotkeys : 'Teclas de atalho',
+				city_select : 'Seleção de cidade',
+				last_city : 'Última cidade',
+				next_city : 'Próxima cidade',
+				jump_city : 'Ir para a cidade actual',
+				administrator : 'Administrador',
+				captain : 'Capitão',
+				trade_ov : 'Troca',
+				command_ov : 'Comandos',
+				recruitment_ov : 'Recrutar',
+				troop_ov : 'Resumo de tropas',
+				troops_outside : 'Tropas fora',
+				building_ov : 'Edificios',
+				culture_ov : 'Cultura',
+				gods_ov : 'Deuses',
+				city_groups_ov : 'Grupos de cidades',
+				city_list : 'Lista de cidades',
+				attack_planner : 'Planear ataques',
+				farming_villages : 'Pilhar cidades',
+				city_view : 'Vista de cidade',
+				messages : 'Mensagens',
+				reports : 'Reportes',
+				alliance : 'Aliança',
+				alliance_forum : 'Forum da aliança',
+				settings : 'Definições',
+				profile : 'Perfil',
+				notes : 'Notas',
+				council : 'Concelho dos herois'
+			},
+			qtoolbox : {
+				onlinecounter_now : 'Actual',
+				onlinecounter_switch : 'Actualmente online/total',
+				stats : 'Estatísticas',
+				player : 'Jogador',
+				alliance : 'Aliança',
+				track_player : 'Localizar um jogador',
+				track_alliance : 'Localizar uma aliança',
+				maps : 'Mapas',
+				townsearches : 'Pesquisa de cidades',
+				in_town : 'Na cidade',
+				from_town : 'Da cidade',
+				outside_town : 'Fora da cidade',
+				tools : 'Ferramentas',
+				unit_comparison : 'Comparação de unidades',
+				minimal : 'Minimo'
+			},
+			academy : {
+				researched : 'Colorir a pesquisa',
+				notresearched : 'Colorir não pesquisado',
+				undo : 'Repor cor'
+			},
+			caves : {
+				stored_silver : 'Moedas de prata armazenadas',
+				silver_to_store : 'Moedas de prata que podem ser armazenadas',
+				name : 'Nome',
+				wood : 'Madeira',
+				stone : 'Pedra',
+				silver : 'Moedas de prata'
+			},
+			transport_calc : {
+				btn_main : 'Calculadora de transporte',
+				available : 'Capacidade de transporte disponivel',
+				transportable : 'Unidades transportáveis',
+				recruits : 'Contar de unidade em fila de recrutamento',
+				outsidetown : 'Contador de unidades fora da cidade',
+				slowtrans : 'Contador de navios de transporte lentos',
+				fasttrans : 'Contador de navios de transporte rápidos',
+				disabled : 'Temporariamente desativo'
+			},
+			culture : {
+				cityfestivals : 'Festivais da cidade',
+				olympicgames : 'Jogos olímpicos',
+				triumph : 'Procissão de victória',
+				theater : 'Peças de teatro'
+			},
+			settings : {
+				text2 : 'Contador online',
+				text3 : 'Abrir links pelo menu de jogo',
+				text4 : 'Activar a inclusão de outros scripts do greasemonkey no menu.',
+				text5 : 'Mostra botões permanentemente para fila de unidades, movimentos e trocas',
+				text6 : 'Barra de botões',
+				text9 : 'Mostrar ao inicio',
+				text11 : 'Desactivar registo do tempo total online',
+				text12 : 'Calculadora de transporte',
+				text13 : 'Menu de visualização',
+				text14 : 'Menu de caracteristicas',
+				text15 : 'Reportes',
+				text16 : 'Adicionar cor',
+				text17 : 'Adicionar filtro',
+				text18 : 'Activar vista',
+				text19 : 'Eliminar todas as definições e configurações do script no cache do browser',
+				text20 : 'Forum ',
+				text21 : 'Maximizar a largura do forum',
+				text22 : 'Imagem das teclas de atalho',
+				text23 : 'Menu Grepolis',
+				text24 : 'Senado',
+				text25 : 'Mostrar o número de pontos creditados pela construção do próximo nível deste edificio',
+				text26 : 'Janela de troca',
+				text27 : 'Activar extensão',
+				text28 : 'Lista de cidades',
+				text29 : 'Lista de missões',
+				text30 : 'Adicionar lista suspensa com as suas pastas',
+				text31 : 'Botão para o BB-code da cidade actual',
+				text32 : 'Selecionar e eliminar posts',
+				text34 : 'Visão de caves (Administrador)',
+				text35 : 'Planeamento da academia',
+				text37 : 'Permitir alinhar cidades',
+				text38 : 'Colocar prata acima de 15000 automaticamente no campo de input',
+				text40 : 'Vista das aldeias de pilhagem (Capitão)',
+				text41 : 'Adicionar botão para abrir a vista de cidade no menu lateral do Grepolis',
+				text42 : 'Mostrar as perdas de recursos',
+				text43 : 'Simulador',
+				text44 : 'Vista de ilha',
+				text45 : 'Aumentar a altura da lista de cidades e da lista de aldeias de pilhagem',
+				text46 : 'Teclas de atalho',
+				text47 : 'Usar [Enter] como o botão para retornar à cidade actual (não [Space])',
+				text48 : 'Abrir a vista de cidade antiga',
+				text49 : 'Ordem pastas de reporte alfabeticamente',
+				text50 : 'Mostrar a seta de missões',
+				text51 : 'Esconder automaticamente cidades depois de ',
+				text52 : 'Vista de cidade',
+				text53 : 'Mostrar a vista de cidade numa janela',
+				other : 'Outro',
+				save : 'Guardar',
+				reset : 'Repor definições',
+				contact : 'Contacto',
+				info : 'Informação',
+				settings : 'Definições',
+				translations : 'Traduções',
+				trans_sure : 'Tem a certeza que a tradução está pronta para enviar?',
+				trans_success : 'Tradução enviada com sucesso',
+				trans_fail : 'A tradução não pode ser enviada',
+				trans_infotext1 : 'A tradução não tem de ser completa. Traduza apenas o que pretender',
+				trans_infotext2 : 'Quando um texto tem tags HTML (ou seja, tudo o que está ente <> parêntesis) eu peço que os mantenhas como os encontraste.',
+				trans_infotext3 : 'De forma a colocá-lo nos créditos o seu nome, ID de jogador e mundo serão igualmente transmitidos',
+				trans_infotext4 : 'Spammers serão adicionados à lista interna e bloqueado o uso do script',
+				please_note : 'Por favor note',
+				credits : 'Créditos',
+				no_translation : 'Tradução não encontrada',
+				choose_lang : 'Escolher lingua',
+				add_lang : 'Adicionar nova lingua',
+				language : 'Linguagem',
+				enter_lang_name : 'Por favor indica a linguagem',
+				send : 'Enviar',
+				name : 'Nome',
+				ingame_name : 'Não hesite em contactar-me se preferir ser tratado pelo seu nome de jogo',
+				adfly : 'Também quer ganhar dinheiro com links?',
+				donations : 'Doações',
+				update_check : 'Verificar updates',
+				prologue : 'Devido à falta de alternativas de userscripts para Grepolis 2.0 deste conjunto de ferramentas foi iniciado há dois anos e constantemente tenta estender Grepolis com novas funções desde então.<p />Inicialmente, o objetivo era o de reparar as funções de userscripts velhos para Grepolis 1.0 e para aprender os conceitos básicos de JavaScript no processo, mas por agora, muito mais tem sido realizado. O conjunto de ferramentas é constantemente melhorado por nossas próprias idéias ou idéias da comunidade, por causa do seu grande apoio a minha motivação para continuar ainda está lá. Você apresenta constantemente desafios interessantes e é divertido para encontrar soluções para isso.<p />Como se trata de uma grande quantidade de trabalho que pode ser muito Eu sou sempre muito grato por qualquer tipo de apoio demorado. Portanto, eu gostaria de agradecer a todos que ofereceram apoio para este projeto - seja através de doações ou clicando em um AdFly-Link, o conhecimento, a criatividade, relatórios de bugs ou apenas algumas palavras de incentivo.'
+			},
+			bbcode : {
+				troops : 'Tropas',
+				building : 'Nível de edificios',
+				cities : 'Cidades',
+				all : 'Todos',
+				active_grp : 'Grupo de cidades activo',
+				in : 'no',
+				from : 'de',
+				outside : 'Fora de',
+				messages : 'Mensagens'
+			},
+			stats_scripts : {
+				stats_scripts_ov : 'Rever estados e scriots'
+			},
+			googledocs : {
+				change_url : 'Mudar URL'
+			},
+			farmhelper : {
+				autohide_cities : 'Auto Hide Farming Villages after farming or looting on/off'
+			},
+			export_window : {
+				wnd_title : 'Revisão do upload da imagem',
+				button_mouseover : 'Exportar para imagem',
+				upload : ' Upload',
+				settings : 'Definições',
+				preview : 'Rever',
+				chrome : 'O Chrome abre por predefinição a janela com o screenshot como um pop-up. Se preferir que a janela abra como uma nova tab tem de instalar um addon Extra. Clique aqui para obter o addon',
+				info : 'O provedor de hospedagem, infelizmente, permite  apenas 1.250 uploads diariamente. Eles vão proibir este serviço para o resto do mês, se eu exceder esse valor 5 vezes. No longo prazo, eu pretendo alugar um servidor próprio para isso, mas os custos e o desenvolvimento precisam de algum tempo e, acima de tudo dinheiro. Eu invisto meu tempo livre para isso com prazer, mas como um estudante Eu simplesmente não pode pagar todos os custos envolvidos. Como alternativa , uso os sponsorlinks de Adf.ly (apenas para a primeira imagem publicada). Com um clique neste botão informação você será redirecionado para a página oficial de doação Paypal deste script. Obrigado a todos que já apoiam este projecto e para aqueles que pretendem fazê-lo.',
+				connection_fail_text : 'Conexão com o servidor falhou. O servidor não está contactável ou a capacidade de alojamento foi alcançada para hoje (1250 imagens por dia / 50 imagens por utilizador)',
+				town : 'Cidade',
+				luck : 'Sorte',
+				title : 'Titulo',
+				resources : 'Recursos',
+				wall : 'Parede',
+				player : 'Jogador',
+				moral : ' Moral',
+				reporttype : 'Tipo de reporte',
+				resources_lost : 'Recursos perdidos',
+				nightbonus : 'Bónus nocturno',
+				alliance : 'Aliança',
+				troops : 'Tropas',
+				bashpoints : 'Pontos de batalha',
+				buildings : 'Edificios',
+				payed_iron : 'Ferro pago',
+				payed_iron_storage : 'Ferro em armazém',
+				date : 'Data',
+				spell_info : 'Informação sobre o feitiço',
+				spell_effect : 'Resultado do feitiço',
+				message : 'Mensagem',
+				attacker : 'Atacante',
+				defender : 'Defensor',
+				bonuses : 'Feitiço/bonus',
+				command_type : 'Tipo de comando',
+				town_left : 'Cidade (esquerda)',
+				town_right : 'Cidade (direita)',
+				player_left : 'Jogador (esquerda)',
+				player_right : 'Jogador (direita)',
+				travel_time : 'Tempo de deslocaçãp',
+				time_of_arrival : 'Tempo de chegada',
+				command : 'Comando',
+				defeated_atk : 'Derrotado como atacante',
+				defeated_def : 'Derrotado como defensor',
+				losses_atk : 'Perdas como atacante',
+				losses_def : 'Perdas como defensor',
+				brush_size : 'Tamanho da escova',
+				color : 'Cor',
+				eraser : 'Borracha',
+				pencil : 'Lápis',
+				arrow : 'Seta',
+				rectangel : 'Rectangulo',
+				line : 'Linha',
+				arc : 'Curva',
+				delete_drawing : 'Eliminar desenho',
+				fill : 'Preencher'
+			},
+			colors : {
+				black : 'Preto',
+				blue : 'azul',
+				red : 'vermelho',
+				green : 'verde',
+				yellow : 'amarelo',
+				gray : 'castanho'
+			},
+			command_ov : {
+				commands : 'Comandos'
 			}
 		},
 		ro : {
@@ -4012,9 +4374,9 @@ function main_script(DATA) {
 								$("#qt_export_ajax").hide();
 								var image_url;
 								if (mID == "de") {
-									image_url = QT.Links.sponsor_link('http://grepolisqt.de/de/image-de/' + data.data.id, true);
+									image_url = QT.Links.sponsor_link('http://de.grepolisqt.de/image-de/' + data.data.id, true);
 								} else {
-									image_url = QT.Links.sponsor_link('http://grepolisqt.de/en/image-en/' + data.data.id, true);
+									image_url = QT.Links.sponsor_link('http://en.grepolisqt.de/image-en/' + data.data.id, true);
 								}
 
 								if(/chrom(e|ium)/.test(navigator.userAgent.toLowerCase())){
@@ -4266,21 +4628,18 @@ function main_script(DATA) {
 			alert("Test funktioniert");
 		},
 		academyMarker : function () {
-			$.Observer(GameEvents.building.academy.research.buy).subscribe('QT_academy_buy', function (e, data) {
-				alert("buy");
-			})
-			$.Observer(GameEvents.building.academy.research.cancel).subscribe('QT_academy_cancel', function (e, data) {
-				alert("cancel");
-			})
-			var wndID = BuildingWindowFactory.getWnd().getID();
-			var qacmarkDIV = '<div class="qacamark green" style="width: 100%; height: 100%; position: absolute; background: none repeat scroll 0% 0% green; top: -3px; left: -3px; border: 3px solid green; opacity: 0.4"></div>';
+			if ($('.academy').length == 0 || $('#qacacountWrapper').length != 0)
+				return;
 			
-			$("DIV#gpwnd_" + wndID).append('<div id="qacacountWrapper"><div id="qacacountGreen" class="qacacountBox" style="margin-left:25px">0</div><div id="qacacountRed" class="qacacountBox" style="margin-left:70px">0</div><a id="qacamarkResearched" class="qacaBTN green" style="left:104px; background-image: url(http://s1.directupload.net/images/130904/2tny5dlh.png)" href="#"></a><a id="qacamarkNotResearched" class="qacaBTN green" style="left:124px; background-image: url(http://s7.directupload.net/images/130904/pkeasgik.png)" href="#"></a><a id="qacamarkNone" class="qacaBTN" style="left:144px; background-image: url(http://s1.directupload.net/images/130904/yothfag9.png)" href="#"></a></div>');
+			var qacmarkDIV = '<div class="qacamark green" style="width: 100%; height: 100%; position: absolute; background: none repeat scroll 0% 0% green; top: -3px; left: -3px; border: 3px solid green; opacity: 0.4"></div>';
+			$(".academy").append('<div id="qacacountWrapper"><div id="qacacountGreen" class="qacacountBox" style="margin-left:25px">0</div><div id="qacacountRed" class="qacacountBox" style="margin-left:70px">0</div><a id="qacamarkResearched" class="qacaBTN green" style="left:104px; background-image: url(http://s1.directupload.net/images/130904/2tny5dlh.png)" href="#"></a><a id="qacamarkNotResearched" class="qacaBTN green" style="left:124px; background-image: url(http://s7.directupload.net/images/130904/pkeasgik.png)" href="#"></a><a id="qacamarkNone" class="qacaBTN" style="left:144px; background-image: url(http://s1.directupload.net/images/130904/yothfag9.png)" href="#"></a></div>');
 			
 			$("#qacacountWrapper").css({
 				"margin" : " 0px auto",
 				"display" : "block",
-				"position" : "relative",
+				"position" : "absolute",
+				"left" : "325px",
+				"top" : "385px",
 				"height" : "35px",
 				"width" : "172px",
 				"background-image" : "url(http://s7.directupload.net/images/130924/wvvkhpvh.png)"
@@ -4359,7 +4718,7 @@ function main_script(DATA) {
 				});
 			};
 			function ChangeAllResearchColors(researchselector, color) {
-				$("DIV#gpwnd_" + wndID + researchselector).each(function () {
+				$(".academy " + researchselector).each(function () {
 					var thisParent = $(this).parent();
 					if (!$(".qacamark", thisParent).length > 0 && color != "nocolor") {
 						$(".academy_info", thisParent).after(qacmarkDIV);
@@ -4372,9 +4731,11 @@ function main_script(DATA) {
 					});
 				});
 			};
+			
 			$(".qacaBTN").click(function () {
 				var thisColor = $(this).attr('class').split(' ').pop();
 				if (this.id != "qacamarkNone") {
+				
 					if (thisColor === "green") {
 						$(this).removeClass("green").addClass("red").css({
 							"background-image" : "url(" + qacaBTNpics[this.id][1] + ")"
@@ -4388,11 +4749,13 @@ function main_script(DATA) {
 							"background-image" : "url(" + qacaBTNpics[this.id][0] + ")"
 						});
 					}
+					
 					if (this.id === "qacamarkResearched") {
-						ChangeAllResearchColors(" .is_researched,.in_progress", thisColor);
+						ChangeAllResearchColors(".is_researched,.in_progress", thisColor);
 					} else if (this.id === "qacamarkNotResearched") {
-						ChangeAllResearchColors(" .can_be_researched,.can_not_be_researched_yet", thisColor);
+						ChangeAllResearchColors(".inactive", thisColor);
 					}
+					
 				} else {
 					resetSelected();
 				}
@@ -4400,7 +4763,8 @@ function main_script(DATA) {
 				UpdateResearchPointsText();
 				SafeResearchColor();
 			});
-			$("DIV#gpwnd_" + wndID + " .academy_info").click(function () {
+			
+			$(".academy_info").click(function () {
 				var thisParent = $(this).parent();
 				if ($(".qacamark", thisParent).length > 0) {
 					var $this = $(".qacamark", thisParent);
@@ -4419,6 +4783,7 @@ function main_script(DATA) {
 				UpdateResearchPointsText();
 				SafeResearchColor();
 			});
+			
 			//init
 			if (typeof researchSelected == "undefined") {
 				researchSelected = {};
@@ -6871,13 +7236,14 @@ function main_script(DATA) {
 					CZ : "jarajanos, Apolon Foibos, jarajanos",
 					DE : "Quackmaster, Scav77",
 					EN : "Quackmaster, cedomaiori",
-					ES : "Jonh Snow, F0NT3, cuervobrujo, Guerrero2013",
+					ES : "Jonh Snow, F0NT3, cuervobrujo, Guerrero2013, TovarischKoba, Wymir",
 					FR : "higter, Mazelys, jbrek, ToolFire, aldo666, jojopt",
 					GR : "drmacsoft, adipas.ioannis, juvekdk, ΤζονακοςΚ, genial, Tassos.28",
-					HU : "Arminno, Betagamer, Shia-ko",
+					HU : "Arminno, Betagamer, Shia-ko, Vermunds",
 					IT : "masale81, Psy17, Sluggish",
 					NL : "Quackmaster, Florent15, sannelos, megaabelleke, Thodoris, HGamert, Siloperg47, necromancer97, nijtram1236",
 					PL : "Slietie, Tropsy Kretts, Polny Konik, danon2",
+					PT : "cybern, Drica0",
 					RO : "BaietelulCelFrumusel",
 					RU : "Jest, DJEDIVER, nihondzin, Jestex"
 				};
@@ -6906,7 +7272,8 @@ function main_script(DATA) {
 					["David M. - 10€", "Thomas M. W. - 3€", "Benedikt K. - 2€", "Sandra M. - 5€"],
 					["Lea Renate G. - 10€", "Helena E. - 5€", "Mercedes G. - 1€", "Alexander S. - 10 €"],
 					["Peter F. - 1€", "Martina S - 1€", "Wilhelm B. - 2€", "Anna G. - 0,01€"],
-					["Maria N. - 5€", "Katharine S. - 10€", "Herbert W. - 5€"]
+					["Maria N. - 5€", "Katharine S. - 10€", "Herbert W. - 5€", "Martin D. - 1€"],
+					["Ronald H. - 10€", "Michael M. - 5€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
@@ -8051,9 +8418,7 @@ function main_script(DATA) {
 				case "frontend_bridge/fetch":
 					if (QT.Settings.values.qmenu_settings_hidesilver)
 						QTF.hidesIndexIron();
-					/*if ($('.researches_queue_box').length != 0) {
-						QTF.academyMarker();
-					}*/
+					//QTF.academyMarker();
 					//if (QT.Settings.values.qmenu_settings_hideaddpoints)
 					//QTF.hidesIndexAddPoints();
 				break;
@@ -8067,13 +8432,6 @@ function main_script(DATA) {
 					//if (QT.Settings.values.qmenu_settings_hideaddpoints)
 					//QTF.hidesIndexAddPoints();
 				break;
-				/*case "building_academy/index":
-				case "building_academy/research":
-				case "building_academy/cancel":
-				case "building_academy/revert_research":
-					if (QT.Settings.values.qmenu_settings_akademieplaner) // funktioniert nicht - läuft jetzt via frontend bridge
-						QTF.academyMarker();
-				break;*/
 				case "town_info/info":
 					QTF.townInactivity();
 					QTF.townStatsButtons();
