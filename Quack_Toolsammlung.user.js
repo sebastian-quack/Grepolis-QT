@@ -4,7 +4,7 @@
 // @description    Extends Grepolis and includes many useful tools into the game
 // @include        http://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.48.01
+// @version        2.48.02
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -2596,12 +2596,12 @@ function main_script(DATA) {
 				outsidetown : 'Contador de unidades fora da cidade',
 				slowtrans : 'Contador de navios de transporte lentos',
 				fasttrans : 'Contador de navios de transporte rápidos',
-				disabled : 'Temporariamente desativo'
+				disabled : 'Temporariamente desativado'
 			},
 			culture : {
-				cityfestivals : 'Festivais da cidade',
+				cityfestivals : 'Festivais Urbanos',
 				olympicgames : 'Jogos olímpicos',
-				triumph : 'Procissão de victória',
+				triumph : 'Desfile da victória',
 				theater : 'Peças de teatro'
 			},
 			settings : {
@@ -2665,7 +2665,7 @@ function main_script(DATA) {
 				trans_infotext2 : 'Quando um texto tem tags HTML (ou seja, tudo o que está ente <> parêntesis) eu peço que os mantenhas como os encontraste.',
 				trans_infotext3 : 'De forma a colocá-lo nos créditos o seu nome, ID de jogador e mundo serão igualmente transmitidos',
 				trans_infotext4 : 'Spammers serão adicionados à lista interna e bloqueado o uso do script',
-				please_note : 'Por favor note',
+				please_note : 'Por favor repare',
 				credits : 'Créditos',
 				no_translation : 'Tradução não encontrada',
 				choose_lang : 'Escolher lingua',
@@ -2724,7 +2724,7 @@ function main_script(DATA) {
 				bashpoints : 'Pontos de batalha',
 				buildings : 'Edificios',
 				payed_iron : 'Ferro pago',
-				payed_iron_storage : 'Ferro em armazém',
+				payed_iron_storage : 'Ferro no armazém',
 				date : 'Data',
 				spell_info : 'Informação sobre o feitiço',
 				spell_effect : 'Resultado do feitiço',
@@ -2737,7 +2737,7 @@ function main_script(DATA) {
 				town_right : 'Cidade (direita)',
 				player_left : 'Jogador (esquerda)',
 				player_right : 'Jogador (direita)',
-				travel_time : 'Tempo de deslocaçãp',
+				travel_time : 'Tempo de viagem',
 				time_of_arrival : 'Tempo de chegada',
 				command : 'Comando',
 				defeated_atk : 'Derrotado como atacante',
@@ -2761,7 +2761,7 @@ function main_script(DATA) {
 				red : 'vermelho',
 				green : 'verde',
 				yellow : 'amarelo',
-				gray : 'castanho'
+				gray : 'cinzento'
 			},
 			command_ov : {
 				commands : 'Comandos'
@@ -7243,7 +7243,7 @@ function main_script(DATA) {
 					IT : "masale81, Psy17, Sluggish",
 					NL : "Quackmaster, Florent15, sannelos, megaabelleke, Thodoris, HGamert, Siloperg47, necromancer97, nijtram1236",
 					PL : "Slietie, Tropsy Kretts, Polny Konik, danon2",
-					PT : "cybern, Drica0",
+					PT : "cybern, Drica0, Jahmaica",
 					RO : "BaietelulCelFrumusel",
 					RU : "Jest, DJEDIVER, nihondzin, Jestex"
 				};
@@ -7273,7 +7273,7 @@ function main_script(DATA) {
 					["Lea Renate G. - 10€", "Helena E. - 5€", "Mercedes G. - 1€", "Alexander S. - 10 €"],
 					["Peter F. - 1€", "Martina S - 1€", "Wilhelm B. - 2€", "Anna G. - 0,01€"],
 					["Maria N. - 5€", "Katharine S. - 10€", "Herbert W. - 5€", "Martin D. - 1€"],
-					["Ronald H. - 10€", "Michael M. - 5€"]
+					["Ronald H. - 10€", "Michael M. - 5€", "Carsten H. - 1€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
