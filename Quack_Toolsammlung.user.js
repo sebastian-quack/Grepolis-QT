@@ -5,7 +5,7 @@
 // @include        http://*.grepolis.*/game*
 // @include        https://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.50.00
+// @version        2.51.00
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -223,6 +223,7 @@ function main_script(DATA) {
 				text51 : 'Esconder cidades após farmar automaticamente',
 				text52 : 'Vista da cidade',
 				text53 : 'Mostrar vista para a cidade em uma janela',
+				text54 : 'Retirar as dicas de ferramentas de unidades no quartel e porto',
 				other : 'Outro',
 				save : 'Salvar',
 				reset : 'Redefinir as configurações',
@@ -3762,7 +3763,9 @@ function main_script(DATA) {
 		},
 		Inactivity : {
 			loadDataToCache : function () {
-				var Ajax = $.ajax({
+				
+				QT_inactivity(wID);
+				/*var Ajax = $.ajax({
 						url : 'https://polissearch.marco93.de/inactivity_cache/'+wID+'.txt',
 						jsonpCallback: "inactivity_callback",
 						dataType : "jsonp"
@@ -3776,7 +3779,7 @@ function main_script(DATA) {
 						})(document.createElement('div'));
 						QT.Helper.Inactivity.cache = jsonify('{ '+data+' }');
 					});
-				return Ajax;
+				return Ajax;*/
 			},
 			addDisplay : function (style, playerID) {
 				var currentTownXY = QT.Helper.Inactivity.Filter.coordinates();
@@ -3840,9 +3843,11 @@ function main_script(DATA) {
 				if (QT.Helper.Inactivity.cache) {
 					QT.Helper.Inactivity.changeDisplay(JQelements);
 				} else {
-					QT.Helper.Inactivity.loadDataToCache().done(function (data) {
+					/*QT.Helper.Inactivity.loadDataToCache().done(function (data) {
 						QT.Helper.Inactivity.changeDisplay(JQelements);
-					});
+					});*/
+					//QT_inactivity(wID);
+					console.log("Inactivity display comming soon");
 				}
 			},
 			Filter : {
@@ -4209,6 +4214,13 @@ function main_script(DATA) {
 						settings_array.third_row = ["wall_losses_atk", "", "", "", "", ""];
 						settings_array.fourth_row = ["wall_losses_def", "", "", "", "", ""];
 						break;
+					case "place_units_beyond_from_town":
+					case "place_units_beyond":
+						settings_array.first_row = ["sb_town_name", "", "", "", "", ""];
+						settings_array.second_row = ["", "", "", "", "", ""];
+						settings_array.third_row = ["", "", "", "", "", ""];
+						settings_array.fourth_row = ["", "", "", "", "", ""];
+						break;
 					default:
 						settings_array = "undefined";
 						break;
@@ -4248,6 +4260,8 @@ function main_script(DATA) {
 						rp_troops_support_atk : [QT.Lang.get("export_window", "troops"), [".report_side_defender", ".big_horizontal_report_separator .report_booty_bonus_fight", ".support_report_cities"]],
 						rp_bonuses_a : [QT.Lang.get("export_window", "bonuses") + " (Off)", [".report_side_attacker .power_holder"]],
 						rp_bonuses_d : [QT.Lang.get("export_window", "bonuses") + " (Deff)", [".report_side_defender .power_holder"]],
+						
+						sb_town_name : [QT.Lang.get("export_window", "town"), [".gp_town_link"]],
 						
 						co_command_type : [QT.Lang.get("export_window", "command_type"), [".command_type"]],
 						co_gp_town_link_l : [QT.Lang.get("export_window", "town_left"), [".gp_town_link:nth-child(1)"]],
@@ -4895,6 +4909,36 @@ function main_script(DATA) {
 				return elemensToChange;
 			});
 		},
+		agoraUnitsBeyondFromTownExport : function () {
+			QT.Helper.Screenshot.btn_preview(".classic_window.place .support_overview .game_inner_box .game_header", "qt_place_units_beyond_from_town_export", "place_units_beyond_from_town", function() {
+				$(".classic_window.place .support_overview .game_inner_box").clone().appendTo("#qt_canvas");
+
+				$("#qt_canvas .game_inner_box").css({"max-height":"none", "min-height":"0px"});
+				$("#qt_canvas .game_border").css({"margin":"2px 3px -15px"});
+				$("#qt_canvas .unit_icon40x40").css({"border":"1px solid #724b08"});
+				$("#qt_canvas .supporters_list .support_row").css({"padding":"5px 0 4px 6px"});
+				$("#qt_canvas .support_row .units_list .count").css({
+					"bottom" : "1px",
+					"right" : "2px",
+					"position" : "absolute"
+				});
+				$("#qt_canvas .outer_troops_send_part").hide();
+				$("#qt_canvas .qt_sendback_big").hide();
+				$("#qt_canvas .qt_sendback_small").hide();
+				
+
+				var elemensToChange = [
+				".even", ".odd", ".brown", ".game_header", ".game_list_footer",
+				".game_border_top", ".game_border_bottom", ".game_border_left", ".game_border_right", ".game_border_corner",
+				".hero40x40, .unit_icon40x40"
+				];
+				return elemensToChange;
+			});
+			$("#qt_place_units_beyond_from_town_export").css({
+				"top" : "3px",
+				"right" : "3px"
+			});
+		},
 		allianceStatsButtons : function (settings) {
 			var b = settings.url.match(/alliance_id%22%3A(\d*)%2C/);
 			var c = GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_ALLIANCE_PROFILE);
@@ -5155,8 +5199,7 @@ function main_script(DATA) {
 					"bottom":"-3px"
 				});
 				$('DIV.ui_city_overview .town_background').css({
-					"left" : "-566px",
-					"top" : "-316px"
+					"transform":"translate(-597px, -315px)"
 				});
 			});
 			
@@ -5652,82 +5695,61 @@ function main_script(DATA) {
 			if ($("DIV#gpwnd_" + wndID).find("span.tilx_points").length > 0 || $("DIV#gpwnd_" + wndID).find("span.tilx_points_block").length > 0)
 				return;
 			var buildings_array = GameData.buildings;
-			var calculatePoints = function (level, val) {
-				points_base = val.points;
-				points_factor = val.points_factor
-					points = Math.round(val.points * (Math.pow(val.points_factor, level)));
-				return points;
-			};
-			var examineQueue = function (name, level, val) {
-				$("DIV#gpwnd_" + wndID + " .building_icon40x40").each(function () {
-					if ($(this).hasClass(name)) {
-						if (val.max_level == 1) {
-							points = "500";
-							if ($(this).children("img").length > 0)
-								points = "-500";
-						} else if ($(".tear_down", this).length > 0) {
-							points_old = calculatePoints(level, val);
-							--level;
-							points_new = calculatePoints(level, val);
-							if (level === 0) {
-								points = "-" + val.points;
-							} else {
-								points = points_new - points_old;
-							}
-						} else {
-							points_old = calculatePoints(level, val);
-							++level;
-							points_new = calculatePoints(level, val);
-							if (level === 1) {
-								points = val.points;
-							} else {
-								points = points_new - points_old;
-							}
-						}
-						$(this).append('<span class="tilx_points_block">' + (points !== undefined ? points : '?') + ' P<\/span>');
-					}
-				});
-				return level;
-			};
+			
+			function calcPoints (level, val) {
+				return Math.round(val.points * (Math.pow(val.points_factor, level)));
+			}
+			function calcDiff (level_old, level_new, val) {
+				return calcPoints(level_new, val) - calcPoints(level_old, val);
+			}
+			
 			$.each(buildings_array, function (key, val) {
 				var b = $("DIV#gpwnd_" + wndID + " #building_main_" + key);
 				if (b.length > 0) {
-					level = parseInt($('.level', b).eq(0).text(), 10);
-					factor = val.points_factor;
-					if (!isNaN(level)) {
-						level = examineQueue(key, level, val);
-						points_old = calculatePoints(level, val);
+					var level = parseInt($('.level', b).eq(0).text(), 10);
+					if (!isNaN(level) && val.points !== undefined) {
 						if (level === 0) {
-							$('.build:not(.tear_down), .build_grey:not(.tear_down)', b).append('<span class="tilx_points"> (' + (val.points !== undefined ? val.points : '?') + ' P)<\/span>');
+							$('.build:not(.tear_down), .build_grey:not(.tear_down)', b).append('<span class="tilx_points"> (' + val.points + ' P)<\/span>');
 						} else if (level < val.max_level && level > 0) {
-							points_new = calculatePoints(level + 1, val);
-							points = points_new - points_old;
-							$('.build:not(.tear_down), .build_grey:not(.tear_down)', b).append('<span class="tilx_points"> (' + (points !== undefined ? points : '?') + ' P)<\/span>');
-						}
-						if (level - 1 >= 0) {
-							points_new = calculatePoints(level - 1, val);
-							points = points_new - points_old;
-							if (val.max_level === 1) {
-								points = 500;
-							} else if (level === 1) {
-								points = val.points;
+							$('.build:not(.tear_down), .build_grey:not(.tear_down)', b).append('<span class="tilx_points"> (' + calcDiff(level, level+1, val) + ' P)<\/span>');
+							if (level - 1 >= 0) {
+								$('.tear_down', b).append('<span class="tilx_points"> (' + calcDiff(level, level-1, val) + ' P)<\/span>');
 							}
-							$('.tear_down', b).append('<span class="tilx_points"> (-' + (points !== undefined ? points : '?') + ' P)<\/span>');
+						} else if (val.max_level === 1) {
+							$('.tear_down', b).append('<span class="tilx_points"> (-500 P)<\/span>');
 						}
 					}
 				} else {
 					var c = $("DIV#gpwnd_" + wndID + " #special_building_" + key).not(".special_tear_down");
 					if (c.length > 0) {
-						level = examineQueue(key, 0, val);
-						if (level === 0) {
-							c.append('<span class="tilx_points_block">' + (val.points !== undefined ? val.points : '?') + ' P<\/span>');
-						}
-						if ($("DIV#gpwnd_" + wndID + " #special_building_" + key + ".special_tear_down").css('backgroundImage').replace(/.*\/([^.]+)\.png.*/, '$1') === key) {
-							$('#special_building_' + key + '.special_tear_down').append('<span class="tilx_points_block"> -' + (points !== undefined ? '500' : '?') + ' P<\/span>');
-						}
+						c.append('<span class="tilx_points_block">' + val.points + ' P<\/span>');
 					}
+					
 				}
 			});
+			
+			$("DIV#gpwnd_" + wndID + " .queued_building_order").each(function () {
+				var name = $(".item_icon", this).prop("class").split(/\s+/)[2];
+				if ($('SPAN.green', this).length) {
+					var level = parseInt($('SPAN.green', this).text(), 10);
+					var points = calcDiff(level-1, level, buildings_array[name]);
+					points = (points === 0 ? "500" : points);
+				} else if ($('SPAN.red', this).length) {
+					var level = parseInt($('SPAN.red', this).text(), 10);
+					var points = calcDiff(level+1, level, buildings_array[name]);
+					points = (points === 0 ? "-500" : points);
+				} else if ($('SPAN.arrow_green_ver', this).length) {
+					var level = parseInt($('DIV.building_level', this).text(), 10);
+					var points = calcDiff(level-1, level, buildings_array[name]);
+					points = (points === 0 ? "500" : points);
+				} else if ($('SPAN.arrow_red_ver', this).length) {
+					var level = parseInt($('DIV.building_level', this).text(), 10);
+					var points = calcDiff(level+1, level, buildings_array[name]);
+					points = (points === 0 ? "-500" : points);
+				}
+				$(".item_icon", this).append('<span class="tilx_points_block">' + points + ' P<\/span>');
+			});
+
 			$("span.tilx_points").css({
 				"font-size" : "7px",
 				"position" : "relative",
@@ -6990,8 +7012,28 @@ function main_script(DATA) {
 				});
 			});
 		},
-		removeTooltipps : function () {
-			var a = QT.wnd.find("#units DIV");
+		removeTooltipps : function (type) {
+			var a;
+			
+			switch (type) {
+				case "agora":
+					a = QT.wnd.find(".place_unit");
+					break;
+				case "barracks":
+				case "docks":
+					a = QT.wnd.find("#units DIV");
+					break;
+				case "place":
+					a = $(".classic_window.place .supporters_list").find(".units_list DIV");
+					break;
+				case "sidebar":
+					a = $("#ui_box").find(".units_wrapper DIV");
+					break;
+				case "town_info":
+					a = QT.wnd.find(".town_info_units .unit");
+					break;
+			} 
+			
 			a.each(function( index ) {
 				$(this).off('mouseenter mouseleave');
 			});
@@ -7389,7 +7431,8 @@ function main_script(DATA) {
 					["Maria N. - 5€", "Katharine S. - 10€", "Herbert W. - 5€", "Martin D. - 1€"],
 					["Ronald H. - 10€", "Michael M. - 5€", "Carsten H. - 1€", "Sylvie S. - 10€"],
 					["Markus B. - 1€", "Marcel P. - 20€", "Manuela M. - 5€", "Andreas H. - 5€"],
-					["Andrea W. - 3€"]
+					["Andrea W. - 3€", "Dirk W. - 5€", "Mixalhs B. - 1€", "Maria N. - 1€"],
+					["Danijel K. - 2€", "Maria N. - 1€", "Sven B. - 3€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
@@ -8303,10 +8346,10 @@ function main_script(DATA) {
 				return [tr_empty, rest];
 			}
 
-			$("#units_beyond_list > LI").each(function (i, e) {
+			$("#units_beyond_list > LI, .support_row").each(function (i, e) {
 				var Ground_Units_BHP = 0;
 				var Transport_Capacity = 0;
-				var a = $(this).children("a");
+				var a = $(this).children(".unit_icon40x40");
 				a.each(function (index) {
 					var className = this.className.split(' ');
 					var unit = className[className.length - 2];
@@ -8417,6 +8460,8 @@ function main_script(DATA) {
 			QT.Functions.transportcalculator.init();
 		if (QT.Settings.values.qmenu_settings_questliste && $('#quest_overview li').length !== 0)
 			QT.Functions.questlist();
+		if (QT.Settings.values.qmenu_settings_removetooltipps)
+			QT.Functions.removeTooltipps("sidebar");
 		
 		$(document).ajaxComplete(function (event, xhr, settings) {
 			var ajaxUrl = settings.url.split("?");
@@ -8490,21 +8535,25 @@ function main_script(DATA) {
 				case "building_barracks/index":
 				case "building_docks/index":
 					if (QT.Settings.values.qmenu_settings_removetooltipps)
-						QTF.removeTooltipps();
+						QTF.removeTooltipps("docks");
 				break;
 				case "building_barracks/build":
 				case "building_barracks/cancel":
 				case "building_docks/build":
 				case "building_docks/cancel":
 					if (QT.Settings.values.qmenu_settings_removetooltipps)
-						QTF.removeTooltipps();
+						QTF.removeTooltipps("barracks");
 					if ($("#tr_wrapper").css('display') != 'none')
 						QTF.transportcalculator.refresh();
 				break;
 				case "building_place/index":
+					if (QT.Settings.values.qmenu_settings_removetooltipps)
+						QTF.removeTooltipps("agora");
 					QTF.agoraIndexExport();
 				break;
 				case "building_place/units_beyond":
+					if (QT.Settings.values.qmenu_settings_removetooltipps)
+						QTF.removeTooltipps("agora");
 					QTF.unitsBeyondView();
 					QTF.agoraUnitsBeyondExport(); // Grafiken von unitsBeyondView werden nicht angezeigt
 				break;
@@ -8518,8 +8567,14 @@ function main_script(DATA) {
 					QTF.unitsBeyondView();
 				break;
 				case "frontend_bridge/fetch":
-					if (QT.Settings.values.qmenu_settings_hidesilver)
+					var frontend_bridge = decodeURIComponent(ajaxUrl[1].split("&")[3]).split("\"")[3];
+					if (frontend_bridge === "hide" && QT.Settings.values.qmenu_settings_hidesilver) {
 						QTF.hidesIndexIron();
+					} else if (frontend_bridge === "place") {
+						QTF.agoraUnitsBeyondFromTownExport();
+						if (QT.Settings.values.qmenu_settings_removetooltipps)
+							QTF.removeTooltipps("place");
+					}
 					//QTF.academyMarker();
 					//if (QT.Settings.values.qmenu_settings_hideaddpoints)
 					//QTF.hidesIndexAddPoints();
@@ -8545,6 +8600,8 @@ function main_script(DATA) {
 				case "town_info/support":
 				case "town_info/attack":
 					QTF.selectunitshelper();
+					if (QT.Settings.values.qmenu_settings_removetooltipps)
+						QTF.removeTooltipps("town_info");
 				break;
 				case "player/get_profile_html":
 					QTF.playerGSButton(settings);
@@ -8777,6 +8834,17 @@ unsafeWindow.QT_updater = function (changelog, forumlink) {
 		}
 	}, 0);
 };
+unsafeWindow.QT_inactivity = function (world_id) {
+	setTimeout(function () {
+		GM_xmlhttpRequest({
+			method : "GET",
+			url : 'http://polissearch.marco93.de/inactivity_cache/'+world_id+'.txt',
+			onload : function (response) {
+				console.log(response.responseText);
+			}
+		});
+	}, 0);
+};
 
 if (typeof exportFunction == 'function') {
 	exportFunction(unsafeWindow.QT_saveValue, unsafeWindow, {
@@ -8796,6 +8864,9 @@ if (typeof exportFunction == 'function') {
 	});
 	exportFunction(unsafeWindow.QT_updater, unsafeWindow, {
 		defineAs : "QT_updater"
+	});
+	exportFunction(unsafeWindow.QT_inactivity, unsafeWindow, {
+		defineAs : "QT_inactivity"
 	});
 }
 
