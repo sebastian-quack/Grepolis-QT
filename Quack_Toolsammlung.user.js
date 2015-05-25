@@ -5,7 +5,7 @@
 // @include        http://*.grepolis.*/game*
 // @include        https://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.51.00
+// @version        2.52.00
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -223,7 +223,6 @@ function main_script(DATA) {
 				text51 : 'Esconder cidades após farmar automaticamente',
 				text52 : 'Vista da cidade',
 				text53 : 'Mostrar vista para a cidade em uma janela',
-				text54 : 'Retirar as dicas de ferramentas de unidades no quartel e porto',
 				other : 'Outro',
 				save : 'Salvar',
 				reset : 'Redefinir as configurações',
@@ -700,7 +699,7 @@ function main_script(DATA) {
 				text18 : 'Anzeige aktivieren',
 				text19 : 'Sämtliche Einstellungen und Spuren des Skriptes im Browsercache löschen?',
 				text20 : 'Forum',
-				text21 : 'Breite des Forum maximieren',
+				text21 : 'Breite des Forums maximieren',
 				text22 : 'Hotkey Bild',
 				text23 : 'Grepolis Menü',
 				text24 : 'Senat',
@@ -731,7 +730,8 @@ function main_script(DATA) {
 				text51 : 'Städte nach dem Farmen automatisch verstecken',
 				text52 : 'Stadtansicht',
 				text53 : 'Stadtansicht in einem Fenster anzeigen',
-				text54 : 'Einheiten Tooltips in der Kaserne und im Hafen ausschalten',
+				text54 : 'Einheiten Tooltips ausschalten',
+				text55 : 'Allgemeine Einstellungen',
 				other : 'Sonstiges',
 				save : 'Speichern',
 				reset : 'Einstellungen zurücksetzen',
@@ -1071,6 +1071,7 @@ function main_script(DATA) {
 				upload : 'Subir',
 				settings : 'Opciones',
 				preview : 'Vista previa',
+				chrome : 'Chrome abre la ventana con la captura de pantalla por defecto como una ventana emergente. Si usted prefiere que la ventana se abra como una nueva pestaña, tienes que instalar un complemento adicional. Haga clic aquí para llegar al complemento.',
 				town : 'Ciudad',
 				luck : 'Suerte',
 				title : 'Titulo',
@@ -3412,7 +3413,8 @@ function main_script(DATA) {
 				text51 : 'Autohide cities after farming',
 				text52 : 'City view',
 				text53 : 'Display the city view in a window',
-				text54 : 'Remove the unit tooltipps in the barracks and harbour',
+				text54 : 'Removal of the new unit tooltipps',
+				text55 : 'General settings',
 				other : 'Other',
 				save : 'Save',
 				reset : 'Reset settings',
@@ -3686,7 +3688,6 @@ function main_script(DATA) {
 			"qmenu_settings_hotkey_jump" : true,
 			"qmenu_settings_hotkey_active" : true,
 			"qmenu_settings_island_villages" : true,
-			"qmenu_settings_links" : true,
 			"qmenu_settings_maximize_forum" : true,
 			"qmenu_settings_plusmenu" : true,
 			"qmenu_settings_questliste" : true,
@@ -4454,20 +4455,6 @@ function main_script(DATA) {
 				childList : true,
 				characterData : false
 			});
-		},
-		openLink : function (linkArray) {
-			if (QT.Settings.values.qmenu_settings_links) {
-				var html = $('<iframe />', {
-						id : "win_gs_s_frame",
-						src : linkArray[0],
-						style : 'width:'+linkArray[1]+'px;height:'+linkArray[2]+'px;border:1px solid black;'
-					});
-				var wnd = GPWindowMgr.Create(GPWindowMgr[linkArray[4]]) || GPWindowMgr.getOpenFirst(GPWindowMgr[linkArray[4]]);
-				wnd.setTitle(linkArray[3]);
-				wnd.setContent(html);
-			} else {
-				window.open(linkArray[0]);
-			}
 		},
 		addWindowTypes : function () {
 			//BB-Codes
@@ -5558,11 +5545,6 @@ function main_script(DATA) {
 					}
 				}
 			}
-		},
-		filter : function (playerID) {
-			var tester = [297128, 1764472, 432065, 880414, 7809196, 927818, 879988, 265587, 600297, 270260, 603597, 32034, 304581, 1472815, 728273, 1039235, 1550585, 366741, 8271245];
-			if (tester.indexOf(playerID) < 0)
-				return true;
 		},
 		fix_Zindex : function () {
 			var index_highest = parseInt($("#town_groups_list").css("z-index"), 10);
@@ -6736,7 +6718,7 @@ function main_script(DATA) {
 					if (this.id.substring(0, 6) === "bbcode") {
 						QT.Functions.bbcodes(this.id);
 					} else if (this.id.substring(0, 4) === "link") {
-						QT.Helper.openLink(linkArray[this.id.substr(5)]);
+						window.open(linkArray[this.id.substr(5)][0]);
 					} else {
 						QT.Functions[this.id]();
 					}
@@ -7030,7 +7012,7 @@ function main_script(DATA) {
 					a = $("#ui_box").find(".units_wrapper DIV");
 					break;
 				case "town_info":
-					a = QT.wnd.find(".town_info_units .unit");
+					a = QT.wnd.find(".unit_icon40x40");
 					break;
 			} 
 			
@@ -7333,17 +7315,14 @@ function main_script(DATA) {
 			};
 			function tab1() {
 				var inhalt_tab1 = [];
-				inhalt_tab1[0] = [QT.Lang.get("settings", "text13"), {
+				inhalt_tab1[0] = [QT.Lang.get("settings", "text14"), {
+						"removetooltipps" : [QT.Lang.get("settings", "text55"), [["qmenu_settings_removetooltipps", QT.Lang.get("settings", "text54")]]],
 						"onlinecounter" : [QT.Lang.get("settings", "text2"), [["qmenu_settings_counter", QT.Lang.get("settings", "text9")], ["qmenu_settings_counter_aktiv", QT.Lang.get("settings", "text11")]]],
 						"buttonbar" : [QT.Lang.get("settings", "text6"), [["qmenu_settings_buttonbar", QT.Lang.get("settings", "text9")]]],
 						"plusmenu" : [QT.Lang.get("settings", "text5"), [["qmenu_settings_plusmenu", QT.Lang.get("settings", "text9")]]],
 						"cityview" : [QT.Lang.get("settings", "text52"), [["qmenu_settings_cityview_BTN", QT.Lang.get("settings", "text41")], ["qmenu_settings_cityview_window", QT.Lang.get("settings", "text53")]]],
-						"hotkeys" : [QT.Lang.get("settings", "text22"), [["qmenu_settings_hotkey_anzeige", QT.Lang.get("settings", "text9")]]],
 						"bbcode_btn" : [QT.Lang.get("settings", "text31"), [["qmenu_settings_townbb", QT.Lang.get("settings", "text9")]]],
-						"transportcalc" : [QT.Lang.get("settings", "text12"), [["qmenu_settings_transport_rechner", QT.Lang.get("settings", "text9")]]]
-					}
-				];
-				inhalt_tab1[1] = [QT.Lang.get("settings", "text14"), {
+						"transportcalc" : [QT.Lang.get("settings", "text12"), [["qmenu_settings_transport_rechner", QT.Lang.get("settings", "text9")]]],
 						"berichtemod" : [QT.Lang.get("settings", "text15"), [["qmenu_settings_berichte_farben", QT.Lang.get("settings", "text16")], ["qmenu_settings_berichte_filter", QT.Lang.get("settings", "text17")], ["qmenu_settings_berichte_move", QT.Lang.get("settings", "text30")], ["qmenu_settings_berichte_losses", QT.Lang.get("settings", "text42")], ["qmenu_settings_berichte_sortfolders", QT.Lang.get("settings", "text49")]]],
 						"grepopoints" : [QT.Lang.get("settings", "text24"), [["qmenu_settings_grepopoints", QT.Lang.get("settings", "text25")]]],
 						"forummod" : [QT.Lang.get("settings", "text20"), [["qmenu_settings_maximize_forum", QT.Lang.get("settings", "text21")], ["qmenu_settings_forumdelete", QT.Lang.get("settings", "text32")]]],
@@ -7355,8 +7334,7 @@ function main_script(DATA) {
 						"cavemod_town" : [QT.Lang.get("settings", "text36"), [["qmenu_settings_hidesilver", QT.Lang.get("settings", "text38")]]],
 						"farmhelper" : [QT.Lang.get("settings", "text40"), [["qmenu_settings_farmhelper", QT.Lang.get("settings", "text27")], ["qmenu_settings_farmhelper_hidecities", QT.Lang.get("settings", "text51")]]],
 						"island" : [QT.Lang.get("settings", "text44"), [["qmenu_settings_island_villages", QT.Lang.get("settings", "text45")]]],
-						"hotkeys" : [QT.Lang.get("settings", "text46"), [["qmenu_settings_hotkey_jump", QT.Lang.get("settings", "text47")], ["qmenu_settings_hotkey_active", QT.Lang.get("settings", "text27")]]],
-						"other" : [QT.Lang.get("settings", "other"), [["qmenu_settings_links", QT.Lang.get("settings", "text3")], ["qmenu_settings_removetooltipps", QT.Lang.get("settings", "text54")]]]
+						"hotkeys" : [QT.Lang.get("settings", "text46"), [["qmenu_settings_hotkey_active", QT.Lang.get("settings", "text27")], ["qmenu_settings_hotkey_anzeige", QT.Lang.get("settings", "text22")], ["qmenu_settings_hotkey_jump", QT.Lang.get("settings", "text47")]]]
 					}
 				];
 				var HTML_tab1 = "";
@@ -7392,7 +7370,7 @@ function main_script(DATA) {
 					CZ : "jarajanos, Apolon Foibos, jarajanos",
 					DE : "Quackmaster, Scav77",
 					EN : "Quackmaster, cedomaiori",
-					ES : "Jonh Snow, F0NT3, cuervobrujo, Guerrero2013, TovarischKoba, Wymir",
+					ES : "Jonh Snow, F0NT3, cuervobrujo, Guerrero2013, TovarischKoba, Wymir, -BENHUR-",
 					FR : "higter, Mazelys, jbrek, ToolFire, aldo666, jojopt",
 					GR : "drmacsoft, adipas.ioannis, juvekdk, ΤζονακοςΚ, genial, Tassos.28",
 					HU : "Arminno, Betagamer, Shia-ko, Vermunds",
@@ -7432,7 +7410,8 @@ function main_script(DATA) {
 					["Ronald H. - 10€", "Michael M. - 5€", "Carsten H. - 1€", "Sylvie S. - 10€"],
 					["Markus B. - 1€", "Marcel P. - 20€", "Manuela M. - 5€", "Andreas H. - 5€"],
 					["Andrea W. - 3€", "Dirk W. - 5€", "Mixalhs B. - 1€", "Maria N. - 1€"],
-					["Danijel K. - 2€", "Maria N. - 1€", "Sven B. - 3€"]
+					["Danijel K. - 2€", "Maria N. - 1€", "Sven B. - 3€", "UBassoon - 10€"],
+					["Bernd R. - 1€", "Wolfgang R. - 10€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
@@ -7982,106 +7961,55 @@ function main_script(DATA) {
 			QT.Helper.Inactivity.loadDisplay(a, "margin:3px 3px 0 0;");
 		},
 		townTradeImprovement : function () {
-			var wndArray = GPWindowMgr.getOpen(Layout.wnd.TYPE_TOWN);
-			for (var e in wndArray) {
-				if (wndArray.hasOwnProperty(e)) {
-					var wndID = wndArray[e].getID();
-					if ($("DIV#gpwnd_" + wndID + " .q_needed").length > 0 || $("DIV#gpwnd_" + wndID + " .town-capacity-indicator").length == 0)
-						continue;
+			if (QT.wnd.find(".q_needed").length > 0 || QT.wnd.find(".town-capacity-indicator").length == 0)
+				return;
 
-					$("DIV#gpwnd_" + wndID + " div.amounts").each(function () {
-						var rescurrent = $(this).find("span.curr").html();
-						var ressended = ($(this).find("span.curr2").html() == "") ? 0 : parseInt($(this).find("span.curr2").html().substring(3));
-						var ressending = ($(this).find("span.curr3").html() == "") ? 0 : parseInt($(this).find("span.curr3").html().substring(3));
-						var resmaxtown = $(this).find("span.max").html();
-						var resneeded = resmaxtown - rescurrent - ressended - ressending;
-						$(this).append('<span class="q_needed"> &#9658; ' + resneeded + '</span>');
-					});
-
-					function rescalc(mode) {
-						var resmaxmarket = parseInt($("DIV#gpwnd_" + wndID + " #big_progressbar .caption .max").html());
-						var ressendingNOW = parseInt($("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val());
-						$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(0).select().blur();
-						var rescurrmarket = parseInt($("DIV#gpwnd_" + wndID + " #big_progressbar .caption .curr").html());
-						var restotalmarket = resmaxmarket - rescurrmarket;
-						var resselector = $("DIV#gpwnd_" + wndID + " #town_capacity_" + mode.substring(2));
-						var rescurrent = resselector.find("span.curr").html();
-						var ressended = (resselector.find("span.curr2").html() == "") ? 0 : parseInt(resselector.find("span.curr2").html().substring(3));
-						var ressending = (resselector.find("span.curr3").html() == "") ? 0 : parseInt(resselector.find("span.curr3").html().substring(3));
-						var resmaxtown = resselector.find("span.max").html();
-						var resneeded = resmaxtown - rescurrent - ressended - ressending;
-						var b = (resneeded > restotalmarket) ? restotalmarket : resneeded;
-						$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(b).select().blur();
-						var ressendingNOW2 = parseInt($("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val());
-						var c = (ressendingNOW == ressendingNOW2) ? 0 : b;
-						$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(c).select().blur();
-					}
-
-					function rescalccult(mode) {
-						var resmaxmarket = parseInt($("DIV#gpwnd_" + wndID + " #big_progressbar .caption .max").html());
-						var ressendingNOW = parseInt($("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val());
-						$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(0).select().blur();
-						var rescurrmarket = parseInt($("DIV#gpwnd_" + wndID + " #big_progressbar .caption .curr").html());
-						var restotalmarket = resmaxmarket - rescurrmarket;
-
-						var resselector = $("DIV#gpwnd_" + wndID + " #town_capacity_" + mode.substring(2));
-						var rescurrent = resselector.find("span.curr").html();
-						var ressended = (resselector.find("span.curr2").html() == "") ? 0 : parseInt(resselector.find("span.curr2").html().substring(3));
-						var ressending = (resselector.find("span.curr3").html() == "") ? 0 : parseInt(resselector.find("span.curr3").html().substring(3));
-						var resmaxtown = resselector.find("span.max").html();
-						var resneeded = resmaxtown - rescurrent - ressended - ressending;
-						var tradetype = (mode == "q_stone") ? 18000 : 15000;
-						var a = tradetype - rescurrent - ressended - ressending;
-						var b = (a > restotalmarket) ? restotalmarket : a;
-						var c = (b > resneeded) ? resneeded : b;
-						$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(c).select().blur();
-						var ressendingNOW2 = parseInt($("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val());
-						var d = (ressendingNOW == ressendingNOW2) ? 0 : c;
-						$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(d).select().blur();
-					}
-
-					function rescalccultReverse(mode) {
-						var resmaxmarket = parseInt($("DIV#gpwnd_" + wndID + " #big_progressbar .caption .max").html());
-						var ressendingNOW = parseInt($("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val());
-						$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(0).select().blur();
-						var rescurrmarket = parseInt($("DIV#gpwnd_" + wndID + " #big_progressbar .caption .curr").html());
-						var restotalmarket = resmaxmarket - rescurrmarket;
-						var townrescurrent = $("div#ui_box div.ui_resources_bar div.indicator[data-type='" + mode.substring(2) + "'] div.amount").text();
-						var tradetype = (mode == "q_stone") ? 18000 : 15000;
-						var a = townrescurrent - tradetype;
-						var b = (tradetype > townrescurrent) ? 0 : a;
-						var c = (b > restotalmarket) ? restotalmarket : b;
-						$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(c).select().blur();
-						var ressendingNOW2 = parseInt($("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val());
-						var d = (ressendingNOW == ressendingNOW2) ? 0 : c;
-						$("DIV#gpwnd_" + wndID + " #trade_type_" + mode.substring(2)).find("input").val(d).select().blur();
-					}
-
-					$("DIV#gpwnd_" + wndID + " #trade_tab").append(
-						'<a id="q_wood" class="q_send" style="top:211px" href="#"></a>' +
-						'<a id="q_stone" class="q_send" style="top:245px" href="#"></a>' +
-						'<a id="q_iron" class="q_send" style="top:279px" href="#"></a>' +
-						'<a id="q_wood" class="q_send_cult" style="top:211px" href="#"></a>' +
-						'<a id="q_stone" class="q_send_cult" style="top:245px" href="#"></a>' +
-						'<a id="q_iron" class="q_send_cult" style="top:279px" href="#"></a>' +
-						'<a id="q_wood" class="q_send_cult_reverse" style="top:211px" href="#"></a>' +
-						'<a id="q_stone" class="q_send_cult_reverse" style="top:245px" href="#"></a>' +
-						'<a id="q_iron" class="q_send_cult_reverse" style="top:279px" href="#"></a>');
-
-					$("DIV#gpwnd_" + wndID + " .q_send").click(function () {
-						rescalc(this.id);
-					});
-					$("DIV#gpwnd_" + wndID + " .q_send_cult").click(function () {
-						rescalccult(this.id);
-					});
-					$("DIV#gpwnd_" + wndID + " .q_send_cult_reverse").click(function () {
-						rescalccultReverse(this.id);
-					});
-
+			function getRes(res_type, wnd_id, mode) {
+				var res = {};
+				res.wnd = $("DIV#gpwnd_" + wnd_id);
+				res.selector = res.wnd.find("#town_capacity_" + res_type);
+				res.caption = {
+					curr : parseInt(res.wnd.find("#big_progressbar .caption .curr").html()),
+					max : parseInt(res.wnd.find("#big_progressbar .caption .max").html()),
+					now : parseInt(res.wnd.find("#trade_type_" + res_type + " input").val())
 				}
+				res.amounts = {
+					curr : parseInt(res.selector.find(".curr").html()) || 0,
+					curr2 : parseInt(res.selector.find(".curr2").html().substring(3)) || 0,
+					curr3 : parseInt(res.selector.find(".curr3").html().substring(3)) || 0,
+					max : parseInt(res.selector.find(".max").html()) || 0
+				}
+				if (mode === "cult" || mode === "cultreverse") {
+					res.amounts.max = (res_type === "stone") ? 18000 : 15000;
+				}
+				if (mode === "cultreverse") {
+					var townrescurrent = $("div#ui_box div.ui_resources_bar div.indicator[data-type='" + res_type + "'] div.amount").text();
+					res.needed = townrescurrent - res.amounts.max;
+				} else {
+					res.needed = res.amounts.max - res.amounts.curr - res.amounts.curr2;
+				}
+				return res;
 			}
+			
+			QT.wnd.find(".tripple-progress-progressbar").each(function () {
+				var res_type = this.id.split("_")[2];
+				var res = getRes(res_type, QT.wndId);
+				$(this).find(".amounts").append('<span class="q_needed_' + res_type + '_' + QT.wndId + '"> &#9658; ' + res.needed + '</span>');
+			});
 
-			$(".q_send_cult").css({
+			QT.wnd.find("#trade_tab").append(
+				'<a id="q_wood_'+QT.wndId+'_max" class="q_trade q_max" style="top:211px" href="#"></a>' +
+				'<a id="q_stone_'+QT.wndId+'_max" class="q_trade q_max" style="top:245px" href="#"></a>' +
+				'<a id="q_iron_'+QT.wndId+'_max" class="q_trade q_max" style="top:279px" href="#"></a>' +
+				'<a id="q_wood_'+QT.wndId+'_cult" class="q_trade q_send_cult" style="top:211px" href="#"></a>' +
+				'<a id="q_stone_'+QT.wndId+'_cult" class="q_trade q_send_cult" style="top:245px" href="#"></a>' +
+				'<a id="q_iron_'+QT.wndId+'_cult" class="q_trade q_send_cult" style="top:279px" href="#"></a>' +
+				'<a id="q_wood_'+QT.wndId+'_cultreverse" class="q_trade q_send_cult_reverse" style="top:211px" href="#"></a>' +
+				'<a id="q_stone_'+QT.wndId+'_cultreverse" class="q_trade q_send_cult_reverse" style="top:245px" href="#"></a>' +
+				'<a id="q_iron_'+QT.wndId+'_cultreverse" class="q_trade q_send_cult_reverse" style="top:279px" href="#"></a>'
+			);
+
+			QT.wnd.find(".q_send_cult").css({
 				"right" : "84px",
 				"position" : "absolute",
 				"height" : "16px",
@@ -8090,7 +8018,7 @@ function main_script(DATA) {
 				"background-repeat" : "no-repeat",
 				"background-position" : "0px -1px"
 			});
-			$(".q_send_cult_reverse").css({
+			QT.wnd.find(".q_send_cult_reverse").css({
 				"left" : "105px",
 				"position" : "absolute",
 				"height" : "16px",
@@ -8099,7 +8027,7 @@ function main_script(DATA) {
 				"background-repeat" : "no-repeat",
 				"background-position" : "0px -1px"
 			});
-			$(".q_send").css({
+			QT.wnd.find(".q_max").css({
 				"right" : "105px",
 				"position" : "absolute",
 				"height" : "16px",
@@ -8109,7 +8037,7 @@ function main_script(DATA) {
 				"background-position" : "0px -1px"
 			});
 
-			$(".q_send, .q_send_cult, .q_send_cult_reverse").hover(
+			QT.wnd.find(".q_trade").hover(
 				function () {
 				$(this).css({
 					"background-position" : "0px -17px"
@@ -8120,6 +8048,19 @@ function main_script(DATA) {
 					"background-position" : "0px -1px"
 				});
 			});
+		
+			QT.wnd.find(".q_trade").click(function () {
+				var id = this.id.split("_");
+				var res = getRes(id[1], id[2], id[3]);
+				if (res.needed - res.amounts.curr3 <= 0 || res.caption.curr  <= 0 || res.amounts.curr3 > 0) {
+					res.send = 0;
+				} else if (res.needed - res.amounts.curr3 > res.caption.curr) {
+					res.send = res.caption.curr + res.amounts.curr3
+				} else {
+					res.send = res.needed;
+				}
+				res.wnd.find("#trade_type_" + id[1] + " input").val(res.send).select().blur();
+			});			
 		},
 		townslist : function () {
 			if ($('#town_groups_list a.town_bb').length != 0)
@@ -8469,9 +8410,9 @@ function main_script(DATA) {
 			var QTF = QT.Functions;
 			var wnd = GPWindowMgr.getFocusedWindow() || false;
 			if (wnd) {
-				//QTF.wnd = wnd;
-				//QTF.wndId = wnd.getID();
-				//QTF.wndEl = wnd.getJQElement();
+				//QT.wnd = wnd;
+				QT.wndId = wnd.getID();
+				//QT.wndEl = wnd.getJQElement();
 				QT.wnd = wnd.getJQElement().find(".gpwindow_content");
 			}
 
@@ -8485,6 +8426,8 @@ function main_script(DATA) {
 						QTF.city_view_windowTitle();
 					if (QT.Settings.values.qmenu_settings_stadtliste && $('#town_groups_list').is(':visible'))
 						QTF.townslist();
+					if (QT.Settings.values.qmenu_settings_removetooltipps)
+						QT.Functions.removeTooltipps("sidebar");
 				break;
 				case "report/index":
 				case "report/move":
@@ -8575,6 +8518,8 @@ function main_script(DATA) {
 						if (QT.Settings.values.qmenu_settings_removetooltipps)
 							QTF.removeTooltipps("place");
 					}
+					if (QT.Settings.values.qmenu_settings_removetooltipps)
+						QT.Functions.removeTooltipps("sidebar");
 					//QTF.academyMarker();
 					//if (QT.Settings.values.qmenu_settings_hideaddpoints)
 					//QTF.hidesIndexAddPoints();
@@ -8586,6 +8531,8 @@ function main_script(DATA) {
 						QTF.townslist();
 					if (QT.Settings.values.qmenu_settings_hidesilver)
 						QTF.hidesIndexIron();
+					if (QT.Settings.values.qmenu_settings_removetooltipps)
+						QT.Functions.removeTooltipps("sidebar");
 					//if (QT.Settings.values.qmenu_settings_hideaddpoints)
 					//QTF.hidesIndexAddPoints();
 				break;
@@ -8655,7 +8602,7 @@ var DATA = {
 	qmenu_update_next : GM_getValue("qmenu_update_next", 0),
 	clicked_sponsor_links : GM_getValue("clicked_sponsor_links", 0),
 	clicked_sponsor_link_last : GM_getValue("clicked_sponsor_link_last", 0),
-	googledocsurl : GM_getValue("googledocsurl", "https://docs.google.com/spreadsheet/ccc?key=0AkpTmTnKs72_dEF3bWs3SW5iWjdyUEE0M0c3Znpmc3c"),
+	googledocsurl : GM_getValue("googledocsurl", "https://docs.google.com/spreadsheet/ccc?key=0AkpTmTnKs72_dEF3bWs3SW5iWjdyUEE0M0c3Znpmc3c&embedded=true"),
 	grepolistoolkit : GM_getValue("grepolistoolkit", false),
 	qmenu_settings_akademieplaner : GM_getValue("qmenu_settings_akademieplaner", true),
 	qmenu_settings_berichte_farben : GM_getValue("qmenu_settings_berichte_farben", true),
@@ -8679,7 +8626,6 @@ var DATA = {
 	qmenu_settings_hotkey_jump : GM_getValue("qmenu_settings_hotkey_jump", true),
 	qmenu_settings_hotkey_active : GM_getValue("qmenu_settings_hotkey_active", true),
 	qmenu_settings_island_villages : GM_getValue("qmenu_settings_island_villages", true),
-	qmenu_settings_links : GM_getValue("qmenu_settings_links", true),
 	qmenu_settings_maximize_forum : GM_getValue("qmenu_settings_maximize_forum", true),
 	qmenu_settings_plusmenu : GM_getValue("qmenu_settings_plusmenu", true),
 	qmenu_settings_questliste : GM_getValue("qmenu_settings_questliste", true),
