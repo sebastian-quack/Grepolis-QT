@@ -5,7 +5,7 @@
 // @include        http://*.grepolis.*/game*
 // @include        https://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.52.01
+// @version        2.53.00
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -50,14 +50,14 @@ function main_script(DATA) {
 				conquered : 'conquistado',
 				spying : 'espiando',
 				spy : 'Espião',
-				support : 'apoia',
-				supporting : 'tropas alocadas',
-				attacking : 'atacando',
-				farming_village : 'aldeia bárbara'
+				support : 'Apoia',
+				supporting : 'Tropas Alocadas',
+				attacking : 'Atacando',
+				farming_village : 'Aldeia Bárbara'
 			},
 			forum : {
 				delete : 'Excluir',
-				delete_sure : 'Você realmente deseja excluir essas mensagens?',
+				delete_sure : 'Você realmente quer apagar essas mensagens?',
 				no_selection : 'Nenhuma mensagem selecionada'
 			},
 			town_info : {
@@ -879,7 +879,7 @@ function main_script(DATA) {
 			},
 			grepo_mainmenu : {
 				city_view : 'Vista de la ciudad',
-				island_view : 'Vista de la Isla'
+				island_view : 'Vista de la isla'
 			},
 			messages : {
 				ghosttown : 'Ciudad fantasma',
@@ -3763,24 +3763,12 @@ function main_script(DATA) {
 			return '<a class="gp_player_link" href="#' + btoa('{"name":"' + name + '","id":' + id + '}') + '">' + name + '</a>';
 		},
 		Inactivity : {
-			loadDataToCache : function () {
-				
-				QT_inactivity(wID);
-				/*var Ajax = $.ajax({
-						url : 'https://polissearch.marco93.de/inactivity_cache/'+wID+'.txt',
-						jsonpCallback: "inactivity_callback",
-						dataType : "jsonp"
-					}).done(function (data) {
-						var jsonify = (function(div){
-						  return function(json){
-							div.setAttribute('onclick', 'this.__json__ = ' + json);
-							div.click();
-							return div.__json__;
-						  }
-						})(document.createElement('div'));
-						QT.Helper.Inactivity.cache = jsonify('{ '+data+' }');
-					});
-				return Ajax;*/
+			loadDataToCache : function (JQelements) {
+				QT.Helper.Inactivity.cache = {};
+				QT_inactivity(wID, function (players) {
+					QT.Helper.Inactivity.cache = QT_inactive_players;
+					QT.Helper.Inactivity.changeDisplay(JQelements);
+				});
 			},
 			addDisplay : function (style, playerID) {
 				var currentTownXY = QT.Helper.Inactivity.Filter.coordinates();
@@ -3844,11 +3832,7 @@ function main_script(DATA) {
 				if (QT.Helper.Inactivity.cache) {
 					QT.Helper.Inactivity.changeDisplay(JQelements);
 				} else {
-					/*QT.Helper.Inactivity.loadDataToCache().done(function (data) {
-						QT.Helper.Inactivity.changeDisplay(JQelements);
-					});*/
-					//QT_inactivity(wID);
-					console.log("Inactivity display comming soon");
+					QT.Helper.Inactivity.loadDataToCache(JQelements);
 				}
 			},
 			Filter : {
@@ -7366,11 +7350,11 @@ function main_script(DATA) {
 				});
 				var HTML_tab2 = '';
 				var q_translations = {
-					BR : "==CrAZyWoW==, douglasgoclv, tesseus, Stelvins, Jonh Snow, BeerCode",
+					BR : "==CrAZyWoW==, douglasgoclv, tesseus, Stelvins, Jonh Snow, BeerCode, WarOfGood",
 					CZ : "jarajanos, Apolon Foibos, jarajanos",
 					DE : "Quackmaster, Scav77",
 					EN : "Quackmaster, cedomaiori",
-					ES : "Jonh Snow, F0NT3, cuervobrujo, Guerrero2013, TovarischKoba, Wymir, -BENHUR-",
+					ES : "Jonh Snow, F0NT3, cuervobrujo, Guerrero2013, TovarischKoba, Wymir, -BENHUR-, pinxu85",
 					FR : "higter, Mazelys, jbrek, ToolFire, aldo666, jojopt",
 					GR : "drmacsoft, adipas.ioannis, juvekdk, ΤζονακοςΚ, genial, Tassos.28",
 					HU : "Arminno, Betagamer, Shia-ko, Vermunds",
@@ -7411,7 +7395,7 @@ function main_script(DATA) {
 					["Markus B. - 1€", "Marcel P. - 20€", "Manuela M. - 5€", "Andreas H. - 5€"],
 					["Andrea W. - 3€", "Dirk W. - 5€", "Mixalhs B. - 1€", "Maria N. - 1€"],
 					["Danijel K. - 2€", "Maria N. - 1€", "Sven B. - 3€", "UBassoon - 10€"],
-					["Bernd R. - 1€", "Wolfgang R. - 10€"]
+					["Bernd R. - 1€", "Wolfgang R. - 10€", "Sabine S. - 20€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
@@ -7828,6 +7812,59 @@ function main_script(DATA) {
 					}, 10);
 				});
 			});
+		},
+		summerevent2015 : function () {
+
+			var wnd = $(".campaign_map.hercules2014_map");
+			var box = '<div id="qt_summerevent" class="countdown_box" style="position: absolute; right: 0px; width: 76px;">' +
+				'<div class="left"></div>' +
+				'<div class="right"></div>' +
+				'<div class="middle"></div>' +
+				'</div>';
+			
+			wnd.append(box);
+			wnd.find("#qt_summerevent .middle").append('<a id="qt_summerevent_hide" href="#"></a>');
+			
+			var qt_summerevent_hide = $("#qt_summerevent_hide");
+			
+			qt_summerevent_hide.css({
+				"top" : "4px",
+				"right" : "-5px",
+				"position" : "absolute",
+				"height" : "23px",
+				"width" : "22px",
+				"background-image" : "url(http://fs2.directupload.net/images/150531/b9yifbxv.png)",
+				"background-repeat" : "no-repeat",
+				"background-position" : "0px 0px"
+			});
+
+			qt_summerevent_hide.hover(
+				function () {
+					if (!$(this).hasClass("active")) {
+						$(this).css({
+							"background-position" : "0px -23px"
+						});
+					}
+				},
+				function () {
+					if (!$(this).hasClass("active")) {
+						$(this).css({
+							"background-position" : "0px 0px"
+						});
+					}
+				}
+			).toggle(function() {
+				$(this).css({
+					"background-position" : "0px -46px"
+				}).addClass("active");
+				wnd.find(".ranking, .headline_container, .frame_my_army").hide();
+			}, function() {
+				$(this).css({
+					"background-position" : "0px 0px"
+				}).removeClass("active");
+				wnd.find(".ranking, .headline_container, .frame_my_army").show();
+			});
+
 		},
 		tb_activitiesExtra : function () {
 			$("#toolbar_activity_recruits_list").hover(
@@ -8517,6 +8554,8 @@ function main_script(DATA) {
 						QTF.agoraUnitsBeyondFromTownExport();
 						if (QT.Settings.values.qmenu_settings_removetooltipps)
 							QTF.removeTooltipps("place");
+					} else if (frontend_bridge === "hercules2014") {
+						QTF.summerevent2015();
 					}
 					if (QT.Settings.values.qmenu_settings_removetooltipps)
 						QT.Functions.removeTooltipps("sidebar");
@@ -8780,13 +8819,20 @@ unsafeWindow.QT_updater = function (changelog, forumlink) {
 		}
 	}, 0);
 };
-unsafeWindow.QT_inactivity = function (world_id) {
+unsafeWindow.QT_inactivity = function (world_id, callback) {
 	setTimeout(function () {
 		GM_xmlhttpRequest({
 			method : "GET",
 			url : 'http://polissearch.marco93.de/inactivity_cache/'+world_id+'.txt',
 			onload : function (response) {
-				console.log(response.responseText);
+				var players = response.responseText.split(','), player;
+				var players_ob = {};
+				for (var i in players) {
+					player = players[i].toString().split(':');
+					players_ob[player[0]] = player[1];
+				}
+				unsafeWindow.QT_inactive_players = cloneInto(players_ob, unsafeWindow);
+				callback(players_ob);
 			}
 		});
 	}, 0);
@@ -8812,7 +8858,8 @@ if (typeof exportFunction == 'function') {
 		defineAs : "QT_updater"
 	});
 	exportFunction(unsafeWindow.QT_inactivity, unsafeWindow, {
-		defineAs : "QT_inactivity"
+		defineAs : "QT_inactivity",
+		allowCrossOriginArguments: true
 	});
 }
 
