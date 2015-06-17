@@ -5,7 +5,7 @@
 // @include        http://*.grepolis.*/game*
 // @include        https://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.53.00
+// @version        2.53.01
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -846,6 +846,11 @@ function main_script(DATA) {
 			},
 			command_ov : {
 				commands : "Befehle"
+			},
+			summerevent : {
+				hide : "Rangliste und Truppen verstecken/anzeigen",
+				tools : "Erfahre mehr über die besten Tips und Strategien, um das Maximum aus diesem Event rauszuholen!",
+				present : "Mach mit bei dem Event Gewinnspiel und verbessere täglich deine Chance auf 1500 Gold!"
 			}
 		},
 		es : {
@@ -3530,6 +3535,11 @@ function main_script(DATA) {
 			},
 			command_ov : {
 				commands : "Commands"
+			},
+			summerevent : {
+				hide : "Show/Hide ranking and troops",
+				tools : "Learn about the best strategies to beat this event!",
+				present : "Check out the Grepolis Summer Event 1500 Gold Giveaway. Make sure to visit every day to earn up to 8 extra entries and to boost your luck even further!"
 			}
 		}
 	};
@@ -7816,29 +7826,46 @@ function main_script(DATA) {
 		summerevent2015 : function () {
 
 			var wnd = $(".campaign_map.hercules2014_map");
-			var box = '<div id="qt_summerevent" class="countdown_box" style="position: absolute; right: 0px; width: 76px;">' +
+			
+			var link_giveaway = (wID == "de" ? "http://de.grepolisqt.de/grepolis-sommer-event-1500-gold-gewinnspiel/" : "http://en.grepolisqt.de/grepolis-summer-event-1500-gold-giveaway/");
+			var link_infos = (wID == "de" ? "http://de.grepolisqt.de/kommandant-fuer-rom-tips-und-infos/" : "http://en.grepolisqt.de/commander-of-rome-tips-and-infos/");
+			
+			var box = '<div id="qt_summerevent" class="countdown_box" style="position: absolute; right: 0px; width: 122px;">' +
 				'<div class="left"></div>' +
 				'<div class="right"></div>' +
 				'<div class="middle"></div>' +
 				'</div>';
 			
 			wnd.append(box);
-			wnd.find("#qt_summerevent .middle").append('<a id="qt_summerevent_hide" href="#"></a>');
+			wnd.find("#qt_summerevent .middle").append('<a id="qt_summerevent_hide" class="qt_summerevent_btn" href="#"></a><a id="qt_summerevent_tools" class="qt_summerevent_btn" href="'+link_infos+'" target="_blank"></a><a id="qt_summerevent_present" class="qt_summerevent_btn" href="'+link_giveaway+'" target="_blank"></a>');
 			
 			var qt_summerevent_hide = $("#qt_summerevent_hide");
+			var qt_summerevent_tools = $("#qt_summerevent_tools");
+			var qt_summerevent_present = $("#qt_summerevent_present");
+			var qt_summerevent_btn = wnd.find(".qt_summerevent_btn");
 			
-			qt_summerevent_hide.css({
+			qt_summerevent_btn.css({
 				"top" : "4px",
-				"right" : "-5px",
 				"position" : "absolute",
 				"height" : "23px",
 				"width" : "22px",
-				"background-image" : "url(http://fs2.directupload.net/images/150531/b9yifbxv.png)",
 				"background-repeat" : "no-repeat",
 				"background-position" : "0px 0px"
 			});
+			qt_summerevent_hide.css({
+				"right" : "41px",
+				"background-image" : "url(http://fs2.directupload.net/images/150531/b9yifbxv.png)",
+			});
+			qt_summerevent_tools.css({
+				"right" : "18px",
+				"background-image" : "url(http://fs2.directupload.net/images/150602/pj4iiyhn.png)",
+			});
+			qt_summerevent_present.css({
+				"right" : "-5px",
+				"background-image" : "url(http://fs1.directupload.net/images/150602/48hc9oaq.png)",
+			});
 
-			qt_summerevent_hide.hover(
+			qt_summerevent_btn.hover(
 				function () {
 					if (!$(this).hasClass("active")) {
 						$(this).css({
@@ -7853,7 +7880,13 @@ function main_script(DATA) {
 						});
 					}
 				}
-			).toggle(function() {
+			);
+			
+			qt_summerevent_hide.mousePopup(new MousePopup(QT.Lang.get("summerevent", "hide")));
+			qt_summerevent_tools.mousePopup(new MousePopup(QT.Lang.get("summerevent", "tools")));
+			qt_summerevent_present.mousePopup(new MousePopup(QT.Lang.get("summerevent", "present")));
+			
+			qt_summerevent_hide.toggle(function() {
 				$(this).css({
 					"background-position" : "0px -46px"
 				}).addClass("active");
