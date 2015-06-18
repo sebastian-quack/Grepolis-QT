@@ -5,7 +5,7 @@
 // @include        http://*.grepolis.*/game*
 // @include        https://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.53.01
+// @version        2.53.02
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @grant          GM_getValue
 // @grant          GM_setValue
@@ -7827,9 +7827,9 @@ function main_script(DATA) {
 
 			var wnd = $(".campaign_map.hercules2014_map");
 			
-			var link_giveaway = (wID == "de" ? "http://de.grepolisqt.de/grepolis-sommer-event-1500-gold-gewinnspiel/" : "http://en.grepolisqt.de/grepolis-summer-event-1500-gold-giveaway/");
-			var link_infos = (wID == "de" ? "http://de.grepolisqt.de/kommandant-fuer-rom-tips-und-infos/" : "http://en.grepolisqt.de/commander-of-rome-tips-and-infos/");
-			
+			var link_giveaway = (mID == "de" ? "http://de.grepolisqt.de/grepolis-sommer-event-1500-gold-gewinnspiel/" : "http://en.grepolisqt.de/grepolis-summer-event-1500-gold-giveaway/");
+			var link_infos = (mID == "de" ? "http://de.grepolisqt.de/kommandant-fuer-rom-tips-und-infos/" : "http://en.grepolisqt.de/commander-of-rome-tips-and-infos/");
+
 			var box = '<div id="qt_summerevent" class="countdown_box" style="position: absolute; right: 0px; width: 122px;">' +
 				'<div class="left"></div>' +
 				'<div class="right"></div>' +
