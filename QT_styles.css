@@ -1,0 +1,256 @@
+/*
+Name: Grepolis QT Styles
+Author: Quackmaster
+Version: 0.1
+*/
+
+/*************************
+ * Academy Marker
+ *************************/
+#qacacountWrapper {
+	background-image: url("http://s7.directupload.net/images/130924/wvvkhpvh.png");
+	display: block;
+	height: 35px;
+	left: 325px;
+	margin: 0 auto;
+	position: absolute;
+	top: 385px;
+	width: 172px;
+	z-index: 5;
+}
+.qacacountBox {
+	display: block;
+	font: bold 11px Verdana;
+	margin-top: 12px;
+	position: absolute;
+}
+#qacacountGreen {
+	margin-left:25px;
+}
+#qacacountRed {
+	margin-left:70px
+}
+.qacaBTN {
+	display: block;
+	height: 20px;
+	margin-top: 8px;
+	position: absolute;
+	width: 20px;
+}
+.qacaBTN:hover {
+	background-position : 0px -21px;
+}
+#qacamarkResearched {
+	left: 104px;
+}
+#qacamarkResearched.green {
+	background-image: url(http://s1.directupload.net/images/130904/2tny5dlh.png);
+}
+#qacamarkResearched.red {
+	background-image: url(http://s14.directupload.net/images/130904/q3kd5re4.png);
+}
+#qacamarkResearched.nocolor {
+	background-image: url(http://s1.directupload.net/images/130904/w4juy8xf.png);
+}
+#qacamarkNotResearched {
+	left:124px;
+}
+#qacamarkNotResearched.green {
+	background-image: url(http://s7.directupload.net/images/130904/pkeasgik.png);
+}
+#qacamarkNotResearched.red {
+	background-image: url(http://s1.directupload.net/images/130904/qmzufy5p.png);
+}
+#qacamarkNotResearched.nocolor {
+	background-image: url(http://s1.directupload.net/images/130904/bt42389p.png);
+}
+#qacamarkNone {
+	left:144px;
+	background-image: url(http://s1.directupload.net/images/130904/yothfag9.png);
+}
+.tech_tree_box .research_icon::after {
+	content: "";
+	height: 100%;
+	width: 100%;
+	display: block;
+	opacity: 0.50;
+}
+.tech_tree_box.researched_green .research_icon:not(.inactive)::after{
+	background-color: green;
+}
+.tech_tree_box.researched_red .research_icon:not(.inactive)::after{
+	background-color: red;
+}
+.tech_tree_box.slinger .research_icon.slinger::after,
+.tech_tree_box.archer .research_icon.archer::after,
+.tech_tree_box.town_guard .research_icon.town_guard::after,
+.tech_tree_box.hoplite .research_icon.hoplite::after,
+.tech_tree_box.diplomacy .research_icon.diplomacy::after,
+.tech_tree_box.meteorology .research_icon.meteorology::after,
+.tech_tree_box.espionage .research_icon.espionage::after,
+.tech_tree_box.booty .research_icon.booty::after,
+.tech_tree_box.pottery .research_icon.pottery::after,
+.tech_tree_box.rider .research_icon.rider::after,
+.tech_tree_box.architecture .research_icon.architecture::after,
+.tech_tree_box.instructor .research_icon.instructor::after,
+.tech_tree_box.bireme .research_icon.bireme::after,
+.tech_tree_box.building_crane .research_icon.building_crane::after,
+.tech_tree_box.shipwright .research_icon.shipwright::after,
+.tech_tree_box.chariot .research_icon.chariot::after,
+.tech_tree_box.attack_ship .research_icon.attack_ship::after,
+.tech_tree_box.conscription .research_icon.conscription::after,
+.tech_tree_box.demolition_ship .research_icon.demolition_ship::after,
+.tech_tree_box.catapult .research_icon.catapult::after,
+.tech_tree_box.cryptography .research_icon.cryptography::after,
+.tech_tree_box.democracy .research_icon.democracy::after,
+.tech_tree_box.colonize_ship .research_icon.colonize_ship::after,
+.tech_tree_box.small_transporter .research_icon.small_transporter::after,
+.tech_tree_box.plow .research_icon.plow::after,
+.tech_tree_box.berth .research_icon.berth::after,
+.tech_tree_box.trireme .research_icon.trireme::after,
+.tech_tree_box.phalanx .research_icon.phalanx::after,
+.tech_tree_box.breach .research_icon.breach::after,
+.tech_tree_box.mathematics .research_icon.mathematics::after,
+.tech_tree_box.ram .research_icon.ram::after,
+.tech_tree_box.cartography .research_icon.cartography::after,
+.tech_tree_box.take_over_old .research_icon.take_over_old::after{
+	background-color: green;
+}
+
+/*************************
+ * Cave Overview
+ *************************/
+#hides_sort_control {
+	bottom: -8px;
+	left: -9px;
+	padding: 0 2px;
+	right: -9px;
+	top: -9px;
+}
+#button_table_resize {
+	background-image: url(http://fs2.directupload.net/images/150328/cmmw443a.png);
+	background-repeat: no-repeat;
+	display: block !important;
+	float: left;
+	width: 22px;
+	height: 23px;
+	margin-right: 5px;
+	margin-top: 2px;
+	cursor: pointer;
+}
+#button_table_resize:hover {
+	background-position: 0px -23px !important;
+}
+#button_table_resize.active {
+	background-position: 0px -46px !important;
+}
+#qsortinit {
+	margin: 3px 0 0 3px;
+}
+#hides_sort_control .border {
+	border-bottom: 1px solid #222;
+	left: -2px;
+	position: absolute;
+	right: -2px;
+	top: 28px;
+}
+#hides_overview_wrapper {
+	height: 465px;
+	top: 39px;
+}
+#hides_overview_towns {
+	border-top: 0px;
+}
+#hides_silver_total {
+	background: #ffe2a1 none repeat scroll 0 0;
+	border: 1px solid #e1af55;
+	font-size: 10px;
+	padding: 0 4px 2px 1px;
+	position: absolute;
+	right: 2px;
+	top: 3px;
+}
+#hides_silver_total .resource_iron_icon {
+	padding-left: 25px;
+	width: auto;
+}
+#hides_silver_total .silver_amount {
+	display: block;
+	padding-top: 1px;
+}
+.q_res_plenty, .q_res_rare {
+	background: url(https://gpde.innogamescdn.com/images/game/layout/resources_deposit.png) no-repeat scroll 0 0;
+	height: 10px;
+	width: 10px;
+	position: absolute;
+	left: 29px;
+}
+.q_res_rare {
+	background-position: 0 -10px;
+}
+#hides_overview_towns.q_resize .box_content {
+	display: none;
+}
+#hides_overview_towns.q_resize .hide_buttons, #hides_overview_towns.q_resize .spinner {
+	top: 23px;
+}
+
+/*************************
+ * Questlist
+ *************************/
+#q_questlist {
+	display: block !important;
+	height: 20px;
+	width: 52px;
+	margin-left: 9px;
+	position: relative;
+	z-index: 5;
+	cursor: pointer;
+	background: url(http://s7.directupload.net/images/130417/mvyxzaeg.png) no-repeat scroll transparent;
+}
+#q_questlist span {
+	cursor: pointer;
+	display: block !important;
+	height: 16px;
+	position: absolute;
+	background-repeat: no-repeat;
+}
+#q_lock {
+	margin-left: 3px;
+	margin-top: 3px;
+	width: 10px;
+	background-image: url(http://s7.directupload.net/images/130412/7pi7gioz.png);
+	background-size: 21px 14px;
+}
+#q_lock:hover {
+	background-position: -10px 0px;
+}
+#q_lock.active {
+	background-image: url(http://s7.directupload.net/images/130412/pnljoi2y.png);
+	background-size: 28px 14px;
+	width: 14px;
+}
+#q_lock.active:hover {
+	background-position: -14px 0px;
+}
+#q_arrow {
+	margin-left: 16px;
+	margin-top: 3px;
+	width: 10px;
+	background-image: url(http://s1.directupload.net/images/130417/ayoe9glf.png);
+	background-size: 21px 14px;
+}
+#q_arrow:hover {
+	background-position: -11px 0px;
+}
+#q_hide {
+	margin-left: 28px;
+	margin-top: 5px;
+	width: 16px;
+	background-image: url(http://s14.directupload.net/images/130417/5vowoe8a.png);
+	background-size: 31px 11px;
+}
+#q_hide:hover {
+	background-position: -16px 0px;
+}
+
