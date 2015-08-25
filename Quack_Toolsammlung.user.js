@@ -5,8 +5,9 @@
 // @include        http://*.grepolis.*/game*
 // @include        https://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.53.02
+// @version        2.54.00
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
+// @resource       QT_styles https://github.com/Quackmaster/Grepolis-QT/raw/master/QT_styles.css
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_deleteValue
@@ -4647,55 +4648,16 @@ function main_script(DATA) {
 	 * Functions
 	 ***********************************************************************/
 	QT.Functions = {
-		test : function () {
-			alert("Test funktioniert");
-		},
 		academyMarker : function () {
-			if ($('.academy').length == 0 || $('#qacacountWrapper').length != 0)
-				return;
-			
-			var qacmarkDIV = '<div class="qacamark green" style="width: 100%; height: 100%; position: absolute; background: none repeat scroll 0% 0% green; top: -3px; left: -3px; border: 3px solid green; opacity: 0.4"></div>';
-			$(".academy").append('<div id="qacacountWrapper"><div id="qacacountGreen" class="qacacountBox" style="margin-left:25px">0</div><div id="qacacountRed" class="qacacountBox" style="margin-left:70px">0</div><a id="qacamarkResearched" class="qacaBTN green" style="left:104px; background-image: url(http://s1.directupload.net/images/130904/2tny5dlh.png)" href="#"></a><a id="qacamarkNotResearched" class="qacaBTN green" style="left:124px; background-image: url(http://s7.directupload.net/images/130904/pkeasgik.png)" href="#"></a><a id="qacamarkNone" class="qacaBTN" style="left:144px; background-image: url(http://s1.directupload.net/images/130904/yothfag9.png)" href="#"></a></div>');
-			
-			$("#qacacountWrapper").css({
-				"margin" : " 0px auto",
-				"display" : "block",
-				"position" : "absolute",
-				"left" : "325px",
-				"top" : "385px",
-				"height" : "35px",
-				"width" : "172px",
-				"background-image" : "url(http://s7.directupload.net/images/130924/wvvkhpvh.png)"
-			});
-			$(".qacacountBox").css({
-				"margin-top" : "12px",
-				"font" : "bold 11px Verdana",
-				"position" : "absolute",
-				"display" : "block"
-			});
-			$(".qacaBTN").css({
-				"width" : "20px",
-				"height" : "20px",
-				"margin-top" : "8px",
-				"position" : "absolute",
-				"display" : "block"
-			});
+
+			$(".academy").append('<div id="qacacountWrapper"><div id="qacacountGreen" class="qacacountBox">0</div><div id="qacacountRed" class="qacacountBox">0</div><a id="qacamarkResearched" class="qacaBTN green" href="#"></a><a id="qacamarkNotResearched" class="qacaBTN green" href="#"></a><a id="qacamarkNone" class="qacaBTN" href="#"></a></div>');
+
+			/*var qacmarkDIV = '<div class="qacamark green" style="width: 100%; height: 100%; position: absolute; background: none repeat scroll 0% 0% green; top: -3px; left: -3px; border: 3px solid green; opacity: 0.4"></div>';
+
 			$(".academy_info").css({
 				"z-index" : "1"
-			});
-			
-			$(".qacaBTN").hover(
-				function () {
-				$(this).css({
-					"background-position" : "0px -21px"
-				});
-			},
-				function () {
-				$(this).css({
-					"background-position" : "0px 0px"
-				});
-			});
-			
+			});*/
+
 			$('#qacamarkResearched').mousePopup(new MousePopup(QT.Lang.get("academy", "researched")));
 			$('#qacamarkNotResearched').mousePopup(new MousePopup(QT.Lang.get("academy", "notresearched")));
 			$('#qacamarkNone').mousePopup(new MousePopup(QT.Lang.get("academy", "undo")));
@@ -4755,28 +4717,25 @@ function main_script(DATA) {
 				});
 			};
 			
+			// Changes image and calls stuff
 			$(".qacaBTN").click(function () {
 				var thisColor = $(this).attr('class').split(' ').pop();
 				if (this.id != "qacamarkNone") {
 				
 					if (thisColor === "green") {
-						$(this).removeClass("green").addClass("red").css({
-							"background-image" : "url(" + qacaBTNpics[this.id][1] + ")"
-						});
+						$(this).removeClass("green").addClass("red");
 					} else if (thisColor === "red") {
-						$(this).removeClass("red").addClass("nocolor").css({
-							"background-image" : "url(" + qacaBTNpics[this.id][2] + ")"
-						});
+						$(this).removeClass("red").addClass("nocolor");
 					} else if (thisColor === "nocolor") {
-						$(this).removeClass("nocolor").addClass("green").css({
-							"background-image" : "url(" + qacaBTNpics[this.id][0] + ")"
-						});
+						$(this).removeClass("nocolor").addClass("green");
 					}
 					
 					if (this.id === "qacamarkResearched") {
-						ChangeAllResearchColors(".is_researched,.in_progress", thisColor);
+						$(".tech_tree_box").addClass("researched_green");
+
+						//ChangeAllResearchColors(".is_researched,.in_progress", thisColor);
 					} else if (this.id === "qacamarkNotResearched") {
-						ChangeAllResearchColors(".inactive", thisColor);
+						//ChangeAllResearchColors(".inactive", thisColor);
 					}
 					
 				} else {
@@ -4787,7 +4746,17 @@ function main_script(DATA) {
 				SafeResearchColor();
 			});
 			
-			$(".academy_info").click(function () {
+			// Click on Unit image
+			$( ".tech_tree_box" ).on( "click", ".research_icon", function() {
+				var unit_class = $(this).attr('class').split(' ')[2];//get unit name
+				$( ".tech_tree_box" ).toggleClass(unit_class);//toggle unit name as class
+				researchSelected.push(unit_class);//push to array
+				//$( ".tech_tree_box" ).data('units', researchSelected);
+				//console.log($( ".tech_tree_box" ).data());
+				// data-units='["a","b","c"]'
+			});
+
+			/*$(".academy_info").click(function () {
 				var thisParent = $(this).parent();
 				if ($(".qacamark", thisParent).length > 0) {
 					var $this = $(".qacamark", thisParent);
@@ -4805,7 +4774,7 @@ function main_script(DATA) {
 				GetResearchColorPoints();
 				UpdateResearchPointsText();
 				SafeResearchColor();
-			});
+			});*/
 			
 			//init
 			if (typeof researchSelected == "undefined") {
@@ -4815,10 +4784,6 @@ function main_script(DATA) {
 					"green" : 0,
 					"blue" : 0
 				};
-				qacaBTNpics = {
-					"qacamarkResearched" : ["http://s1.directupload.net/images/130904/2tny5dlh.png", "http://s14.directupload.net/images/130904/q3kd5re4.png", "http://s1.directupload.net/images/130904/w4juy8xf.png"],
-					"qacamarkNotResearched" : ["http://s7.directupload.net/images/130904/pkeasgik.png", "http://s1.directupload.net/images/130904/qmzufy5p.png", "http://s1.directupload.net/images/130904/bt42389p.png"]
-				}
 			} else {
 				$.each(researchSelected, function (key, value) {
 					$("#" + key + " .academy_info").after(qacmarkDIV);
@@ -4829,6 +4794,7 @@ function main_script(DATA) {
 				});
 				UpdateResearchPointsText();
 			}
+
 		},
 		addsettingsbutton : function () {
 			var b = GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_PLAYER_SETTINGS);
@@ -4836,7 +4802,7 @@ function main_script(DATA) {
 				return;
 			var c = $("DIV#gpwnd_" + b.getID() + " .settings-menu ul:last");
 			if ($(c).find('#quack-toolsammlung').length == 0) {
-				$(c[0]).append('<li><img id="quackicon" style="width:20px;height:15px;vertical-align:bottom;" src="http://s1.directupload.net/images/130206/r2q9fzri.png"></img> <a id="quack-toolsammlung" href="#">Quack Toolsammlung</a></li>');
+				$(c[0]).append('<li><img id="quackicon" src="http://s1.directupload.net/images/130206/r2q9fzri.png"></img> <a id="quack-toolsammlung" href="#">Quack Toolsammlung</a></li>');
 				$("#quack-toolsammlung").click(function () {
 					QT.Functions.scriptmanager();
 				})
@@ -4945,40 +4911,9 @@ function main_script(DATA) {
 		},
 		bbcodeBtnTown : function () {
 			$('<a id="BTN_TownBB" href="#"></a><input id="INPUT_TownBB" type="text" onfocus="this.select();" onclick="this.select();">').appendTo('.town_name_area');
-			$("#BTN_TownBB").css({
-				"z-index" : "5",
-				"top" : "56px",
-				"left" : "95px",
-				"position" : "absolute",
-				"height" : "16px",
-				"width" : "18px",
-				"background-image" : "url(http://s14.directupload.net/images/131121/eif6bq74.png)",
-				"background-repeat" : "no-repeat",
-				"background-position" : "0px 0px"
-			});
-			$("#INPUT_TownBB").css({
-				"z-index" : "5",
-				"top" : "29px",
-				"left" : "21px",
-				"position" : "absolute",
-				"width" : "160px",
-				"display" : "none",
-				"text-align" : "center"
-			});
 			$("#BTN_TownBB").click(function () {
 				$("#INPUT_TownBB").toggle();
 				$("#INPUT_TownBB").val("[town]" + Game.townId + "[/town]");
-			});
-			$("#BTN_TownBB").hover(
-				function () {
-				$(this).css({
-					"background-position" : "0px -16px"
-				});
-			},
-				function () {
-				$(this).css({
-					"background-position" : "0px 0px"
-				});
 			});
 		},
 		bbcodes : function (mode) {
@@ -5856,112 +5791,30 @@ function main_script(DATA) {
 						["stone", QT.Lang.get("caves", "stone")],
 						["iron", QT.Lang.get("caves", "silver")]
 					];
-					QT.wnd.append('<div id="hides_sort_control" class="overview_search_bar"><a id="button_table_resize" href="#"></a>'+QT.Helper.grepo_dropdown("qsort_towns", sort_options)+QT.Helper.grepo_input("margin-top:0px","qsortfilterbox","")[0].outerHTML+'<div id="qsortinit" class="button_order_by active"></div><div id="hides_silver_total"><span class="resource_iron_icon iron"><span class="silver_amount">'+silver_total+'</span></span></div><div class="border"></div></div>');
+					QT.wnd.append('<div id="hides_sort_control" class="overview_search_bar"><div id="button_table_resize"></div>'+QT.Helper.grepo_dropdown("qsort_towns", sort_options)+QT.Helper.grepo_input("margin-top:0px","qsortfilterbox","")[0].outerHTML+'<div id="qsortinit" class="button_order_by active"></div><div id="hides_silver_total"><span class="resource_iron_icon iron"><span class="silver_amount">'+silver_total+'</span></span></div><div class="border"></div></div>');
 
-					$('#hides_sort_control').css({
-						"top" : "-9px",
-						"right" : "-9px",
-						"bottom" : "-8px",
-						"left" : "-9px",
-						"padding" : "0 2px"
-					});
-					$("#button_table_resize").css({
-						"float" : "left",
-						"margin-top" : "2px",
-						"margin-right" : "5px",
-						"height" : "23px",
-						"width" : "22px",
-						"background-image" : "url(http://fs2.directupload.net/images/150328/cmmw443a.png)",
-						"background-repeat" : "no-repeat",
-						"background-position" : "0px 0px"
-					});
-					$('#qsortinit').css({
-						"margin" : "3px 0 0 3px"
-					});
-					$('#hides_sort_control .border').css({
-						"position" : "absolute",
-						"top" : "28px",
-						"left" : "-2px",
-						"right" : "-2px",
-						"border-bottom" : "1px solid #222"
-					});
-					$('#hides_overview_wrapper').css({
-						"top" : "39px",
-						"height" : "465px"
-					});
-					$('#hides_overview_towns').css({
-						"border-top" : "0px"
-					});
-					$('#hides_silver_total').css({
-						"position" : "absolute",
-						"top" : "3px",
-						"right" : "2px",
-						"padding" : "0 4px 2px 1px",
-						"border" : "1px solid #e1af55",
-						"background" : "none repeat scroll 0 0 #ffe2a1",
-						"font-size" : "10px"
-					});
-					$('#hides_silver_total .resource_iron_icon').css({
-						"padding-left" : "25px",
-						"width" : "auto"
-					});
-					$('#hides_silver_total .silver_amount').css({
-						"padding-top" : "1px",
-						"display" : "block"
-					});
-
-					$("#button_table_resize").hover(
-						function () {
-							if (!$(this).hasClass("active")) {
-								$(this).css({
-									"background-position" : "0px -23px"
-								});
-							}
-						},
-						function () {
-							if (!$(this).hasClass("active")) {
-								$(this).css({
-									"background-position" : "0px 0px"
-								});
-							}
-						}
-					).toggle(function() {
-						$(this).css({
-							"background-position" : "0px -46px"
-						}).addClass("active");
-						city_boxes.find(".box_content").hide();
-						city_boxes.find(".hide_buttons, .spinner").css({
-							"top" : "23px"
-						});
+					function table_resize_handler1() {
+						$(this).addClass("active");
+						$("#hides_overview_towns").addClass("q_resize");
 						city_boxes.each(function( index ) {
 							var iron_span_class = $(this).find(".box_content.res_box .iron SPAN:first-child").prop("class");
-							//$(this).find(".box_content.res_box .iron SPAN.res_rare").length > 0
 							if (iron_span_class == "res_rare") {
 								$(this).find(".iron_img").append('<span class="q_res_rare"></span>');
 							} else if (iron_span_class == "res_plenty") {
 								$(this).find(".iron_img").append('<span class="q_res_plenty"></span>');
 							}
 						});
-						$(".q_res_plenty, .q_res_rare").css({
-							"background": "url(https://gpde.innogamescdn.com/images/game/layout/resources_deposit.png) no-repeat scroll 0 0",
-							"height" : "10px",
-							"width" : "10px",
-							"position" : "absolute",
-							"left" : "29px"
-						});
-						$(".q_res_rare").css({
-							"background-position": "0 -10px"
-						});
-					}, function() {
-						$(this).css({
-							"background-position" : "0px 0px"
-						}).removeClass("active");
-						city_boxes.find(".box_content").show();
-						city_boxes.find(".hide_buttons, .spinner").css({
-							"top" : "107px"
-						});
+						$(this).one("click", table_resize_handler2);
+					}
+					
+					function table_resize_handler2() {
+						$(this).removeClass("active");
+						$("#hides_overview_towns").removeClass("q_resize");
 						city_boxes.find(".q_res_plenty, .q_res_rare").remove();
-					});
+						$(this).one("click", table_resize_handler1);
+					}
+					
+					$('#button_table_resize').one("click", table_resize_handler1);
 					
 					function isNumber(n) {
 						return !isNaN(parseFloat(n)) && isFinite(n);
@@ -6859,130 +6712,38 @@ function main_script(DATA) {
 			}		
 		},
 		questlist : function () {
-			$('#quest_overview').prepend("<li id='q_qadd'><ul><li id='q_lock'></li><li id='q_qarrow'></li><li id='q_qhide'></li></ul></li>");
-			$('#q_qadd').css({
-				"cursor" : "pointer",
-				"z-index" : "4",
-				"height" : "20px",
-				"width" : "52px",
-				"margin-left" : "9px",
-				"margin-top" : "-20px",
-				"position" : "absolute",
-				"background" : "url('http://s7.directupload.net/images/130417/mvyxzaeg.png') no-repeat scroll transparent"
+			$('#quest_overview').prepend("<li id='q_questlist'><span id='q_lock'></span><span id='q_arrow'></span><span id='q_hide'></span></li>");
+			$('#q_lock').click(function () {
+				if ( $(this).hasClass("active") ) {
+					$('#quest_overview').draggable({
+						disabled : true
+					});
+					$(this).removeClass("active");
+				} else {
+					$('#quest_overview').draggable({
+						disabled : false
+					});
+					$(this).addClass("active");
+				}
 			});
-			$('#q_lock')
-			.css({
-				"cursor" : "pointer",
-				"z-index" : "5",
-				"height" : "16px",
-				"width" : "10px",
-				"margin-left" : "3px",
-				"margin-top" : "3px",
-				"position" : "absolute",
-				"background" : "url('http://s7.directupload.net/images/130412/7pi7gioz.png') no-repeat scroll 0px 0px / 21px 14px transparent"
-			})
-			.hover(function () {
-				$(this).css({
-					"background-position" : "-10px 0px"
-				});
-			}, function () {
-				$(this).css({
-					"background-position" : "0px 0px"
-				});
-			})
-			.toggle(
-				function () {
-				$('#quest_overview').draggable({
-					disabled : false
-				});
-				$(this).css({
-					"width" : "14px",
-					"background" : "url('http://s7.directupload.net/images/130412/pnljoi2y.png') no-repeat scroll 0px 0px / 28px 14px transparent"
-				})
-				.off('hover')
-				.hover(function () {
-					$(this).css({
-						"background-position" : "-14px 0px"
-					});
-				}, function () {
-					$(this).css({
-						"background-position" : "0px 0px"
-					});
-				});
-			},
-				function () {
-				$('#quest_overview').draggable({
-					disabled : true
-				});
-				$(this).css({
-					"width" : "10px",
-					"background" : "url('http://s7.directupload.net/images/130412/7pi7gioz.png') no-repeat scroll 0px 0px / 21px 14px transparent"
-				})
-				.off('hover')
-				.hover(function () {
-					$(this).css({
-						"background-position" : "-10px 0px"
-					});
-				}, function () {
-					$(this).css({
-						"background-position" : "0px 0px"
-					});
-				});
-			});
-			$('#q_qarrow')
-			.css({
-				"cursor" : "pointer",
-				"z-index" : "5",
-				"height" : "16px",
-				"width" : "10px",
-				"margin-left" : "16px",
-				"margin-top" : "3px",
-				"position" : "absolute",
-				"background" : "url('http://s1.directupload.net/images/130417/ayoe9glf.png') no-repeat scroll 0px 0px / 21px 14px transparent"
-			})
-			.hover(function () {
-				$(this).css({
-					"background-position" : "-11px 0px"
-				});
-			}, function () {
-				$(this).css({
-					"background-position" : "0px 0px"
-				});
-			})
-			.toggle(
-				function () {
+			function q_arrow_handler1() {
 				QT.Settings.save("qmenu_settings_questpfeil", false);
 				QT.Settings.values.qmenu_settings_questpfeil = false;
-				$('<style id="qarrowstyle" type="text/css">.helper_arrow {display: none}</style>').appendTo('head');
-			},
-				function () {
+				$('<style id="qarrowstyle" type="text/css">.helper_arrow {display: none !important}</style>').appendTo('head');
+				$(this).one("click", q_arrow_handler2);
+			}
+			function q_arrow_handler2() {
 				QT.Settings.delete("qmenu_settings_questpfeil");
 				QT.Settings.values.qmenu_settings_questpfeil = true;
 				$('#qarrowstyle').remove();
-			});
-			if (!QT.Settings.values.qmenu_settings_questpfeil) {
-				$('#q_qarrow').click();
+				$(this).one("click", q_arrow_handler1);
 			}
-			$('#q_qhide')
-			.css({
-				"z-index" : "5",
-				"height" : "16px",
-				"width" : "16px",
-				"margin-left" : "28px",
-				"margin-top" : "5px",
-				"position" : "absolute",
-				"background" : "url('http://s14.directupload.net/images/130417/5vowoe8a.png') no-repeat scroll 0px 0px / 31px 11px transparent"
-			})
-			.hover(function () {
-				$(this).css({
-					"background-position" : "-16px 0px"
-				});
-			}, function () {
-				$(this).css({
-					"background-position" : "0px 0px"
-				});
-			})
-			.click(function () {
+			$('#q_arrow').one("click", q_arrow_handler1);
+
+			if (!QT.Settings.values.qmenu_settings_questpfeil) {
+				$('#q_arrow').click();
+			}
+			$('#q_hide').click(function () {
 				$('#quest_overview li[id*="quest"]').each(function () {
 					$(this).toggle();
 				});
@@ -8589,10 +8350,12 @@ function main_script(DATA) {
 							QTF.removeTooltipps("place");
 					} else if (frontend_bridge === "hercules2014") {
 						QTF.summerevent2015();
+					} else if (frontend_bridge === "academy") {
+						//QTF.academyMarker();
 					}
 					if (QT.Settings.values.qmenu_settings_removetooltipps)
 						QT.Functions.removeTooltipps("sidebar");
-					//QTF.academyMarker();
+					
 					//if (QT.Settings.values.qmenu_settings_hideaddpoints)
 					//QTF.hidesIndexAddPoints();
 				break;
@@ -8908,6 +8671,11 @@ function appendScript() {
 		QT_HTML2Canvas.type = 'text/javascript';
 		QT_HTML2Canvas.innerHTML = GM_getResourceText('HTML2Canvas');
 		document.getElementsByTagName('head')[0].appendChild(QT_HTML2Canvas);
+		
+		var QT_styles = document.createElement('style'); 
+		QT_styles.type = 'text/css';
+		QT_styles.innerHTML = GM_getResourceText('QT_styles');
+		document.getElementsByTagName('head')[0].appendChild(QT_styles);
 
 	} else {
 		setTimeout(function () {
