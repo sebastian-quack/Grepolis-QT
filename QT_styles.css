@@ -118,6 +118,33 @@ Version: 0.1
 }
 
 /*************************
+ * BB Code Town Button
+ *************************/
+#BTN_TownBB {
+	background-image: url("http://s14.directupload.net/images/131121/eif6bq74.png");
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	height: 16px;
+	left: 95px;
+	position: absolute;
+	top: 56px;
+	width: 18px;
+	z-index: 5;
+}
+#BTN_TownBB:hover {
+	background-position: 0px -16px;
+}
+#INPUT_TownBB {
+	display: none;
+	left: 21px;
+	position: absolute;
+	text-align: center;
+	top: 29px;
+	width: 160px;
+	z-index: 5;
+}
+
+/*************************
  * Cave Overview
  *************************/
 #hides_sort_control {
@@ -252,5 +279,14 @@ Version: 0.1
 }
 #q_hide:hover {
 	background-position: -16px 0px;
+}
+
+/*************************
+ * Settings Button
+ *************************/
+#quackicon {
+	width: 20px;
+	height: 15px;
+	vertical-align: bottom;
 }
 
