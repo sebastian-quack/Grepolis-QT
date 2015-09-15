@@ -5,7 +5,7 @@
 // @include        http://*.grepolis.*/game*
 // @include        https://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.54.00
+// @version        2.54.01
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @resource       QT_styles https://github.com/Quackmaster/Grepolis-QT/raw/master/QT_styles.css
 // @grant          GM_getValue
@@ -5603,81 +5603,72 @@ function main_script(DATA) {
 				return;
 			var wnd = a[a.length - 1];
 			var wndID = wnd.getID();
-			if ($("DIV#gpwnd_" + wndID).find("span.tilx_points").length > 0 || $("DIV#gpwnd_" + wndID).find("span.tilx_points_block").length > 0)
+			if ($("DIV#gpwnd_" + wndID).find("span.qt_points").length > 0 || $("DIV#gpwnd_" + wndID).find("span.qt_points_block").length > 0)
 				return;
+
 			var buildings_array = GameData.buildings;
-			
+			var queued_buildings_array = {};
+
 			function calcPoints (level, val) {
 				return Math.round(val.points * (Math.pow(val.points_factor, level)));
 			}
 			function calcDiff (level_old, level_new, val) {
 				return calcPoints(level_new, val) - calcPoints(level_old, val);
 			}
-			
+
+			$("DIV#gpwnd_" + wndID + " .queued_building_order").each(function () {
+				var name = $(".item_icon", this).prop("class").split(/\s+/)[2];
+				var level, points;
+				if ($('SPAN.green', this).length) {
+					level = parseInt($('SPAN.green', this).text(), 10);
+					points = calcDiff(level-1, level, buildings_array[name]);
+					points = (points === 0 ? "500" : points);
+				} else if ($('SPAN.red', this).length) {
+					level = parseInt($('SPAN.red', this).text(), 10);
+					points = calcDiff(level+1, level, buildings_array[name]);
+					points = (points === 0 ? "-500" : points);
+				} else if ($('SPAN.arrow_green_ver', this).length) {
+					level = parseInt($('DIV.building_level', this).text(), 10);
+					points = calcDiff(level-1, level, buildings_array[name]);
+					points = (points === 0 ? "500" : points);
+				} else if ($('SPAN.arrow_red_ver', this).length) {
+					level = parseInt($('DIV.building_level', this).text(), 10);
+					points = calcDiff(level+1, level, buildings_array[name]);
+					points = (points === 0 ? "-500" : points);
+				}
+				queued_buildings_array[name] = level;
+				$(".item_icon", this).append('<span class="qt_points_block">' + points + ' P<\/span>');
+			});
+
 			$.each(buildings_array, function (key, val) {
 				var b = $("DIV#gpwnd_" + wndID + " #building_main_" + key);
 				if (b.length > 0) {
-					var level = parseInt($('.level', b).eq(0).text(), 10);
+					var level;
+					if (queued_buildings_array[key]) {
+						level = queued_buildings_array[key];
+					} else {
+						level = parseInt($('.level', b).eq(0).text(), 10);
+					}
 					if (!isNaN(level) && val.points !== undefined) {
+					console.log(key + " - Level " + level + ": " + val.points);
 						if (level === 0) {
-							$('.build:not(.tear_down), .build_grey:not(.tear_down)', b).append('<span class="tilx_points"> (' + val.points + ' P)<\/span>');
+							$('.build:not(.tear_down), .build_grey:not(.tear_down)', b).append('<span class="qt_points"> (' + val.points + ' P)<\/span>');
 						} else if (level < val.max_level && level > 0) {
-							$('.build:not(.tear_down), .build_grey:not(.tear_down)', b).append('<span class="tilx_points"> (' + calcDiff(level, level+1, val) + ' P)<\/span>');
+							$('.build:not(.tear_down), .build_grey:not(.tear_down)', b).append('<span class="qt_points"> (' + calcDiff(level, level+1, val) + ' P)<\/span>');
 							if (level - 1 >= 0) {
-								$('.tear_down', b).append('<span class="tilx_points"> (' + calcDiff(level, level-1, val) + ' P)<\/span>');
+								$('.tear_down', b).append('<span class="qt_points"> (' + calcDiff(level, level-1, val) + ' P)<\/span>');
 							}
 						} else if (val.max_level === 1) {
-							$('.tear_down', b).append('<span class="tilx_points"> (-500 P)<\/span>');
+							$('.tear_down', b).append('<span class="qt_points"> (-500 P)<\/span>');
 						}
 					}
 				} else {
 					var c = $("DIV#gpwnd_" + wndID + " #special_building_" + key).not(".special_tear_down");
 					if (c.length > 0) {
-						c.append('<span class="tilx_points_block">' + val.points + ' P<\/span>');
+						c.append('<span class="qt_points_block">' + val.points + ' P<\/span>');
 					}
 					
 				}
-			});
-			
-			$("DIV#gpwnd_" + wndID + " .queued_building_order").each(function () {
-				var name = $(".item_icon", this).prop("class").split(/\s+/)[2];
-				if ($('SPAN.green', this).length) {
-					var level = parseInt($('SPAN.green', this).text(), 10);
-					var points = calcDiff(level-1, level, buildings_array[name]);
-					points = (points === 0 ? "500" : points);
-				} else if ($('SPAN.red', this).length) {
-					var level = parseInt($('SPAN.red', this).text(), 10);
-					var points = calcDiff(level+1, level, buildings_array[name]);
-					points = (points === 0 ? "-500" : points);
-				} else if ($('SPAN.arrow_green_ver', this).length) {
-					var level = parseInt($('DIV.building_level', this).text(), 10);
-					var points = calcDiff(level-1, level, buildings_array[name]);
-					points = (points === 0 ? "500" : points);
-				} else if ($('SPAN.arrow_red_ver', this).length) {
-					var level = parseInt($('DIV.building_level', this).text(), 10);
-					var points = calcDiff(level+1, level, buildings_array[name]);
-					points = (points === 0 ? "-500" : points);
-				}
-				$(".item_icon", this).append('<span class="tilx_points_block">' + points + ' P<\/span>');
-			});
-
-			$("span.tilx_points").css({
-				"font-size" : "7px",
-				"position" : "relative",
-				"bottom" : "1px"
-			});
-			$("span.tilx_points_block").css({
-				"display" : "block",
-				"position" : "absolute",
-				"top" : "-2px",
-				"width" : "100%",
-				"z-index" : "5",
-				"color" : "#fff",
-				"text-shadow" : "1px 1px 0px #000",
-				"font-size" : "9px",
-				"font-weight" : "bold",
-				"background-color" : "rgba(0, 0, 0, 0.4)",
-				"text-align" : "center"
 			});
 		},
 		googledocs : function () {
@@ -7166,7 +7157,8 @@ function main_script(DATA) {
 					["Markus B. - 1€", "Marcel P. - 20€", "Manuela M. - 5€", "Andreas H. - 5€"],
 					["Andrea W. - 3€", "Dirk W. - 5€", "Mixalhs B. - 1€", "Maria N. - 1€"],
 					["Danijel K. - 2€", "Maria N. - 1€", "Sven B. - 3€", "UBassoon - 10€"],
-					["Bernd R. - 1€", "Wolfgang R. - 10€", "Sabine S. - 20€"]
+					["Bernd R. - 1€", "Wolfgang R. - 10€", "Sabine S. - 20€", "Daniel W. - 1€"],
+					["Nelson A. - 2€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
