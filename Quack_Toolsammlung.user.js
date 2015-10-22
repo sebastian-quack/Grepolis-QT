@@ -5,7 +5,7 @@
 // @include        http://*.grepolis.*/game*
 // @include        https://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.54.01
+// @version        2.55.00
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @resource       QT_styles https://github.com/Quackmaster/Grepolis-QT/raw/master/QT_styles.css
 // @grant          GM_getValue
@@ -848,9 +848,9 @@ function main_script(DATA) {
 			command_ov : {
 				commands : "Befehle"
 			},
-			summerevent : {
-				hide : "Rangliste und Truppen verstecken/anzeigen",
-				tools : "Erfahre mehr über die besten Tips und Strategien, um das Maximum aus diesem Event rauszuholen!",
+			halloween : {
+				recipebook : "Link zum Rezepte Buch des Events. Teile deine Rezepte mit der Community, damit wir die Liste schnell vervollständigen können.",
+				poll : "Helfe den Entwicklern des Spiels die Belohnungen zu verbessern und sag uns, welche dir am besten gefallen.",
 				present : "Mach mit bei dem Event Gewinnspiel und verbessere täglich deine Chance auf 1500 Gold!"
 			}
 		},
@@ -3537,10 +3537,10 @@ function main_script(DATA) {
 			command_ov : {
 				commands : "Commands"
 			},
-			summerevent : {
-				hide : "Show/Hide ranking and troops",
-				tools : "Learn about the best strategies to beat this event!",
-				present : "Check out the Grepolis Summer Event 1500 Gold Giveaway. Make sure to visit every day to earn up to 8 extra entries and to boost your luck even further!"
+			halloween : {
+				recipebook: "A searchable recipe book - please share your recipes in the comment section so we can complete the list",
+				poll : "Help the devolopers of Grepolis: What are your favorite rewards?",
+				present : "Check out the Grepolis Halloween Event 1500 Gold Giveaway. Make sure to visit every day to earn extra entries and to boost your luck even further!"
 			}
 		}
 	};
@@ -5708,6 +5708,26 @@ function main_script(DATA) {
 			});
 			document.getElementById('googledocs_frame').src = QT.Settings.values.googledocsurl;
 		},
+		halloween2015 : function () {
+			var wnd = $(".easter_alchemy");
+			
+			var link_giveaway = (mID == "de" ? "http://de.grepolisqt.de/grepolis-halloween-event-2015-1500-gold-gewinnspiel/" : "http://en.grepolisqt.de/grepolis-halloween-event-1500-gold-giveaway/");
+			var link_poll = (mID == "de" ? "http://de.grepolisqt.de/lieblingsbelohungen-beim-grepolis-halloween-event-2015/" : "http://en.grepolisqt.de/what-are-your-favorite-halloween-event-2015-rewards/");
+			var link_recipebook = (mID == "de" ? "http://de.grepolisqt.de/grepolis-halloween-event-2015-rezepte-liste/" : "http://en.grepolisqt.de/grepolis-halloween-event-2015-recipe-list/");
+
+			var box = '<div id="qt_halloweenevent" class="countdown_box" style="position: absolute; top: 0; right: 0; width: 122px;">' +
+				'<div class="left"></div>' +
+				'<div class="right"></div>' +
+				'<div class="middle"></div>' +
+				'</div>';
+			
+			wnd.append(box);
+			wnd.find("#qt_halloweenevent .middle").append('<a id="qt_halloweenevent_recipebook" class="qt_halloweenevent_btn" href="'+link_recipebook+'" target="_blank"></a><a id="qt_halloweenevent_poll" class="qt_halloweenevent_btn" href="'+link_poll+'" target="_blank"></a><a id="qt_halloweenevent_present" class="qt_halloweenevent_btn" href="'+link_giveaway+'" target="_blank"></a>');
+
+			$("#qt_halloweenevent_recipebook").mousePopup(new MousePopup(QT.Lang.get("halloween", "recipebook")));
+			$("#qt_halloweenevent_poll").mousePopup(new MousePopup(QT.Lang.get("halloween", "poll")));
+			$("#qt_halloweenevent_present").mousePopup(new MousePopup(QT.Lang.get("halloween", "present")));
+		},
 		hidesIndexIron : function () {
 			if ($('#hide_espionage').length == 0)
 				return;
@@ -7158,7 +7178,7 @@ function main_script(DATA) {
 					["Andrea W. - 3€", "Dirk W. - 5€", "Mixalhs B. - 1€", "Maria N. - 1€"],
 					["Danijel K. - 2€", "Maria N. - 1€", "Sven B. - 3€", "UBassoon - 10€"],
 					["Bernd R. - 1€", "Wolfgang R. - 10€", "Sabine S. - 20€", "Daniel W. - 1€"],
-					["Nelson A. - 2€"]
+					["Nelson A. - 2€", "Ines L. - 10€", "Ivica K. - 5€", "Andreas E. - 5€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
@@ -7575,82 +7595,6 @@ function main_script(DATA) {
 					}, 10);
 				});
 			});
-		},
-		summerevent2015 : function () {
-
-			var wnd = $(".campaign_map.hercules2014_map");
-			
-			var link_giveaway = (mID == "de" ? "http://de.grepolisqt.de/grepolis-sommer-event-1500-gold-gewinnspiel/" : "http://en.grepolisqt.de/grepolis-summer-event-1500-gold-giveaway/");
-			var link_infos = (mID == "de" ? "http://de.grepolisqt.de/kommandant-fuer-rom-tips-und-infos/" : "http://en.grepolisqt.de/commander-of-rome-tips-and-infos/");
-
-			var box = '<div id="qt_summerevent" class="countdown_box" style="position: absolute; right: 0px; width: 122px;">' +
-				'<div class="left"></div>' +
-				'<div class="right"></div>' +
-				'<div class="middle"></div>' +
-				'</div>';
-			
-			wnd.append(box);
-			wnd.find("#qt_summerevent .middle").append('<a id="qt_summerevent_hide" class="qt_summerevent_btn" href="#"></a><a id="qt_summerevent_tools" class="qt_summerevent_btn" href="'+link_infos+'" target="_blank"></a><a id="qt_summerevent_present" class="qt_summerevent_btn" href="'+link_giveaway+'" target="_blank"></a>');
-			
-			var qt_summerevent_hide = $("#qt_summerevent_hide");
-			var qt_summerevent_tools = $("#qt_summerevent_tools");
-			var qt_summerevent_present = $("#qt_summerevent_present");
-			var qt_summerevent_btn = wnd.find(".qt_summerevent_btn");
-			
-			qt_summerevent_btn.css({
-				"top" : "4px",
-				"position" : "absolute",
-				"height" : "23px",
-				"width" : "22px",
-				"background-repeat" : "no-repeat",
-				"background-position" : "0px 0px"
-			});
-			qt_summerevent_hide.css({
-				"right" : "41px",
-				"background-image" : "url(http://fs2.directupload.net/images/150531/b9yifbxv.png)",
-			});
-			qt_summerevent_tools.css({
-				"right" : "18px",
-				"background-image" : "url(http://fs2.directupload.net/images/150602/pj4iiyhn.png)",
-			});
-			qt_summerevent_present.css({
-				"right" : "-5px",
-				"background-image" : "url(http://fs1.directupload.net/images/150602/48hc9oaq.png)",
-			});
-
-			qt_summerevent_btn.hover(
-				function () {
-					if (!$(this).hasClass("active")) {
-						$(this).css({
-							"background-position" : "0px -23px"
-						});
-					}
-				},
-				function () {
-					if (!$(this).hasClass("active")) {
-						$(this).css({
-							"background-position" : "0px 0px"
-						});
-					}
-				}
-			);
-			
-			qt_summerevent_hide.mousePopup(new MousePopup(QT.Lang.get("summerevent", "hide")));
-			qt_summerevent_tools.mousePopup(new MousePopup(QT.Lang.get("summerevent", "tools")));
-			qt_summerevent_present.mousePopup(new MousePopup(QT.Lang.get("summerevent", "present")));
-			
-			qt_summerevent_hide.toggle(function() {
-				$(this).css({
-					"background-position" : "0px -46px"
-				}).addClass("active");
-				wnd.find(".ranking, .headline_container, .frame_my_army").hide();
-			}, function() {
-				$(this).css({
-					"background-position" : "0px 0px"
-				}).removeClass("active");
-				wnd.find(".ranking, .headline_container, .frame_my_army").show();
-			});
-
 		},
 		tb_activitiesExtra : function () {
 			$("#toolbar_activity_recruits_list").hover(
@@ -8340,8 +8284,8 @@ function main_script(DATA) {
 						QTF.agoraUnitsBeyondFromTownExport();
 						if (QT.Settings.values.qmenu_settings_removetooltipps)
 							QTF.removeTooltipps("place");
-					} else if (frontend_bridge === "hercules2014") {
-						QTF.summerevent2015();
+					} else if (frontend_bridge === "easter") {
+						QTF.halloween2015();
 					} else if (frontend_bridge === "academy") {
 						//QTF.academyMarker();
 					}
