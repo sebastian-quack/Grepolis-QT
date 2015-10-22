@@ -1,7 +1,7 @@
 /*
 Name: Grepolis QT Styles
 Author: Quackmaster
-Version: 0.2
+Version: 0.3
 */
 
 /*************************
@@ -244,6 +244,33 @@ Version: 0.2
 	text-align: center;
 }
 
+/*************************
+ * Halloween 2015
+ *************************/
+.qt_halloweenevent_btn {
+	top: 4px;
+	position: absolute;
+	height: 23px;
+	width: 22px;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+.qt_halloweenevent_btn:hover {
+	background-position: 0 -23px;
+}
+#qt_halloweenevent_recipebook {
+	right: 41px;
+	background-image: url(http://fs2.directupload.net/images/150602/pj4iiyhn.png);
+}
+#qt_halloweenevent_poll {
+	right: 18px;
+	background-image: url(http://fs5.directupload.net/images/151022/iubt6vym.png);
+}
+#qt_halloweenevent_present {
+	right: -5px;
+	background-image: url(http://fs1.directupload.net/images/150602/48hc9oaq.png);
+}
+ 
 /*************************
  * Questlist
  *************************/
