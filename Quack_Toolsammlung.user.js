@@ -5,7 +5,7 @@
 // @include        http://*.grepolis.*/game*
 // @include        https://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.55.00
+// @version        2.56.00
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @resource       QT_styles https://github.com/Quackmaster/Grepolis-QT/raw/master/QT_styles.css
 // @grant          GM_getValue
@@ -547,7 +547,7 @@ function main_script(DATA) {
 				changelog : 'http://adf.ly/1F7EBy',
 				forumlink : 'http://adf.ly/cbQaZ',
 				forumlink_addfree : 'http://forum.de.grepolis.com/showthread.php?20742',
-				donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=DE&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/de_DE/i/btn/btn_donate_LG.gif" alt="Spenden"></a>',
+				donation_btn : '<a href="http://paypal.me/quacktoolsammlung" target="_blank"><img src="https://www.paypal.com/de_DE/i/btn/btn_donate_LG.gif" alt="Spenden"></a>',
 				unitscalculator : 'http://de.grepolisqt.de/grepolis-truppenrechner/'
 			},
 			reports : {
@@ -848,7 +848,7 @@ function main_script(DATA) {
 			command_ov : {
 				commands : "Befehle"
 			},
-			halloween : {
+			recipeevent : {
 				recipebook : "Link zum Rezepte Buch des Events. Teile deine Rezepte mit der Community, damit wir die Liste schnell vervollständigen können.",
 				poll : "Helfe den Entwicklern des Spiels die Belohnungen zu verbessern und sag uns, welche dir am besten gefallen.",
 				present : "Mach mit bei dem Event Gewinnspiel und verbessere täglich deine Chance auf 1500 Gold!"
@@ -857,7 +857,7 @@ function main_script(DATA) {
 		es : {
 			meta : {
 				flag : 'http://s1.directupload.net/images/140408/6lxubx63.png',
-				donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=ES&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/es_ES/i/btn/btn_donate_LG.gif" alt="Donar"></a>'
+				donation_btn : '<a href="http://paypal.me/quacktoolsammlung" target="_blank"><img src="https://www.paypal.com/es_ES/i/btn/btn_donate_LG.gif" alt="Donar"></a>'
 			},
 			reports : {
 				choose_folder : 'Elegir carpeta',
@@ -1136,7 +1136,7 @@ function main_script(DATA) {
 		fr : {
 			meta : {
 				flag : 'http://s7.directupload.net/images/140408/fo8msuwx.png',
-				donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=FR&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/fr_FR/i/btn/btn_donate_LG.gif" alt="Donate"></a>'
+				donation_btn : '<a href="http://paypal.me/quacktoolsammlung" target="_blank"><img src="https://www.paypal.com/fr_FR/i/btn/btn_donate_LG.gif" alt="Donate"></a>'
 			},
 			reports : {
 				choose_folder : 'Choisissez un dossier',
@@ -1350,7 +1350,7 @@ function main_script(DATA) {
 		},
 		gr : {
 			meta : {
-				flag : 'http://s7.directupload.net/images/140725/ki6kli48.png',
+				flag : 'http://s7.directupload.net/images/140725/ki6kli48.png'
 			},
 			reports : {
 				choose_folder : 'Επιλογή φακέλου',
@@ -1794,7 +1794,7 @@ function main_script(DATA) {
 		it : {
 			meta : {
 				flag : 'http://s7.directupload.net/images/140422/rxk9hlkk.png',
-				donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=IT&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/it_IT/i/btn/btn_donate_LG.gif" alt="Donate"></a>'
+				donation_btn : '<a href="http://paypal.me/quacktoolsammlung" target="_blank"><img src="https://www.paypal.com/it_IT/i/btn/btn_donate_LG.gif" alt="Donate"></a>'
 			},
 			reports : {
 				choose_folder : 'Scegli cartella',
@@ -2017,7 +2017,7 @@ function main_script(DATA) {
 		nl : {
 			meta : {
 				flag : 'http://s14.directupload.net/images/140408/bn8q27or.png',
-				donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=NL&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/nl_NL/i/btn/btn_donate_LG.gif" alt="Donatie"></a>'
+				donation_btn : '<a href="http://paypal.me/quacktoolsammlung" target="_blank"><img src="https://www.paypal.com/nl_NL/i/btn/btn_donate_LG.gif" alt="Donatie"></a>'
 			},
 			reports : {
 				choose_folder : 'Map kiezen',
@@ -2285,7 +2285,7 @@ function main_script(DATA) {
 		pl : {
 			meta : {
 				flag : 'http://s7.directupload.net/images/140408/yno6pw5g.png',
-				donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=PL&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/pl_PL/i/btn/btn_donate_LG.gif" alt="Donate"></a>'
+				donation_btn : '<a href="http://paypal.me/quacktoolsammlung" target="_blank"><img src="https://www.paypal.com/pl_PL/i/btn/btn_donate_LG.gif" alt="Donate"></a>'
 			},
 			reports : {
 				choose_folder : 'Wybierz folder',
@@ -3010,7 +3010,7 @@ function main_script(DATA) {
 		ru : {
 			meta : {
 				flag : 'http://s1.directupload.net/images/140408/7bsp2aye.png',
-				donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=RU&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/ru_RU/i/btn/btn_donate_LG.gif" alt="Donate"></a>'
+				donation_btn : '<a href="http://paypal.me/quacktoolsammlung" target="_blank"><img src="https://www.paypal.com/ru_RU/i/btn/btn_donate_LG.gif" alt="Donate"></a>'
 			},
 			reports : {
 				choose_folder : 'Выбрать каталог',
@@ -3235,7 +3235,7 @@ function main_script(DATA) {
 				changelog : 'http://adf.ly/1F7F0A',
 				forumlink : 'http://adf.ly/fJDMD',
 				forumlink_addfree : 'http://forum.en.grepolis.com/showthread.php?51999',
-				donation_btn : '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=US&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"><img src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate"></a>',
+				donation_btn : '<a href="http://paypal.me/quacktoolsammlung" target="_blank"><img src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate"></a>',
 				unitscalculator : 'http://en.grepolisqt.de/grepolis-units-calculator/'
 			},
 			reports : {
@@ -3537,7 +3537,7 @@ function main_script(DATA) {
 			command_ov : {
 				commands : "Commands"
 			},
-			halloween : {
+			recipeevent : {
 				recipebook: "A searchable recipe book - please share your recipes in the comment section so we can complete the list",
 				poll : "Help the devolopers of Grepolis: What are your favorite rewards?",
 				present : "Check out the Grepolis Halloween Event 1500 Gold Giveaway. Make sure to visit every day to earn extra entries and to boost your luck even further!"
@@ -3550,11 +3550,11 @@ function main_script(DATA) {
 	 ***********************************************************************/
 	QT.Images = {
 		hotkeys : {
-			key : 'data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QDARXhpZgAATU0AKgAAAAgABQEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAAExAAIAAAASAAAAWodpAAQAAAABAAAAbAAAAAAAAABgAAAAAQAAAGAAAAABUGFpbnQuTkVUIHYzLjUuMTEAAAGShgAHAAAAOgAAAH4AAAAATABFAEEARAAgAFQAZQBjAGgAbgBvAGwAbwBnAGkAZQBzACAASQBuAGMALgAgAFYAMQAuADAAMQAAAP/bAEMABAIDAwMCBAMDAwQEBAQFCQYFBQUFCwgIBgkNCw0NDQsMDA4QFBEODxMPDAwSGBITFRYXFxcOERkbGRYaFBYXFv/bAEMBBAQEBQUFCgYGChYPDA8WFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFv/AABEIABEAEQMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/APqbwnpum3WnB7jT7SRlbaGaBScbR3xVX4xadY2vwz1K4s7K3t54xHsliiVHXMqA4IGehP51S0nxt4W8PQ/Yda1iG1uOH8tskgFRycZx0rM+LXxJ8Fah8P7zT9O1yK6urryhFHEj/N+9Rs5IwBgGua65R63PMf7Pi9ZP++jRV7y39vzormuyzmviD/yHtQ/66H+Vct4d/wBcv4UUVT6jR3lFFFAj/9k=',
-			city_select : 'data:image/png;base64,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',
-			administrator : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACHDwAAjA8AAP1SAACBQAAAfXkAAOmLAAA85QAAGcxzPIV3AAAKOWlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAEjHnZZ3VFTXFofPvXd6oc0wAlKG3rvAANJ7k15FYZgZYCgDDjM0sSGiAhFFRJoiSFDEgNFQJFZEsRAUVLAHJAgoMRhFVCxvRtaLrqy89/Ly++Osb+2z97n77L3PWhcAkqcvl5cGSwGQyhPwgzyc6RGRUXTsAIABHmCAKQBMVka6X7B7CBDJy82FniFyAl8EAfB6WLwCcNPQM4BOB/+fpFnpfIHomAARm7M5GSwRF4g4JUuQLrbPipgalyxmGCVmvihBEcuJOWGRDT77LLKjmNmpPLaIxTmns1PZYu4V8bZMIUfEiK+ICzO5nCwR3xKxRoowlSviN+LYVA4zAwAUSWwXcFiJIjYRMYkfEuQi4uUA4EgJX3HcVyzgZAvEl3JJS8/hcxMSBXQdli7d1NqaQffkZKVwBALDACYrmcln013SUtOZvBwAFu/8WTLi2tJFRbY0tba0NDQzMv2qUP91829K3NtFehn4uWcQrf+L7a/80hoAYMyJarPziy2uCoDOLQDI3fti0zgAgKSobx3Xv7oPTTwviQJBuo2xcVZWlhGXwzISF/QP/U+Hv6GvvmckPu6P8tBdOfFMYYqALq4bKy0lTcinZ6QzWRy64Z+H+B8H/nUeBkGceA6fwxNFhImmjMtLELWbx+YKuGk8Opf3n5r4D8P+pMW5FonS+BFQY4yA1HUqQH7tBygKESDR+8Vd/6NvvvgwIH554SqTi3P/7zf9Z8Gl4iWDm/A5ziUohM4S8jMX98TPEqABAUgCKpAHykAd6ABDYAasgC1wBG7AG/iDEBAJVgMWSASpgA+yQB7YBApBMdgJ9oBqUAcaQTNoBcdBJzgFzoNL4Bq4AW6D+2AUTIBnYBa8BgsQBGEhMkSB5CEVSBPSh8wgBmQPuUG+UBAUCcVCCRAPEkJ50GaoGCqDqqF6qBn6HjoJnYeuQIPQXWgMmoZ+h97BCEyCqbASrAUbwwzYCfaBQ+BVcAK8Bs6FC+AdcCXcAB+FO+Dz8DX4NjwKP4PnEIAQERqiihgiDMQF8UeikHiEj6xHipAKpAFpRbqRPuQmMorMIG9RGBQFRUcZomxRnqhQFAu1BrUeVYKqRh1GdaB6UTdRY6hZ1Ec0Ga2I1kfboL3QEegEdBa6EF2BbkK3oy+ib6Mn0K8xGAwNo42xwnhiIjFJmLWYEsw+TBvmHGYQM46Zw2Kx8lh9rB3WH8vECrCF2CrsUexZ7BB2AvsGR8Sp4Mxw7rgoHA+Xj6vAHcGdwQ3hJnELeCm8Jt4G749n43PwpfhGfDf+On4Cv0CQJmgT7AghhCTCJkIloZVwkfCA8JJIJKoRrYmBRC5xI7GSeIx4mThGfEuSIemRXEjRJCFpB+kQ6RzpLuklmUzWIjuSo8gC8g5yM/kC+RH5jQRFwkjCS4ItsUGiRqJDYkjiuSReUlPSSXK1ZK5kheQJyeuSM1J4KS0pFymm1HqpGqmTUiNSc9IUaVNpf+lU6RLpI9JXpKdksDJaMm4ybJkCmYMyF2TGKQhFneJCYVE2UxopFykTVAxVm+pFTaIWU7+jDlBnZWVkl8mGyWbL1sielh2lITQtmhcthVZKO04bpr1borTEaQlnyfYlrUuGlszLLZVzlOPIFcm1yd2WeydPl3eTT5bfJd8p/1ABpaCnEKiQpbBf4aLCzFLqUtulrKVFS48vvacIK+opBimuVTyo2K84p6Ss5KGUrlSldEFpRpmm7KicpFyufEZ5WoWiYq/CVSlXOavylC5Ld6Kn0CvpvfRZVUVVT1Whar3qgOqCmrZaqFq+WpvaQ3WCOkM9Xr1cvUd9VkNFw08jT6NF454mXpOhmai5V7NPc15LWytca6tWp9aUtpy2l3audov2Ax2yjoPOGp0GnVu6GF2GbrLuPt0berCehV6iXo3edX1Y31Kfq79Pf9AAbWBtwDNoMBgxJBk6GWYathiOGdGMfI3yjTqNnhtrGEcZ7zLuM/5oYmGSYtJoct9UxtTbNN+02/R3Mz0zllmN2S1zsrm7+QbzLvMXy/SXcZbtX3bHgmLhZ7HVosfig6WVJd+y1XLaSsMq1qrWaoRBZQQwShiXrdHWztYbrE9Zv7WxtBHYHLf5zdbQNtn2iO3Ucu3lnOWNy8ft1OyYdvV2o/Z0+1j7A/ajDqoOTIcGh8eO6o5sxybHSSddpySno07PnU2c+c7tzvMuNi7rXM65Iq4erkWuA24ybqFu1W6P3NXcE9xb3Gc9LDzWepzzRHv6eO7yHPFS8mJ5NXvNelt5r/Pu9SH5BPtU+zz21fPl+3b7wX7efrv9HqzQXMFb0ekP/L38d/s/DNAOWBPwYyAmMCCwJvBJkGlQXlBfMCU4JvhI8OsQ55DSkPuhOqHC0J4wybDosOaw+XDX8LLw0QjjiHUR1yIVIrmRXVHYqLCopqi5lW4r96yciLaILoweXqW9KnvVldUKq1NWn46RjGHGnIhFx4bHHol9z/RnNjDn4rziauNmWS6svaxnbEd2OXuaY8cp40zG28WXxU8l2CXsTphOdEisSJzhunCruS+SPJPqkuaT/ZMPJX9KCU9pS8Wlxqae5Mnwknm9acpp2WmD6frphemja2zW7Fkzy/fhN2VAGasyugRU0c9Uv1BHuEU4lmmfWZP5Jiss60S2dDYvuz9HL2d7zmSue+63a1FrWWt78lTzNuWNrXNaV78eWh+3vmeD+oaCDRMbPTYe3kTYlLzpp3yT/LL8V5vDN3cXKBVsLBjf4rGlpVCikF84stV2a9021DbutoHt5turtn8sYhddLTYprih+X8IqufqN6TeV33zaEb9joNSydP9OzE7ezuFdDrsOl0mX5ZaN7/bb3VFOLy8qf7UnZs+VimUVdXsJe4V7Ryt9K7uqNKp2Vr2vTqy+XeNc01arWLu9dn4fe9/Qfsf9rXVKdcV17w5wD9yp96jvaNBqqDiIOZh58EljWGPft4xvm5sUmoqbPhziHRo9HHS4t9mqufmI4pHSFrhF2DJ9NProje9cv+tqNWytb6O1FR8Dx4THnn4f+/3wcZ/jPScYJ1p/0Pyhtp3SXtQBdeR0zHYmdo52RXYNnvQ+2dNt293+o9GPh06pnqo5LXu69AzhTMGZT2dzz86dSz83cz7h/HhPTM/9CxEXbvUG9g5c9Ll4+ZL7pQt9Tn1nL9tdPnXF5srJq4yrndcsr3X0W/S3/2TxU/uA5UDHdavrXTesb3QPLh88M+QwdP6m681Lt7xuXbu94vbgcOjwnZHokdE77DtTd1PuvriXeW/h/sYH6AdFD6UeVjxSfNTws+7PbaOWo6fHXMf6Hwc/vj/OGn/2S8Yv7ycKnpCfVEyqTDZPmU2dmnafvvF05dOJZ+nPFmYKf5X+tfa5zvMffnP8rX82YnbiBf/Fp99LXsq/PPRq2aueuYC5R69TXy/MF72Rf3P4LeNt37vwd5MLWe+x7ys/6H7o/ujz8cGn1E+f/gUDmPP8usTo0wAAAAlwSFlzAAALEgAACxIB0t1+/AAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTFH80I3AAAEHElEQVQ4Tx2Qa0yTBxSGv19qXFVSRS7rhRa1CF6g7TovXIpQhBatIJSLXcECRSjCQKhUmykiNxlKgUHUeYOpbEM3xcmmMTgziZiZZQMn0Rg33ZgxWbJsEnV/nn3Zr/PnPc/7nCMELZIinT+PAMlbBMyTsECcCwMWYM+x8uP4MDPTd3kzPcb02KcMdnhJjdWL+fliToJk9mzmzpqFECYLQR4SRGhQIPLQYMJVSjrafLz6c4KZ38aZeXSNlxMXeDJ8mKmhNiYvdtK+p5xIzRICpQFI5swRIW+HoJKFolLKUYsA29ZNPP/lLq+e3eH5tz38M97F67vdPD1XzGSPjTs9RTy4fpydJTbU4o4iOAhBFryYMIUMtVqFUq3GU1POvy9+4vfrPTztz+Dvr93MjJTxx4CFX/tzeXx+O3eOVtPXWseKSM3/5oJSLkOzPIKVWj1RWgMHP6jhxb1L3O8tZOLIRn740MxkRyrf16/g50OxTDRqueLWc6JjN3qDlnCxXFghAmL0et41JmPcnEmvM5axIy7uNZvptkWwMz4c3yYtp/M0fLN3AwPFq7jmTcIvmryzbh0rV69G0GljWBuXwPoUC6acAk7kRXGx1MDt2mi+rNBxKn8p7SmL+CQvlINmBTkR87jaZsddWYrRvAlDbAJCXEI8poxs0u1OtpTWcLTSwqgvlZslQTw+auXZ+VLxoWae9CYy3hjHUJGai01Z5FVUs+W9QkxbshESEo1YbLnkl1Xg9Phoa6jhVruDgbQALtnDuNcUz3mHgmP5Ki5X6xjzruLkvnwK9jZhf7+WrJIyBGOyicxtDpzVHsr3t7LrcB8jZ9s5kx7MmZS5jFYtZ/xQGi0ZGjqtCoZLNPR91ETxvhZKfA0U7vIgWLNzKKiqw93QSmVLJ/VdxxgdOcnV2iQuONQMVhjxW5bSna6kf3s0X3mTafU3s6Pei2tXLY5y0SS3uATXnv1UHmzHdaCXze4mOrxFPPriADebt3KpWE1Puox6XSCHNoYz2ObClF9G4c4qnK4isnNzEAp2FOGs82GpOEJ05j50MQa6shTc9juYHPRxw7ue0QYz/rQwPnYYcOelEiDXERmfR5wpg0RrgXhO3SmMrh6iMhpRJlXjNCgZdsk5a5fxXVcZD6908uByB+c82XQXm4iXL0CqiEZhsCHTZaFKdCMsS/WwOt/PkuQKgtcW0d9Uxa3qDQxtC+N4ppwL9Wn4SzfiTY5kt15K+vJwpBHxBGnWsySpDFWcE2Fx+BpCopKRxVhZuHIrI5d7efnwc6bOeLghwk5Z1ezRSumzaPjMk0mi2c5CZQzBS9eiii1EobchBCqjkSyOFBX1SMKMDJ9r5M2TAV5Oneb1s2H+uj/E1OBupq830NzWiGKNXSxNQRoagVybQWhUCv8BptN4cBY15igAAAAASUVORK5CYII=',
-			captain : 'data:image/png;base64,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',
-			menu : 'data:image/png;base64,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'
+			key : 'http://fs5.directupload.net/images/160207/dj4uootz.jpg',
+			city_select : 'http://fs5.directupload.net/images/160207/nzhgrbzm.png',
+			administrator : 'http://fs5.directupload.net/images/160207/j4kvrnok.png',
+			captain : 'http://fs5.directupload.net/images/160207/8r8ty3md.png',
+			menu : 'http://fs5.directupload.net/images/160207/giiagnrp.png'
 		},
 		archer : "http://s1.directupload.net/images/140121/l2xgz8zg.jpg",
 		attack_ship : "http://s1.directupload.net/images/140121/mvlqonug.jpg",
@@ -3601,23 +3601,6 @@ function main_script(DATA) {
 	 * Links
 	 ***********************************************************************/
 	QT.Links = {
-		sponsor_link : function (target, rawURL) {
-			var url = (rawURL) ? target : QT.Links[target];
-
-			if (QT.Settings.values.clicked_sponsor_link_last != new Date().toDateString()) {
-				QT.Settings.values.clicked_sponsor_links = 0;
-			}
-
-			if (QT.Settings.values.clicked_sponsor_links < 1 && pName != "Quackmaster") {
-				url = "http://adf.ly/2057648/" + url;
-				QT.Settings.values.clicked_sponsor_links ++;
-				QT.Settings.values.clicked_sponsor_link_last = new Date().toDateString();
-				QT.Settings.save("clicked_sponsor_links", QT.Settings.values.clicked_sponsor_links);
-				QT.Settings.save("clicked_sponsor_link_last", QT.Settings.values.clicked_sponsor_link_last);
-			}
-
-			return url;
-		},
 		GS_Spieler : "http://www." + mID + ".grepostats.com/world/" + wID + "/player/" + sID,
 		GS_Allianz : "http://www." + mID + ".grepostats.com/world/" + wID + "/alliance/" + aID,
 		GS_Bash : "http://www." + mID + ".grepostats.com/world/" + wID + "/alliance/" + aID + "/members",
@@ -4412,9 +4395,9 @@ function main_script(DATA) {
 								$("#qt_export_ajax").hide();
 								var image_url;
 								if (mID == "de") {
-									image_url = QT.Links.sponsor_link('http://de.grepolisqt.de/image-de/' + data.data.id, true);
+									image_url = 'http://de.grepolisqt.de/image-de/' + data.data.id;
 								} else {
-									image_url = QT.Links.sponsor_link('http://en.grepolisqt.de/image-en/' + data.data.id, true);
+									image_url = 'http://en.grepolisqt.de/image-en/' + data.data.id;
 								}
 
 								if(/chrom(e|ium)/.test(navigator.userAgent.toLowerCase())){
@@ -5708,26 +5691,6 @@ function main_script(DATA) {
 			});
 			document.getElementById('googledocs_frame').src = QT.Settings.values.googledocsurl;
 		},
-		halloween2015 : function () {
-			var wnd = $(".easter_alchemy");
-			
-			var link_giveaway = (mID == "de" ? "http://de.grepolisqt.de/grepolis-halloween-event-2015-1500-gold-gewinnspiel/" : "http://en.grepolisqt.de/grepolis-halloween-event-1500-gold-giveaway/");
-			var link_poll = (mID == "de" ? "http://de.grepolisqt.de/lieblingsbelohungen-beim-grepolis-halloween-event-2015/" : "http://en.grepolisqt.de/what-are-your-favorite-halloween-event-2015-rewards/");
-			var link_recipebook = (mID == "de" ? "http://de.grepolisqt.de/grepolis-halloween-event-2015-rezepte-liste/" : "http://en.grepolisqt.de/grepolis-halloween-event-2015-recipe-list/");
-
-			var box = '<div id="qt_halloweenevent" class="countdown_box" style="position: absolute; top: 0; right: 0; width: 122px;">' +
-				'<div class="left"></div>' +
-				'<div class="right"></div>' +
-				'<div class="middle"></div>' +
-				'</div>';
-			
-			wnd.append(box);
-			wnd.find("#qt_halloweenevent .middle").append('<a id="qt_halloweenevent_recipebook" class="qt_halloweenevent_btn" href="'+link_recipebook+'" target="_blank"></a><a id="qt_halloweenevent_poll" class="qt_halloweenevent_btn" href="'+link_poll+'" target="_blank"></a><a id="qt_halloweenevent_present" class="qt_halloweenevent_btn" href="'+link_giveaway+'" target="_blank"></a>');
-
-			$("#qt_halloweenevent_recipebook").mousePopup(new MousePopup(QT.Lang.get("halloween", "recipebook")));
-			$("#qt_halloweenevent_poll").mousePopup(new MousePopup(QT.Lang.get("halloween", "poll")));
-			$("#qt_halloweenevent_present").mousePopup(new MousePopup(QT.Lang.get("halloween", "present")));
-		},
 		hidesIndexIron : function () {
 			if ($('#hide_espionage').length == 0)
 				return;
@@ -6786,6 +6749,28 @@ function main_script(DATA) {
 				$(this).off('mouseenter mouseleave');
 			});
 		},
+		recipeevent : function () {
+			if ( $("#qt_recipeevent").length ) {
+				return;
+			}
+
+			var wnd = $(".classic_window.easter");
+			
+			var link_giveaway = (mID == "de" ? "http://de.grepolisqt.de/grepolis-valentinstag-gewinnspiel" : "http://en.grepolisqt.de/grepolis-valentines-day-giveaway");
+			var link_recipebook = (mID == "de" ? "http://de.grepolisqt.de/demeters-namen-rezepte-liste" : "http://en.grepolisqt.de/demeters-name-recipe-list");
+
+			var box = '<div id="qt_recipeevent" class="countdown_box" style="position: absolute; top: 35px; right: 0; width: 99px;">' +
+				'<div class="left"></div>' +
+				'<div class="right"></div>' +
+				'<div class="middle"></div>' +
+				'</div>';
+
+			wnd.append(box);
+			wnd.find("#qt_recipeevent .middle").append('<a id="qt_recipeevent_recipebook" class="qt_recipeevent_btn qt_recipeevent_btn_2 qt_recipeevent_recipebook" href="'+link_recipebook+'" target="_blank"></a><a id="qt_recipeevent_present" class="qt_recipeevent_btn qt_recipeevent_btn_1 qt_recipeevent_present" href="'+link_giveaway+'" target="_blank"></a>');
+
+			$("#qt_recipeevent_recipebook").mousePopup(new MousePopup(QT.Lang.get("recipeevent", "recipebook")));
+			$("#qt_recipeevent_present").mousePopup(new MousePopup(QT.Lang.get("recipeevent", "present")));
+		},
 		reportsColor : function () {
 			var b = GPWindowMgr.getOpen(Layout.wnd.TYPE_REPORT);
 			if (b.length == 0)
@@ -6879,6 +6864,7 @@ function main_script(DATA) {
 				return;
 			}
 			//$("DIV#gpwnd_" + c + " .report_booty_bonus_fight hr").remove();
+			$("DIV#gpwnd_" + c + " #kill_points .icon").hide();
 			var report_type = $("DIV#gpwnd_" + c + " DIV#report_arrow img").attr("src").replace(/.*\/([a-z_]*)\.png.*/, "$1");
 			switch (report_type) {
 			case "attack":
@@ -7178,7 +7164,8 @@ function main_script(DATA) {
 					["Andrea W. - 3€", "Dirk W. - 5€", "Mixalhs B. - 1€", "Maria N. - 1€"],
 					["Danijel K. - 2€", "Maria N. - 1€", "Sven B. - 3€", "UBassoon - 10€"],
 					["Bernd R. - 1€", "Wolfgang R. - 10€", "Sabine S. - 20€", "Daniel W. - 1€"],
-					["Nelson A. - 2€", "Ines L. - 10€", "Ivica K. - 5€", "Andreas E. - 5€"]
+					["Nelson A. - 2€", "Ines L. - 10€", "Ivica K. - 5€", "Andreas E. - 5€"],
+					["Jean Marie T. - 1€", "Peter F. - 2€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
@@ -8285,7 +8272,7 @@ function main_script(DATA) {
 						if (QT.Settings.values.qmenu_settings_removetooltipps)
 							QTF.removeTooltipps("place");
 					} else if (frontend_bridge === "easter") {
-						QTF.halloween2015();
+						QTF.recipeevent();
 					} else if (frontend_bridge === "academy") {
 						//QTF.academyMarker();
 					}
