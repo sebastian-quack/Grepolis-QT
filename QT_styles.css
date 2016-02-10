@@ -245,9 +245,9 @@ Version: 0.3
 }
 
 /*************************
- * Halloween 2015
+ * Recipes Event Window
  *************************/
-.qt_halloweenevent_btn {
+.qt_recipeevent_btn {
 	top: 4px;
 	position: absolute;
 	height: 23px;
@@ -255,19 +255,25 @@ Version: 0.3
 	background-repeat: no-repeat;
 	background-position: 0 0;
 }
-.qt_halloweenevent_btn:hover {
+.qt_recipeevent_btn:hover {
 	background-position: 0 -23px;
 }
-#qt_halloweenevent_recipebook {
+.qt_recipeevent_btn_1 {
+	right: -5px;
+}
+.qt_recipeevent_btn_2 {
+	right: 18px;
+}
+.qt_recipeevent_btn_3 {
 	right: 41px;
+}
+.qt_recipeevent_recipebook {
 	background-image: url(http://fs2.directupload.net/images/150602/pj4iiyhn.png);
 }
-#qt_halloweenevent_poll {
-	right: 18px;
+.qt_recipeevent_poll {
 	background-image: url(http://fs5.directupload.net/images/151022/iubt6vym.png);
 }
-#qt_halloweenevent_present {
-	right: -5px;
+.qt_recipeevent_present {
 	background-image: url(http://fs1.directupload.net/images/150602/48hc9oaq.png);
 }
  
