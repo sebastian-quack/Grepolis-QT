@@ -5,7 +5,7 @@
 // @include        http://*.grepolis.*/game*
 // @include        https://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.57.00
+// @version        2.57.01
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @resource       QT_styles https://github.com/Quackmaster/Grepolis-QT/raw/master/QT_styles.css
 // @grant          GM_getValue
@@ -8454,7 +8454,7 @@ unsafeWindow.QT_updater = function (changelog, forumlink) {
 		function forceCheck() {
 			GM_xmlhttpRequest({
 				method : "GET",
-				url : "https://openuserjs.org/meta/quackmaster/Quack/Quack_Toolsammlung.meta.js",
+				url : "https://openuserjs.org/meta/Quackmaster/Quack_Toolsammlung.meta.js",
 				headers : {
 					"User-agent" : "Mozilla/5.0",
 					"Accept" : "text/html"
