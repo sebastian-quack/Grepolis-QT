@@ -5,7 +5,7 @@
 // @include        http://*.grepolis.*/game*
 // @include        https://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.56.00
+// @version        2.57.00
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @resource       QT_styles https://github.com/Quackmaster/Grepolis-QT/raw/master/QT_styles.css
 // @grant          GM_getValue
@@ -3596,7 +3596,7 @@ function main_script(DATA) {
 		urephon : "http://s14.directupload.net/images/140121/jfqewwux.jpg",
 		zuretha : "http://s7.directupload.net/images/140121/o6cf8cya.jpg",
 	};
-	
+
 	/************************************************************************
 	 * Links
 	 ***********************************************************************/
@@ -3905,14 +3905,14 @@ function main_script(DATA) {
 							<a id="qt_canvas_delete" class="cancel" href="#"></a>\
 						</div>\
 					');
-					
+
 					$("#selWidth").val("5");
 					$("#selColor").val("red");
-					
+
 					var qt_canvas_height = $("#qt_canvas :first").outerHeight();
 
 					$("#qt_canvas").append('<div id="qt_canvas_wrapper"><canvas id="myCanvas" class="qt_canvas_el" width="800" height="'+qt_canvas_height+'"></canvas><canvas id="canvasTemp" class="qt_canvas_el" width="800" height="'+qt_canvas_height+'"></canvas></div>');
-					
+
 					$("#qt_canvas_toolbar").css({"position":"absolute", "right":"40px", "margin-top":"-22px", "z-index":"2", "height":"23px", "padding":"0 8px", "background":"url(https://gpde.innogamescdn.com/images/game/border/odd.png)"});
 					$(".qt_canvas_tool").css({"width":"22px", "height":"23px", "display":"inline-block","background-position":"0px 0px"});
 					$("#qt_canvas_delete").css({"display":"inline-block", "margin-left": "5px"});
@@ -3935,15 +3935,15 @@ function main_script(DATA) {
 					$("#line").mousePopup(new MousePopup(QT.Lang.get("export_window", "line")));
 					$("#arc").mousePopup(new MousePopup(QT.Lang.get("export_window", "arc")));
 					$("#qt_canvas_delete").mousePopup(new MousePopup(QT.Lang.get("export_window", "delete_drawing")));
-					
+
 					$("#qt_canvas_toolbar .checkbox_new").click(function () {
 						$(this).toggleClass("checked");
 					});
-					
+
 					QT.Helper.Screenshot.canvasDraw.init();
 				},
 				init : function () {
-					
+
 					var lastX, lastY;
 					var startX, startY;
 					var tool;
@@ -3969,10 +3969,10 @@ function main_script(DATA) {
 						ctxTemp.moveTo(startX, startY);
 						ctxTemp.lineTo(x,y);
 						ctxTemp.stroke();
-						
+
 						var endRadians=Math.atan((y-startY)/(x-startX));
 						endRadians+=((x>=startX)?90:-90)*Math.PI/180;
-						
+
 						ctxTemp.save();
 						ctxTemp.translate(x,y);
 						ctxTemp.rotate(endRadians);
@@ -4058,7 +4058,7 @@ function main_script(DATA) {
 						mousePressed = false;
 						img_update();
 					});
-					
+
 					$(".qt_canvas_tool").hover(
 						function () {
 						$(this).not(".active").css({
@@ -4070,7 +4070,7 @@ function main_script(DATA) {
 							"background-position" : "0px 0px"
 						});
 					});
-					
+
 					$(".qt_canvas_tool").click(function () {
 						$(".qt_canvas_tool").removeClass("active").css({
 							"background-position" : "0px 0px"
@@ -4079,11 +4079,11 @@ function main_script(DATA) {
 							"background-position" : "0px -23px"
 						});
 					});
-					
+
 					$("#qt_canvas_delete").click(function () {
 						clearArea();
 					});
-					
+
 					function Draw(x, y, tool, isDown) {
 						if (isDown) {
 							tools[tool](x, y);
@@ -4239,9 +4239,9 @@ function main_script(DATA) {
 						rp_troops_support_atk : [QT.Lang.get("export_window", "troops"), [".report_side_defender", ".big_horizontal_report_separator .report_booty_bonus_fight", ".support_report_cities"]],
 						rp_bonuses_a : [QT.Lang.get("export_window", "bonuses") + " (Off)", [".report_side_attacker .power_holder"]],
 						rp_bonuses_d : [QT.Lang.get("export_window", "bonuses") + " (Deff)", [".report_side_defender .power_holder"]],
-						
+
 						sb_town_name : [QT.Lang.get("export_window", "town"), [".gp_town_link"]],
-						
+
 						co_command_type : [QT.Lang.get("export_window", "command_type"), [".command_type"]],
 						co_gp_town_link_l : [QT.Lang.get("export_window", "town_left"), [".gp_town_link:nth-child(1)"]],
 						co_gp_town_link_r : [QT.Lang.get("export_window", "town_right"), [".gp_town_link:nth-child(4)"]],
@@ -4250,7 +4250,7 @@ function main_script(DATA) {
 						co_countdown : [QT.Lang.get("export_window", "travel_time"), [".countdown"]],
 						co_arrival : [QT.Lang.get("export_window", "time_of_arrival"), [".troops_arrive_at"]],
 						co_command : [QT.Lang.get("export_window", "command"), [".command_overview_units", ".command_overview_booty"]],
-						
+
 						wall_defeated_atk : [QT.Lang.get("export_window", "defeated_atk"), ["#building_wall .game_list li:eq(2) .list_item_left", "#building_wall .game_list li:eq(3) .list_item_left"]],
 						wall_defeated_def : [QT.Lang.get("export_window", "defeated_def"), ["#building_wall .game_list li:eq(4) .list_item_left", "#building_wall .game_list li:eq(5) .list_item_left"]],
 						wall_losses_atk : [QT.Lang.get("export_window", "losses_atk"), ["#building_wall .game_list li:eq(2) .list_item_right", "#building_wall .game_list li:eq(3) .list_item_right"]],
@@ -4269,7 +4269,7 @@ function main_script(DATA) {
 						});
 						settings_table += "</tr>";
 					});
-				
+
 					$("#qt_export_container").prepend('<div id="qt_export_header" class="odd"><fieldset><legend><b>'+QT.Lang.get("export_window", "settings")+'</b></legend><table id="qt_export_settings">'+settings_table+'</table></fieldset></div>');
 
 					$("#qt_export_header").css({"padding" : "10px", "border" : "0 none"});
@@ -4301,14 +4301,14 @@ function main_script(DATA) {
 				var html = 	'<div id="qt_export_ajax"></div><div id="qt_export_container"><div id="qt_export_content" class="odd"><fieldset><legend><b>'+QT.Lang.get("export_window", "preview")+'</b>\
 				</legend><div id="qt_canvas">\
 				</div></fieldset></div><div id="qt_export_footer" class="section stone recruit_button_section"></div></div>';
-				
+
 				var wnd = GPWindowMgr.Create(GPWindowMgr.TYPE_QT_REPORTEXPORT) || GPWindowMgr.getOpenFirst(GPWindowMgr.TYPE_QT_REPORTEXPORT); //<img class="qt_transparent" src="http://cdn.grepolis.com/images/transparent.png">
 				wnd.setTitle(title);
 				wnd.setContent(html);
 
 				$("#qt_export_footer").append(QT.Helper.grepo_btn("qt_export_btn",QT.Lang.get("export_window", "upload")));
 				$("#qt_export_footer").append('<a id="qt_export_info" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2HJ88ATTBYXSQ&lc=DE&item_name=Quack%20Toolsammlung&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" target="_blank"></a>');
-				
+
 				if(/chrom(e|ium)/.test(navigator.userAgent.toLowerCase())){
 					$("#qt_export_footer").append('<a id="qt_chrome_info" href="https://chrome.google.com/webstore/detail/one-window/papnlnnbddhckngcblfljaelgceffobn" target="_blank"></a>');
 					$("#qt_chrome_info").css({"top" : "8px", "right" : "7px", "position" : "absolute", "height" : "24px", "width" : "26px", "background-image" : "url(http://s14.directupload.net/images/141021/cqz59o6t.png)", "background-repeat" : "no-repeat", "background-position" : "0px 0px"});
@@ -4322,10 +4322,10 @@ function main_script(DATA) {
 				$("#qt_canvas").css({"height" : "352px", "overflow-y" : "auto"});
 				$("#qt_export_footer").css({"position" : "absolute", "bottom" : "-3px", "text-align" : "center", "width" : "868px", "z-index" : "5"});
 				$("#qt_export_btn").css({"margin-top" : "9px"});
-		
+
 				$('#qt_export_info').mousePopup(new MousePopup(QT.Lang.get("export_window", "info")));
 
-				
+
 				$("#qt_export_btn").click(function () {
 					QT.Helper.Screenshot.upload($("#qt_canvas :first"));
 				});
@@ -4363,7 +4363,7 @@ function main_script(DATA) {
 					},
 					onrendered: function(canvas) {
 						$("#qt_canvas").css({"overflow-y":"auto"});
-						
+
 						var image = new Image();
 						image.src = document.getElementById("myCanvas").toDataURL();
 						image.onload = function() {
@@ -4376,7 +4376,7 @@ function main_script(DATA) {
 							} catch(e) {
 								img = canvas.toDataURL().split(',')[1];
 							}
-						
+
 							$.ajax({
 								url: 'https://api.imgur.com/3/upload.json',
 								type: 'POST',
@@ -4644,7 +4644,7 @@ function main_script(DATA) {
 			$('#qacamarkResearched').mousePopup(new MousePopup(QT.Lang.get("academy", "researched")));
 			$('#qacamarkNotResearched').mousePopup(new MousePopup(QT.Lang.get("academy", "notresearched")));
 			$('#qacamarkNone').mousePopup(new MousePopup(QT.Lang.get("academy", "undo")));
-			
+
 			function resetSelected() {
 				$(".qacamark").each(function () {
 					$(this).remove();
@@ -4699,12 +4699,12 @@ function main_script(DATA) {
 					});
 				});
 			};
-			
+
 			// Changes image and calls stuff
 			$(".qacaBTN").click(function () {
 				var thisColor = $(this).attr('class').split(' ').pop();
 				if (this.id != "qacamarkNone") {
-				
+
 					if (thisColor === "green") {
 						$(this).removeClass("green").addClass("red");
 					} else if (thisColor === "red") {
@@ -4712,7 +4712,7 @@ function main_script(DATA) {
 					} else if (thisColor === "nocolor") {
 						$(this).removeClass("nocolor").addClass("green");
 					}
-					
+
 					if (this.id === "qacamarkResearched") {
 						$(".tech_tree_box").addClass("researched_green");
 
@@ -4720,7 +4720,7 @@ function main_script(DATA) {
 					} else if (this.id === "qacamarkNotResearched") {
 						//ChangeAllResearchColors(".inactive", thisColor);
 					}
-					
+
 				} else {
 					resetSelected();
 				}
@@ -4728,7 +4728,7 @@ function main_script(DATA) {
 				UpdateResearchPointsText();
 				SafeResearchColor();
 			});
-			
+
 			// Click on Unit image
 			$( ".tech_tree_box" ).on( "click", ".research_icon", function() {
 				var unit_class = $(this).attr('class').split(' ')[2];//get unit name
@@ -4758,7 +4758,7 @@ function main_script(DATA) {
 				UpdateResearchPointsText();
 				SafeResearchColor();
 			});*/
-			
+
 			//init
 			if (typeof researchSelected == "undefined") {
 				researchSelected = {};
@@ -4800,12 +4800,12 @@ function main_script(DATA) {
 
 			QT.Helper.Screenshot.btn_preview("DIV#gpwnd_" + c + " #place_defense .game_header", "qt_place_defense_export", "place_defense", function() {
 				$("DIV#gpwnd_" + c + " #place_defense").clone().appendTo("#qt_canvas");
-				
+
 				$("#qt_canvas #place_defense").css({"padding-top":"1px"});
 				$("#qt_canvas #place_defense .game_list").css({"max-height":"none", "min-height":"0px"});
 				$("#qt_canvas .game_border").css({"margin":"2px 3px 2px"});
 				$("#qt_canvas .game_list li").css({"padding":"4px 0 4px 2px"});
-				
+
 				var elemensToChange = [
 				".game_list .even", ".game_list .odd", ".game_header", ".game_list_footer",
 				".game_border_top", ".game_border_bottom", ".game_border_left", ".game_border_right", ".game_border_corner",
@@ -4855,7 +4855,7 @@ function main_script(DATA) {
 				$("#qt_canvas .outer_troops_send_part").hide();
 				$("#qt_canvas .qt_sendback_big").hide();
 				$("#qt_canvas .qt_sendback_small").hide();
-				
+
 
 				var elemensToChange = [
 				".even", ".odd", ".brown", ".game_header", ".game_list_footer",
@@ -5086,14 +5086,14 @@ function main_script(DATA) {
 				wnd.setContent(html);
 				wnd.setTitle(QT.Lang.get("grepo_mainmenu", "city_view") + " - " + Game.townName);
 				var JQel = wnd.getJQElement();
-				
+
 				JQel.find(".gpwindow_content").css({
 					"overflow" : "hidden",
 					"border" : "1px solid black"
 				});
-				
+
 				JQel.find('#QT_townoverview').append($('DIV.ui_city_overview')).append($('DIV.ui_construction_queue'));
-				
+
 				$('DIV.ui_construction_queue').css({
 					"bottom":"-3px"
 				});
@@ -5101,7 +5101,7 @@ function main_script(DATA) {
 					"transform":"translate(-597px, -315px)"
 				});
 			});
-			
+
 			$("#ui_box .bull_eye_buttons .rb_map").on("rb:change:value", function (e, value, old_value) {
 				if (value === 'island_view' || value === 'strategic_map') {
 					var wnd = GPWindowMgr.getOpenFirst(Layout.wnd.TYPE_QT_TOWNOVERVIEW);
@@ -5420,7 +5420,7 @@ function main_script(DATA) {
 				if (!QT.Settings.values.qmenu_settings_farmhelper_hidecities) {
 					$("#q_toggleAutohide").addClass('q_autoHideCitiesOff');
 				}
-				
+
 				$("#q_toggleAutohide").click(function () {
 					if (QT.Settings.values.qmenu_settings_farmhelper_hidecities) {
 						QT.Settings.save("qmenu_settings_farmhelper_hidecities", false);
@@ -5510,7 +5510,7 @@ function main_script(DATA) {
 						});
 					});
 				}
-				
+
 				function AreAnyCheckboxesChecked() {
 					var checkboxes = $("#forum #postlist :checkbox");
 					var checkboxesChecked = 0;
@@ -5521,7 +5521,7 @@ function main_script(DATA) {
 					}
 					return checkboxesChecked;
 				}
-				
+
 				$('#qdeletemultipleBTN').click(function () {
 					var numberChecked = AreAnyCheckboxesChecked();
 					if (numberChecked > 0) {
@@ -5539,11 +5539,11 @@ function main_script(DATA) {
 						HumanMessage.error(QT.Lang.get("forum", "no_selection"));
 					}
 				});
-				
+
 				$('#qdeleteAllcheckbox').click(function () {
 					$('#forum input[type="checkbox"]').prop('checked', this.checked)
 				});
-				
+
 				$("#forum #postlist :checkbox").click(function () {
 					if ($('#qdeleteAllcheckbox').is(":checked")) {
 						$('#qdeleteAllcheckbox').prop('checked', false);
@@ -5650,7 +5650,7 @@ function main_script(DATA) {
 					if (c.length > 0) {
 						c.append('<span class="qt_points_block">' + val.points + ' P<\/span>');
 					}
-					
+
 				}
 			});
 		},
@@ -5734,7 +5734,7 @@ function main_script(DATA) {
 				function silverToInt (str) {
 					return parseInt(str.split("/")[0].replace(/\D/g, "")) || 0;
 				}
-				
+
 				if (QT.Settings.values.qmenu_settings_hidessilver) {
 					for (var d = 0; d < city_boxes.length; d++) {
 						var e = $(city_boxes[d]);
@@ -5757,7 +5757,7 @@ function main_script(DATA) {
 							silver_total += silverToInt($(city_boxes[a]).find(".hide_progressbar").text());
 						}
 					}
-					
+
 					var sort_options = [
 						["ironinstore", QT.Lang.get("caves", "stored_silver")],
 						["name", QT.Lang.get("caves", "name")],
@@ -5780,20 +5780,20 @@ function main_script(DATA) {
 						});
 						$(this).one("click", table_resize_handler2);
 					}
-					
+
 					function table_resize_handler2() {
 						$(this).removeClass("active");
 						$("#hides_overview_towns").removeClass("q_resize");
 						city_boxes.find(".q_res_plenty, .q_res_rare").remove();
 						$(this).one("click", table_resize_handler1);
 					}
-					
+
 					$('#button_table_resize').one("click", table_resize_handler1);
-					
+
 					function isNumber(n) {
 						return !isNaN(parseFloat(n)) && isFinite(n);
 					}
-					
+
 					function setfilter(selection) {
 						$('#hides_overview_towns>li').show();
 						if (isNumber($('#qsortfilterbox').val())) {
@@ -5812,7 +5812,7 @@ function main_script(DATA) {
 										$(e).hide();
 									}
 								}
-								
+
 								if (numericfilter > selectedSort) {
 									$(e).hide();
 								}
@@ -5827,7 +5827,7 @@ function main_script(DATA) {
 							});
 						}
 					};
-					
+
 					function sort(selection) {
 						order = !order;
 						switch (selection) {
@@ -5877,12 +5877,12 @@ function main_script(DATA) {
 							qArrayUnsorted[i].parentNode.appendChild(qArrayUnsorted[i]);
 						}
 					}
-					
+
 					$("#qsortinit").click(function () {
 						sort($("#qsort_towns").val());
 						$(this).toggleClass('active')
 					});
-				
+
 				} else {
 					if (silver_total != 0) {
 						QT.wnd.append('<div id="hides_silver_total"><span class="resource_iron_icon iron"><span class="silver_amount">'+silver_total+'</span></span></div>');
@@ -6377,7 +6377,7 @@ function main_script(DATA) {
 			$('#ui_box .nui_main_menu .content ul li:last-child span.button_wrapper').css({
 				"height" : "15px"
 			});
-			
+
 			$('#ui_box .nui_main_menu .bottom').append('\
 				<div id="qt_gtk_fix"></div>\
 				<div id="qtbox_wrapper">\
@@ -6457,7 +6457,7 @@ function main_script(DATA) {
 					"background-image" : "url(http://s7.directupload.net/images/140119/nebf5887.png)"
 				});
 			});
-			
+
 			var qtbox_main_array = [
 				[QT.Lang.get("qtoolbox", "stats"), "http://s1.directupload.net/images/140125/vnghthhz.png", "",
 					[QT.Lang.get("qtoolbox", "grepostats"), "http://s1.directupload.net/images/121012/zzydmra8.png", "",
@@ -6533,7 +6533,7 @@ function main_script(DATA) {
 			});
 
 			$('#qt_mainmenu_list').append(qtbox_main_items.join(''));
-			
+
 			$('#qt_mainmenu_list li').click(function () {
 				if ($(this).prop("id").length > 0) {
 					if (this.id.substring(0, 6) === "bbcode") {
@@ -6610,11 +6610,11 @@ function main_script(DATA) {
 				$(this).css({"color":"#ecb44d"});
 				$(this).children("ol").hide();
 			});
-			
+
 			$("#qtbox_main_btn").click(function () {
 				$("#qt_mainmenu_list").slideToggle();
 			});
-		
+
 			// Buttonbox
 			if (QT.Settings.values.qmenu_settings_buttonbar) {
 				$('#qtbox_wrapper').append('<div id="qtbox_buttons_wrapper" style="display: block; position: relative; height: 26px; width: 100%; left: 2px; bottom: 0px; background:url(http://s7.directupload.net/images/131007/wh2uwdro.png) no-repeat"></div>');
@@ -6640,7 +6640,7 @@ function main_script(DATA) {
 					});
 				});
 			}
-			
+
 			//Online Counter
 			if (QT.Settings.values.qmenu_settings_counter) {
 				$('#qtbox_wrapper').append('<div id="qtbox_clock_wrapper" style="display: block; position: relative; height: 21px; left: 2px; width: 100%; background:url(http://s7.directupload.net/images/131007/desspey5.png) no-repeat"><a id="qt_clock_clock" style="display: block; position: absolute; height: 17px; background: url(http://s7.directupload.net/images/131007/qqcsqnfm.png) no-repeat scroll 0px 2px transparent; margin-left: 5px; width: 127px;" href="#"><span id="qt_clock_span" style="display: block; color: #EEDDBB; font-size: 9px; width: 110px; position: absolute; bottom: 2px; margin-left: 10px;"></span></a></div>');
@@ -6683,7 +6683,7 @@ function main_script(DATA) {
 					}, 1000);
 				}
 				counttime();
-			}		
+			}
 		},
 		questlist : function () {
 			$('#quest_overview').prepend("<li id='q_questlist'><span id='q_lock'></span><span id='q_arrow'></span><span id='q_hide'></span></li>");
@@ -6725,7 +6725,7 @@ function main_script(DATA) {
 		},
 		removeTooltipps : function (type) {
 			var a;
-			
+
 			switch (type) {
 				case "agora":
 					a = QT.wnd.find(".place_unit");
@@ -6743,8 +6743,8 @@ function main_script(DATA) {
 				case "town_info":
 					a = QT.wnd.find(".unit_icon40x40");
 					break;
-			} 
-			
+			}
+
 			a.each(function( index ) {
 				$(this).off('mouseenter mouseleave');
 			});
@@ -6755,21 +6755,23 @@ function main_script(DATA) {
 			}
 
 			var wnd = $(".classic_window.easter");
-			
-			var link_giveaway = (mID == "de" ? "http://de.grepolisqt.de/grepolis-valentinstag-gewinnspiel" : "http://en.grepolisqt.de/grepolis-valentines-day-giveaway");
-			var link_recipebook = (mID == "de" ? "http://de.grepolisqt.de/demeters-namen-rezepte-liste" : "http://en.grepolisqt.de/demeters-name-recipe-list");
 
-			var box = '<div id="qt_recipeevent" class="countdown_box" style="position: absolute; top: 35px; right: 0; width: 99px;">' +
+			var link_giveaway = (mID == "de" ? "http://de.grepolisqt.de/herbst-event-rezepte-liste" : "http://en.grepolisqt.de/fall-event-recipe-list");
+			var link_recipebook = (mID == "de" ? "http://de.grepolisqt.de/herbst-event-rezepte-liste" : "http://en.grepolisqt.de/fall-event-recipe-list");
+
+			var box = '<div id="qt_recipeevent" class="countdown_box" style="position: absolute; top: 35px; right: 0; width: 76px;">' +
 				'<div class="left"></div>' +
 				'<div class="right"></div>' +
 				'<div class="middle"></div>' +
 				'</div>';
 
 			wnd.append(box);
-			wnd.find("#qt_recipeevent .middle").append('<a id="qt_recipeevent_recipebook" class="qt_recipeevent_btn qt_recipeevent_btn_2 qt_recipeevent_recipebook" href="'+link_recipebook+'" target="_blank"></a><a id="qt_recipeevent_present" class="qt_recipeevent_btn qt_recipeevent_btn_1 qt_recipeevent_present" href="'+link_giveaway+'" target="_blank"></a>');
+			wnd.find("#qt_recipeevent .middle").append('<a id="qt_recipeevent_recipebook" class="qt_recipeevent_btn qt_recipeevent_btn_1 qt_recipeevent_recipebook" href="'+link_recipebook+'" target="_blank">');
+
+			//</a><a id="qt_recipeevent_present" class="qt_recipeevent_btn qt_recipeevent_btn_1 qt_recipeevent_present" href="'+link_giveaway+'" target="_blank"></a>
 
 			$("#qt_recipeevent_recipebook").mousePopup(new MousePopup(QT.Lang.get("recipeevent", "recipebook")));
-			$("#qt_recipeevent_present").mousePopup(new MousePopup(QT.Lang.get("recipeevent", "present")));
+			//$("#qt_recipeevent_present").mousePopup(new MousePopup(QT.Lang.get("recipeevent", "present")));
 		},
 		reportsColor : function () {
 			var b = GPWindowMgr.getOpen(Layout.wnd.TYPE_REPORT);
@@ -6919,7 +6921,7 @@ function main_script(DATA) {
 						var unitNumber = $("span.report_losts", this).text();
 						var unitClass = $("div.report_unit", this).attr("class").split(/\s/);
 						unitName = unitClass[5];
-						
+
 						if (unitName != "militia" && !unitClass[6] && unitNumber != "-?") {
 							DefenseUnitsRessources.unit_w = Math.abs(GameData.units[unitName].resources.wood * unitNumber);
 							DefenseUnitsRessources.unit_s = Math.abs(GameData.units[unitName].resources.stone * unitNumber);
@@ -6935,7 +6937,7 @@ function main_script(DATA) {
 							$("div.report_unit", this).mousePopup(new MousePopup(unitPopup));
 						}
 					});
-					
+
 					var JQselector = ($("DIV#gpwnd_" + c + " DIV#resources #load").length > 0) ? $("DIV#gpwnd_" + c + " DIV#resources #load") : $("DIV#gpwnd_" + c + " DIV#resources");
 					JQselector.after('<hr><table><tr><td width="50%">' + AttackUnitsRessources.total_w + '</td><td><div class="resources_small wood"></div></td><td width="50%">' + DefenseUnitsRessources.total_w + '</td></tr><tr><td>' + AttackUnitsRessources.total_s + '</td><td><div class="resources_small stone"></td><td>' + DefenseUnitsRessources.total_s + '</td></tr><tr><td>' + AttackUnitsRessources.total_i + '</td><td><div class="resources_small iron"></td><td>' + DefenseUnitsRessources.total_i + '</td></tr><tr><td>' + AttackUnitsRessources.total_f + '</td><td><div class="resources_small favor"></td><td>' + DefenseUnitsRessources.total_f + '</td></tr><tr><td>' + AttackUnitsRessources.total_p + '</td><td><div class="resources_small population"></td><td>' + DefenseUnitsRessources.total_p + "</td></tr></table>")
 				}
@@ -7020,16 +7022,16 @@ function main_script(DATA) {
 					}
 				}
 			}
-			
+
 			QT.Helper.Screenshot.btn_preview("DIV#gpwnd_" + d + " #report_report_header", "qt_reportexport", report_type, function() {
-				// General 
+				// General
 				$("#report_report").clone().appendTo("#qt_canvas");
 				$("#qt_canvas #report_report_header").contents().filter(function(){return this.nodeType === 3}).wrap('<span />');
 
 				// Elements to remove
 				$("#qt_canvas #select_folder_id").remove();
 				$("#qt_canvas .game_list_footer a").remove();
-				
+
 				// General Style
 				$("#qt_canvas #report_report").css({"display": "inline-block"});
 				$("#qt_canvas #report_report_header").css({"max-width":"780px"});
@@ -7053,7 +7055,7 @@ function main_script(DATA) {
 				".building_ironer", ".building_market", ".building_docks", ".building_wall", ".building_academy", ".building_temple", ".building_barracks",
 				".building_tower", ".building_lighthouse", ".building_library", ".building_thermal", ".building_theatre", ".building_oracle", ".building_statue", ".building_trade_office"
 				];
-				
+
 				return elemensToChange;
 			});
 			$("#qt_reportexport").css({"top":"1px", "right":"1px"});
@@ -7165,7 +7167,9 @@ function main_script(DATA) {
 					["Danijel K. - 2€", "Maria N. - 1€", "Sven B. - 3€", "UBassoon - 10€"],
 					["Bernd R. - 1€", "Wolfgang R. - 10€", "Sabine S. - 20€", "Daniel W. - 1€"],
 					["Nelson A. - 2€", "Ines L. - 10€", "Ivica K. - 5€", "Andreas E. - 5€"],
-					["Jean Marie T. - 1€", "Peter F. - 2€"]
+					["Jean Marie T. - 1€", "Peter F. - 2€", "Andreas H. - 5€", "Thorsten W. - 5€"],
+					["Pascal F. - 3€", "Marion L. - 2€", "Claudia B. - 5€", "Kat C. - 1€"],
+					["David W. - 0.05€", "Doris H. - 20€", "S. J. - 5€"]
 				];
 				HTML_tab3 += grepoGameBorder + QT.Lang.get("settings", "info") + "</div>";
 				HTML_tab3 += '<div id="info_content" class="contentDiv" style="padding:5px 10px; overflow: auto; height:396px">';
@@ -7349,10 +7353,10 @@ function main_script(DATA) {
 			for (var e in wnds) {
 				if (wnds.hasOwnProperty(e)) {
 					var wndid = wnds[e].getID();
-					
+
 					var testel = $('DIV#gpwnd_'+wndid+' A.gt_balanced');
 					if (testel.length > 0) continue;
-					
+
 					var handler=wnds[e].getHandler();
 
 					$('DIV#gpwnd_'+wndid+' A.select_all_units').after(' | <a class="gt_balanced" style="position:relative; top:3px" href="#">'+QT.Lang.get("town_info", "no_overload")+'</a> | <a class="gt_delete" style="position:relative; top:3px" href="#">'+QT.Lang.get("town_info", "delete")+'</a>');
@@ -7362,20 +7366,20 @@ function main_script(DATA) {
 					$('DIV#gpwnd_'+wndid+' A.gt_balanced').click(function () {
 						var units=new Array();
 						var item;
-						
+
 						for (var i=0; i<gt_bl_groundUnits.length; i++)		{
 							if (handler.data.units[gt_bl_groundUnits[i]])			{
 								item={name:gt_bl_groundUnits[i], count:handler.data.units[gt_bl_groundUnits[i]].count, population:handler.data.units[gt_bl_groundUnits[i]].population};
 								units.push(item);
 							}
 						}
-						
+
 						if (handler.data.researches && handler.data.researches.berth) {
 							var berth=handler.data.researches.berth;
 						} else {
 							var berth=0;
 						}
-						
+
 						var totalCap=handler.data.units.big_transporter.count*(handler.data.units.big_transporter.capacity+berth)+handler.data.units.small_transporter.count*(handler.data.units.small_transporter.capacity+berth);
 						units.sort(function(a,b){
 							return b.population-a.population;
@@ -7411,7 +7415,7 @@ function main_script(DATA) {
 							for (i=0; i<units.length; i++)
 								if (units[i].count==0)				{
 									units.splice(i,1);
-									i=i-1;				
+									i=i-1;
 								};
 								if (!hasSent)			{
 									break;
@@ -7426,7 +7430,7 @@ function main_script(DATA) {
 									this.value='';
 							}
 						});
-						
+
 						for (i=0; i<gt_bl_groundUnits.length; i++)		{
 							if (sendUnits[gt_bl_groundUnits[i]])			{
 								if (sendUnits[gt_bl_groundUnits[i]].count>0)
@@ -7435,7 +7439,7 @@ function main_script(DATA) {
 									$('DIV#gpwnd_'+wndid+' INPUT.unit_type_'+gt_bl_groundUnits[i]).val('');
 							}
 						}
-						
+
 						$('DIV#gpwnd_'+wndid+' INPUT.unit_type_sword').trigger('change');
 					});
 
@@ -7451,13 +7455,13 @@ function main_script(DATA) {
 		},
 		simulatorExport : function () {
 			QT.Helper.Screenshot.btn_preview("#place_simulator_form .game_header", "qt_simulatorexport", "simulator", function() {
-				
+
 				$("#place_simulator").clone().appendTo("#qt_canvas");
-				
+
 				//$("#qt_canvas .place_sim_select_gods_wrap select")
 				$("#qt_canvas #place_simulator").css({"padding-top":"1px", "overflow-x":"hidden"});
 				$("#qt_canvas .game_border").css({"margin":"1px 2px 2px 2px"});
-				
+
 				var select_god_att = $('#place_simulator .place_sim_select_gods.att select option:selected').val();
 				var select_god_def = $('#place_simulator .place_sim_select_gods.def select option:selected').val();
 				var select_strategies = $('#place_simulator .place_sim_select_strategies select option:selected').val();
@@ -7466,7 +7470,7 @@ function main_script(DATA) {
 				$('#qt_canvas .place_sim_select_gods.def select option[value="'+select_god_def+'"]').prop('selected', true);
 				$('#qt_canvas .place_sim_select_strategies select option[value="'+select_strategies+'"]').prop('selected', true);
 				$('#qt_canvas .place_sim_insert_units select option[value="'+select_units+'"]').prop('selected', true);
-				
+
 				// Elements to change
 				var elemensToChange = [
 				".game_border_top", ".game_border_bottom", ".game_border_left", ".game_border_right", ".game_border_corner",
@@ -7481,7 +7485,7 @@ function main_script(DATA) {
 		statsandscripts : function () {
 			var grepoGameBorder = '<div class="game_border"><div class="game_border_top"></div><div class="game_border_bottom"></div><div class="game_border_left"></div><div class="game_border_right"></div><div class="game_border_corner corner1"></div><div class="game_border_corner corner2"></div><div class="game_border_corner corner3"></div><div class="game_border_corner corner4"></div><div class="game_header bold" style="height:18px;padding:3px 11px">';
 			var grepoGameBorderContainer = '<div class="qsettingsContainer" style="padding:5px 5px 0px 5px; overflow: auto">';
-			
+
 			var SAS_HTML = [];
 			SAS_HTML[0] = ["Tools", {
 					"grepostats" : ["Grepolis Stats", "http://adf.ly/B7C8k", "Clash Rank", "http://www.clashrank.com/contact", QT.Links.grepostats, "Bietet Statistiken und Übersichten über Spieler, Allianzen, Städte und vielem mehr"],
@@ -7514,11 +7518,11 @@ function main_script(DATA) {
 					"gs_eroberungsstatistiken" : ["Grepolis Stats Eroberungsstatistiken", "http://adf.ly/rGbkm", "Menidan", "http://forum.de.grepolis.com/private.php?do=newpm&u=36203", QT.Links.gs_eroberungsstatistiken, "Erstellt Statistiken für die Eroberungen von Allianzen"],
 				}
 			];
-			
+
 			var inhalt = "";
 
 			inhalt += '<div id="stats_scripts_content" class="contentDiv" style="padding:0 5px; overflow: auto; height:434px">';
-			
+
 			$.each(SAS_HTML, function (a, b) {
 				inhalt += '<div id="' + b[0] + '">' + grepoGameBorder + b[0] + '<a class="forum_export" style="float:right" href="#"><img src="http://s14.directupload.net/images/140124/8tzken7v.png" style="margin-top: -2px; margin-left: 11px;" /></a>' + "</div>" + grepoGameBorderContainer;
 				$.each(b[1], function (c, d) {
@@ -7744,7 +7748,7 @@ function main_script(DATA) {
 				}
 				return res;
 			}
-			
+
 			QT.wnd.find(".tripple-progress-progressbar").each(function () {
 				var res_type = this.id.split("_")[2];
 				var res = getRes(res_type, QT.wndId);
@@ -7802,7 +7806,7 @@ function main_script(DATA) {
 					"background-position" : "0px -1px"
 				});
 			});
-		
+
 			QT.wnd.find(".q_trade").click(function () {
 				var id = this.id.split("_");
 				var res = getRes(id[1], id[2], id[3]);
@@ -7814,7 +7818,7 @@ function main_script(DATA) {
 					res.send = res.needed;
 				}
 				res.wnd.find("#trade_type_" + id[1] + " input").val(res.send).select().blur();
-			});			
+			});
 		},
 		townslist : function () {
 			if ($('#town_groups_list a.town_bb').length != 0)
@@ -8157,7 +8161,7 @@ function main_script(DATA) {
 			QT.Functions.questlist();
 		if (QT.Settings.values.qmenu_settings_removetooltipps)
 			QT.Functions.removeTooltipps("sidebar");
-		
+
 		$(document).ajaxComplete(function (event, xhr, settings) {
 			var ajaxUrl = settings.url.split("?");
 			var ajaxType = ajaxUrl[0].substr(6) + "/" + ajaxUrl[1].split("&")[1].substr(7);
@@ -8278,7 +8282,7 @@ function main_script(DATA) {
 					}
 					if (QT.Settings.values.qmenu_settings_removetooltipps)
 						QT.Functions.removeTooltipps("sidebar");
-					
+
 					//if (QT.Settings.values.qmenu_settings_hideaddpoints)
 					//QTF.hidesIndexAddPoints();
 				break;
@@ -8403,18 +8407,18 @@ unsafeWindow.QT_saveValue = function (name, val) {
 unsafeWindow.QT_saveAllValues = function (values) {
 	setTimeout(function () {
 		var exceptions = ["qmenu_update_next", "qmenu_online_version", "onlinetotal", "googledocsurl", "clicked_sponsor_links", "clicked_sponsor_link_last"];
-	
+
 		for (key in DATA) {
 			if (exceptions.indexOf(key) > -1) {
 				continue;
 			}
 			GM_deleteValue(key);
 		}
-		
+
 		for (key in values) {
 			GM_setValue(key, values[key]);
 		}
-		
+
 		window.location.reload();
 	}, 0);
 };
@@ -8589,13 +8593,13 @@ function appendScript() {
 		QT_script.type = 'text/javascript';
 		QT_script.textContent = main_script.toString() + "\n main_script(" + JSON.stringify(DATA) + ");";
 		document.body.appendChild(QT_script);
-		
-		var QT_HTML2Canvas = document.createElement('script'); 
+
+		var QT_HTML2Canvas = document.createElement('script');
 		QT_HTML2Canvas.type = 'text/javascript';
 		QT_HTML2Canvas.innerHTML = GM_getResourceText('HTML2Canvas');
 		document.getElementsByTagName('head')[0].appendChild(QT_HTML2Canvas);
-		
-		var QT_styles = document.createElement('style'); 
+
+		var QT_styles = document.createElement('style');
 		QT_styles.type = 'text/css';
 		QT_styles.innerHTML = GM_getResourceText('QT_styles');
 		document.getElementsByTagName('head')[0].appendChild(QT_styles);
