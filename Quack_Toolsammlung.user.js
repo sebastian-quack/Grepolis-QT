@@ -5,7 +5,7 @@
 // @include        http://*.grepolis.*/game*
 // @include        https://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.57.01
+// @version        2.58.00
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @resource       QT_styles https://github.com/Quackmaster/Grepolis-QT/raw/master/QT_styles.css
 // @grant          GM_getValue
@@ -3339,7 +3339,8 @@ function main_script(DATA) {
 				standard : 'Standard',
 				stats_scripts : 'Stats/Scripts',
 				settings : 'Script manager',
-				quo : 'Quo'
+				quo : 'Quo',
+				grepoworld : 'Grepoworld'
 			},
 			academy : {
 				researched : 'Colorize researched',
@@ -3627,7 +3628,7 @@ function main_script(DATA) {
 		abakus : "http://forum.de.grepolis.com/showthread.php?691-Abakus-Der-Grepolis-Rechner",
 		grepotool : "http://forum.de.grepolis.com/showthread.php?28359",
 		youscreen : "http://www.youscreen.de",
-		quacktools : "https://openuserjs.org/scripts/quackmaster/Quack/Quack_Toolsammlung",
+		quacktools : "https://openuserjs.org/scripts/quackmaster/Quack_Toolsammlung",
 		grc : "http://grepolis.potusek.eu/module/installgrc",
 		playerprofilescript : "https://openuserjs.org/scripts/Menidan/Grepolis_Spielerprofil_mit_Zur%C3%BCck-Button",
 		attackwarner : "http://forum.de.grepolis.com/showthread.php?25986",
@@ -3644,7 +3645,10 @@ function main_script(DATA) {
 		grepolisqt : "http://adf.ly/pcChx",
 		grepolisqt_facebook : "https://www.facebook.com/grepolisqt",
 		revoformatierer : "http://tms-partner.de/Grepolis/revoeingabe.php",
-		gs_eroberungsstatistiken : "https://openuserjs.org/scripts/Menidan/Grepolis_Stats_Eroberungsstatistiken"
+		gs_eroberungsstatistiken : "https://openuserjs.org/scripts/Menidan/Grepolis_Stats_Eroberungsstatistiken",
+		grepoworld : 'http://www.grepoworld.com',
+		grepoworld_player : "http://grepoworld.com/world/" + wID + "/player/" + sID,
+		grepoworld_alliance :  "http://grepoworld.com/world/" + wID + "/alliance/" + aID
 	};
 
 	/************************************************************************
@@ -3660,6 +3664,7 @@ function main_script(DATA) {
 			"clicked_sponsor_link_last" : 0,
 			"googledocsurl" : "https://docs.google.com/spreadsheet/ccc?key=0AkpTmTnKs72_dEF3bWs3SW5iWjdyUEE0M0c3Znpmc3c",
 			"grepolistoolkit" : false,
+			"sylvester2017" : true,
 			"qmenu_settings_akademieplaner" : true,
 			"qmenu_settings_berichte_farben" : true,
 			"qmenu_settings_berichte_filter" : true,
@@ -6460,21 +6465,21 @@ function main_script(DATA) {
 
 			var qtbox_main_array = [
 				[QT.Lang.get("qtoolbox", "stats"), "http://s1.directupload.net/images/140125/vnghthhz.png", "",
-					[QT.Lang.get("qtoolbox", "grepostats"), "http://s1.directupload.net/images/121012/zzydmra8.png", "",
-						[QT.Lang.get("qtoolbox", "player"), "http://s1.directupload.net/images/121012/8xgicpg7.png", "link_gs_player"],
-						[QT.Lang.get("qtoolbox", "alliance"), "http://s7.directupload.net/images/121012/4kfl493a.png", "link_gs_alliance"],
-						[QT.Lang.get("qtoolbox", "rankings"), "http://s14.directupload.net/images/121012/p2otvkuz.png", "link_gs_rankings"]],
+					[QT.Lang.get("qtoolbox", "grepoworld"), "http://fs5.directupload.net/images/170105/2txtp9xz.png", "", //http://s1.directupload.net/images/121012/zzydmra8.png
+						[QT.Lang.get("qtoolbox", "player"), "http://s1.directupload.net/images/121012/8xgicpg7.png", "link_grepoworld_player"],
+						[QT.Lang.get("qtoolbox", "alliance"), "http://s7.directupload.net/images/121012/4kfl493a.png", "link_grepoworld_alliance"]],
+						//[QT.Lang.get("qtoolbox", "rankings"), "http://s14.directupload.net/images/121012/p2otvkuz.png", "link_gs_rankings"],
 					[QT.Lang.get("qtoolbox", "grepo_intel"), "http://s14.directupload.net/images/130403/u33cb3b8.jpg", "",
 						[QT.Lang.get("qtoolbox", "track_player"), "http://s1.directupload.net/images/121012/8xgicpg7.png", "link_gi_player"],
 						[QT.Lang.get("qtoolbox", "track_alliance"), "http://s7.directupload.net/images/121012/4kfl493a.png", "link_gi_alliance"],
 						[QT.Lang.get("qtoolbox", "top_killers"), "http://s14.directupload.net/images/121012/p2otvkuz.png", "link_gi_topkillers"]],
-					[QT.Lang.get("qtoolbox", "grepo_bash"), "http://s14.directupload.net/images/140615/x766ldmm.png", "link_grepobash"],
+					//[QT.Lang.get("qtoolbox", "grepo_bash"), "http://s14.directupload.net/images/140615/x766ldmm.png", "link_grepobash"],
 					[QT.Lang.get("qtoolbox", "quo"), "http://s7.directupload.net/images/140615/fhkhdsdc.png", "link_quo"]],
 				[QT.Lang.get("qtoolbox", "maps"), "http://s1.directupload.net/images/121012/4hbt2ofa.png", "",
 					[QT.Lang.get("qtoolbox", "grepo_maps"), "http://s1.directupload.net/images/121012/4hbt2ofa.png", "link_maps_grepomaps"],
 					[QT.Lang.get("qtoolbox", "grepo_intel"), "http://s14.directupload.net/images/130403/u33cb3b8.jpg", "link_maps_grepointel"]],
 				[QT.Lang.get("qtoolbox", "townsearches"), "http://s14.directupload.net/images/121012/vlnknenk.png", "",
-					[QT.Lang.get("qtoolbox", "tonda_polissuche"), "http://polissuche.marco93.de/favicon.ico", "link_polissuche"],
+					//[QT.Lang.get("qtoolbox", "tonda_polissuche"), "http://polissuche.marco93.de/favicon.ico", "link_polissuche"],
 					[QT.Lang.get("qtoolbox", "grepo_finder"), "http://s14.directupload.net/images/140913/5c6ak7br.jpg", "link_grepofinder"]],
 				[QT.Lang.get("qtoolbox", "bb_codes"), "http://s14.directupload.net/images/140124/8tzken7v.png", "",
 					[QT.Lang.get("bbcode", "troops"), "http://s1.directupload.net/images/121012/a2w2xe8r.png", "",
@@ -6505,7 +6510,9 @@ function main_script(DATA) {
 				maps_grepomaps : [QT.Links.GrepoMaps, "1035", "500", QT.Lang.get("qtoolbox", "grepo_maps"), "TYPE_QT_SERVERMAPS"],
 				maps_grepointel : [QT.Links.GrepoIntelMap, "1035", "500", QT.Lang.get("qtoolbox", "grepo_intel"), "TYPE_QT_SERVERMAPS"],
 				grepofinder : [QT.Links.Grepofinder, "970", "500", QT.Lang.get("qtoolbox", "grepo_finder"), "TYPE_QT_TOWNSEARCHES"],
-				polissuche : [QT.Links.Polissuche, "970", "500", QT.Lang.get("qtoolbox", "tonda_polissuche"), "TYPE_QT_TOWNSEARCHES"]
+				polissuche : [QT.Links.Polissuche, "970", "500", QT.Lang.get("qtoolbox", "tonda_polissuche"), "TYPE_QT_TOWNSEARCHES"],
+				grepoworld_player : [QT.Links.grepoworld_player, "970", "500", QT.Lang.get("qtoolbox", "player"), "TYPE_QT_GREPOSTATS"],
+				grepoworld_alliance : [QT.Links.grepoworld_alliance, "970", "500", QT.Lang.get("qtoolbox", "alliance"), "TYPE_QT_GREPOSTATS"]
 			};
 
 			var qtbox_main_items = [];
@@ -6621,10 +6628,11 @@ function main_script(DATA) {
 				$('#ui_box .nui_main_menu .bottom, #ui_box .nui_main_menu .leaves').css({
 					"bottom" : "-=27px"
 				});
-				$('#qtbox_buttons_wrapper').append('<a id="qtbox_button1" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 3px;" target="_blank" href="' + QT.Links.GS_Spieler + '"><img src="http://s1.directupload.net/images/131008/ktvkyrx8.png"></a><a id="qtbox_button2" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 29px;" target="_blank" href="' + QT.Links.GrepoIntelPlayer + '"><img src="http://s1.directupload.net/images/131008/2hr8vbhw.png"></a><a id="qtbox_button3" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 55px;" target="_blank" href="' + QT.Links.GrepoBash + '"><img src="http://s14.directupload.net/images/131008/wfe9ficd.png"></a><a id="qtbox_button4" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 81px;" target="_blank" href="' + QT.Links.GrepoMaps + '"><img src="http://s7.directupload.net/images/131007/hdh4farx.png"></a><a id="qtbox_button5" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 107px;" target="_blank" href="' + QT.Links.Polissuche + '"><img src="http://s7.directupload.net/images/131008/5zj4ujmi.png"></a>');
-				$('#qtbox_button1').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepostats")));
+				$('#qtbox_buttons_wrapper').append('<a id="qtbox_button1" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 3px;" target="_blank" href="' + QT.Links.grepoworld_player + '"><img src="http://fs5.directupload.net/images/170105/6ai4ye3s.png"></a><a id="qtbox_button2" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 29px;" target="_blank" href="' + QT.Links.GrepoIntelPlayer + '"><img src="http://s1.directupload.net/images/131008/2hr8vbhw.png"></a><a id="qtbox_button3" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 55px;" target="_blank" href="' + QT.Links.quo + '"><img src="http://s14.directupload.net/images/131008/wfe9ficd.png"></a><a id="qtbox_button4" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 81px;" target="_blank" href="' + QT.Links.GrepoMaps + '"><img src="http://s7.directupload.net/images/131007/hdh4farx.png"></a><a id="qtbox_button5" class="qtbox_button" style="display: block; position: absolute; width: 24px; height: 22px; margin: 1px 0 0 107px;" target="_blank" href="' + QT.Links.Polissuche + '"><img src="http://s7.directupload.net/images/131008/5zj4ujmi.png"></a>');
+				//http://s1.directupload.net/images/131008/ktvkyrx8.png
+				$('#qtbox_button1').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepoworld")));
 				$('#qtbox_button2').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepo_intel")));
-				$('#qtbox_button3').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepo_bash")));
+				$('#qtbox_button3').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "quo")));
 				$('#qtbox_button4').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "grepo_maps")));
 				$('#qtbox_button5').mousePopup(new MousePopup(QT.Lang.get("qtoolbox", "tonda_polissuche")));
 
@@ -7488,11 +7496,11 @@ function main_script(DATA) {
 
 			var SAS_HTML = [];
 			SAS_HTML[0] = ["Tools", {
-					"grepostats" : ["Grepolis Stats", "http://adf.ly/B7C8k", "Clash Rank", "http://www.clashrank.com/contact", QT.Links.grepostats, "Bietet Statistiken und Übersichten über Spieler, Allianzen, Städte und vielem mehr"],
+					//"grepostats" : ["Grepolis Stats", "http://adf.ly/B7C8k", "Clash Rank", "http://www.clashrank.com/contact", QT.Links.grepostats, "Bietet Statistiken und Übersichten über Spieler, Allianzen, Städte und vielem mehr"],
 					"grepolisintel" : ["Grepolis Intel", "http://adf.ly/B7D1y", "wansyth", "mailto:wansyth@grepointel.com", QT.Links.grepointel, "Ähnlich wie Grepo Stats, aber mit einigen zusätzlichen Funktionen wie Serverkarten oder Polissuche"],
 					"grepolismaps" : ["Grepolis Maps", "http://adf.ly/B7BlJ", "Gehirnpfirsich", "mailto:info@twmaps.org", QT.Links.grepomaps_main, "Kartentool - Weltkarten aller Server"],
 					"quo" : ["Quo - Allianz Bashliste", "http://adf.ly/pc8xL", "Maltokor", "http://forum.de.grepolis.com/private.php?do=newpm&u=47548", QT.Links.quo_main, "Alternative zu Grepobash"],
-					"grepobash" : ["Grepolis Bashrangliste", "http://adf.ly/B6HBW", "quert", "mailto:support@terenceds.de", QT.Links.grepobash_main, "Allianzinterne Bashrangliste"],
+					//"grepobash" : ["Grepolis Bashrangliste", "http://adf.ly/B6HBW", "quert", "mailto:support@terenceds.de", QT.Links.grepobash_main, "Allianzinterne Bashrangliste"],
 					"polissuche" : ["Polissuche", "http://adf.ly/fGG9b", "tonda", "http://forum.de.grepolis.com/private.php?do=newpm&u=1345", QT.Links.polisssuche_main, "Deutsche Suchfunktion für Städte mit breiter Auswahl von Filteroptionen. Nützlich um Geisterstädte und Inaktive zu finden"],
 					"grepofinder" : ["Grepolis Finder", "http://adf.ly/B7D6r", "Ludovic Drolez", "mailto:ludo@drolez.com", QT.Links.grepofinder_main, "Suchen von Städten mit bestimmten Filteroptionen. Nützlich um Geisterstädte und Inaktive zu finden"],
 					"grepounitcompare" : ["Grepolis Truppenrechner", "http://adf.ly/1F7GrC", "Quackmaster", "http://forum.de.grepolis.com/private.php?do=newpm&u=11342", QT.Lang.get("meta", "unitscalculator"), "Eine Tabelle um die Verteidigungswerte der einzelnen Einheiten in Grepolis miteinander zu vergleichen"],
@@ -7584,6 +7592,29 @@ function main_script(DATA) {
 					setTimeout(function () {
 						$(that).select();
 					}, 10);
+				});
+			});
+		},
+		sylvester2017 : function () {
+			var wnd = GPWindowMgr.Create(GPWindowMgr.TYPE_QT_STANDARD) || GPWindowMgr.getOpenFirst(GPWindowMgr.TYPE_QT_STANDARD);
+			wnd.setTitle('Quack Toolsammlung - Sylvester 2017 Gewinnspiel');
+			var html = '<h1>Frohes Neues Jahr!!</h1><p>Ich hoffe ihr seid gut reingerutscht. Es gab schon länger kein Update mehr für die Toolsammlung, weswegen ich direkt zu Jahresbeginn mal ein Lebenszeichen geben wollte.</p><p>Ich habe daher mal zur Feier des neuen Jahres ein kleines Gewinnspiel gestartet. Zu gewinnen gibt es wie immer eine 10€ Paysafe Karte.</p><p>Alles was ihr dafür machen müsst ist an einer kleinen <a href="http://l4asrv-6.wi.hs-osnabrueck.de/limesurvey/index.php/936383?lang=de" target="_blank">Umfrage</a> teilzunehmen. Das Ganze kostet maximal 5 Minuten eurer Zeit und hilft mir sogar bei einer Hausarbeit, die ich für mein Wirtschaftspsychologie Studium erledigen muss. ;)</p><p>Ein bischen Eile ist geboten, da die Umfrage nur bis zum 08.01.2017 läuft - am besten also einfach direkt jetzt schnell erledigen. Das Gewinnspiel läuft nur für den deutschen Markt, weswegen eure Chance zu gewinnen diesmal auf jeden Fall etwas besser sein wird. ;)</p><p>Weitere Infos gibt es noch hier:</p>';
+			html += '<a style="margin-bottom: 20px;" href="http://grepolisqt.de/umfrage/" target="_blank" class="button"><span class="left"><span class="right"><span class="middle"><small>Info zur Umfrage</small></span></span></span></a>';
+			html += '<div>Viele Grüße <br> Quack</div>';
+			html += '<div style="margin-top: 20px">';
+			html += '<a id="sylvester2017_close" href="#" class="button"><span class="left"><span class="right"><span class="middle"><small>Bitte später nochmal dran erinnern</small></span></span></span></a>';
+			html += '<a id="sylvester2017_close_forever" href="#" class="button"><span class="left"><span class="right"><span class="middle"><small>Danke ich habs verstanden - verschone mich in Zukunft</small></span></span></span></a>';
+			html += '</div>';
+			wnd.setContent(html);
+
+			$('#sylvester2017_close').click(function () {
+				wnd.close();
+			});
+
+			$('#sylvester2017_close_forever').click(function () {
+				hOpenWindow.showConfirmDialog('', 'Schon an der Umfrage teilgenommen? ;)', function () {
+					QT.Settings.save("sylvester2017", false);
+					wnd.close();
 				});
 			});
 		},
@@ -7697,15 +7728,15 @@ function main_script(DATA) {
 					var h = window.location.host.replace(/.grepolis.com.*$/, "");
 					var i = h.replace(/\d+/, "");
 					var j = $("DIV#gpwnd_" + c + " DIV#towninfo_towninfo UL.game_list DIV.list_item_right");
-					$(j[1]).append('<a class="qt_gsbutton" target="_blank" href="http://' + i + ".grepostats.com/world/" + h + "/player/" + g.id + '"><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a>');
-					$(j[1]).css("width", "+=25px");
+					//$(j[1]).append('<a class="qt_gsbutton" target="_blank" href="http://' + i + ".grepostats.com/world/" + h + "/player/" + g.id + '"><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a>');
+					//$(j[1]).css("width", "+=25px");
 					if (!$('DIV#gpwnd_' + c + ' a[onclick^="Layout.allianceProfile"]').length > 0)
 						continue;
 					var k = $('DIV#gpwnd_' + c + ' a[onclick^="Layout.allianceProfile"]').attr("onclick").replace(")", "").split(",")[1];
 					var l = $('DIV#gpwnd_' + c + ' a[onclick^="Layout.allianceProfile"]').parent().find(".list_item_right");
 					//var x = $("DIV#gpwnd_" + c + " .assign_ally_color").parent();
-					l.css("width", "+=26px");
-					l.append('<span class="qt_gsbutton"><a class="qt_gsbutton" target="_blank" href="http://' + i + ".grepostats.com/world/" + h + "/alliance/" + k + '"><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a></span>');
+					//l.css("width", "+=26px");
+					//l.append('<span class="qt_gsbutton"><a class="qt_gsbutton" target="_blank" href="http://' + i + ".grepostats.com/world/" + h + "/alliance/" + k + '"><img src="http://s14.directupload.net/images/120328/kxn3oknc.png"></a></span>');
 					if (mID === "de") {
 						l.css("width", "+=26px");
 						l.append('<a class="qt_quobutton" target="_blank" href="http://marekblomkvist.com/quo/'+ h +'/'+ k +'"><img src="http://s7.directupload.net/images/140615/fhkhdsdc.png"></a>');
@@ -8145,6 +8176,7 @@ function main_script(DATA) {
 		QT.Helper.mutationobserver();
 		QT.Helper.addWindowTypes();
 		QT.Functions.qtoolbox();
+		if (mID == "de" && QT.Settings.values.sylvester2017) { QT.Functions.sylvester2017(); };
 		if (QT.Settings.values.qmenu_settings_hotkey_active)
 			QT.Functions.hotkeys();
 		if (QT.Settings.values.qmenu_settings_cityview_BTN)
@@ -8299,7 +8331,7 @@ function main_script(DATA) {
 					//QTF.hidesIndexAddPoints();
 				break;
 				case "town_info/info":
-					QTF.townInactivity();
+					//QTF.townInactivity();
 					QTF.townStatsButtons();
 				break;
 				case "town_info/trading":
@@ -8313,22 +8345,22 @@ function main_script(DATA) {
 						QTF.removeTooltipps("town_info");
 				break;
 				case "player/get_profile_html":
-					QTF.playerGSButton(settings);
-					QTF.playerInactivity(settings);
+					//QTF.playerGSButton(settings);
+					//QTF.playerInactivity(settings);
 				break;
 				case "player/index":
 					QTF.addsettingsbutton();
 				break;
 				case "island_info/index":
 					QTF.islandMessage();
-					QTF.islandInactivity(xhr);
-					QTF.islandAddPlayerlinks(xhr);
+					//QTF.islandInactivity(xhr);
+					//QTF.islandAddPlayerlinks(xhr);
 					if (QT.Settings.values.qmenu_settings_island_villages)
 						QTF.islandFarmingVillages();
 				break;
 				case "alliance/profile":
-					QTF.allianceStatsButtons(settings);
-					QTF.allianceInactivity();
+					//QTF.allianceStatsButtons(settings);
+					//QTF.allianceInactivity();
 				break;
 				case "farm_town_overviews/claim_loads":
 					if (QT.Settings.values.qmenu_settings_farmhelper)
@@ -8366,6 +8398,7 @@ var DATA = {
 	clicked_sponsor_link_last : GM_getValue("clicked_sponsor_link_last", 0),
 	googledocsurl : GM_getValue("googledocsurl", "https://docs.google.com/spreadsheet/ccc?key=0AkpTmTnKs72_dEF3bWs3SW5iWjdyUEE0M0c3Znpmc3c&embedded=true"),
 	grepolistoolkit : GM_getValue("grepolistoolkit", false),
+	sylvester2017 : GM_getValue("sylvester2017", true),
 	qmenu_settings_akademieplaner : GM_getValue("qmenu_settings_akademieplaner", true),
 	qmenu_settings_berichte_farben : GM_getValue("qmenu_settings_berichte_farben", true),
 	qmenu_settings_berichte_filter : GM_getValue("qmenu_settings_berichte_filter", true),
