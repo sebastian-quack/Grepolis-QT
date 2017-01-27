@@ -5,7 +5,7 @@
 // @include        http://*.grepolis.*/game*
 // @include        https://*.grepolis.*/game*
 // @icon           http://s1.directupload.net/images/140711/eshmcqzu.png
-// @version        2.58.00
+// @version        2.59.00
 // @resource       HTML2Canvas https://raw.githubusercontent.com/Quackmaster/html2canvas/v0.4/build/html2canvas.js
 // @resource       QT_styles https://github.com/Quackmaster/Grepolis-QT/raw/master/QT_styles.css
 // @grant          GM_getValue
@@ -6765,7 +6765,7 @@ function main_script(DATA) {
 			var wnd = $(".classic_window.easter");
 
 			var link_giveaway = (mID == "de" ? "http://de.grepolisqt.de/herbst-event-rezepte-liste" : "http://en.grepolisqt.de/fall-event-recipe-list");
-			var link_recipebook = (mID == "de" ? "http://de.grepolisqt.de/herbst-event-rezepte-liste" : "http://en.grepolisqt.de/fall-event-recipe-list");
+			var link_recipebook = (mID == "de" ? "http://de.grepolisqt.de/grepolis-demeter-2017-rezepte-liste/" : "http://en.grepolisqt.de/grepolis-demeter-2017-recipe-list/");
 
 			var box = '<div id="qt_recipeevent" class="countdown_box" style="position: absolute; top: 35px; right: 0; width: 76px;">' +
 				'<div class="left"></div>' +
@@ -8176,7 +8176,7 @@ function main_script(DATA) {
 		QT.Helper.mutationobserver();
 		QT.Helper.addWindowTypes();
 		QT.Functions.qtoolbox();
-		if (mID == "de" && QT.Settings.values.sylvester2017) { QT.Functions.sylvester2017(); };
+		//if (mID == "de" && QT.Settings.values.sylvester2017) { QT.Functions.sylvester2017(); };
 		if (QT.Settings.values.qmenu_settings_hotkey_active)
 			QT.Functions.hotkeys();
 		if (QT.Settings.values.qmenu_settings_cityview_BTN)
